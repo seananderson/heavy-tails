@@ -1,0 +1,16 @@
+*.Rproj.user
+*.Rhistory
+*.RData
+*.fls
+*.log
+*.aux
+*.fdb_latexmk
+*.pdf
+*.png
+*.rda
+*.bbl
+*.blg
+*.Rapp.history
+*.rds
+sub-*\.sh
+*.xlsx
