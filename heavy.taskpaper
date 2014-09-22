@@ -1,0 +1,35 @@
+
+- delete and re-run ID 20659
+
+- Get order relatedness
+- Re-run bits of simulation and pass on figs to Trevor
+- pick out funny heavy ones and digg into
+- pick out some example time series
+- plot out time series eg plot from GPDD with dots highlighted at extremes and nu in panel
+
+Figure 1:
+	- add time series panels to right
+	- 3 panels with gompertz models with 'effective' nu seeds of 2, 5, and normal	
+Figure 2:
+	- Same as now? maybe in baseplot?
+	- add silhouettes?
+Figure 3:
+
+main_id: 1516 - some points derived from curves
+http://www.jstor.org.proxy.lib.sfu.ca/stable/pdfplus/1328.pdf?acceptTC=true&jpdConfirm=true
+
+main_id : 6528
+http://www.jstor.org.proxy.lib.sfu.ca/stable/pdfplus/4258.pdf?&acceptTC=true&jpdConfirm=true
+Potts, G.R., Coulson, J.C. & Deans, I.R. 1980 Population dynamics and breeding success of the Shag, Phalacrocorax aristotelis on the Farne Islands, Northumberland. Journal of Animal Ecology, 49:465-485
+"Between 1963 and 1968, the shag population increased and the shortage of nest-sites progressively reduced the production of fledged young per pair. This effect was especially marked among the first time breeders which arrived late each season and were forced to occupy relatively poor sites."
+"After an exceptionally high mortality of adults in 1968, caused by a 'red-tide', nest-sites were not in short supply and productivity per pair greatly increased, especially among the first time breeders which moved to better sites."
+So we may have fewer populations to focus on, but I think even a short compilation of real-world examples like that in a table with little sparkline population trends would be interesting.
+
+
+main_id  : 10139 - NOTE SAME AS 20531
+http://www.tandfonline.com/doi/pdf/10.1080/00063657109476316
+
+severe winters
+
+
+http://onlinelibrary.wiley.com.proxy.lib.sfu.ca/doi/10.1034/j.1600-0706.2003.12072.x/full
