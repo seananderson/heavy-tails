@@ -14,3 +14,7 @@
 *.rds
 sub-*\.sh
 *.xlsx
+
+*.gz
+
+scratch.R
