@@ -13,7 +13,7 @@ add_label <- function(xfrac = -0.02, yfrac = -0.04, label = "", pos = 4, ...) {
 set.seed(1) # for jittering
 pdf("nu-coefs-2.pdf", width = 3.8, height = 9.5)
 
-par(mfrow = c(4, 1), mar = c(1.3,0,0,0), oma = c(2.2, 3.5, 1, .8), tck = -0.02, mgp = c(2, 0.5, 0), col.lab = "grey20", col.axis = "grey20", col = "grey20")
+par(mfrow = c(4, 1), mar = c(1.5,0,0,0), oma = c(2.2, 3.5, 1, .8), tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
 par(cex = 0.9)
 
 for(i in 1:length(classes)) {
@@ -56,7 +56,7 @@ points(x$sort_id_perc, 1/x$nu_50, pch = 21, col = "grey10", lwd = 0.5, bg = "bla
 if(unique(x$taxonomic_class) == "Aves") {
   cutoff <- 4
 } else {
-  cutoff <- 1
+  cutoff <- 0
 }
  x <- x %>% group_by(taxonomic_order) %>%
   mutate(n_pops = length(p10)) %>%
@@ -75,6 +75,7 @@ if(unique(x$taxonomic_class) == "Aves") {
  abline(h = as.numeric(as.factor(x$taxonomic_order)), col = "grey93", lwd = 0.7, lty = 1)
    par(xpd = NA)
  points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = "grey80", col = "grey40", cex = 0.7)
+ #box(col = "grey80")
    par(xpd = FALSE)
  },
  x = c(60, 95),
