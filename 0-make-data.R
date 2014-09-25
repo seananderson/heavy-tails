@@ -333,8 +333,11 @@ stat_table <-
     ) %>% arrange(desc(n)) %>% as.data.frame
 write.csv(stat_table, file = "stat_table.csv", row.names = FALSE)
 
+stat_table$max_N <- NULL
+
+names(stat_table) <- c("Taxonomic class", "Populations", "Orders", "Species", "Median length", "Interpolated pts", "Zeros pts")
 library(xtable)
-print.xtable(xtable(stat_table), include.rownames = FALSE, file = "stat-table.tex")
+print.xtable(xtable(stat_table, caption = "Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, and total number of substituted zeros."), include.rownames = FALSE, file = "stat-table.tex", booktabs = TRUE,  caption.placement = "top")
 
 
 saveRDS(gpdd, file = "gpdd-clean.rds")
