@@ -6,7 +6,8 @@ library(rstan)
 library(dplyr)
 
 extract_model <- function(id, get_phi = FALSE,
-  folder = "/global/scratch/anderson/heavy/", subfolder = "base") {
+  folder = "/global/scratch/anderson/heavy/", subfolder = "base",
+  type = "gompertz") {
 
   sm <- readRDS(paste0(folder, subfolder, "/sm-", id, ".rds"))
   samp <- extract(sm)
@@ -19,10 +20,21 @@ extract_model <- function(id, get_phi = FALSE,
     as.data.frame(t(x))
   }
 
-  lambda <- get_q("lambda")
-  nu <- get_q("nu")
-  b <- get_q("b")
-  sigma_proc <- get_q("sigma_proc")
+  if(type[1] == "gompertz") {
+    lambda <- get_q("lambda")
+    nu <- get_q("nu")
+    b <- get_q("b")
+    sigma_proc <- get_q("sigma_proc")
+    sigma_proc <- get_q("sigma_proc")
+    out <- data.frame(lambda, nu, b, sigma_proc)
+  }
+  if(type[1] == "logistic") {
+    r <- get_q("r")
+    nu <- get_q("nu")
+    K <- get_q("K")
+    sigma_proc <- get_q("sigma_proc")
+    out <- data.frame(r, nu, K, sigma_proc)
+  }
 
   if(get_phi) {
     phi <- get_q("phi")
@@ -40,7 +52,6 @@ extract_model <- function(id, get_phi = FALSE,
 
   iter <- sm@stan_args[[1]]$iter
 
-  out <- data.frame(lambda, nu, b, sigma_proc)
 
   if(get_phi) {
     out <- data.frame(out, phi)
@@ -63,8 +74,11 @@ ids <- unique(gpdd$main_id)
   #get_phi = FALSE)
 gomp_hat_ar1 <- plyr::ldply(ids, extract_model, subfolder = "ar1-5.0",
   get_phi = TRUE)
+gomp_hat_logistic <- plyr::ldply(ids, extract_model, type = "logistic",
+  subfolder = "logistic-5.0", get_phi = FALSE)
 #gomp_hat_ar1_obs <- plyr::ldply(mammals_ids$main_id, extract_model,
 #  subfolder = "ar1-obs0.2", get_phi = TRUE)
 #saveRDS(gomp_hat_base, file = "gomp_hat_base.rds")
 saveRDS(gomp_hat_ar1, file = "gomp_hat_ar1-5.0.rds")
+saveRDS(gomp_hat_logistic, file = "gomp_hat_logistic-5.0.rds")
 #saveRDS(gomp_hat_ar1_obs, file = "gomp_hat_ar1_obs0.2.rds")

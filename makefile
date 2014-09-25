@@ -1,4 +1,9 @@
-all: pdf
+TEXT = anderson-etal-blackswan-timeseries
+                                 
+all: $(TEXT).pdf
 
-pdf:
-	pdflatex heavy-ms.tex
+$(TEXT).pdf: $(TEXT).tex
+	latexmk -pdf $(TEXT).tex
+
+clean:
+	latexmk -c

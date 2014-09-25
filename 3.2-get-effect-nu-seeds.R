@@ -40,13 +40,11 @@ get_effective_nu_seeds <- function(nu_true = 5, cv = 0.5, N = 50,
   return(list(seeds = seeds, nu_ests = nu_ests))
 }
 
-nu_2_seeds_N50 <- get_effective_nu_seeds(seed_N = 20, nu_true = 2)
+nu_3_seeds_N50 <- get_effective_nu_seeds(seed_N = 20, nu_true = 3)
 nu_5_seeds_N50 <- get_effective_nu_seeds(seed_N = 20, nu_true = 5)
 
-nu_2_seeds_N100 <- get_effective_nu_seeds(seed_N = 20, nu_true = 2, N = 100)
+nu_3_seeds_N100 <- get_effective_nu_seeds(seed_N = 20, nu_true = 3, N = 100)
 nu_5_seeds_N100 <- get_effective_nu_seeds(seed_N = 20, nu_true = 5, N = 100)
 
-save(nu_2_seeds_N50, nu_5_seeds_N50, nu_2_seeds_N100, nu_5_seeds_N100,
+save(nu_3_seeds_N50, nu_5_seeds_N50, nu_3_seeds_N100, nu_5_seeds_N100,
   file = "nu_effective_seeds.rda")
-
-# now go remove all N50 iterations 2 and re-run

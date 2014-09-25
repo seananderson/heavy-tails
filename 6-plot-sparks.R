@@ -16,7 +16,7 @@ get_gomp_res <- function(id_show) {
   p <- subset(gomp_hat_base, main_id == id_show)
   pop <- subset(gpdd, main_id == id_show)$population_untransformed
   res <- rep(NA, length(pop))
-  for(i in 3:length(pop)) {
+  for(i in 2:length(pop)) {
     res[i] <- log(pop)[i] - (p$lambda_50 + p$b_50 * log(pop[i-1]))
       #p$phi_50 * (p$lambda_50 + p$b_50 * log(pop[i-2]))
   }
@@ -32,8 +32,8 @@ make_spark <- function(x) {
   pdf(paste0("sparks/", x$main_id[1], ".pdf"), width = 2.5, height = 1.2)
   par(mar = c(0.5,0.2,0.5,0.2), oma = c(0,0,1.0,0), cex = 0.8)
   par(xpd = NA)
-  with(x, plot(seq_along(population_untransformed), population, type = "l", axes = FALSE,
-      xlab = "", ylab = "", yaxs = "i", xaxs = "i"))
+  with(x, plot(seq_along(population_untransformed), population_untransformed, type = "l", axes = FALSE,
+      xlab = "", ylab = "", yaxs = "i", xaxs = "i", log = "y"))
   if(length(bsw_l) > 0)
     points(bsw_l, x$population_untransformed[bsw_l], col = "red", pch = 20, cex = 3)
   if(length(bsw_u) > 0)

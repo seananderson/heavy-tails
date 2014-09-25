@@ -1,11 +1,29 @@
 
+New as of 20140924:
+	- dig into Barbary macaque a bit more
+	- add years to spark lines in table
+	- make new figure 2 (combination of current 2 and 3)
+	- make figure 3 (cross plots of characteristics with nu)
+	- add 'black swan' simulation row
+	- test the autocorrelation model with simulation
+	- consider running the GPDD data with assumed observation error
+	- Tidy up working in sparkline table
+	- look up Bradshaw outline method; outline paragraphs for paper and send to co-authors
+	- add rectangles of misclassification to cross plots
+	- try lining up black swan events - say for birds in UK - and add NAO - line up?
+	- make cross plot of with and without observation error AND/OR add central tendency line? maybe?
+
+
+Title:
+	- Black swans in population dynamics
+	- Black swans in ecological time series
+	- Heavy tailed population dynamics
+
 - delete and re-run ID 20659
 
-- Get order relatedness
 - Re-run bits of simulation and pass on figs to Trevor
-- pick out funny heavy ones and digg into
-- pick out some example time series
-- plot out time series eg plot from GPDD with dots highlighted at extremes and nu in panel
+
+- pull in brook et al. correlates data and plot
 
 Figure 1:
 	- add time series panels to right
