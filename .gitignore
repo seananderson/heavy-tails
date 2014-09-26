@@ -18,3 +18,4 @@ sub-*\.sh
 *.gz
 
 scratch.R
+.Rproj.user
