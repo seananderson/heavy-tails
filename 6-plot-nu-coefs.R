@@ -1,7 +1,13 @@
 # a pretty version of nu coeffs and p(nu < 10) for a main paper figure
 
+library(grImport)
+
 classes <- c("Aves","Mammalia", "Insecta", "Osteichthyes")
 cols <- c(rev(RColorBrewer::brewer.pal(5, "YlOrRd"))[-c(4, 5)])
+pics <- c("silhouettes/grey-heron.eps.xml", "silhouettes/rabbit.eps.xml",
+  "silhouettes/fly.eps.xml", "silhouettes/chinook.eps.xml")
+pic_width <- c(9, 9, 9, 17)
+pic_height <- c(.10, .10, .10, .08)
 
 add_label <- function(xfrac = -0.02, yfrac = -0.04, label = "", pos = 4, ...) {
   u <- par("usr")
@@ -51,6 +57,19 @@ segments(x$sort_id_perc, 1/x$nu_25, x$sort_id_perc, 1/x$nu_75, lwd = 1.1, col = 
 points(x$sort_id_perc, 1/x$nu_50, pch = 21, col = "grey10", lwd = 0.5, bg = "black", cex = 0.6)
 
 
+  par(xpd = NA)
+  p <- readPicture(pics[i])
+  if(i != 4)
+    p@paths$path@rgb <- "grey37"
+  else
+    p@paths[[2]]@rgb <- "grey37"  # different vector structure
+  grImport::picture(p, 12, 0.37, 12 + pic_width[i], 0.37 + pic_height[i])
+  par(xpd = FALSE)
+
+#   p <- readPicture(pics[4])
+#   p@paths$path@rgb <- "#FF0000"
+#   plot(1, 1, xlim = c(0, 1), ylim = c(0, 1)); grImport::picture(p, 0, 0, 1, 1)
+
 
  #x <- filter(x, !taxonomic_order %in% c("Cuculiformes", "Gruiformes", "Pteroclidiformes", "Procellariiformes", "Gaviiformes"))
 if(unique(x$taxonomic_class) == "Aves") {
@@ -62,19 +81,27 @@ if(unique(x$taxonomic_class) == "Aves") {
   mutate(n_pops = length(p10)) %>%
   filter(n_pops >= cutoff)
 
+
   #filter(!taxonomic_order %in% c("Cuculiformes", "Gruiformes", "Pteroclidiformes", "Procellariiformes", "Gaviiformes"))
 
  p <- x %>% group_by(taxonomic_order) %>% summarise(med_p10 = mean(p10)) %>%
   arrange(med_p10) %>% mutate(p10_order = 1:length(med_p10))
  x <- plyr::join(x, p, by = "taxonomic_order")
+
+ cols_df <- data.frame(
+   col = rev((c(rev(RColorBrewer::brewer.pal(6, "YlOrRd"))[-6], "grey90"))),
+   cuts = rev(c(0.8, 0.7, 0.6, 0.5, 0.4, 0)))
+
+ x$p_col <- as.character(cols_df$col[findInterval(x$p10, cols_df$cuts)])
+
  TeachingDemos::subplot({
  plot(x$p10, x$p10_order, type = "n", xlab = "", ylab = "", las = 1, bty = "n", yaxt = "n", xaxt = "n", axes = FALSE)
- axis(2, at = p$p10_order, labels = p$taxonomic_order, las = 1, cex = 0.8, cex.axis= 0.8, lwd = 0, col.axis = "grey30")
+ axis(2, at = p$p10_order, labels = p$taxonomic_order, las = 1, cex = 0.8, cex.axis= 0.8, lwd = 0, col.axis = "grey30", line = -0.36)
  axis(1, at = c(0, 0.5, 1), col = "grey30", lwd = 0.7, tck = -0.04, mgp = c(2, 0.25, 0), col.axis = "grey30", cex.axis = 0.8)
  mtext(expression(p(nu<10)), side = 1, line = 1.4, cex = 0.8, col = "grey30")
  abline(h = as.numeric(as.factor(x$taxonomic_order)), col = "grey93", lwd = 0.7, lty = 1)
    par(xpd = NA)
- points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = "grey80", col = "grey40", cex = 0.7)
+ points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = x$p_col, col = "grey40", cex = 0.72)
  #box(col = "grey80")
    par(xpd = FALSE)
  },
