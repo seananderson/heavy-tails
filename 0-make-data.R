@@ -344,8 +344,8 @@ saveRDS(gpdd, file = "gpdd-clean.rds")
 
 # massive ts plot:
 library(ggplot2)
-p <- ggplot(gpdd, aes(series_step, log10(population_untransformed), colour = taxonomic_class)) + geom_point() + geom_line() + facet_wrap(~label, scales = "free") + geom_point(data = subset(gpdd, interpolated == TRUE), aes(series_step, log10(population_untransformed)), colour = "black", pch = 21) + geom_point(data = subset(gpdd, zero_sub == TRUE), aes(series_step, log10(population_untransformed)), colour = "black", pch = 20)
-ggsave("all-clean-ts-3.0.pdf", width = 50, height = 50, limitsize = FALSE)
+p <- ggplot(gpdd, aes(series_step, log10(population_untransformed), colour = taxonomic_class)) + geom_point() + geom_line() + facet_wrap(~label, scales = "free") + geom_point(data = subset(gpdd, interpolated == TRUE), aes(series_step, log10(population_untransformed)), colour = "black", pch = 21) + geom_point(data = subset(gpdd, zero_sub == TRUE), aes(series_step, log10(population_untransformed)), colour = "black", pch = 20) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), strip.background = element_blank()) + xlab("Time series step") + ylab("log10(Abundance)")
+ggsave("all-clean-ts-3.pdf", width = 50, height = 50, limitsize = FALSE)
 
 p<-ggplot(subset(gpdd, assumed_log10 == TRUE), aes(series_step, log10(population_untransformed))) + geom_point() + geom_line() + facet_wrap(~label, scales = "free")
 ggsave("log10-assumed.pdf", width = 20, height = 20)
