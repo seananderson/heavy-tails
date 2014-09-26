@@ -35,7 +35,7 @@
 \bibliographystyle{apalike}
 \bibpunct{(}{)}{;}{a}{}{;}
 
-\title{Black swans in ecological time series\\Black swans in population dynamics\\Heavy tailed ecological time series}
+\title{Black swans in ecological time series\\Black swans in population dynamics\\Heavy-tailed ecological time series}
 \author{
 Sean C. Anderson$^{1\ast}$ \and
 Trevor A. Branch$^2$ \and
@@ -209,6 +209,14 @@ Ways forward:
 
 - what does this mean for conservation management (crashes might be more frequent and greater in magnitude than our typical models tell us) --- importance of establishing polices that are robust to this
 
+\section{Acknowledgements}
+
+Silhouettes: \texttt{phylopic.org}: rabbit by Sarah Werning, grey heron by Ardea cinerea, hoverfly by Gareth Monger. All under Creative Commons Attribution 3.0 Unported license.
+
+GPDD
+
+Funding
+
 \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
 
 \clearpage
@@ -330,11 +338,10 @@ Severe winters in 1929, 1940--1942, and 1962--1963; 1963 event so severe that re
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.47\textwidth]{nu-coefs-2.pdf}
+\includegraphics[width=0.46\textwidth]{nu-coefs-2.pdf}
 \caption{
-  Estimate of $\nu$ from the base Gompertz model (no autocorrelation or observation error).
-  Shown are median (points), quartiles (mid line segments) and 90\% quantiles (widest line segments) of the posterior.}
-\label{fig:nu-coefs}
+Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\ populations of birds, mammals, insects, and fishes. Small values of $\nu$ ($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest approximately normal-tailed dynamics. Vertical points and line segments represent posterior medians and 50\% / 90\% credible intervals for individual populations. Inset plots show probability that $\nu < 10$ (probability of heavy tails) for populations arranged by taxonomic order. Taxonomic orders are sorted by decreasing mean p($\nu < 10$).
+Taxonomic orders with three or fewer populations in panel a are omitted for space.}\label{fig:nu-coefs}
 \end{center}
 \end{figure}
 
@@ -360,7 +367,7 @@ Severe winters in 1929, 1940--1942, and 1962--1963; 1963 event so severe that re
 \includegraphics[width=0.6\textwidth]{nu-covariates-base.pdf}
 \includegraphics[width=0.7\textwidth]{brook-etal-correlates.pdf}
 \caption{
-  (\textit{\textbf{To be redone with 6 panels: 3 parameters, data point number, log length, minimum age or lifespan.}})
+  (\textit{\textbf{To be redone in base graphics with 6 panels: 3 parameters, data point number, log length, minimum age or lifespan. Include silhouettes}})
   A number of hypotheses for what could be driving $\nu$ values. From top left to bottom right: $\phi$ (AR1 coefficient), $\log \sigma_\mathrm{proc}$ (log process error standard deviation), $N$ (time series length), $b$ (density dependence parameter in the Gompertz model; 1 is density independent and 0 is maximally density dependent), $\lambda$ (growth parameter from Gompertz model).  
   All dots show median estimates and vertical line segments show 50\% credible intervals of posterior for the $\nu$ values.}
 \label{fig:correlates}
@@ -381,6 +388,7 @@ To TODO \ldots
 \begin{enumerate}
 
 \item To remove populations with unreliable population indices that could be strongly confounded with economics and sampling effort, we removed all populations with a sampling protocol listed as \texttt{"harvest"} as well populations with the words \texttt{"harvest"} or \texttt{"fur"} in the cited reference title.
+\item Populations with negative abundance values were assumed to be log values and transformed by taking $10$ to the power of the recorded abundance. In many cases this was noted for the population, but not in all cases. We inspected each of these  \totalAssumedLog\ time series to make sure our assumption made sense (Fig.~\ref{fig:log10-assumed}).
 \item We filled in all missing time steps with \texttt{NA} values and imputed single missing values with the geometric mean of the previous and following values. We chose a geometric mean to be linear on the log scale that the Gompertz and Ricker-logistic models were fit on.
 \item We filled in single recorded values of zero with the lowest non-zero value in the time series \citep[following][]{brook2006a}. This assumes that single values of zero result from abundance being low enough that censusing missed present individuals. We turned multiple zero values in a row into \texttt{NA} values. This implies that multiple zero values were either censusing errors or caused by emigration. Regardless, our population  models were fit on a multiplicative (log) scale and so could not account for zero abundance.
 \item We removed all populations with four or more identical values in a row since these suggest either recording error or extrapolation between two observations.
@@ -452,7 +460,7 @@ x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Student\mhyphen t}_\nu(\phi \epsilon_{t-1}, \sigma).
 \end{align*}
 \noindent
-In addition to the parameters in the original Gompertz model, an additional parameter, $\phi$, is estimated that represents the similarity of subsequent process noise residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -0.99, \mathrm{max.} = 0.99)$.
+In addition to the parameters in the original Gompertz model, an additional parameter, $\phi$, is estimated that represents the relationship between of subsequent process noise residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -0.99, \mathrm{max.} = 0.99)$.
 
 \subsection{Assumed observation error}
 
@@ -571,9 +579,19 @@ where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ repr
 
 \clearpage
 
+
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{all-clean-ts-3.pdf} \caption{All filtered times series. The abundances are shown on a log vertical axis. Colours indicate taxonomic classes. Open black circles indicate abundance values that were interpolated. Closed black circles indicate single abundance values that were recorded as 0 but were set to the next lowest observed abundance.}
+\includegraphics[width=\textwidth]{log10-assumed.pdf} \caption{Populations in which the abundance was specified as or assumed to be recorded as log10 values. The numbers at the front of each panel label are the GPDD IDs.}
+    \label{fig:log10-assumed}
+\end{center}
+\end{figure}
+
+
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{all-clean-ts-3.pdf} \caption{All filtered times series used in our analysis. The abundances are shown on a log10 vertical axis. Colours indicate taxonomic classes. Open black circles indicate abundance values that were interpolated. Closed black circles indicate single abundance values that were recorded as zero but were set to the next lowest observed abundance.}
     \label{fig:all-ts}
 \end{center}
 \end{figure}
