@@ -7,8 +7,8 @@
 # This version of the code tests the AR1 version of the model
 
 library(rstan)
-stan_gomp_ar1_obs <- readRDS("stan-gomp-ar1-obs.rds")
-stan_gomp_ar1 <- readRDS("stan-gomp-ar1.rds")
+stan_gomp2_ar1_obs <- readRDS("stan-gomp2-ar1-obs.rds")
+stan_gomp2_ar1 <- readRDS("stan-gomp2-ar1.rds")
 # stan_gomp_obs <- readRDS("stan-gomp-obs.rds")
 # stan_gomp <- readRDS("stan-gomp.rds")
 
