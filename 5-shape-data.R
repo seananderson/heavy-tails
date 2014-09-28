@@ -7,7 +7,7 @@ library(dplyr)
 gpdd <- readRDS("gpdd-clean.rds")
 gomp_hat_base <- readRDS("gomp_hat_base.rds")
 gomp_hat_logistic <- readRDS("gomp_hat_logistic-5.0.rds")
-gomp_hat_ar1 <- readRDS("gomp_hat_ar1-4.0.rds")
+gomp_hat_ar1 <- readRDS("gomp_hat_ar1-5.0.rds")
 #gomp_hat_ar1_obs <- readRDS("gomp_hat_ar1_obs0.2.rds")
 mammals <- readRDS("mammals.rds")
 brook <- read.csv("brook-etal.csv", stringsAsFactors = FALSE)
@@ -18,6 +18,12 @@ gomp_hat_base <- subset(gomp_hat_base,
   main_id %in% gpdd$main_id)
 #gomp_hat_ar1_obs <- subset(gomp_hat_ar1_obs,
   #main_id %in% gpdd$main_id)
+
+gpdd$dataset_length <- NULL
+gomp_hat_base$dataset_length <- NULL
+gpdd.temp <- gpdd %>% group_by(main_id) %>% summarise(dataset_length = n())
+gomp_hat_base <- plyr::join(gomp_hat_base, gpdd.temp)
+gpdd <- plyr::join(gpdd, gpdd.temp)
 
 # back to reshaping
 # add pgr to gpdd:
@@ -77,6 +83,8 @@ gomp_hat_base <- gomp_hat_base %>%
   mutate(sort_id = seq_along(main_id),
     sort_id_perc = 100 * (sort_id / max(sort_id)))
 
+
+
 # bring in PanTHERIA:
 mammals <- plyr::rename(mammals, c("binomial" = "taxon_name"))
 
@@ -93,10 +101,13 @@ brook <- transform(brook, taxon_name = paste(Genus, Species))
 gomp_hat_base <- plyr::join(gomp_hat_base, brook[,c("taxon_name", "Mass",
     "Len", "MinAge", "Lifesp", "BS", "EF", "HI", "RA")])
 gomp_hat_base$log_Mass <- log(gomp_hat_base$Mass)
-gomp_hat_base$Mass <- NULL
+# gomp_hat_base$Mass <- NULL
 gomp_hat_base$log_Len <- log(gomp_hat_base$Len)
-gomp_hat_base$Len <- NULL
+gomp_hat_base$log10_Len <- log10(gomp_hat_base$Len)
+# gomp_hat_base$Len <- NULL
 gomp_hat_base$log10_MinAge <- log10(gomp_hat_base$MinAge)
+gomp_hat_base$log10_Lifesp <- log10(gomp_hat_base$Lifesp)
+
 
 # make a long data version for ggplot:
 library(reshape2)
@@ -111,6 +122,7 @@ gomp_hat_base_long_brooks$variable <-
     "EF" = "Ecological flexibility index",
     "HI" = "Human impact index",
     "RA" = "Geographic range index"))
+
 
 gomp_hat_ar1_long_p <- plyr::join(gomp_hat_ar1_long, gomp_hat_ar1[,c("main_id", "p20", "p10")])
 gomp_hat_base_long_p <- plyr::join(gomp_hat_base_long, gomp_hat_ar1[,c("main_id", "p20", "p10")])
