@@ -136,6 +136,8 @@ Papers to work in:
 \citet{brook2006}
 \citep{herrandoprez2014}
 
+\citep{sibly2005, ziebarth2010}
+
 \ldots
 
 \section{Methods}
@@ -364,12 +366,13 @@ Taxonomic orders with three or fewer populations in panel a are omitted for spac
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.6\textwidth]{nu-covariates-base.pdf}
-\includegraphics[width=0.7\textwidth]{brook-etal-correlates.pdf}
+\includegraphics[width=0.9\textwidth]{correlates.pdf}
 \caption{
-  (\textit{\textbf{To be redone in base graphics with 6 panels: 3 parameters, data point number, log length, minimum age or lifespan. Include silhouettes}})
-  A number of hypotheses for what could be driving $\nu$ values. From top left to bottom right: $\phi$ (AR1 coefficient), $\log \sigma_\mathrm{proc}$ (log process error standard deviation), $N$ (time series length), $b$ (density dependence parameter in the Gompertz model; 1 is density independent and 0 is maximally density dependent), $\lambda$ (growth parameter from Gompertz model).  
-  All dots show median estimates and vertical line segments show 50\% credible intervals of posterior for the $\nu$ values.}
+Potential correlates of heavy-tailed behaviour (indicated by low $\nu$ values). Shown are (a--c) parameters from the Gompertz heavy-tailed population model, (b) number of time steps, (c) body length, and (d) lifespan.
+For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-t process-noise distribution, $\lambda$ refers to the population growth rate at an abundance of one, $b$ refers to the density dependence parameter ($1$ is maximally density independent, $0$ is maximally density dependent, and $<0$ is inversely density dependent).
+For parameter values, points and lines represent medians and 50\% credible intervals of the posterior.
+Circles representing four populations are filled with white and represent a shark, crustaceans, and one gastropod.
+}
 \label{fig:correlates}
 \end{center}
 \end{figure}
@@ -388,16 +391,17 @@ To TODO \ldots
 \begin{enumerate}
 
 \item To remove populations with unreliable population indices that could be strongly confounded with economics and sampling effort, we removed all populations with a sampling protocol listed as \texttt{"harvest"} as well populations with the words \texttt{"harvest"} or \texttt{"fur"} in the cited reference title.
+\item We removed all populations rated as $< 2$ in the GPDD quality assessment (on a scale of $1$ to $5$, with $1$ being the lowest quality data) \citep[following][]{sibly2005, ziebarth2010}
 \item Populations with negative abundance values were assumed to be log values and transformed by taking $10$ to the power of the recorded abundance. In many cases this was noted for the population, but not in all cases. We inspected each of these  \totalAssumedLog\ time series to make sure our assumption made sense (Fig.~\ref{fig:log10-assumed}).
 \item We filled in all missing time steps with \texttt{NA} values and imputed single missing values with the geometric mean of the previous and following values. We chose a geometric mean to be linear on the log scale that the Gompertz and Ricker-logistic models were fit on.
 \item We filled in single recorded values of zero with the lowest non-zero value in the time series \citep[following][]{brook2006a}. This assumes that single values of zero result from abundance being low enough that censusing missed present individuals. We turned multiple zero values in a row into \texttt{NA} values. This implies that multiple zero values were either censusing errors or caused by emigration. Regardless, our population  models were fit on a multiplicative (log) scale and so could not account for zero abundance.
 \item We removed all populations with four or more identical values in a row since these suggest either recording error or extrapolation between two observations.
 \item We removed all populations without at least four unique values \citep[following][]{brook2006a}.
-\item We then went through each population time series and found the longest unbroken  window of abundance (no \texttt{NA}s) with at least 20 time steps. This is a longer window that used in some previous analyses \citep[e.g.][]{brook2006a}, but since our model attempts to capture the shape of the distribution tails our model requires more data. If there were any populations with multiple windows of identical length, we took the most recent window.
+\item We then wrote an algorithm to find the longest unbroken window of abundance (no \texttt{NA}s) with at least 20 time steps in each population time series.  If there were any populations with multiple windows of identical length, we took the most recent window. This is a longer window than used in some previous analyses \citep[e.g.][]{brook2006a}, but since our model attempts to capture the shape of the distribution tails, our model requires more data.
 \item Finally, we removed GPDD Main ID \texttt{20531}, which we noticed was a duplicate of \texttt{10139} (a heron population). 
 \end{enumerate}
 
-We provide a supplemental figure of all the time series included in our analysis and indicate which values were imputed (\percImputedPops\% of populations had at least one point imputed and only \percImputedPoints\% of the total observations were imputed) (Fig.\ SX). Table~S1 shows the final taxonomic breakdown after filtering as well as the number of populations with interpolated values.
+We provide a supplemental figure of all the time series included in our analysis and indicate which values were interpolated (\percImputedPops\% of populations had at least one point interpolated and only \percImputedPoints\% of the total observations were interpolated) (Fig.\ SX). Table~S1 shows the final taxonomic breakdown and the number of populations with interpolated values.
 
 \section{Details on the heavy-tailed Gompertz probability model}
 
@@ -406,7 +410,7 @@ For the Gompertz, the mostly weakly-informative priors I'm using are:
 b &\sim \mathrm{Uniform}(-1, 2)\\
 \lambda &\sim \mathrm{Normal}(0, 10^2)\\
 \nu &\sim \mathrm{Exponential}(0.01)\\
-\sigma_\mathrm{proc} &\sim \mathrm{Half\mhyphen Cauchy} (5).
+\sigma &\sim \mathrm{Half\mhyphen Cauchy} (5).
 \end{align*}
 
 See Figure~\ref{fig:priors}.
@@ -691,3 +695,9 @@ Read More: http://www.esajournals.org.proxy.lib.sfu.ca/doi/full/10.1890/09-1128.
 \end{enumerate}
 
 %Also, we may not be crazy seeing the heavier tails for heavier longer lived animals. There's some precedence for that in a paper that found more red noise (longer term fluctuations dominating the variance and therefore making the CV grow with time) in large-bodied animals. They attributed it to a mismatch between dynamics and the observation scale. They used a different life-history dataset too. But, there are other systematic differences with the body size-nu relationship that make this sketchy for us. E.g.\ taxonomic orders and interval frequency of data collection vary systematically and in clumps with body size (not shown in the below figure). And basically the only stuff with very \textit{low} probability of heavy tails are the the small ones with generation times less than a year and small collection intervals. It's basically a step function. We may not be able to tease that all apart... at least not in this paper.
+
+black swans:
+Pederson, N., Dyer, J.M., McEwan, R.W., Hessl, A.E., Mock, C.J., Orwig, D.A. et al. (in press). The legacy of episodic climatic events in shaping temperate, broadleaf forests. Ecol. Monogr., 10.1890/13– 1025.1.
+Cohn, J.P. (2000). Saving the Salton Sea: researchers work to understand its problems and provide possible solutions. Bioscience, 50, 295–301.
+
+Gelman 2006: "Large but finite values of A represent prior distributions which we call “weakly informative” because, even in the tail, they have a gentle slope (unlike, for example, a half-normal distribution) and can let the data dominate if the likelihood is strong in that region. "
