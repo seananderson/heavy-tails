@@ -21,10 +21,23 @@
 \setlength{\tabulinesep}{9pt}
 
 % Palatino
-\usepackage[full]{textcomp}     \usepackage[osf]{newpxtext} % osf for text, not math     \usepackage{cabin} % sans serif     \usepackage[varqu,varl]{inconsolata} % sans serif typewriter     \usepackage[bigdelims,vvarbb]{newpxmath} % bb from STIX     \usepackage[cal=boondoxo]{mathalfa} % mathcal
+\usepackage[full]{textcomp}
+     \usepackage[osf]{newpxtext} % osf for text, not math
+     \usepackage{cabin} % sans serif
+     \usepackage[varqu,varl]{inconsolata} % sans serif typewriter
+     \usepackage[bigdelims,vvarbb]{newpxmath} % bb from STIX
+     \usepackage[cal=boondoxo]{mathalfa} % mathcal
 
  % Linux Libertine:
-%  \usepackage{textcomp}%     \usepackage[sb]{libertine}%     \usepackage[varqu,varl]{inconsolata}% sans serif typewriter%     \usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX%     \usepackage[cal=boondoxo]{mathalfa} % mathcal%     \useosf % osf for text, not math%     \usepackage[supstfm=libertinesups,%%       supscaled=1.2,%%       raised=-.13em]{superiors}
+%  \usepackage{textcomp}
+%     \usepackage[sb]{libertine}
+%     \usepackage[varqu,varl]{inconsolata}% sans serif typewriter
+%     \usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
+%     \usepackage[cal=boondoxo]{mathalfa} % mathcal
+%     \useosf % osf for text, not math
+%     \usepackage[supstfm=libertinesups,%
+%       supscaled=1.2,%
+%       raised=-.13em]{superiors}
 
 
 \mathchardef\mhyphen="2D
@@ -391,6 +404,7 @@ To TODO \ldots
 \begin{enumerate}
 
 \item To remove populations with unreliable population indices that could be strongly confounded with economics and sampling effort, we removed all populations with a sampling protocol listed as \texttt{"harvest"} as well populations with the words \texttt{"harvest"} or \texttt{"fur"} in the cited reference title.
+\item We removed all populations with uneven sampling intervals. I.e\ we removed populations that didn't have a constant difference between the ``decimal year begin'' and ``decimal year end'' columns.
 \item We removed all populations rated as $< 2$ in the GPDD quality assessment (on a scale of $1$ to $5$, with $1$ being the lowest quality data) \citep[following][]{sibly2005, ziebarth2010}
 \item Populations with negative abundance values were assumed to be log values and transformed by taking $10$ to the power of the recorded abundance. In many cases this was noted for the population, but not in all cases. We inspected each of these  \totalAssumedLog\ time series to make sure our assumption made sense (Fig.~\ref{fig:log10-assumed}).
 \item We filled in all missing time steps with \texttt{NA} values and imputed single missing values with the geometric mean of the previous and following values. We chose a geometric mean to be linear on the log scale that the Gompertz and Ricker-logistic models were fit on.
@@ -600,6 +614,48 @@ where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ repr
 \end{center}
 \end{figure}
 
+\clearpage
+
+\noindent
+Example Stan code for heavy-tailed Gompertz model with AR1 correlated residuals without observation error.
+
+\begin{verbatim}
+data {
+  int<lower=0> N;        // number of data rows
+  vector[N] y;           // vector to hold ln abundance observations
+  real<lower=0> nu_rate; // rate parameter for nu exponential prior
+}
+parameters {
+  real lambda;                 // Gompertz growth rate parameter
+  real<lower=-1, upper=2> b;   // Gompertz density dependence parameter
+  real<lower=0> sigma_proc;    // process noise standard deviation
+  real<lower=2> nu;            // t-distribution degrees of freedom
+  real<lower=-1, upper=1> phi; // AR1 parameter
+}
+transformed parameters {
+  vector[N] epsilon;     // error terms
+  epsilon[1] <- 0;
+  for (i in 2:N) {
+    epsilon[i] <- y[i] - (lambda + b * y[i - 1])
+                       - (phi * epsilon[i - 1]);
+  }
+}
+model {
+  // priors:
+  nu ~ exponential(nu_rate);
+  lambda ~ normal(0, 10);
+  sigma_proc ~ cauchy(0, 2.5);
+  phi ~ normal(0, 1);
+  // data model:
+  for (i in 2:N) {
+    y[i] ~ student_t(nu,
+                     lambda + b * y[i - 1]
+                     + phi * epsilon[i - 1],
+                     sigma_proc);
+  }
+}
+\end{verbatim}
+
 
 
 \end{document}
@@ -697,7 +753,10 @@ Read More: http://www.esajournals.org.proxy.lib.sfu.ca/doi/full/10.1890/09-1128.
 %Also, we may not be crazy seeing the heavier tails for heavier longer lived animals. There's some precedence for that in a paper that found more red noise (longer term fluctuations dominating the variance and therefore making the CV grow with time) in large-bodied animals. They attributed it to a mismatch between dynamics and the observation scale. They used a different life-history dataset too. But, there are other systematic differences with the body size-nu relationship that make this sketchy for us. E.g.\ taxonomic orders and interval frequency of data collection vary systematically and in clumps with body size (not shown in the below figure). And basically the only stuff with very \textit{low} probability of heavy tails are the the small ones with generation times less than a year and small collection intervals. It's basically a step function. We may not be able to tease that all apart... at least not in this paper.
 
 black swans:
-Pederson, N., Dyer, J.M., McEwan, R.W., Hessl, A.E., Mock, C.J., Orwig, D.A. et al. (in press). The legacy of episodic climatic events in shaping temperate, broadleaf forests. Ecol. Monogr., 10.1890/13– 1025.1.
+
+Pederson, N., Dyer, J.M., McEwan, R.W., Hessl, A.E., Mock, C.J., Orwig, D.A. et al. (in press). The legacy of episodic climatic events in shaping temperate, broadleaf forests. Ecol. Monogr., 10.1890/13– 1025.1.
 Cohn, J.P. (2000). Saving the Salton Sea: researchers work to understand its problems and provide possible solutions. Bioscience, 50, 295–301.
 
 Gelman 2006: "Large but finite values of A represent prior distributions which we call “weakly informative” because, even in the tail, they have a gentle slope (unlike, for example, a half-normal distribution) and can let the data dominate if the likelihood is strong in that region. "
+
+TODO - see this paper: http://onlinelibrary.wiley.com/doi/10.1046/j.1365-2656.2003.00738.x/full Population-level mechanisms for reddened spectra in ecological time series H. Resit Akçakaya1,*, John M. Halley1,2 andPablo Inchausti1,3
