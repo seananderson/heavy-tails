@@ -13,10 +13,13 @@
 \usepackage{booktabs}
 \usepackage{lineno}
 
+\usepackage{ragged2e}
+\setlength\RaggedRightParindent{\parindent} % default value of this parameter is `0pt`
+\RaggedRight % if invoked in preamble, entire document is set Ragged-Right
+
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{array}
-\usepackage{ragged2e}
 \usepackage{tabu} % for spacing between rows in longtable
 \setlength{\tabulinesep}{9pt}
 
@@ -91,7 +94,13 @@ Nicholas K. Dulvy$^1$
 
 \setcounter{page}{1}
 
+\section{Main message (25 words)}
+
+Black swans are present, taxonomically widespread, but rare in population dynamics.
+Intrinsic drivers are unclear; extreme climate, predation, parasites, and their interactions are common causes.
+
 \section{Abstract}
+
 - introduce black swans and heavy tails, perhaps use the climate and increasing climate variability hook
 
 - we find evidence of heavy tails/black swans in ecological time series, but they are rare
@@ -108,9 +117,24 @@ Nicholas K. Dulvy$^1$
 
 \section{Introduction}
 
-Increasing realization about the importance of extreme events in the environment (REFs)
-and of the importance of ecological surprises and black swans (REFs)
+\begin{enumerate}
+  \item What are black swans and why do we care?
 
+%\bigskip
+\item Why might we expect to see  heavy tails in ecological timeseries?
+
+%\bigskip
+\item What is the existing evidence for heavy tails in ecological time series?
+
+%\bigskip
+\item Our research questions and main conclusions.
+
+\end{enumerate}
+
+%Increasing realization about the importance of extreme events in the environment (REFs)
+%and of the importance of ecological surprises and black swans (REFs)
+
+\bigskip
 Papers to work in:
 
 \citep{inchausti2002,halley2002,inchausti2001}
@@ -143,7 +167,7 @@ Papers to work in:
 \citep{vert-pre2013}
 \citep{lindenmayer2010}
 
-\citep{valpine2002} 
+\citep{valpine2002}
 \citep{gregory2010}
 \citet{garcia-carreras2011}
 \citet{brook2006}
@@ -154,6 +178,13 @@ Papers to work in:
 \ldots
 
 \section{Methods}
+
+\begin{enumerate}
+  \item Short overview paragraph
+  \item The data: global population dynamics database
+  \item The model: Gompertz population model
+  \item Alternative models and sensitivity analyses
+  \end{enumerate}
 
 The data: briefly introduce the GPDD and how we filtered it. Expand in the supplement. Mention the breakdown of taxonomy and interpolation (Table~S1).
 
@@ -178,7 +209,7 @@ consider alternative inverse prior on $\nu$ as in \citep{gelman2014}
 
 mention data used for life-history hypothesis comparisons from \citet{brook2006a}
 
-justify why we only present these as hypotheses but do not formally model them 
+justify why we only present these as hypotheses but do not formally model them
 
 \section{Results}
 
@@ -340,7 +371,7 @@ Severe winters in 1929, 1940--1942, and 1962--1963; 1963 event so severe that re
   Small values of $\nu$ create heavy tails.
   As $\nu$ approaches infinity the distribution approaches the normal distribution.
   For example, at $\nu = 2$, the probability of drawing a value less than -5 is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%).
-  (c--e) Simulated population dynamics from a Gompertz model with process noise drawn from t distributions with different values of $\nu$.  
+  (c--e) Simulated population dynamics from a Gompertz model with process noise drawn from t distributions with different values of $\nu$.
   Coloured dots in panels c and d represent jumpts with less than a 1 in 1000 chance of occurring in a normal distribution.
   (f--h) Estimates of $\nu$ from models fit to the times series in panels c--e.
   Shown are the posterior samples (histograms), median and interquartile range of the posterior (IQR) (dots and line segments), and the exponential prior on $\nu$ (dashed lines).
@@ -412,7 +443,7 @@ To TODO \ldots
 \item We removed all populations with four or more identical values in a row since these suggest either recording error or extrapolation between two observations.
 \item We removed all populations without at least four unique values \citep[following][]{brook2006a}.
 \item We then wrote an algorithm to find the longest unbroken window of abundance (no \texttt{NA}s) with at least 20 time steps in each population time series.  If there were any populations with multiple windows of identical length, we took the most recent window. This is a longer window than used in some previous analyses \citep[e.g.][]{brook2006a}, but since our model attempts to capture the shape of the distribution tails, our model requires more data.
-\item Finally, we removed GPDD Main ID \texttt{20531}, which we noticed was a duplicate of \texttt{10139} (a heron population). 
+\item Finally, we removed GPDD Main ID \texttt{20531}, which we noticed was a duplicate of \texttt{10139} (a heron population).
 \end{enumerate}
 
 We provide a supplemental figure of all the time series included in our analysis and indicate which values were interpolated (\percImputedPops\% of populations had at least one point interpolated and only \percImputedPoints\% of the total observations were interpolated) (Fig.\ SX). Table~S1 shows the final taxonomic breakdown and the number of populations with interpolated values.
