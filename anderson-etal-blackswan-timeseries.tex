@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 \usepackage{geometry}
 \geometry{verbose,letterpaper,tmargin=2.54cm,bmargin=2.54cm,lmargin=2.54cm,rmargin=2.54cm}
 \geometry{letterpaper}
@@ -6,16 +6,10 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
-%\usepackage{pdfpages}
-%\usepackage{lscape}
-%\usepackage{pdflscape}
 \usepackage{setspace}
 \usepackage{booktabs}
 \usepackage{lineno}
-
 \usepackage{ragged2e}
-\setlength\RaggedRightParindent{\parindent} % default value of this parameter is `0pt`
-\RaggedRight % if invoked in preamble, entire document is set Ragged-Right
 
 \usepackage{longtable}
 \usepackage{multirow}
@@ -23,24 +17,16 @@
 \usepackage{tabu} % for spacing between rows in longtable
 \setlength{\tabulinesep}{9pt}
 
-% Palatino
-\usepackage[full]{textcomp}
-     \usepackage[osf]{newpxtext} % osf for text, not math
-     \usepackage{cabin} % sans serif
-     \usepackage[varqu,varl]{inconsolata} % sans serif typewriter
-     \usepackage[bigdelims,vvarbb]{newpxmath} % bb from STIX
-     \usepackage[cal=boondoxo]{mathalfa} % mathcal
-
  % Linux Libertine:
-%  \usepackage{textcomp}
-%     \usepackage[sb]{libertine}
-%     \usepackage[varqu,varl]{inconsolata}% sans serif typewriter
-%     \usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
-%     \usepackage[cal=boondoxo]{mathalfa} % mathcal
-%     \useosf % osf for text, not math
-%     \usepackage[supstfm=libertinesups,%
-%       supscaled=1.2,%
-%       raised=-.13em]{superiors}
+  \usepackage{textcomp}
+     \usepackage[sb]{libertine}
+     \usepackage[varqu,varl]{inconsolata}% sans serif typewriter
+     \usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
+     \usepackage[cal=boondoxo]{mathalfa} % mathcal
+     \useosf % osf for text, not math
+     \usepackage[supstfm=libertinesups,%
+       supscaled=1.2,%
+       raised=-.13em]{superiors}
 
 
 \mathchardef\mhyphen="2D
@@ -51,7 +37,7 @@
 \bibliographystyle{apalike}
 \bibpunct{(}{)}{;}{a}{}{;}
 
-\title{Black swans in ecological time series\\Black swans in population dynamics\\Heavy-tailed ecological time series}
+\title{Black swans in ecological time series\\Black swans in population dynamics\\Heavy-tailed ecological time series\\Black swans in ecological dynamics}
 \author{
 Sean C. Anderson$^{1\ast}$ \and
 Trevor A. Branch$^2$ \and
@@ -79,8 +65,7 @@ Nicholas K. Dulvy$^1$
 \textit{Authors are listed alphabetically (ABCD!) and open to reordering.}
 
 \noindent
-\textsuperscript{1}Earth to Ocean Research Group, Department of Biological Sciences, Simon Fraser University, Burnaby BC, V5A 1S6, Canada
-
+\textsuperscript{1}Earth to ocean research group, department of biological sciences, Simon Fraser University, Burnaby BC, V5A 1S6, Canada
 \noindent
 \textsuperscript{2}School of Aquatic and Fishery Sciences, University of Washington, Box 355020, Seattle, WA 98195, USA
 
@@ -94,40 +79,32 @@ Nicholas K. Dulvy$^1$
 
 \setcounter{page}{1}
 
-\section{Main message (25 words)}
+\noindent
+\textit{Main message, to be deleted (25 words)}: Black swans are present \& taxonomically widespread but rare in population dynamics.
+Extreme climate, predation, parasites, and their interactions are common causes; intrinsic drivers are unclear.
 
-Black swans are present, taxonomically widespread, but rare in population dynamics.
-Intrinsic drivers are unclear; extreme climate, predation, parasites, and their interactions are common causes.
+%When they do occur they tend to be driven by ... little evidence....
 
 \section{Abstract}
 
-- introduce black swans and heavy tails, perhaps use the climate and increasing climate variability hook
+Black swans are statistically improbable events that have profound implications when they occur. Such events are known to occur in financial, social, and environmental systems; the magnitude of environmental extremes is projected to increase with climate change. But, the prevalence and magnitude of black swans in ecological population dynamics is unknown. Here, we develop a probability model that allows us to estimate the degree of heavy-tailedness in ecological process noise. We apply our model to \NPops\ time series from around the world across \NOrders\ taxonomic orders and seven classes. We find strong evidence of black swans, but they are rare, occurring in \overallMinPerc--\overallMaxPerc\% of populations and most frequently for birds (\AvesRangePerc\%) followed by mammals (\MammaliaRangePerc\%), insects (\InsectaRangePerc\%), and fishes (\OsteichthyesRangePerc\%). When they occur, they tend to be driven by climate and severe winters, cycles of natural enemies (parasites and predators) and interactions between these elements. We find little evidence of intrinsic life-history correlates.
+Our results suggest [FOR ECOLOGICAL MODELLING]
+and the importance of establishing management strategies that are robust to extreme events \ldots.
 
-- we find evidence of heavy tails/black swans in ecological time series, but they are rare
+%lso mention the advance of our method: probabilistic in quantifying heavy tailedness, incorporates population dynamics, can allow for autocorrelation and observation error, and incorporate prior information
 
-- taxonomically widespread although most frequent in birds, followed by mammals, insects
-
-- we don't find compelling intrinsic biological (e.g.\ lifehistory) correlates
-
-- common causes were extrinsic extreme events or multiple extreme events in a row: climate and severe winters, cycles of natural enemies (parasites and predators) and interactions between these
-
-- also mention the advance of our method: probabilistic in quantifying heavy tailedness, incorporates population dynamics, can allow for autocorrelation and observation error, and incorporate prior information
-
-- conclude with ecological, modelling, policy, and management implications
+%- conclude with ecological, modelling, policy, and management implications
 
 \section{Introduction}
 
 \begin{enumerate}
-  \item What are black swans and why do we care?
+\item Black swans are statistically improbable events whose occurrence has major ramifications. One of the most profound black swans in ecology was the asteroid marking the mass extinctions at the K-T boundary. Today, it is the extremeness of climate that is expected to cause the greatest societal damage. While extremes in the physical environment are present and widely understood, it remains unclear the extent to which ecological systems buffer or suffer from black swans.
 
-%\bigskip
-\item Why might we expect to see  heavy tails in ecological timeseries?
-
-%\bigskip
 \item What is the existing evidence for heavy tails in ecological time series?
 
-%\bigskip
-\item Our research questions and main conclusions.
+\item There are two main possible reasons for why we may find little evidence of ecological black swans. (1) don't exist, (2) a paucity of appropriate methods or length/quality of time series.
+
+\item Here we develop \ldots our research questions and main conclusions.
 
 \end{enumerate}
 
@@ -181,87 +158,110 @@ Papers to work in:
 
 \begin{enumerate}
   \item Short overview paragraph
-  \item The data: global population dynamics database
-  \item The model: Gompertz population model
-  \item Alternative models and sensitivity analyses
+  \item The data: global population dynamics database; briefly introduce the GPDD and how we filtered it. Expand in the supplement. Mention the breakdown of taxonomy and interpolation (Table~S1).
+  \item The heavy-tailed Gompertz population model. Mention the simulation testing but don't go into details here.
+  \item Mention the alternative population models we fit.
+  \item Modelling the possible correlates (mixed effects models with binomial or beta distributions and logit links; nested random effects for taxonomic class and taxonomic order). Life-history data from \citet{brook2006a}.
   \end{enumerate}
 
-The data: briefly introduce the GPDD and how we filtered it. Expand in the supplement. Mention the breakdown of taxonomy and interpolation (Table~S1).
 
 The Student-t Gompertz model is:
 \begin{align*}
 x_t &= \ln N_t\\
 x_t &= \lambda + b x_{t-1} + \epsilon_t\\
-\epsilon_t &\sim \mathrm{Student\mhyphen t}_\nu(0, \sigma),
+\epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma),
 \end{align*}
 
-\noindent where $x_t$ is the $\ln$ abundance at time $t$. The model is density independent if $b = 1$, maximally density dependent if $b = 0$, and inversely density dependence if $b < 0$. The parameter $\lambda$ represents the expected population growth rate at $x_t = 0$. The process noise, $\epsilon_t$, is modelled as a Student-t distribution that is centered at $0$, has a scale parameter of $\sigma_\mathrm{proc}$, and has a degrees of freedom parameter of $\nu$. If $\nu$ is small ($\lesssim 10$) the distribution has much heavier tails than a normal distribution.  For example, at $\nu = 2$, the probability of drawing a value less than -5 is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%). As $\nu$ approaches infinity the distribution approaches the normal distribution (Fig~\ref{fig:didactic}). By estimating the value of $\nu$ we can quantity the degree of heavy-tailedness in the process noise jumps from $\ln N_t$ to $\ln N_{t+1}$.
+\noindent where $x_t$ is the $\ln$ abundance at time $t$. The model is density independent if $b = 1$, maximally density dependent if $b = 0$, and inversely density dependence if $b < 0$. The parameter $\lambda$ represents the expected population growth rate at $x_t = 0$. The process noise, $\epsilon_t$, is modelled as a Student-t distribution that is centered at $0$, has a scale parameter of $\sigma_\mathrm{proc}$, and has a degrees of freedom parameter of $\nu$. If $\nu$ is small ($\lesssim 10$) the distribution has much heavier tails than a normal distribution.  For example, at $\nu = 2$, the probability of drawing a value less than -5 is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%). As $\nu$ approaches infinity the distribution approaches the normal distribution (Fig~\ref{fig:didactic}). By estimating the value of $\nu$ we can quantity how heavy-tailed the process noise deviations are.
 
 We fit alternative models that allowed for autocorrelation of the residuals, allowed for observation error, and allowed the functional form of the population dynamics to be represented as Ricker-logistic (Supporting Material).
 
-Mention that we simulation tested the model.
+%Mention that we simulation tested the model.
 
-Mention the priors (Fig.~\ref{fig:priors}) and expand on their justification in the supplement.
+%Mention the priors (Fig.~\ref{fig:priors}) and expand on their justification in the supplement.
 
-$\nu$ prior: \citep{fernandez1998}
-$\sigma$ prior: \citep{gelman2006c}
-consider alternative inverse prior on $\nu$ as in \citep{gelman2014}
+%$\nu$ prior: \citep{fernandez1998}
+%$\sigma$ prior: \citep{gelman2006c}
+%consider alternative inverse prior on $\nu$ as in \citep{gelman2014}
 
-mention data used for life-history hypothesis comparisons from \citet{brook2006a}
 
-justify why we only present these as hypotheses but do not formally model them
+
+%justify why we only present these as hypotheses but do not formally model them
+
+\bigskip
+Supporting material to be noted:
+
+\begin{enumerate}
+
+  \item Table showing the taxonomic breakdown, number of interpolated points, etc (Table~S1).
+
+  \item Plot showing time series we assumed were recorded as log transformed  (Fig.~\ref{fig:log10-assumed}).
+
+  \item Plot showing all the time series we used with interpolated and zero imputed values (Fig.~\ref{fig:all-ts}).
+
+  \item Plot showing the priors (Fig.~\ref{fig:priors}).
+\end{enumerate}
 
 \section{Results}
 
-- quantify how frequent and strong heavy tails were (Fig.~\ref{fig:nu-coefs})
+Main figures and tables:
 
-- plot showing all p($\nu < 10$) $> 0.5$ (Fig.~\ref{fig:heavy-ts})
+\begin{enumerate}
+  \item Fig.~\ref{fig:didactic} illustrates the method: it shows the t-distribution tails, example simulated time series, and model fits to those time series.
 
-- across how many different species
+  \item Fig.~\ref{fig:nu-coefs} shows the posterior distributions of the estimated $\nu$ values. These are split by taxonomic class and order.
 
-- break down by taxonomy  (Fig.~\ref{fig:nu-coefs} inset panels)
+  \item Fig.~\ref{fig:correlates} shows possible biological and time-series-property correlates of heavy-tailed behaviour.
 
-- no obvious intrinsic biological drivers (Fig.~\ref{fig:correlates})
+  \item Table.~\ref{tab:sparks} selects populations that were categorized as heavy-tailed and digs into the causes. These are a non-random sample that I was able to verify in the literature.
 
-- mention the common causes (Table~\ref{tab:sparks})
+\end{enumerate}
 
-- touch on the supplemental figures --- simulation results (Fig.~\ref{fig:sim-nu}, Fig.~\ref{fig:sim-gompertz}, Fig.~\ref{fig:sim-prob})
 
-- alternative models: (Fig.~\ref{fig:ar1}, Fig.~\ref{fig:gomp-vs-ricker})
+%- quantify how frequent and strong heavy tails were (Fig.~\ref{fig:nu-coefs})
+
+Supporting material to be noted quickly:
+
+\begin{enumerate}
+
+  \item Simulation testing: the ability to recover $\nu$ when randomly sampling from various distributions (Fig.~\ref{fig:sim-nu}); heavy-tailed Gompertz model performance and confidence interval coverage given the process noise has deviations that are known to have effective $\nu$ equal to true $\nu$ (Fig.~\ref{fig:sim-gompertz}); boxplots of the same output (Fig.~\ref{fig:sim-gompertz-boxplots}); probability that $\nu < 10$ for the Gompertz simulation testing (Fig.~\ref{fig:sim-prob}).
+
+  \item Time series of all heavy tailed populations (Fig.~\ref{fig:heavy-ts}).
+
+  \item The effect of alternative population dynamics models on $\nu$ estimates (Fig.~\ref{fig:alt}).
+
+  \item Coefficients from modelling covariates of the probability of heavy tails (Fig.~\ref{fig:correlate-coefs}).
+
+  \item Example Stan code for heavy-tailed Gompertz model with AR1 residuals and observation error (a model including everything).
+
+  \item GPDD IDs used.
+
+\end{enumerate}
+
+Modelling result: an increase of 1 time step of data (given that you are ballpark around the mean --- 30 time steps --- to start with) results in an approximately 1\% increase in the expected probability of observing heavy tails. (Using Gelman's `divide by 4' rule for interpreting logistic regression coefficients.)
 
 \section{Discussion}
 
-- why we think we see them in some taxa but not others (observation scale dynamics mismatch; observation errors...)
-
-Ways forward:
-
-- hierarchical modelling of nu and other parameters
-
-- better datasets for specific taxa (e.g.\ fish recruitment)
-
-- joint prior on scale and nu parameters
-
-- formally investigating what heavy tails are associated with
-
-- do heavy tails have conservation importance?
-
-- can we forecast their probability and develop correlates?
-
-- how can we detect them relatively quickly after they happen?
-
-- how often are heavy tails real? observation error, recording errors...
-
-- what does this mean for how we model time series (should we consider using the t as a default even if we fix nu?)
-
-- what does this mean for conservation management (crashes might be more frequent and greater in magnitude than our typical models tell us) --- importance of establishing polices that are robust to this
+\begin{enumerate}
+  \item Summary of our findings
+  \item How do our results mesh with previous related analyses?
+  \item Why might we expect to see heavy tails in ecological time-series? (mixture of normals or extreme drivers)
+  \item Are the observed frequencies by taxonomic class real or an observational phenomena?
+  \item Ways forward
+  \item Policy implications
+\end{enumerate}
 
 \section{Acknowledgements}
 
+Funding: SCA: SFU Graduate Fellowship, NKD: NSERC SFU \ldots, ABC: \ldots, TAB: \ldots
+
+Earth to Ocean's research group for helpful discussions
+
+Global Population Dynamics Database
+
 Silhouettes: \texttt{phylopic.org}: rabbit by Sarah Werning, grey heron by Ardea cinerea, hoverfly by Gareth Monger. All under Creative Commons Attribution 3.0 Unported license.
 
-GPDD
-
-Funding
+Compute Canada's WestGrid high-performance computing resources
 
 \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
 
@@ -301,7 +301,6 @@ Fur seal,
 South Africa &
 Strong decreases in harvesting, loss of predators, and diamond mining regulations reducing human traffic caused sharp upswings  &
 \citep{shaughnessy1982}\\
-
 
 \includegraphics[width=2cm]{sparks/10113} &
 Willow grouse,
@@ -359,7 +358,7 @@ Severe winters in 1929, 1940--1942, and 1962--1963; 1963 event so severe that re
 % reset citation style:
 \bibpunct{(}{)}{;}{a}{}{;}
 
-\clearpage
+%\clearpage
 
 \section{Figures}
 
@@ -384,27 +383,12 @@ Severe winters in 1929, 1940--1942, and 1962--1963; 1963 event so severe that re
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.46\textwidth]{nu-coefs-2.pdf}
+\includegraphics[width=0.42\textwidth]{nu-coefs-2.pdf}
 \caption{
 Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\ populations of birds, mammals, insects, and fishes. Small values of $\nu$ ($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest approximately normal-tailed dynamics. Vertical points and line segments represent posterior medians and 50\% / 90\% credible intervals for individual populations. Inset plots show probability that $\nu < 10$ (probability of heavy tails) for populations arranged by taxonomic order. Taxonomic orders are sorted by decreasing mean p($\nu < 10$).
 Taxonomic orders with three or fewer populations in panel a are omitted for space.}\label{fig:nu-coefs}
 \end{center}
 \end{figure}
-
-\clearpage
-
-%\begin{figure}[htbp]
-%\begin{center}
-%\includegraphics[width=\textwidth]{gomp-base-p10-dot-order.pdf}
-%\caption{
-%  Probability $\nu<20$, i.e.\ one way of asking what the probability is of heavy tails.
-%  Dots represent populations.
-%  Something like this could be made more pretty and sorted in some appropriate way\ldots maybe with little silhouettes for the animals.
-%  Looks pretty similar for $\nu < 10$, with the probabilities a bit lower.
-%  There is some vertical jitter added. Could do this and have another subpanel that breaks down the mammals by family, since there's the most interesting stuff happening there and there are lots of them... or just colour the dots by family within each panel.}
-%\label{fig:dots}
-%\end{center}
-%\end{figure}
 
 \clearpage
 
@@ -474,8 +458,7 @@ Priors justification: (TODO this is old)
 \item $\sigma_\mathrm{proc}$ can be justified based on \citet{gelman2006c} and the expected range of this variable in nature from previous studies \citep[e.g.][]{connors2014}
 \end{itemize}
 
-Using Stan 2.4.0 \citep{stan-manual2014}, and R 3.1.1 \citep{r2014} I'm starting with 4 chains and 1000 iterations with the first 500 as warmup (i.e.\ 2000 total samples). If rhat is greater than 1.05 for any parameter or the minimum effective sample size is less than 200 for any parameter then I double both the total iterations and warmup and run again. These conditions were met by 8000 iterations (16000 total samples) in all cases and in almost all cases (X\%) within the initial 1000 iteration case (i.e.\ a total of 2000 samples).
-
+We fit our models with Stan 2.4.0 \citep{stan-manual2014}, and R 3.1.1 \citep{r2014}. I'm starting with 4 chains and 2000 iterations with the first 1000 as warmup (i.e.\ 4000 total samples). If rhat is greater than 1.05 for any parameter or the minimum effective sample size is less than 200 for any parameter then I double both the total iterations and warmup and run again. This continued up to 8000 iterations (16000 total samples) \ldots
 
 \section{Simulation testing the model}
 
@@ -497,9 +480,9 @@ x_t &= x_{t-1} + r_{\mathrm{max}}\left(1 - \frac{N_{t-1}}{K}\right) + b x_{t-1} 
 \epsilon_t &\sim \mathrm{Student\mhyphen t}_\nu(0, \sigma),
 \end{align*}
 \noindent
-where  $r_\mathrm{max}$ represents the maximum population growth rate that is obtained when $N$ (abundance) $= 0$. The parameter $K$ represents the carrying capacity and, as before, $x_t$ represents the $\ln$ transformed abundance at time $t$. The Ricker-logistic model assumes a linear decrease in population growth rate ($x_t / x_{t-1}$) with increases in abundance ($N_t$). In contrast, the Gompertz model assumes a linear decrease in population growth rate with increases in $\ln$ abundance ($x_t$) (REF).
+where  $r_\mathrm{max}$ represents the maximum population growth rate that is obtained when $N$ (abundance) $= 0$. The parameter $K$ represents the carrying capacity and, as before, $x_t$ represents the $\ln$ transformed abundance at time $t$. The Ricker-logistic model assumes a linear decrease in population growth rate ($x_t - x_{t-1}$) with increases in abundance ($N_t$). In contrast, the Gompertz model assumes a linear decrease in population growth rate with increases in $\ln$ abundance ($x_t$) (REF).
 
-To fit the Ricker-logistic models ,we chose a prior on $K$ uniform between 0 and twice the maximum observed abundance (\citet{clark2010} chose 0 and maximum observed, which is less conservative). We set the prior on $r_\mathrm{max}$ as uniform between 0 and 20 as in \citet{clark2010}. We used the same priors on $\nu$ and $\sigma$ as in the Gompertz model.
+To fit the Ricker-logistic models, we chose a prior on $K$ uniform between zero and twice the maximum observed abundance (\citet{clark2010} chose uniform between zero and maximum observed, which is less conservative). We set the prior on $r_\mathrm{max}$ as uniform between 0 and 20 as in \citet{clark2010}. We used the same priors on $\nu$ and $\sigma$ as in the Gompertz model.
 
 \subsection{Autocorrelated residuals}
 
@@ -509,7 +492,7 @@ x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Student\mhyphen t}_\nu(\phi \epsilon_{t-1}, \sigma).
 \end{align*}
 \noindent
-In addition to the parameters in the original Gompertz model, an additional parameter, $\phi$, is estimated that represents the relationship between of subsequent process noise residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -0.99, \mathrm{max.} = 0.99)$.
+In addition to the parameters in the original Gompertz model, an additional parameter, $\phi$, is estimated that represents the relationship between of subsequent process noise residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = 1, \mathrm{max.} = 1)$.
 
 \subsection{Assumed observation error}
 
@@ -521,7 +504,7 @@ x_t &\sim \mathrm{Normal}(U_t, \sigma_\mathrm{obs})\\
 \end{align*}
 
 \noindent
-where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ represents the standard deviation of observation error (on a log scale), which was set at $0.3$. TODO justify $0.3$.
+where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ represents the standard deviation of observation error (on a log scale), which was set at $0.2$. TODO justify $0.2$.
 
 %\end{spacing}
 
@@ -533,34 +516,41 @@ where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ repr
 \renewcommand{\thefigure}{S\arabic{figure}}
 \setcounter{figure}{0}
 
-% \begin{figure}[htbp]
-% \begin{center}
-% \includegraphics[width=\textwidth]{nu-covariates-p-base.pdf}
-% \caption{Same as previous figure but the y axis is p(nu $<$ 20), which I think might be better to use\ldots, in reality this kind of coarse dichotomy I think is more realistic. If p(nu $<$ 20) is high (say above 0.5) then there's a good chance the tails are heavy. Otherwise, we just don't know.}
-% \label{default}
-% \end{center}
-% \end{figure}
-
-%\begin{figure}[htbp]
-%\begin{center}
-%\includegraphics[width=0.7\textwidth]{p10-mammals-cross.pdf}
-%\caption{Probability that nu $<$ 10 vs.\ log10(body mass) and log10(years at sexual maturity).}
-%\label{default}
-%\end{center}
-%\end{figure}
-
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{ts-gpdd-heavy-eg-log10-no-fur.pdf}
-\caption{Time series for populations with p($\nu < 10$) $>$ 0.5 using the base Gompertz population model. Panels are ordered by increasing p($\nu < 10$). Vertical axes are on a log10 scale. Colours indicate taxonomic classes. TODO add dots for upswings and downswings as in Table 1. The labels on each panel indicate p($\nu < 10$) $>$ 0.5, the common name for the species, and the GPDD ID number.}
-\label{fig:heavy-ts}
+\includegraphics[width=\textwidth]{log10-assumed.pdf} \caption{Populations in which the abundance was specified as or assumed to be recorded as log10 values. The numbers at the front of each panel label are the GPDD IDs.}
+    \label{fig:log10-assumed}
 \end{center}
 \end{figure}
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{t-dist-sampling-sim-prior-exp0point01.pdf}
-\includegraphics[width=0.9\textwidth]{t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
+\includegraphics[width=\textwidth]{all-clean-ts-3.pdf} \caption{All filtered times series used in our analysis. The abundances are shown on a log10 vertical axis. Colours indicate taxonomic classes. Open black circles indicate abundance values that were interpolated. Closed black circles indicate single abundance values that were recorded as zero but were set to the next lowest observed abundance.}
+    \label{fig:all-ts}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{priors-gomp-base.pdf} \caption{Probability
+  density of the Bayesian priors for the base Gompertz model. From left to right: (1) per capita growth
+  rate at $\ln$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale
+  parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen
+    Cauchy} (2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim
+  \mathrm{Exponential}(0.01)$. (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Normal}(0, 1)[-1, 1]$. Not shown is $b$, the density dependence
+  parameter: $b \sim \mathrm{Uniform}(-1, 2)$.}
+  \label{fig:priors}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{t-dist-sampling-sim-prior-exp0point01.pdf}
+\includegraphics[width=0.8\textwidth]{t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
 \caption{
   Testing the ability to estimate $\nu$ (top panels) and the scale parameter of the process error (bottom panels) for a given number of samples (columns) drawn from a distribution with a given true $\nu$ value (rows). The red lines indicate the true population value. When a small number of samples are drawn there may not be samples sufficiently far into the tails to recapture the true $\nu$ value; however, heavy tails are still distinguished from normal tails in most cases, even with only 25 or 50 samples. TODO switch to nu = black swan, 3, 5, and normal.
 }
@@ -572,42 +562,41 @@ where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ repr
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=1.1\textwidth]{sim-gompertz.pdf}
-\caption{Simulation testing the Gompertz estimation model when the process error is chosen so that $\nu$ can be estimated close to the true value outside the full population model (``effective $\nu$'' within a CV of 0.5 of specified $\nu$).
-  The simulation was run across population $\nu$ values (columns) and different scenarios (colours): (1) 100 time steps and no observation error, (2) 50 time steps and no observation error, (3) 50 time steps and observation error drawn from $\mathrm{Normal} (0, 0.3^2)$ but ignored, and (4) 50 time steps with observation error in which the quantity of observation error was assumed known.
+\includegraphics[width=\textwidth]{sim-gompertz.pdf}
+\caption{Simulation testing the Gompertz estimation model when the process error draws are chosen so that $\nu$ can be estimated close to the true value outside the full population model (``effective $\nu$'' within a CV of 0.2 of specified $\nu$).
+  The simulation was run across population $\nu$ values (columns) and different scenarios (colours): (1) 100 time steps and no observation error, (2) 50 time steps and no observation error, (3) 50 time steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but ignored, and (4) 50 time steps with observation error in which the quantity of observation error was assumed known.
   Dashed horizontal lines show the true population values;
   these true values were chosen to represent approximately the median values as estimated from the GPDD.
-  Individual dots and lines represent a stochastic draws from the true population distribution and a model fitting.
-  The panels show true values of $\nu$ =  3, 5, normal (very heavy, heavy, and not heavy tailed).
-  The panels from top to bottom show $1/\nu$, process noise scale parameter $\sigma_\mathrm{proc}$, growth rate parameter $\lambda$, and the density dependence parameter $b$.
-  Dots and line segments are medians and 80\% credible intervals of the posterior.}
+  Individual dots and lines represent a stochastic draws from the true population distribution and a model fitting (median and 80\% credible intervals).
+  %The panels show true values of $\nu$ =  3, 5, normal (very heavy, heavy, and not heavy tailed).
+  The panels from top to bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate parameter $\lambda$, and the density dependence parameter $b$.}
 \label{fig:sim-gompertz}
 \end{center}
 \end{figure}
 
 \begin{figure}[htbp]
 \begin{center}
+\includegraphics[width=\textwidth]{sim-gompertz-boxplots.pdf}
+\caption{The distribution of median estimates from the same simulation as described in Fig.~\ref{fig:sim-gompertz}. The boxes show the interquartile range. The whiskers extend to $1.5$ times the interquartile range and outliers are shown as dots.}
+\label{fig:sim-gompertz-boxplots}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\begin{center}
 \includegraphics[width=\textwidth]{check-sim-box.pdf}
-\caption{The same simulations results as the previous figure but here represented as probability that $\nu < 10$ (i.e.\ the probability of heavy tails). Within each scenario the dots represent stochastic draws from the true population distributions.}
+\caption{The probability that $\nu < 10$ (i.e.\ the approximate probability of heavy tails) for the same simulation scenarios as shown in Fig.~\ref{fig:sim-gompertz} and Fig.~\ref{fig:sim-gompertz-boxplots}. Within each scenario the dots represent stochastic draws from the true population distributions combined with model fits.}
 \label{fig:sim-prob}
 \end{center}
 \end{figure}
 
-\clearpage
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{gomp-vs-logistic-nu.pdf}
-\caption{Gompertz vs.\ Ricker logistic $\nu$ (nu) estimates. Line segments show 50\% credible intervals; dots show median estimates. The vast majority of heavy-tailed estimates are similar for the two population models. In a few instances one model estimates heavy tails where the other does not. This happens more often for the Ricker-logistic than the Gompertz model.}
-\label{fig:gomp-vs-ricker}
-\end{center}
-\end{figure}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{effect-of-ar1-on-nu.pdf}
-\caption{The effect of assuming no autocorrelation of residuals (vertical axis) vs.\ estimating autocorrelation of residuals (horizontal axis). Shown are medians and 50\% credible intervals of the posterior. The colours indicate $\phi$ --- the parameter estimating the lag-1 correlation of the residuals. The diagonal line illustrates a one-to-one relationship. There are a few populations in which the heavy-tail estimate changes when autocorrelation is incorporated, but a systematic difference.}
-\label{fig:ar1}
+\includegraphics[width=0.9\textwidth]{ts-gpdd-heavy-eg-log10-base.pdf}
+\caption{Time series for populations with p($\nu < 10$) $>$ 0.5 using the base Gompertz population model. Panels are ordered by increasing p($\nu < 10$). Vertical axes are on a log10 scale. Colours indicate taxonomic classes. TODO add dots for upswings and downswings as in Table 1. The labels on each panel indicate p($\nu < 10$) $>$ 0.5, the common name for the species, and the GPDD ID number.}
+\label{fig:heavy-ts}
 \end{center}
 \end{figure}
 
@@ -615,14 +604,9 @@ where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ repr
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{priors-gomp-base.pdf} \caption{Probability
-  density of the Bayesian priors for the base Gompertz model. Per capita growth
-  rate at log(abundance) = 0: $\lambda \sim \mathrm{Normal}(0, 10^2)$; scale
-  parameter of t-distribution process error: $\sigma_\mathrm{proc} \sim \mathrm{Half\mhyphen
-    Cauchy} (5)$; t-distribution degrees of freedom parameter: $\nu \sim
-  \mathrm{Exponential}(0.01)$. Not shown is $b$, the density dependence
-  parameter: $b \sim \mathrm{Uniform}(-1, 2)$.}
-  \label{fig:priors}
+\includegraphics[width=\textwidth]{gomp-comparison.pdf}
+\caption{Estimates of $\nu$ from alternative models plotted against the base Gompertz model estimates of $\nu$. Shown are medians of the posterior (dots) and 50\% credible intervals (segments). The diagonal line indicates a one-to-one relationship. Different colours indicate various taxonomic classes. The grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics. The Gompertz observation error model assumes a fixed standard deviation of observation error of $0.2$ on the log scale.}
+\label{fig:alt}
 \end{center}
 \end{figure}
 
@@ -631,43 +615,56 @@ where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ repr
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{log10-assumed.pdf} \caption{Populations in which the abundance was specified as or assumed to be recorded as log10 values. The numbers at the front of each panel label are the GPDD IDs.}
-    \label{fig:log10-assumed}
+\includegraphics[width=0.7\textwidth]{admb-coefs}
+\includegraphics[width=0.8\textwidth]{length-vs-prob-tails}
+\caption{Potential correlates of heavy-tailed dynamics.
+  (Top panels) Dots, thick lines, and thin lines represent fixed-effect estimates and their 50\% and 95\% confidence intervals for the covariates listed on the left: $\log \sigma$, $b$, $\lambda$, $\log$(lifespan), $\log$(data set length). All covariates were standardized by subtracting their mean and dividing by their standard deviation.
+  The beta distribution model (left panel) uses p$(\nu < 10)$ as the response (probability of heavy tails).
+  The binomial distribution model (right panel) uses p$(\nu < 10) > 0.5$ vs.\ p$(\nu < 10) \le 0.5$ as the response (heavy vs.\ not heavy tails).
+  The models were fitted as mixed effects models with beta or binomial distributions, logit links, and multilevel intercepts for taxonomic class and order nested within class using the \texttt{glmmADMB} \texttt{R} package \citep{fournier2012,glmmadmb}.
+  (Bottom panels) Model predictions for the strongest covariate --- time series length --- with all other predictors set to zero (their mean value when standardized). Dots represent observations for individual populations. Lines and shaded regions represent estimates and 50\% and 95\% confidence intervals.
+}
+    \label{fig:correlate-coefs}
 \end{center}
 \end{figure}
 
-
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{all-clean-ts-3.pdf} \caption{All filtered times series used in our analysis. The abundances are shown on a log10 vertical axis. Colours indicate taxonomic classes. Open black circles indicate abundance values that were interpolated. Closed black circles indicate single abundance values that were recorded as zero but were set to the next lowest observed abundance.}
-    \label{fig:all-ts}
-\end{center}
-\end{figure}
+% \clearpage
+%
+% \begin{figure}[htbp]
+% \begin{center}
+% \includegraphics[width=0.8\textwidth]{length-vs-prob-tails}
+% \caption{Model predictions. TODO}
+%     \label{fig:length-predictions}
+% \end{center}
+% \end{figure}
 
 \clearpage
 
 \noindent
-Example Stan code for heavy-tailed Gompertz model with AR1 correlated residuals without observation error.
+Example Stan code for a heavy-tailed Gompertz model with AR1 correlated residuals and a specified level of observation error:
 
+\begin{spacing}{1.15}
+\begin{footnotesize}
 \begin{verbatim}
 data {
-  int<lower=0> N;        // number of data rows
-  vector[N] y;           // vector to hold ln abundance observations
-  real<lower=0> nu_rate; // rate parameter for nu exponential prior
+  int<lower=3> N;              // number of observations
+  vector[N] y;                 // vector to hold ln abundance observations
+  real<lower=0> nu_rate;       // rate parameter for nu exponential prior
 }
 parameters {
   real lambda;                 // Gompertz growth rate parameter
   real<lower=-1, upper=2> b;   // Gompertz density dependence parameter
-  real<lower=0> sigma_proc;    // process noise standard deviation
+  real<lower=0> sigma_proc;    // process noise scale parameter
   real<lower=2> nu;            // t-distribution degrees of freedom
   real<lower=-1, upper=1> phi; // AR1 parameter
+  vector[N] U;                 // unobserved states
+  real<lower=0> sigma_obs;     // specified observation error SD
 }
 transformed parameters {
-  vector[N] epsilon;     // error terms
+  vector[N] epsilon;           // error terms
   epsilon[1] <- 0;
   for (i in 2:N) {
-    epsilon[i] <- y[i] - (lambda + b * y[i - 1])
+    epsilon[i] <- U[i] - (lambda + b * U[i - 1])
                        - (phi * epsilon[i - 1]);
   }
 }
@@ -679,115 +676,26 @@ model {
   phi ~ normal(0, 1);
   // data model:
   for (i in 2:N) {
-    y[i] ~ student_t(nu,
-                     lambda + b * y[i - 1]
+    U[i] ~ student_t(nu,
+                     lambda + b * U[i - 1]
                      + phi * epsilon[i - 1],
                      sigma_proc);
   }
+  y ~ normal(U, sigma_obs);
 }
 \end{verbatim}
+\end{footnotesize}
 
+\clearpage
 
+\noindent
+The GPDD IDs used in our analysis:
 
+\begin{footnotesize}
+\noindent
+{\tt
+\input{mainids}
+}
+\end{footnotesize}
+\end{spacing}
 \end{document}
-
-1 - there is evidence of heavy tails/black swans... in ecological time series... but they are rare
-
-- taxonomically widespread
-- we don't find compelling... intrinsic obvious biological reason
-- commonly extrinsic extreme events and interactions - climate and severe winters, cycles of natural enemies (parasites + predators),
-- as climate gets more variable, extremes more frequent and greater magnitude (and skewed), might expect more of these
-- and as our time series get longer and censusing gets more accurate... more ability to detect these
-- calls for policy that is be robust to the possibility of black swans
-- lead with ecological application
-
-grouse are hunted - shags have erupted
-
-2 - method
-- probabilistic
-- you can get away with 'these kinds of mistakes if you allow for heavy-tailed process errors'
--  first with a population dynamics model
-- para on why novel
-
-hook - to what degree to extreme environmental events..
-population dynamics can often be connected to
-will be increase in...
-and then, however it remains unclear the degree to which animal populations also exhibit (too neutral, something like suffer) from extreme events...
-
-ecology letters
-
-- argue for why we do what we're doing
-
-some we were able to track down
-
-- digg into Barbary macaque
-
-decreasing median - order plot
-
-4 rows one column
-
-add little years on spark lines at beginning and end at bottom?
-
-switch to nu = 20 (or 10?) in first figure
-l
-combine fig 2 and 3 into new fig 2
-
-new fig3 is cross plots
-b, lambda, sigma_proc, N,
-log10length, log10Lifespan or min age at maturity,
-
-add 'black swan' simulation in which single value chosen at deviation = 8 or something like that
-
-new supp fig that shows cross plot of accounting or not for observation error
-
-show boxes of misclassification in cross plot figure of various model estimates
-
-line up black swans, say with birds in UK - NAO
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-citation with good justification of gompertz and other references: \citep{herrandoprez2014}
-
-The Gompertz was by far the most favoured model in \citet{brook2006} with the GPDD.
-
-I could see an argument being made that we're just seeing them because of autocorrelation in the residuals. Autocorrelation plays a big role in \citet{inchausti2002} justifying why they think they're seeing increasing CV of time series in the GPDD with time and an increasing CV could create heavy tails. They just model the spectral properties and CV of the abundance time series --- not a population dynamics model. I tried estimating a coefficient for the first-order autocorrelation of the residuals. There is some autocorrelation it picks up sometimes, but interestingly this doesn't change things that much with respect to heavy tail results. Nothing systematic at least (Another important reference on spectral analysis and the GPDD: \citet{garcia-carreras2011}.)
-
-little evidence for benefit of including annual climate or climate extremes with these data:
-\citep{gregory2010}
-and little evidence for allee effect with them
-
-the natural logorithm version of the logistic is often convenient for parameter estimation
-\citep{valpine2002} (and they cite a couple people too)
-
-cite Limited evidence for the demographic Allee effect from numerous species across taxa
-Stephen D. Gregory1,4, Corey J. A. Bradshaw2,3, Barry W. Brook2, and Franck Courchamp1
-Read More: http://www.esajournals.org.proxy.lib.sfu.ca/doi/full/10.1890/09-1128.1
-
-###
-
-\begin{enumerate}
-
-\item illustration of how the exponential prior slightly constrains the sampling of $\nu$\ldots illustrating what the prior probability of heavy tails is given uninformative data (about 5\% probability $\nu < 10$.
-
-\item plots of the priors overlayed with estimates across populations for all parameters
-
-\item cross plot of $\nu$ estimates from the models: no density dependence, add density dependence, add AR1, add assumed observation error
-
-\item time series plots of all heavy-tailed populations
-
-\item simulation testing of detecting nu given reduced sampling from true distribution; show repeated estimates of nu with different sample sizes, and show a few example samples with different observation window lengths and highlight the deviations that are beyond the 0.001 and 0.999 probabilities for a normal distribution.
-
-\item simulation testing of the Gompertz model with process error deviations fixed to have an effective $\nu$ estimate at the true level --- this asks how well is the Gompertz model able to partition the various parameters in a precise and unbiased way given that we know the heavy tails are there (also include a scenario with a massive black swan to show how it behaves there)
-
-\end{enumerate}
-
-%Also, we may not be crazy seeing the heavier tails for heavier longer lived animals. There's some precedence for that in a paper that found more red noise (longer term fluctuations dominating the variance and therefore making the CV grow with time) in large-bodied animals. They attributed it to a mismatch between dynamics and the observation scale. They used a different life-history dataset too. But, there are other systematic differences with the body size-nu relationship that make this sketchy for us. E.g.\ taxonomic orders and interval frequency of data collection vary systematically and in clumps with body size (not shown in the below figure). And basically the only stuff with very \textit{low} probability of heavy tails are the the small ones with generation times less than a year and small collection intervals. It's basically a step function. We may not be able to tease that all apart... at least not in this paper.
-
-black swans:
-
-Pederson, N., Dyer, J.M., McEwan, R.W., Hessl, A.E., Mock, C.J., Orwig, D.A. et al. (in press). The legacy of episodic climatic events in shaping temperate, broadleaf forests. Ecol. Monogr., 10.1890/13– 1025.1.
-Cohn, J.P. (2000). Saving the Salton Sea: researchers work to understand its problems and provide possible solutions. Bioscience, 50, 295–301.
-
-Gelman 2006: "Large but finite values of A represent prior distributions which we call “weakly informative” because, even in the tail, they have a gentle slope (unlike, for example, a half-normal distribution) and can let the data dominate if the likelihood is strong in that region. "
-
-TODO - see this paper: http://onlinelibrary.wiley.com/doi/10.1046/j.1365-2656.2003.00738.x/full Population-level mechanisms for reddened spectra in ecological time series H. Resit Akçakaya1,*, John M. Halley1,2 andPablo Inchausti1,3

@@ -17,7 +17,7 @@ sim_gomp <- function(id = 99, nu = 10, sigma_proc = 0.65,
   lambda = 1.5, y1 = 3, iterations = 2000, warmup = 1000, plot = FALSE,
   max_iter = 8000, chains = 4, seed) {
 
-  file_base <- paste0("/global/scratch/anderson/heavy/sim3/sm-",
+  file_base <- paste0("/global/scratch/anderson/heavy/sim4/sm-",
     id, "-sigma_obs_true-", sigma_obs_true, "-sigma_obs_assumed-",
     sigma_obs_assumed, "-N-", N, "-b-", b, "-sigma_proc-", sigma_proc,
     "-nu-", nu, "-y1-", y1, "-lambda-", lambda)
@@ -84,7 +84,7 @@ sim_gomp <- function(id = 99, nu = 10, sigma_proc = 0.65,
   out
 }
 
-iters <- 1:10
+iters <- 1:20
 
 load("nu_effective_seeds.rda")
 nu_norm_seeds <- 1:200
@@ -109,26 +109,26 @@ check_nu_N100 <- rbind(check_nu_1, check_nu_2, check_nu_4)
 # and with 50 data points and 0.3 observation error (but not estimated) to see
 # how this obscures the signal
 check_nu_1 <- plyr::ldply(iters, function(i) sim_gomp(i, nu = 3,
-    seed = nu_3_seeds_N50$seeds[i], sigma_obs_true = 0.3,
+    seed = nu_3_seeds_N50$seeds[i], sigma_obs_true = 0.2,
   sigma_obs_assumed = 0.001))
 check_nu_2 <- plyr::ldply(iters, function(i) sim_gomp(i, nu = 5,
-    seed = nu_5_seeds_N50$seeds[i], sigma_obs_true = 0.3,
+    seed = nu_5_seeds_N50$seeds[i], sigma_obs_true = 0.2,
   sigma_obs_assumed = 0.001))
 check_nu_4 <- plyr::ldply(iters, function(i) sim_gomp(i, nu = 1e9,
-    seed = nu_norm_seeds[i], sigma_obs_true = 0.3,
+    seed = nu_norm_seeds[i], sigma_obs_true = 0.2,
   sigma_obs_assumed = 0.001))
-check_nu_sigma_obs0.3_ignored <- rbind(check_nu_1, check_nu_2, check_nu_4)
+check_nu_sigma_obs_ignored <- rbind(check_nu_1, check_nu_2, check_nu_4)
 
 # and try with 0.3 sigma_obs that is assumed known
 check_nu_1 <- plyr::ldply(iters, function(i) sim_gomp(i, nu = 3,
-    seed = nu_3_seeds_N50$seeds[i], sigma_obs_true = 0.3, sigma_obs_assumed = 0.3, iterations = 4000, warmup = 2000))
+    seed = nu_3_seeds_N50$seeds[i], sigma_obs_true = 0.2, sigma_obs_assumed = 0.2, iterations = 4000, warmup = 2000))
 check_nu_2 <- plyr::ldply(iters, function(i) sim_gomp(i, nu = 5,
-    seed = nu_5_seeds_N50$seeds[i], sigma_obs_true = 0.3, sigma_obs_assumed = 0.3, iterations = 4000, warmup = 2000))
+    seed = nu_5_seeds_N50$seeds[i], sigma_obs_true = 0.2, sigma_obs_assumed = 0.2, iterations = 4000, warmup = 2000))
 check_nu_4 <- plyr::ldply(iters, function(i) sim_gomp(i, nu = 1e9,
-    seed = nu_norm_seeds[i], sigma_obs_true = 0.3, sigma_obs_assumed = 0.3, iterations = 4000, warmup = 2000))
-check_nu_sigma_obs0.3_assumed <- rbind(check_nu_1, check_nu_2, check_nu_4)
+    seed = nu_norm_seeds[i], sigma_obs_true = 0.2, sigma_obs_assumed = 0.2, iterations = 4000, warmup = 2000))
+check_nu_sigma_obs_assumed <- rbind(check_nu_1, check_nu_2, check_nu_4)
 
-check_nu <- rbind(check_nu_base, check_nu_N100, check_nu_sigma_obs0.3_ignored,
- check_nu_sigma_obs0.3_assumed)
+check_nu <- rbind(check_nu_base, check_nu_N100, check_nu_sigma_obs_ignored,
+ check_nu_sigma_obs_assumed)
 
 saveRDS(check_nu, file = "check_nu.rds")

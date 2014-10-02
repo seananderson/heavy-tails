@@ -1,8 +1,8 @@
 library(rstan)
 stan_t <- readRDS("stan-t.rds")
 
-get_effective_nu_seeds <- function(nu_true = 5, cv = 0.5, N = 50,
-  seed_N = 20, start_seed = 0, sigma_proc = 0.45) {
+get_effective_nu_seeds <- function(nu_true = 5, cv = 0.2, N = 50,
+  seed_N = 20, start_seed = 0, sigma_proc = 0.5) {
 
   N <- N
   sigma_proc <- sigma_proc

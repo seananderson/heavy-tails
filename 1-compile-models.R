@@ -19,7 +19,6 @@ parameters {
 model {
   nu ~ exponential(nu_rate);
   lambda ~ normal(0, 10);
-  //b ~ normal(b_mu, b_sigma);
   sigma_proc ~ cauchy(0, 2.5);
   for (i in 2:N) {
     y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
@@ -450,3 +449,31 @@ model {
 stan_gomp_obs_equal <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp_obs_equal, file = "stan-gomp-obs-equal.rds")
 
+
+# uniform prior on sigma:
+
+stan_model <-
+  'data {
+  int<lower=0> N; // rows of data
+  vector[N] y; // vector to hold observations
+  real<lower=0> nu_rate; // rate parameter for nu exponential prior
+  real b_lower;
+  real b_upper;
+}
+parameters {
+  real lambda;
+  real<lower=b_lower, upper=b_upper> b;
+  real<lower=0, upper=20> sigma_proc;
+  real<lower=2> nu;
+}
+model {
+  nu ~ exponential(nu_rate);
+  lambda ~ normal(0, 10);
+  for (i in 2:N) {
+    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
+  }
+}
+'
+
+stan_gomp_uniform <- stan_model(model_code = stan_model)
+saveRDS(stan_gomp_uniform, file = "stan-gomp-uniform.rds")

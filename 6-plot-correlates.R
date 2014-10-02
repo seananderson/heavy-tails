@@ -60,7 +60,7 @@ make_panel <- function(x, xl = NULL, xu = NULL, log = "", yaxis = FALSE,
 }
 
 pdf("correlates.pdf", width = 7, height = 4.55)
-par(mfrow = c(2, 3), mar = c(2.5,0,0,0), oma = c(.8, 4.2,2.9, .5),
+par(mfrow = c(2, 3), mar = c(2.5,0,0,0), oma = c(.8, 4.2,1.1, 5.4),
   tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
 par(cex = 0.9)
 
@@ -80,9 +80,13 @@ with(gomp_hat_base_corr,
   make_panel(x = lambda_50, xl = lambda_25, xu = lambda_75,
     label = paste("Gompertz ", lambda)))
 
+with(gomp_hat_base_corr,
+  make_panel(x = b_50, xl = b_25, xu = b_75, label = paste("Gompertz ", b)))
+# text(-0.5, 1/10, "Density\ndependent", cex = 0.8, col = "grey50")
+
 add_sil <- function(x, y, file, tax_class, width_mult = 1, height_mult = 1) {
-  x <- x+5
-  y <- y + 0.02
+  #x <- x+5
+  y <- y + -0.1
   bg <- subset(cols_df, taxonomic_class == tax_class)$col
   library(grImport)
   par(xpd = NA)
@@ -90,20 +94,20 @@ add_sil <- function(x, y, file, tax_class, width_mult = 1, height_mult = 1) {
   p@paths$path@rgb <- "grey37"
   if(file == "chinook")
     p@paths[[2]]@rgb <- "grey37"  # different vector structure
-  grImport::picture(p, x, y, x + 3*width_mult, y+0.1*height_mult)
-  rect(x-2, y+0.05, x-2+ 1.2, y + 0.08, col = bg, lwd = 0.8, border = "grey50")
-  text(x-3.4, y-0.025, tax_class, col = "grey40", cex = 0.9, pos=4)
+  grImport::picture(p, x, y, x + 0.28*width_mult, y+0.1*height_mult)
+  rect(x-0.2, y+0.05, x-0.2 + 0.14, y + 0.08, col = bg, lwd = 0.8, border = "grey50")
+  text(x-0.315, y-0.025, tax_class, col = "grey40", cex = 0.9, pos=4)
   par(xpd = FALSE)
 }
 
-add_sil(-12, 0.54, "grey-heron", tax_class = "Aves")
-add_sil(-2, 0.54, "rabbit", tax_class = "Mammalia")
-add_sil(8, 0.54, "fly", tax_class = "Insecta")
-add_sil(17.5, 0.54, "chinook", tax_class = "Osteichthyes", width_mult = 1.7, height_mult = 0.8)
-
-with(gomp_hat_base_corr,
-  make_panel(x = b_50, xl = b_25, xu = b_75, label = paste("Gompertz ", b)))
-# text(-0.5, 1/10, "Density\ndependent", cex = 0.8, col = "grey50")
+#add_sil(-12, 0.54, "grey-heron", tax_class = "Aves")
+#add_sil(-2, 0.54, "rabbit", tax_class = "Mammalia")
+#add_sil(8, 0.54, "fly", tax_class = "Insecta")
+#add_sil(17.5, 0.54, "chinook", tax_class = "Osteichthyes", width_mult = 1.7, height_mult = 0.8)
+add_sil(1.65, 0.3, "grey-heron", tax_class = "Aves")
+add_sil(1.65, 0.1, "rabbit", tax_class = "Mammalia")
+add_sil(1.65, -0.1, "fly", tax_class = "Insecta")
+add_sil(1.65, -0.3, "chinook", tax_class = "Osteichthyes", width_mult = 1.7, height_mult = 0.8)
 
 with(gomp_hat_base_corr,
   make_panel(x = dataset_length, log = "x", yaxis = TRUE,
@@ -124,5 +128,6 @@ mtext("Possible correlate value", side = 1, outer = TRUE, line = -0.5,
   cex = 0.9)
 mtext(quote(t~distribution~degrees~of~freedom~(widehat(nu))), side = 2,
   outer = TRUE, line = 2.8, cex = 0.9, adj = 0.6)
+
 
 dev.off()

@@ -33,10 +33,10 @@ mtext("Student-t distribution", side = 3, line = 0, cex = 0.9)
 axis(2, at = c(0, 0.2, 0.4), col = box.col)
 lines(x, dt(x, 3), lty = 1, col = cols[2], lwd = lwd)
 lines(x, dt(x, 5), lty = 1, col = cols[3], lwd = lwd)
-lines(x, dt(x, 50), lty = 1, col = cols[4], lwd = lwd)
+lines(x, dt(x, 20), lty = 1, col = cols[4], lwd = lwd)
 lines(x, dt(x, 1e9), lty = 1, col = cols[5], lwd = lwd)
 legend("topright", legend = c(expression(nu==2), expression(nu==3),
-  expression(nu==5), expression(nu==50), expression(Normal)),
+  expression(nu==5), expression(nu==20), expression(Normal)),
   col = cols, bty = "n", lty = c(1, 1, 1, 1, 1),
   lwd = c(lwd, lwd, lwd, lwd, lwd))
 # zoomed panel:
@@ -47,7 +47,7 @@ text(-7.5, 0.022, "(b)")
 axis(2, at = c(0, 0.02), col = box.col)
 lines(x, dt(x, 3), lty = 1, col = cols[2], lwd = lwd)
 lines(x, dt(x, 5), lty = 1, col = cols[3], lwd = lwd)
-lines(x, dt(x, 50), lty = 1, col = cols[4], lwd = lwd)
+lines(x, dt(x, 20), lty = 1, col = cols[4], lwd = lwd)
 lines(x, dt(x, 1e6), lty = 1, col = cols[5], lwd = lwd)
 par(xpd = NA)
 mtext("Probability density", side = 2, outer = TRUE, line = 1.2, las = 0, cex = 0.9)

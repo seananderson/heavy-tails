@@ -3,19 +3,21 @@
 # observation error and the degree of heavy-tailedness.
 
 # Check priors:
-plot_prior <- function(x, y, xlab) {
+plot_prior <- function(x, y, xlab, xlim = NULL) {
   plot(x, y, type = "l", xlab = xlab, ylab = "Probability density",
-    ylim = c(0, max(y)*1.04), yaxs = "i", xaxs = "i")
+    ylim = c(0, max(y)*1.04), yaxs = "i", xaxs = "i", xlim = xlim)
 }
 
-pdf("priors-gomp-base.pdf", width = 8, height = 4)
-par(mfrow = c(1, 3), cex = 0.8)
+pdf("priors-gomp-base.pdf", width = 10, height = 3.7)
+par(mfrow = c(1, 4), cex = 0.8)
 x <- seq(-10, 10, length.out = 200)
 plot_prior(x, dnorm(x, 0, 10), expression(lambda))
 x <- seq(0, 10, length.out = 200)
-plot_prior(x, dcauchy(x, 0, 5), expression(sigma[proc]))
+plot_prior(x, dcauchy(x, 0, 2.5), expression(sigma[proc]))
 x <- seq(2, 300, length.out = 200)
 plot_prior(x, dexp(x, 0.01), expression(nu))
+x <- seq(-1.1, 1.1, length.out = 200)
+plot_prior(x, dnorm(x, 0, 1) * dunif(x, -1, 1), expression(phi), xlim = c(-1.1, 1.1))
 dev.off()
 
 # How much probability mass is below 10 and above 2 in the prior?

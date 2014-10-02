@@ -13,7 +13,7 @@ set.seed(123)
 
 N_vec <- c(1600, 800, 400, 200, 100, 50, 25)
 sigma_proc <- 1
-nu_vec <- c(2, 5, 10, 1e6)
+nu_vec <- c(1, 3, 5, 10, 1e6)
 reps <- 1:20
 show_plot <- FALSE
 
@@ -39,8 +39,8 @@ out <- plyr::ldply(reps, function(k) {
     out_nu <-  plyr::ldply(seq_along(N_vec), function(j) {
       sm <- sampling(stan_t,
         data = list(N = N_vec[j], y = y[1:N_vec[j]], nu_rate = 0.05),
-        pars = c("nu", "sigma_proc"), iter = 1000,
-        chains = 4, warmup = 500)
+        pars = c("nu", "sigma_proc"), iter = 2000,
+        chains = 4, warmup = 1000)
       max_rhat <- max(summary(sm)$summary[, "Rhat"])
       min_neff <- min(summary(sm)$summary[, "n_eff"])
       e <- extract(sm, pars = "nu")[[1]]

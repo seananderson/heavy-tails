@@ -13,7 +13,7 @@ stan_pars <- c("r", "K", "nu", "sigma_proc")
 fit_gpdd_model(gpdd_dat = gpdd, model = model,
   sub_folder = id, stan_dat = stan_dat, pars = stan_pars)
 
-out <- plyr::ldply(unique(gpdd$main_id)[1], extract_model,
+out <- plyr::ldply(unique(gpdd$main_id), extract_model,
   sub_folder = id, get_phi = FALSE, type = "logistic")
 
 saveRDS(out, file = paste0(id, "-hat.rds"))
