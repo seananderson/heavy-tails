@@ -10,6 +10,7 @@
 \usepackage{booktabs}
 \usepackage{lineno}
 \usepackage{ragged2e}
+\usepackage{color}
 
 \usepackage{longtable}
 \usepackage{multirow}
@@ -165,14 +166,14 @@ Papers to work in:
   \end{enumerate}
 
 
-The Student-t Gompertz model is:
-\begin{align*}
-x_t &= \ln N_t\\
-x_t &= \lambda + b x_{t-1} + \epsilon_t\\
-\epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma),
-\end{align*}
+The heavy-tailed Gompertz model is:
+\begin{equation*}
+%\begin{align*}
+\ln N_t = x_t = \mathrm{Student\mhyphen t}( {\color{red} \nu }, \lambda + b x_{t-1}, \sigma),
+%\end{align*}
+\end{equation*}
 
-\noindent where $x_t$ is the $\ln$ abundance at time $t$. The model is density independent if $b = 1$, maximally density dependent if $b = 0$, and inversely density dependence if $b < 0$. The parameter $\lambda$ represents the expected population growth rate at $x_t = 0$. The process noise, $\epsilon_t$, is modelled as a Student-t distribution that is centered at $0$, has a scale parameter of $\sigma_\mathrm{proc}$, and has a degrees of freedom parameter of $\nu$. If $\nu$ is small ($\lesssim 10$) the distribution has much heavier tails than a normal distribution.  For example, at $\nu = 2$, the probability of drawing a value less than -5 is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%). As $\nu$ approaches infinity the distribution approaches the normal distribution (Fig~\ref{fig:didactic}). By estimating the value of $\nu$ we can quantity how heavy-tailed the process noise deviations are.
+\noindent where $x_t$ is the $\ln$ abundance $N$ at time $t$. The model is density independent if $b = 1$, maximally density dependent if $b = 0$, and inversely density dependence if $b < 0$. The parameter $\lambda$ represents the expected population growth rate at $x_t = 0$. The process noise is modelled as a Student-t distribution with a scale parameter of $\sigma_\mathrm{proc}$, and a degrees of freedom parameter of $\nu$ (highlighted in red). If $\nu$ is small ($\lesssim 10$) the distribution has much heavier tails than a normal distribution.  For example, at $\nu = 2$, the probability of drawing a value less than -5 is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%). As $\nu$ approaches infinity the distribution approaches the normal distribution (Fig~\ref{fig:didactic}). By estimating the value of $\nu$ we can quantity how heavy-tailed the process noise deviations are.
 
 We fit alternative models that allowed for autocorrelation of the residuals, allowed for observation error, and allowed the functional form of the population dynamics to be represented as Ricker-logistic (Supporting Material).
 
@@ -385,8 +386,15 @@ Severe winters in 1929, 1940--1942, and 1962--1963; 1963 event so severe that re
 \begin{center}
 \includegraphics[width=0.42\textwidth]{nu-coefs-2.pdf}
 \caption{
-Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\ populations of birds, mammals, insects, and fishes. Small values of $\nu$ ($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest approximately normal-tailed dynamics. Vertical points and line segments represent posterior medians and 50\% / 90\% credible intervals for individual populations. Inset plots show probability that $\nu < 10$ (probability of heavy tails) for populations arranged by taxonomic order. Taxonomic orders are sorted by decreasing mean p($\nu < 10$).
-Taxonomic orders with three or fewer populations in panel a are omitted for space.}\label{fig:nu-coefs}
+Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\ populations of birds, mammals, insects, and fishes.
+Small values of $\nu$ ($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest approximately normal-tailed dynamics.
+Vertical points and line segments represent posterior medians and 50\% / 90\% credible intervals for individual populations.
+Inset plots show probability that $\nu < 10$ (probability of heavy tails) for populations arranged by taxonomic order.
+Taxonomic orders are sorted by decreasing mean p($\nu < 10$).
+Taxonomic orders with three or fewer populations in panel a are omitted for space.
+Red and orange colours highlight populations with a high probability of heavy-tailed dynamics.
+}
+\label{fig:nu-coefs}
 \end{center}
 \end{figure}
 
@@ -439,7 +447,7 @@ For the Gompertz, the mostly weakly-informative priors I'm using are:
 b &\sim \mathrm{Uniform}(-1, 2)\\
 \lambda &\sim \mathrm{Normal}(0, 10^2)\\
 \nu &\sim \mathrm{Exponential}(0.01)\\
-\sigma &\sim \mathrm{Half\mhyphen Cauchy} (5).
+\sigma &\sim \mathrm{Half\mhyphen Cauchy} (2.5).
 \end{align*}
 
 See Figure~\ref{fig:priors}.
@@ -492,7 +500,7 @@ x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Student\mhyphen t}_\nu(\phi \epsilon_{t-1}, \sigma).
 \end{align*}
 \noindent
-In addition to the parameters in the original Gompertz model, an additional parameter, $\phi$, is estimated that represents the relationship between of subsequent process noise residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = 1, \mathrm{max.} = 1)$.
+In addition to the parameters in the original Gompertz model, an additional parameter, $\phi$, is estimated that represents the relationship between of subsequent process noise residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$.
 
 \subsection{Assumed observation error}
 
@@ -539,7 +547,7 @@ where $U$ represents the unobserved state vector, and $\sigma_\mathrm{obs}$ repr
   rate at $\ln$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale
   parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen
     Cauchy} (2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim
-  \mathrm{Exponential}(0.01)$. (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Normal}(0, 1)[-1, 1]$. Not shown is $b$, the density dependence
+  \mathrm{Exponential}(0.01)$. (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence
   parameter: $b \sim \mathrm{Uniform}(-1, 2)$.}
   \label{fig:priors}
 \end{center}
