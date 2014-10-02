@@ -1,0 +1,51 @@
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{t-nu-eg.pdf}
+\caption{An illustration of fitting population dynamics models that allow for heavy tails, represented by the Student-t degrees of freedom parameter $\nu$.
+  (a, b) The probability density for t distributions with a scale parameter of 1 and different values of $\nu$.
+  Small values of $\nu$ create heavy tails.
+  As $\nu$ approaches infinity the distribution approaches the normal distribution.
+  For example, at $\nu = 2$, the probability of drawing a value less than -5 is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%).
+  (c--e) Simulated population dynamics from a Gompertz model with process noise drawn from t distributions with different values of $\nu$.
+  Coloured dots in panels c and d represent jumpts with less than a 1 in 1000 chance of occurring in a normal distribution.
+  (f--h) Estimates of $\nu$ from models fit to the times series in panels c--e.
+  Shown are the posterior samples (histograms), median and interquartile range of the posterior (IQR) (dots and line segments), and the exponential prior on $\nu$ (dashed lines).
+  Colour shading behind panels f--h illustrates the region of heavy tails.}
+\label{fig:didactic}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.42\textwidth]{nu-coefs-2.pdf}
+\caption{
+Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\ populations of birds, mammals, insects, and fishes.
+Small values of $\nu$ ($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest approximately normal-tailed dynamics.
+Vertical points and line segments represent posterior medians and 50\% / 90\% credible intervals for individual populations.
+Inset plots show probability that $\nu < 10$ (probability of heavy tails) for populations arranged by taxonomic order.
+Taxonomic orders are sorted by decreasing mean p($\nu < 10$).
+Taxonomic orders with three or fewer populations in panel a are omitted for space.
+Red and orange colours highlight populations with a high probability of heavy-tailed dynamics.
+}
+\label{fig:nu-coefs}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{correlates.pdf}
+\caption{
+Potential correlates of heavy-tailed behaviour (indicated by low $\nu$ values). Shown are (a--c) parameters from the Gompertz heavy-tailed population model, (b) number of time steps, (c) body length, and (d) lifespan.
+For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-t process-noise distribution, $\lambda$ refers to the population growth rate at an abundance of one, $b$ refers to the density dependence parameter ($1$ is maximally density independent, $0$ is maximally density dependent, and $<0$ is inversely density dependent).
+For parameter values, points and lines represent medians and 50\% credible intervals of the posterior.
+Circles representing four populations are filled with white and represent a shark, crustaceans, and one gastropod.
+}
+\label{fig:correlates}
+\end{center}
+\end{figure}
+
+\clearpage
