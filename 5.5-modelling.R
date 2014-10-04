@@ -91,7 +91,7 @@ m.admb.4 <- glmmadmb(p10 ~ log_Lifesp_scaled + log_sigma_proc_50_scaled +
 save(m.admb.4, file = "m.admb.4.rds")
 
 newdat <- data.frame(log_Lifesp_scaled = 0, log_sigma_proc_50_scaled = 0,
-  dataset_length = seq(20, 100), b_50_scaled = 0, lambda_50_scaled = 0)
+  dataset_length = seq(20, 117), b_50_scaled = 0, lambda_50_scaled = 0)
 
 p <- predict(m.admb.3, newdata = newdat, se = TRUE)
 x <- newdat$dataset_length
