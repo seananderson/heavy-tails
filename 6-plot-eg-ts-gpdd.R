@@ -28,3 +28,7 @@ write.csv(heavy_table, file = "heavy.csv", row.names = FALSE)
 
 p<-ggplot(subset(gpdd, assumed_log10 == TRUE), aes(series_step, log10(population_untransformed))) + geom_point() + geom_line() + facet_wrap(~label, scales = "free_x") + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 ggsave("log10-assumed.pdf", width = 13, height = 13)
+
+zz <- file("mainids.tex", "w")
+cat(sort(unique(gpdd$main_id)), file = zz)
+close(zz)
