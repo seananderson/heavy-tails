@@ -114,8 +114,8 @@ Supporting material to be noted quickly:
 
 2. How do our results mesh with previous related analyses?
 
-3. Why might we expect to see heavy tails in ecological time-series? (mixture 
-   of normals, red-coloured noise, tipping points, interactions, extreme 
+3. Why might we expect to see heavy tails in ecological time-series? (mixture
+   of normals, red-coloured noise, tipping points, interactions, extreme
    drivers)
 
 4. Are the observed frequencies by taxonomic class real or an observational
@@ -133,7 +133,7 @@ Earth to Ocean research group for helpful discussions
 
 Global Population Dynamics Database
 
-Silhouettes: `phylopic.org`: rabbit by Sarah Werning, 
+Silhouettes: `phylopic.org`: rabbit by Sarah Werning,
 Aves photo by Jean-Raphaël Guillaumin (photography) and T. Michael Keesey (vectorization)
 , hoverfly by Gareth Monger. All under Creative Commons Attribution 3.0 Unported license.
 
