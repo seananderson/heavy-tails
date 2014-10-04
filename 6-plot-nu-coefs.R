@@ -4,7 +4,7 @@ library(grImport)
 
 classes <- c("Aves","Mammalia", "Insecta", "Osteichthyes")
 cols <- c(rev(RColorBrewer::brewer.pal(5, "YlOrRd"))[-c(4, 5)])
-pics <- c("silhouettes/grey-heron.eps.xml", "silhouettes/rabbit.eps.xml",
+pics <- c("silhouettes/aves.eps.xml", "silhouettes/rabbit.eps.xml",
   "silhouettes/fly.eps.xml", "silhouettes/chinook.eps.xml")
 pic_width <- c(9, 9, 9, 17)
 pic_height <- c(.10, .10, .10, .08)

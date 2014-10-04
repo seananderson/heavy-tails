@@ -104,7 +104,7 @@ add_sil <- function(x, y, file, tax_class, width_mult = 1, height_mult = 1) {
 #add_sil(-2, 0.54, "rabbit", tax_class = "Mammalia")
 #add_sil(8, 0.54, "fly", tax_class = "Insecta")
 #add_sil(17.5, 0.54, "chinook", tax_class = "Osteichthyes", width_mult = 1.7, height_mult = 0.8)
-add_sil(1.65, 0.3, "grey-heron", tax_class = "Aves")
+add_sil(1.65, 0.3, "aves", tax_class = "Aves")
 add_sil(1.65, 0.1, "rabbit", tax_class = "Mammalia")
 add_sil(1.65, -0.1, "fly", tax_class = "Insecta")
 add_sil(1.65, -0.3, "chinook", tax_class = "Osteichthyes", width_mult = 1.7, height_mult = 0.8)
