@@ -11,6 +11,7 @@ all:
 	perl -p -i -e "s/Figs. /Figs.~/g" ms.tex
 	perl -p -i -e "s/Figs. /Figs.~/g" som.tex
 	pdflatex anderson-etal-blackswan-timeseries.tex
+	cp anderson-etal-blackswan-timeseries.pdf ~/Dropbox/Public/anderson-etal-blackswan-timeseries-v2.pdf
 
 bib:
 	pdflatex $(TEXT).tex
