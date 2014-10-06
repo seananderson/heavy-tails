@@ -1,12 +1,12 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \setcounter{figure}{0}
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{log10-assumed.pdf} \caption{Populations in which the abundance was specified as or assumed to be recorded as log10 values. The numbers at the front of each panel label are the GPDD IDs.}
-    \label{fig:log10-assumed}
-\end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[width=\textwidth]{log10-assumed.pdf} \caption{Populations in which the abundance was specified as or assumed to be recorded as log10 values. The numbers at the front of each panel label are the GPDD IDs.}
+    %\label{fig:log10-assumed}
+%\end{center}
+%\end{figure}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -20,12 +20,11 @@
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=\textwidth]{priors-gomp-base.pdf} \caption{Probability
-  density of the Bayesian priors for the base Gompertz model. From left to right: (1) per capita growth
+  density of the Bayesian priors for the Gompertz models. From left to right: (1) per capita growth
   rate at $\ln$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale
   parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen
-    Cauchy} (2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim
-  \mathrm{Exponential}(0.01)$. (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence
-  parameter: $b \sim \mathrm{Uniform}(-1, 2)$.}
+    Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim
+  \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$.}
   \label{fig:priors}
 \end{center}
 \end{figure}
@@ -100,16 +99,34 @@
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.7\textwidth]{admb-coefs}
-\includegraphics[width=0.8\textwidth]{length-vs-prob-tails}
-\caption{Potential correlates of heavy-tailed dynamics.
-  (Top panels) Dots, thick lines, and thin lines represent fixed-effect estimates and their 50\% and 95\% confidence intervals for the covariates listed on the left: $\log \sigma$, $b$, $\lambda$, $\log$(lifespan), $\log$(data set length). All covariates were standardized by subtracting their mean and dividing by their standard deviation.
-  The beta distribution model (left panel) uses p$(\nu < 10)$ as the response (probability of heavy tails).
-  The binomial distribution model (right panel) uses p$(\nu < 10) > 0.5$ vs.\ p$(\nu < 10) \le 0.5$ as the response (heavy vs.\ not heavy tails).
-  The models were fitted as mixed effects models with beta or binomial distributions, logit links, and multilevel intercepts for taxonomic class and order nested within class using the \texttt{glmmADMB} \texttt{R} package \citep{fournier2012,glmmadmb}.
-  (Bottom panels) Model predictions for the strongest covariate --- time series length --- with all other predictors set to zero (their mean value when standardized). Dots represent observations for individual populations. Lines and shaded regions represent estimates and 50\% and 95\% confidence intervals.
+%\includegraphics[width=0.7\textwidth]{admb-coefs}
+%\includegraphics[width=0.8\textwidth]{length-vs-prob-tails}
+\includegraphics[width=0.5\textwidth]{stan-beta-correlates}
+\caption{
+  %Potential correlates of heavy-tailed dynamics.
+  %(Top panels) Dots, thick lines, and thin lines represent fixed-effect estimates and their 50\% and 95\% confidence intervals for the covariates listed on the left: $\log \sigma$, $b$, $\lambda$, $\log$(lifespan), $\log$(data set length).
+  Main effect posterior densitities for potential correlates of heavy-tailed dynamics.
+  The response variable was Pr($\nu < 10$) (approximately the probability of heavy tails).
+  The beta regression model was fit on a logit scale with random intercepts for taxonomic class, taxonomic order, and species.
+  All covariates were standardized by subtracting their mean and dividing by twice their standard deviation. Therefore, the coefficient values represent the expected effect of a change in two standard deviations of the raw input variable on the logit-transformed response variable.
+  %The beta distribution model (left panel) uses p$(\nu < 10)$ as the response (probability of heavy tails).
+  %The binomial distribution model (right panel) uses p$(\nu < 10) > 0.5$ vs.\ p$(\nu < 10) \le 0.5$ as the response (heavy vs.\ not heavy tails).
+  %The models were fitted as mixed effects models with beta or binomial distributions, logit links, and multilevel intercepts for taxonomic class and order nested within class using the \texttt{glmmADMB} \texttt{R} package \citep{fournier2012,glmmadmb}.
+  %(Bottom panels) Model predictions for the strongest covariate --- time series length --- with all other predictors set to zero (their mean value when standardized). Dots represent observations for individual populations. Lines and shaded regions represent estimates and 50\% and 95\% confidence intervals.
 }
     \label{fig:correlate-coefs}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.75\textwidth]{perc-prob-increase-with-n}
+\caption{
+Expected percent increase in the probability of detecting heavy tails, Pr($\nu < 10$), with an additional ten time steps of data.
+These values are based on the curve shown in Fig.~\ref{fig:correlates}d, which is based on the coefficient in Fig.~\ref{fig:correlate-coefs}.
+For example, we have about a 12\% increased probability of observing heavy tails in a time series that has 60 time steps vs.\ a time series with 50 time steps.
+}
+\label{fig:perc-inc-p}
 \end{center}
 \end{figure}
 
@@ -169,6 +186,13 @@ model {
   y ~ normal(U, sigma_obs);
 }
 \end{verbatim}
+\end{footnotesize}
+
+\clearpage
+\noindent
+Stan code for the multilevel beta regression:
+\begin{footnotesize}
+\verbatiminput{betareg4.stan}
 \end{footnotesize}
 
 \clearpage

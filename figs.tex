@@ -19,7 +19,7 @@
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.42\textwidth]{nu-coefs-2.pdf}
+\includegraphics[width=0.44\textwidth]{nu-coefs-2.pdf}
 \caption{
 Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\ populations of birds, mammals, insects, and fishes.
 Small values of $\nu$ ($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest approximately normal-tailed dynamics.
@@ -37,12 +37,15 @@ Red and orange colours highlight populations with a high probability of heavy-ta
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{correlates.pdf}
+%\includegraphics[width=0.9\textwidth]{correlates.pdf}
+\includegraphics[width=0.9\textwidth]{correlates-p10.pdf}
 \caption{
-Potential correlates of heavy-tailed behaviour (indicated by low $\nu$ values). Shown are (a--c) parameters from the Gompertz heavy-tailed population model, (b) number of time steps, (c) body length, and (d) lifespan.
+Potential correlates of heavy-tailed behaviour (indicated by a high probability that $\nu < 10$).
+Shown are (a--c) parameters from the Gompertz heavy-tailed population model, (b) number of time steps, (c) body length, and (d) lifespan.
 For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-t process-noise distribution, $\lambda$ refers to the population growth rate at an abundance of one, $b$ refers to the density dependence parameter ($1$ is maximally density independent, $0$ is maximally density dependent, and $<0$ is inversely density dependent).
-For parameter values, points and lines represent medians and 50\% credible intervals of the posterior.
-Circles representing four populations are filled with white and represent a shark, crustaceans, and one gastropod.
+%For parameter values, points and lines represent medians and 50\% credible intervals of the posterior.
+Circles representing a limited number of sharks, crustaceans, and gastropods are filled in white.
+Median and 90\% credible interval posterior predictions of a beta regression multilevel model are shown in panels a and d where there was a high probability the slope coefficient was different from zero (Supporting Material).
 }
 \label{fig:correlates}
 \end{center}
