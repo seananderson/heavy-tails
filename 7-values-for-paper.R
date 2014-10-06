@@ -11,9 +11,11 @@ write_tex <- function(x, macro, ...) {
 }
 
 # what's the median and mean nu in the exponential prior?
-#x <- rexp(1e7, 0.01)
-#median(x)
-#mean(x)
+x <- rexp(2e7, 0.01)
+x <- x[x > 2]
+median(x)
+mean(x)
+length(x[x < 10])/length(x)
 
 # how much was imputed?
 gpdd <- readRDS("gpdd-clean.rds")
