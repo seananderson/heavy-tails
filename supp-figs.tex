@@ -88,6 +88,18 @@
 
 \begin{figure}[htbp]
 \begin{center}
+\includegraphics[width=0.27\textwidth]{order-level-estimates.pdf}
+\caption{
+Taxonomic-order-level posterior estimates of probabilty that $\nu < 10$ from a beta regression multilevel model accounting for the effect of time-series length. Estimates are at the geometric mean of time series length across all the data (approximately 27 time steps). Colour shading refers to the taxonomic classes as indicated in Fig.~\ref{fig:nu-coefs} and Fig.~\ref{fig:correlates} (yellow for fishes, green for insects, purple for birds, and red for mammals). Short vertical line segments indicate median posterior estimates. Long dotted vertical line throughout the figure indicates the median expected Pr($\nu < 10$) from the prior distribution.
+}
+\label{fig:order-estimates}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
 \includegraphics[width=\textwidth]{gomp-comparison.pdf}
 \caption{Estimates of $\nu$ from alternative models plotted against the base Gompertz model estimates of $\nu$. Shown are medians of the posterior (dots) and 50\% credible intervals (segments). The diagonal line indicates a one-to-one relationship. Different colours indicate various taxonomic classes. The grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics. The Gompertz observation error model assumes a fixed standard deviation of observation error of $0.2$ on the log scale.}
 \label{fig:alt}
@@ -120,7 +132,7 @@
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.75\textwidth]{perc-prob-increase-with-n}
+\includegraphics[width=0.70\textwidth]{perc-prob-increase-with-n}
 \caption{
 Expected percent increase in the probability of detecting heavy tails, Pr($\nu < 10$), with an additional ten time steps of data.
 These values are based on the curve shown in Fig.~\ref{fig:correlates}d, which is based on the coefficient in Fig.~\ref{fig:correlate-coefs}.

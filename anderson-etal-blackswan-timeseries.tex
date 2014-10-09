@@ -12,6 +12,7 @@
 \usepackage{ragged2e}
 \usepackage{color}
 \usepackage{verbatim}
+\usepackage[sectionbib]{chapterbib}
 
 \usepackage{amsmath}
 % \makeatletter
@@ -40,13 +41,11 @@
        supscaled=1.2,%
        raised=-.13em]{superiors}
 
-
 \mathchardef\mhyphen="2D
 
 \textheight 22.0cm
 
-\usepackage[round]{natbib}
-\bibliographystyle{apalike}
+\usepackage[round,sectionbib]{natbib}
 \bibpunct{(}{)}{;}{a}{}{;}
 
 \title{Black swans in ecological time series\\Black swans in population dynamics\\Heavy-tailed ecological time series\\Black swans in ecological dynamics}
@@ -66,41 +65,47 @@ Nicholas K. Dulvy$^1$
 \setlength\parskip{0.16in}
 \setlength\parindent{0in}
 \usepackage{titlesec}
-\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
-\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{-8pt plus 2pt minus 2pt}
+\titlespacing\section{0pt}{6pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{0pt plus 4pt minus 2pt}{-8pt plus 2pt minus 2pt}
 
 \begin{document}
-\input{values} % R output
-
-%\begin{spacing}{1.4}
-%\doublespacing
-\onehalfspacing
 
 \maketitle
+
+\input{values} % R output
+
+\emph{Authors are listed alphabetically (ABCD!) and open to reordering.}
+
+\textsuperscript{1}Earth to ocean research group, department of biological sciences, Simon Fraser University, Burnaby BC, V5A 1S6, Canada
+
+\textsuperscript{2}School of Aquatic and Fishery Sciences, University of Washington, Box 355020, Seattle, WA 98195, USA
+
+\textsuperscript{3}School of Resource and Environmental Management, Simon Fraser University, Burnaby, BC, V5A 1S6, Canada
+
+\textsuperscript{*}Corresponding author: Sean C. Anderson; Earth to Ocean Research Group, Department of Biological Sciences, Simon Fraser University, Burnaby BC, V5A 1S6; Phone: 1-778-782-3989; E-mail: sean\_anderson@sfu.ca
+
+%\begin{spacing}{1.4}
+\doublespacing
+%\onehalfspacing
+
 \thispagestyle{empty}
 
-\input{ms}
+\linenumbers
 
-\bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
-%\bibliography{/Users/seananderson/Dropbox/tex/jshort,refs}
-
-\clearpage
-\section{Tables}
-
-\input{sparks.tex}
+\include{ms}
 
 \clearpage
 \section{Figures}
 
-\input{figs.tex}
+\input{figs}
 
-\begin{centering}
-\LARGE
-Supporting material\\[1.5em]
-\end{centering}
+\include{supp}
 
-\input{supp}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{table}{0}
 
-\input{supp-figs}
+\include{stat-table}
+
+\include{supp-figs}
 
 \end{document}
