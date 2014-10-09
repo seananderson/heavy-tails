@@ -2,6 +2,7 @@
 # this version is a streamlined version with the final analysis
 # see 5.6-... for the intermediate work
 
+library(rstan)
 source("5-shape-data.R")
 
 gelm_scale <- function(x) {
@@ -9,6 +10,7 @@ gelm_scale <- function(x) {
 }
 
 ghb <- dplyr::select(gomp_hat_base, Lifesp, sigma_proc_50, b_50, lambda_50, dataset_length, p10, main_id)
+ghb <- na.omit(ghb)
 ghb$log_Lifesp_scaled <- gelm_scale(log(ghb$Lifesp))
 ghb$log_sigma_proc_50_scaled <- gelm_scale(log(ghb$sigma_proc_50))
 ghb$b_50_scaled <- gelm_scale(ghb$b_50)
@@ -30,7 +32,7 @@ dat$lambda_scaled_mean <- gelm_scale(dat$mean_lambda)
 dat$lambda_scaled_sd <- dat$sd_lambda / (2 * sd(dat$mean_lambda))
 dat$b_scaled_mean <- gelm_scale(dat$mean_b)
 dat$b_scaled_sd <- dat$sd_b / (2 * sd(dat$mean_b))
-dat <- na.omit(dat)
+#dat <- na.omit(dat)
 dat <- droplevels(dat)
 dat$taxonomic_order <- as.factor(dat$taxonomic_order)
 dat$taxonomic_class <- as.factor(dat$taxonomic_class)
@@ -65,18 +67,22 @@ m.stan.beta4 <- sampling(stan_beta4,
     y = d$p10),
   pars = c("b1", "b2", "b3", "b4", "b5", "mu_a",
     "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
-    "a_class", "a_order", "mu"),
-  iter = 1000, chains = 3)
+    "a_class", "a_order"),
+  iter = 5000, chains = 4, thin = 2)
+
+png("trace-beta.png", width = 700, height = 1000)
+rstan::traceplot(m.stan.beta4, pars = c("b1", "b2", "b3", "b4", "b5",
+    "mu_a", "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi"),
+  nrow = 5, ncol = 2,
+  inc_warmup = FALSE)
+dev.off()
+
 saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
-sink("beta-stan-samples.txt")
+sink("beta-stan-samples-2.txt")
 print(m.stan.beta4)
 sink()
 m <- readRDS("beta-stan-samples.rds")
 
-a_class <- apply(extract(m, pars = "a_class")[[1]], 2, mean)
-a_class_df <- data.frame(a_class = a_class, class_id = 1:length(a_class))
-a_order <- apply(extract(m, pars = "a_order")[[1]], 2, mean)
-a_order_df <- data.frame(a_order = a_order, order_id = 1:length(a_order))
 
 d <- left_join(d, a_class_df)
 d <- left_join(d, a_order_df)
