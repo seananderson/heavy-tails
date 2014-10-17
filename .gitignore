@@ -25,3 +25,5 @@ supp.md
 *.dvi
 
 *.gz(busy)
+
+*.rtf

@@ -27,7 +27,7 @@ We applied the following data selection and quality-control rules to the Global 
 \item
   We removed all populations without at least four unique values \citep[following][]{brook2006a}.
 \item
-  We then wrote an algorithm to find the longest unbroken window of abundance (no \texttt{NA}s) with at least 20 time steps in each population time series. If there were any populations with multiple windows of identical length, we took the most recent window. This is a longer window than used in some previous analyses \citep[e.g.][]{brook2006a}, but since our model attempts to capture the shape of the distribution tails, our model requires more data.
+  We then wrote an algorithm to find the longest unbroken window of abundance (no \texttt{NA}s) with at least $20$ time steps in each population time series. If there were any populations with multiple windows of identical length, we took the most recent window. This is a longer window than used in some previous analyses \citep[e.g.][]{brook2006a}, but since our model attempts to capture the shape of the distribution tails, our model requires more data.
 \item
   Finally, we removed GPDD Main ID \texttt{20531}, which we noticed was a duplicate of \texttt{10139} (a heron population).
 \end{enumerate}
