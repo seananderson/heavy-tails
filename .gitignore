@@ -21,3 +21,5 @@ scratch.R
 .Rproj.user
 ms.md
 supp.md
+
+*.dvi
