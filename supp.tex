@@ -31,7 +31,7 @@ We followed the following data selection and quality-control rules with the GPDD
 \item
   Finally, we removed GPDD Main ID \texttt{20531}, which we noticed was a duplicate of \texttt{10139} (a heron population).
 \end{enumerate}
-
+\noindent
 We provide a supplemental figure of all the time series included in our analysis and indicate which values were interpolated (\percImputedPops\% of populations had at least one point interpolated and only \percImputedPoints\% of the total observations were interpolated) (Fig.~\ref{fig:all-ts}). Table S1 shows the final taxonomic breakdown and the number of populations with interpolated values.
 
 \section{Details on the heavy-tailed Gompertz probability model}
@@ -56,7 +56,7 @@ We separated our simulation into these two components to avoid confounding two i
 
 \subsection{Estimating $\nu$ simulations}
 
-First, we tested the ability to estimate $\nu$ given different true values of $\nu$ and sample sizes. We took stochastic draws from t distributions with different $\nu$ values ($\nu = 3, 5, 10,$ and $10^6$ [$\approx$ normal]), with central tendency parameters of $0$, and scale parameters of $1$. We started with 1600 stochastic draws and then fitted again at the first 800, 400, 200, 100, 50, and 25 draws. Each time we recorded the posterior samples of $\nu$.
+First, we tested the ability to estimate $\nu$ given different true values of $\nu$ and sample sizes. We took stochastic draws from t distributions with different $\nu$ values ($\nu = 3, 5, 10,$ and $10^6$ [$\approx$ normal]), with central tendency parameters of $0$, and scale parameters of $1$. We started with 1600 stochastic draws and then fitted the models again at the first 800, 400, 200, 100, 50, and 25 draws. Each time we recorded the posterior samples of $\nu$.
 
 We found that we could consistently and precisely recover median posterior estimates of $\nu$ near the true value of $\nu$ with large samples ($\ge 200$) (Fig.~\ref{fig:sim-gompertz} upper panels). At smaller samples the we could still usually distinguish ``heavy'' from ``not-heavy'' tails, but the model tended to underestimate how heavy the tails were. At the same time, when the model underestimated how heavy-tailed the distribution was, it tended to overestimate how large the scale parameter was (Fig.~\ref{fig:sim-gompertz} lower panels).
 
@@ -87,7 +87,7 @@ We considered a version of the Gompertz model in which an autoregressive paramet
 x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, \phi \epsilon_{t-1}, \sigma).
 \end{align*}
-In addition to the parameters in the original Gompertz model, we estimate an additional parameter $\phi$, which represents the relationship between subsequent residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. The MCMC chains for a small number of these models (XX) did not converge according to our criteria ($\widehat{R} < 1.05, n_\mathrm{eff} > 200$) after 8000 iterations of four chains. We do not show these models in Fig.~\ref{fig:alt}.
+In addition to the parameters in the original Gompertz model, we estimate an additional parameter $\phi$, which represents the relationship between subsequent residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. The MCMC chains for a small number of these models (XX) did not converge according to our criteria ($\widehat{R} < 1.05, n_\mathrm{eff} > 200$) after 8000 iterations of four chains. We did not include these models in Fig.~\ref{fig:alt}.
 
 \subsection{Assumed density independence}\label{assumed-density-independence}
 
