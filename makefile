@@ -29,5 +29,9 @@ bib:
 	pdflatex $(TEXT)
 	pdflatex $(TEXT)
 
+extractbib:
+	bibtool -x ms.aux -o ms.bib -- 'expand.macros = ON'
+	bibtool -x supp.aux -o supp.bib -- 'expand.macros = ON'
+
 clean:
 	latexmk -c
