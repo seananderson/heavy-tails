@@ -43,7 +43,6 @@ dat$class_id <- as.numeric(dat$taxonomic_class)
 
 d <- dat
 
-#stan_beta3 <- stan_model("betareg3.stan")
 stan_beta4 <- stan_model("betareg4.stan")
 
 m.stan.beta4 <- sampling(stan_beta4,
