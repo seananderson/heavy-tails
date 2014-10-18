@@ -330,9 +330,9 @@ black swan ecological dynamics. This could occur if the interaction nature is
 synergistic \citep[e.g.][]{kirby2009} or even if non-synergistic interactions
 experience a rare alignment \citep{denny2009}.
 
-There a number of caveats when considering the generality of our results.
+There are a number of caveats when considering the generality of our results.
 First, the GPDD data represent a taxonomically and geographically biased sample
-of populations. Also, the longer time series we focus on are dominated by
+of populations --- the longer time series we focus on are dominated by
 commercially and recreationally important species and a disproportionate number
 of populations are located in the United Kingdom. Although we expect that we
 would find strong but rare evidence for black swans in other large taxonomic or
@@ -340,31 +340,29 @@ geographic samples, the common forces driving those black swans (e.g.~severe
 winters in Table~1) likely differ. Second, in a large database with disparate
 data sources, we cannot ensure the quality of every data point. Recording
 mistakes undoubtedly comprise some of the black swans we detected. Conversely,
-recording mistakes could mask heavy tails if initial observations are discarded
-or altered as assumed recording errors. Third, the temporal scale of observation
-and population dynamics vary considerably across populations in the GPDD and
-this likely influences the detection of heavy tails. For example, if we make
-frequent observations relative to generation time (e.g.~for many large bodied
-mammals) we will average across generations and perhaps not observe the tails.
-Furthermore, if we record population censuses infrequently relative to
+recording mistakes could mask heavy tails if initial observations assumed to be
+recording errors and are discarded or altered. Third, the temporal scale of
+observation and population dynamics vary considerably across populations in the
+GPDD and this likely influences the detection of heavy tails. For example, if
+we make frequent observations relative to generation time (e.g.~for many large
+bodied mammals) we will average across generations and perhaps not observe
+black swans. Furthermore, if we census populations infrequently relative to
 generation time (e.g.~many insects in the GPDD) the recorded data may average
-across extreme and less-extreme events and dampen observed black swan dynamics.
+across extreme and less-extreme events and dampen black swan dynamics.
 
-Our results suggest a number of important future issues to address regarding
-ecological black swans. First, given that black swans can and do occur, can we
-forecast the probability of black swans in space and time? Furthermore, what
-management policies allow us to detect them quickly after they happen?
-Secondly, can we isolate the components of ecological dynamics that experience
-black swans events by moving from phenomenological models such as the Gompertz
-to mechanistic models, that take into account, for example, recruitment? We
-expect that greater insight into the mechanisms and covariates of ecological
-black swans may be best obtained through specific geographic and taxonomic
-subsets of data where longer time series are available
-\citep[e.g.][]{segura2013}. Finally, if a sizeable fraction of populations
-experience heavy tails in population process noise, what is the impact of
-allowing for black swans in forecasts of ecological risk? Financial analysts
-are acutely concerned with the shape of the tail distribution of financial
-returns since these impact estimates of risk --- the probability of a specific
+Our results suggest important future issues to address about ecological black
+swans. Given that black swans can and do occur, can we forecast the probability
+of black swans in space and time? Furthermore, what management policies allow
+us to detect them quickly after they happen? Secondly, can we isolate the
+components of ecological dynamics that experience black swans events by moving
+from phenomenological models such as the Gompertz to mechanistic models, that
+take into account, for example, recruitment? We expect that greater insight
+into the mechanisms and covariates of ecological black swans may be best
+obtained through specific geographic and taxonomic subsets of data where longer
+time series are available \citep[e.g.][]{segura2013}. Finally, what is the
+impact of allowing for black swans in forecasts of ecological risk? Financial
+analysts are concerned with the shape of financial-return distribution tails
+because these impact estimates of risk --- the probability of a specific
 magnitude of undesired event occurring (REF). It is possible that a comparable
 focus in ecology would alter our perception of ecological forecasts such as
 extinction risk.
@@ -397,16 +395,22 @@ Canada Research Chairs Program (NKD), and XX-TODO (TAB).
 \begin{center}
 \includegraphics[width=\textwidth]{t-nu-eg.pdf}
 \caption{
-An illustration of fitting population dynamics models that allow for heavy tails, represented by the Student-t degrees of freedom parameter $\nu$.
-(a, b) The probability density for t distributions with a scale parameter of 1 and different values of $\nu$.
-Small values of $\nu$ create heavy tails.
-As $\nu$ approaches infinity the distribution approaches the normal distribution.
-For example, at $\nu = 2$, the probability of drawing a value less than -5 is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%).
-(c--e) Simulated population dynamics from a Gompertz model with process noise drawn from t distributions with different values of $\nu$.
-Coloured dots in panels c and d represent jumps with less than a 1 in 1000 chance of occurring in a normal distribution.
-(f--h) Estimates of $\nu$ from models fit to the times series in panels c--e.
-Shown are the posterior samples (histograms), median and interquartile range of the posterior (IQR) (dots and line segments), and the exponential prior on $\nu$ (dashed lines).
-Colour shading behind panels f--h illustrates the region of heavy tails.}
+An illustration of fitting population dynamics models that allow for heavy
+tails, represented by the Student-t degrees of freedom parameter $\nu$. (a, b)
+The probability density for t distributions with a scale parameter of 1 and
+different values of $\nu$. Small values of $\nu$ create heavy tails. As $\nu$
+approaches infinity the distribution approaches the normal distribution. For
+example, at $\nu = 2$, the probability of drawing a value less than -5 is
+1.8\%, whereas the probability of drawing such a value from a normal
+distribution is nearly zero ($2.9\cdot10^{-5}$\%). (c--e) Simulated population
+dynamics from a Gompertz model with process noise drawn from t distributions
+with different values of $\nu$. Coloured dots in panels c and d represent jumps
+with less than a 1 in 1000 chance of occurring in a normal distribution. (f--h)
+Estimates of $\nu$ from models fit to the times series in panels c--e. Shown
+are the posterior samples (histograms), median and interquartile range of the
+posterior (IQR) (dots and line segments), and the exponential prior on $\nu$
+(dashed lines). Colour shading behind panels f--h illustrates the region of
+heavy tails.}
 \label{fig:didactic}
 \end{center}
 \end{figure}
@@ -417,13 +421,16 @@ Colour shading behind panels f--h illustrates the region of heavy tails.}
 \begin{center}
 \includegraphics[width=0.44\textwidth]{nu-coefs-2.pdf}
 \caption{
-Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\ populations of birds, mammals, insects, and fishes.
-Small values of $\nu$ ($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest approximately normal-tailed dynamics.
-Vertical points and line segments represent posterior medians and 50\% / 90\% credible intervals for individual populations.
-Inset plots show probability that $\nu < 10$ (probability of heavy tails) for populations arranged by taxonomic order.
-Taxonomic orders are sorted by decreasing mean p($\nu < 10$).
-Taxonomic orders with three or fewer populations in panel a are omitted for space.
-Red and orange colours highlight populations with a high probability of heavy-tailed dynamics.
+Estimates of how heavy-tailed population dynamics are for \nuCoefPopN\
+populations of birds, mammals, insects, and fishes. Small values of $\nu$
+($\lesssim 10$) suggest heavy-tailed dynamics; larger values of $\nu$ suggest
+approximately normal-tailed dynamics. Vertical points and line segments
+represent posterior medians and 50\% / 90\% credible intervals for individual
+populations. Inset plots show probability that $\nu < 10$ (probability of heavy
+tails) for populations arranged by taxonomic order. Taxonomic orders are sorted
+by decreasing mean p($\nu < 10$). Taxonomic orders with three or fewer
+populations in panel a are omitted for space. Red and orange colours highlight
+populations with a high probability of heavy-tailed dynamics.
 }
 \label{fig:nu-coefs}
 \end{center}
@@ -435,12 +442,21 @@ Red and orange colours highlight populations with a high probability of heavy-ta
 \begin{center}
 \includegraphics[width=0.9\textwidth]{correlates-p10.pdf}
 \caption{
-Potential correlates of heavy-tailed behaviour (indicated by a high probability that $\nu < 10$).
-Shown are (a--c) parameters from the Gompertz heavy-tailed population model, (b) number of time steps, (c) body length, and (d) lifespan.
-For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-t process-noise distribution, $\lambda$ refers to the population growth rate at an abundance of one, $b$ refers to the density dependence parameter ($1$ is maximally density independent, $0$ is maximally density dependent, and $<0$ is inversely density dependent).
-%For parameter values, points and lines represent medians and 50\% credible intervals of the posterior.
-Circles representing a limited number of sharks, crustaceans, and gastropods are filled in white.
-Median and 90\% credible interval posterior predictions of a beta regression multilevel model are shown in panels a and d where there was a high probability the slope coefficient was different from zero (Supporting Material).
+Potential correlates of heavy-tailed behaviour (indicated by a high probability
+that $\nu < 10$). Shown are (a--c) parameters from the Gompertz heavy-tailed
+population model, (b) number of time steps, (c) body length, and (d) lifespan.
+For the Gompertz parameters, $\sigma$ refers to the scale parameter of the
+Student-t process-noise distribution, $\lambda$ refers to the population growth
+rate at an abundance of one, $b$ refers to the density dependence parameter
+($1$ is maximally density independent, $0$ is maximally density dependent, and
+$<0$ is inversely density dependent).
+%For parameter values, points and lines represent medians and 50\% credible
+%intervals of the posterior.
+Circles representing a limited number of sharks, crustaceans, and gastropods
+are filled in white. Median and 90\% credible interval posterior predictions of
+a beta regression multilevel model are shown in panels a and d where there was
+a high probability the slope coefficient was different from zero (Supporting
+Material).
 }
 \label{fig:correlates}
 \end{center}
