@@ -1,6 +1,7 @@
 TEXT = anderson-etal-blackswan-timeseries
 MS = ms
 SOM = supp
+VERSION = 3
 
 all: quick
 
@@ -10,8 +11,12 @@ quick:
 text: 
 	latexmk $(TEXT)
 
-dropbox: text
-	cp $(TEXT).pdf ~/Dropbox/Public/$(TEXT)-v3.pdf
+dropbox: text rtf
+	cp $(TEXT).pdf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).pdf
+	cp $(TEXT).tex ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).tex
+	cp $(MS).tex ~/Dropbox/heavy-tails/$(MS)-v$(VERSION).tex
+	cp $(SOM).tex ~/Dropbox/heavy-tails/$(SOM)-v$(VERSION).tex
+	mv $(TEXT).rtf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).rtf
 
 rtf: text
 	latex2rtf -E0 anderson-etal-blackswan-timeseries.tex
