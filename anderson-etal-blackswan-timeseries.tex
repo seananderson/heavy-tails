@@ -9,9 +9,7 @@
 \usepackage{amsfonts}
 \usepackage{setspace}
 \usepackage{booktabs}
-\usepackage{lineno}
 \usepackage{ragged2e}
-\usepackage{color}
 \usepackage{verbatim}
 \usepackage[sectionbib]{chapterbib}
 \usepackage{amsmath}
@@ -19,20 +17,25 @@
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{tabu} % for spacing between rows in longtable
-\setlength{\tabulinesep}{9pt}
+\usepackage{titlesec}
 
- % Linux Libertine:
-  \usepackage{textcomp}
-     \usepackage[sb]{libertine}
-     \usepackage[varqu,varl]{inconsolata}% sans serif typewriter
-     \usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
-     \usepackage[cal=boondoxo]{mathalfa} % mathcal
-     \useosf % osf for text, not math
-     \usepackage[supstfm=libertinesups,%
-       supscaled=1.2,%
-       raised=-.13em]{superiors}
+\usepackage{lineno}
+\usepackage{xcolor}
+\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+\modulolinenumbers[2]
 
-\mathchardef\mhyphen="2D
+% Linux Libertine:
+\usepackage{textcomp}
+\usepackage[sb]{libertine}
+\usepackage[varqu,varl]{inconsolata}% sans serif typewriter
+\usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
+\usepackage[cal=boondoxo]{mathalfa} % mathcal
+\useosf % osf for text, not math
+\usepackage[supstfm=libertinesups,%
+  supscaled=1.2,%
+  raised=-.13em]{superiors}
+
+\mathchardef\mhyphen="2D % math hyphen
 
 \textheight 22.0cm
 
@@ -61,8 +64,8 @@ Nicholas K. Dulvy$^1$
 \begin{document}
 
 \maketitle
-\doublespacing
-%\onehalfspacing
+%\doublespacing
+\onehalfspacing
 
 \input{values} % R output
 
