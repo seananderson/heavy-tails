@@ -32,3 +32,5 @@ stat_table.csv
 values.tex
 notes.md
 mammals.txt
+packrat/lib*/
+*.tex.latexmain
