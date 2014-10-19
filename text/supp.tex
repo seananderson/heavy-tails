@@ -387,16 +387,6 @@ $\alpha^\mathrm{order}_k$.
 \renewcommand{\thefigure}{S\arabic{figure}}
 \setcounter{figure}{0}
 
-%\begin{figure}[htbp]
-%\begin{center}
-%\includegraphics[width=\textwidth]{../analysis/log10-assumed.pdf}
-%\caption{Populations in which the abundance was specified as or assumed to be
-%recorded as log10 values. The numbers at the front of each panel label are the
-%GPDD IDs.}
-    %\label{fig:log10-assumed}
-%\end{center}
-%\end{figure}
-
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/all-clean-ts-3.pdf}
@@ -469,12 +459,9 @@ $\alpha^\mathrm{order}_k$.
   true values were chosen to represent approximately the median values as
   estimated from the GPDD. Individual dots and lines represent a stochastic
   draws from the true population distribution and a model fitting (median and
-  80\% credible intervals).
-  %The panels show true values of $\nu$ =  3, 5, normal (very heavy, heavy, and
-  %not heavy tailed).
-  The panels from top to bottom show $1/\nu$, process noise scale parameter
-  $\sigma$, growth rate parameter $\lambda$, and the density dependence
-  parameter $b$.
+  80\% credible intervals). The panels from top to bottom show $1/\nu$, process
+  noise scale parameter $\sigma$, growth rate parameter $\lambda$, and the
+  density dependence parameter $b$.
 }
 \label{fig:sim-gompertz}
 \end{center}
@@ -568,12 +555,8 @@ $\alpha^\mathrm{order}_k$.
 
 \begin{figure}[htbp]
 \begin{center}
-%\includegraphics[width=0.7\textwidth]{../analysis/admb-coefs}
-%\includegraphics[width=0.8\textwidth]{../analysis/length-vs-prob-tails}
 \includegraphics[width=0.5\textwidth]{../analysis/stan-beta-correlates}
 \caption{
-  %Potential correlates of heavy-tailed dynamics.
-  %(Top panels) Dots, thick lines, and thin lines represent fixed-effect estimates and their 50\% and 95\% confidence intervals for the covariates listed on the left: $\log \sigma$, $b$, $\lambda$, $\log$(lifespan), $\log$(data set length).
   Main effect posterior densities for potential correlates of heavy-tailed
   dynamics. The response variable was Pr($\nu < 10$) (approximately the
   probability of heavy tails). The beta regression model was fit on a logit
@@ -601,16 +584,6 @@ a 12\% increased probability of observing heavy tails in a time series that has
 \label{fig:perc-inc-p}
 \end{center}
 \end{figure}
-
-% \clearpage
-%
-% \begin{figure}[htbp]
-% \begin{center}
-% \includegraphics[width=0.8\textwidth]{../analysis/length-vs-prob-tails}
-% \caption{Model predictions. TODO}
-%     \label{fig:length-predictions}
-% \end{center}
-% \end{figure}
 
 \clearpage
 
