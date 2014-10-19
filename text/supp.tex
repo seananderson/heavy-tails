@@ -103,7 +103,7 @@ a $7.7$\% probability $\nu < 10$ but constrains the sampling sufficiently to
 avoid wandering off towards infinity --- above approximately $\nu = 20$ the
 t distribution is so similar to the normal distribution
 (Fig.~\ref{fig:didactic}) that time series of the length considered here are
-unlikely to be sufficiently informative about the precise value of $\nu$. In the
+unlikely to be informative about the precise value of $\nu$. In the
 scenario where the data are not heavy tailed (e.g.~Fig.~\ref{fig:didactic}e, h)
 the posterior will approximately match the prior (median $= 71$, mean $= 102$)
 and not be flagged as likely heavy tailed using the metrics we used in our paper
@@ -133,14 +133,13 @@ $\nu$'' value was close to the true $\nu$ value.
 
 We separated our simulation into these two components to avoid confounding two
 issues. (1) With smaller sample sizes, there may not be a stochastic draw from
-the tails of a distribution. In that case, no model, no matter how perfect
-a model, will be able to detect the shape of the tails. (2) Models (particularly
-complex models) may return biased parameter estimates if there are conceptual,
-computational, or coding errors in the models. Our first simulation tested the
-first issue and our second simulation tested the latter. In general, out
-simulations show that, if anything, our model under predicts the magnitude and
-frequency of heavy tailed events --- especially given the length of the time
-series in the GPDD.
+the tails of a distribution. In that case, no model, no matter how perfect,
+will be able to detect the shape of the tails. (2) Complex models may return
+biased parameter estimates if there are conceptual, computational, or coding
+errors. Our first simulation tested the first issue and our second simulation
+tested the latter. In general, out simulations show that, if anything, our
+model under predicts the magnitude and frequency of heavy tailed events ---
+especially given the length of the time series in the GPDD.
 
 \subsection{Estimating $\nu$ simulations}
 
@@ -154,10 +153,9 @@ $\nu$.
 
 We found that we could consistently and precisely recover median posterior
 estimates of $\nu$ near the true value of $\nu$ with large samples ($\ge 200$)
-(Fig.~\ref{fig:sim-gompertz} upper panels). At smaller samples the we could
-still usually distinguish ``heavy'' from ``not-heavy'' tails, but the model
-tended to underestimate how heavy the tails were. At the same time, when the
-model underestimated how heavy-tailed the distribution was, it tended to
+(Fig.~\ref{fig:sim-gompertz} upper panels). At smaller samples we could still
+usually distinguish ``heavy'' from ``not-heavy'' tails, but the model tended to
+underestimate how heavy the tails were. At the same time, the model tended to
 overestimate how large the scale parameter was (Fig.~\ref{fig:sim-gompertz}
 lower panels).
 
@@ -165,9 +163,9 @@ lower panels).
 
 In the second part of our simulation testing, we tested the ability of the
 heavy-tailed Gompertz model to obtain unbiased parameter estimates given that
-process deviations were provided in which our simpler model (in the previous
+process deviations were provided in which our simpler model (previous
 section) could accurately estimate the value of $\nu$. To generate these process
-errors, we repeatedly generated candidate process deviations and estimated the
+deviations, we repeatedly generated candidate process deviations and estimated the
 central tendency, scale, and $\nu$ values each time. We recorded when
 $\hat{\nu}$ was within $0.2$ CVs (coefficient of variations) of the true $\nu$
 value and used this set of random seed values in our Gompertz simulation. We
@@ -262,10 +260,10 @@ accounting for density dependence \citep{segura2013}.
 
 Observation error can bias parameter estimates \citep[e.g.][]{knape2012} and is
 known to affect the ability to detect extreme events \citep{ward2007}. However,
-simultaneously estimating observation and process error in state-space is
-a challenging problem and is known to result in identifiability issues with the
-Gompertz population model \citep{knape2008}. Furthermore, our model estimates an
-additional parameter --- the shape of the process error distribution tails ---
+simultaneously estimating observation and process noise is a challenging
+problem and is known to result in identifiability issues with the Gompertz
+population model \citep{knape2008}. Furthermore, our model estimates an
+additional parameter --- the shape of the process deviation tails ---
 potentially making identifiability and computational issues even greater.
 Therefore, we considered a version of the base Gompertz model that allowed for
 a fixed level of observation error:
@@ -429,7 +427,7 @@ $\alpha^\mathrm{order}_k$.
 \includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
 \caption{
   Testing the ability to estimate $\nu$ (top panels) and the scale parameter of
-  the process error (bottom panels) for a given number of samples (columns)
+  the process deviations (bottom panels) for a given number of samples (columns)
   drawn from a distribution with a given true $\nu$ value (rows). The red lines
   indicate the true population value. When a small number of samples are drawn
   there may not be samples sufficiently far into the tails to recapture the
@@ -447,21 +445,21 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz.pdf}
 \caption{
-  Simulation testing the Gompertz estimation model when the process error draws
-  are chosen so that $\nu$ can be estimated close to the true value outside the
-  full population model (``effective $\nu$'' within a CV of 0.2 of specified
-  $\nu$). The simulation was run across population $\nu$ values (columns) and
-  different scenarios (colours): (1) 100 time steps and no observation error,
-  (2) 50 time steps and no observation error, (3) 50 time steps and observation
-  error drawn from $\mathrm{Normal} (0, 0.2^2)$ but ignored, and (4) 50 time
-  steps with observation error in which the quantity of observation error was
-  assumed known. Dashed horizontal lines show the true population values; these
-  true values were chosen to represent approximately the median values as
-  estimated from the GPDD. Individual dots and lines represent a stochastic
-  draws from the true population distribution and a model fitting (median and
-  80\% credible intervals). The panels from top to bottom show $1/\nu$, process
-  noise scale parameter $\sigma$, growth rate parameter $\lambda$, and the
-  density dependence parameter $b$.
+  Simulation testing the Gompertz estimation model when the process deviation
+  draws were chosen so that $\nu$ can be estimated close to the true value
+  outside the full population model (``effective $\nu$'' within a CV of 0.2 of
+  specified $\nu$). The simulation was run across population $\nu$ values
+  (columns) and different scenarios (colours): (1) 100 time steps and no
+  observation error, (2) 50 time steps and no observation error, (3) 50 time
+  steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
+  ignored, and (4) 50 time steps with observation error in which the quantity
+  of observation error was assumed known. Dashed horizontal lines show the true
+  population values; these true values were chosen to represent approximately
+  the median values as estimated from the GPDD. Individual dots and lines
+  represent a stochastic draws from the true population distribution and
+  a model fitting (median and 80\% credible intervals). The panels from top to
+  bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate
+  parameter $\lambda$, and the density dependence parameter $b$.
 }
 \label{fig:sim-gompertz}
 \end{center}
