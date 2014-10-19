@@ -1,10 +1,10 @@
-# this file makes the gpdd and mammals data
-# some of the gpdd processing happens in another folder but gets sources from
-# here
-# note that there's a shell script in the gpdd folder to turn the original
-# Access database files into the .csvs
-# not running it here because I haven't put the appropriate binary in R's
-# path
+# - this file makes the filtered GPDD dataset
+# - some of the gpdd processing happens in another folder (`gpdd`)
+#   but gets sourced from here
+# - note that there's a shell script in the `gpdd` folder to turn the original
+#   Access database files into the `.csv` files
+# - I'm not running it here because I haven't put the appropriate binary in R's
+#   path
 
 library(dplyr)
 
@@ -15,8 +15,6 @@ setwd("..")
 
 # Data filtering (TODO note)
 gpdd <- readRDS("gpdd.rds")
-# gpdd <- subset(gpdd, taxonomic_phylum %in%
-#     c("Chordata", "Arthropoda", "Mollusca", "Annelida", "Echinodermata"))
 #
 # for checking later:
 gpdd$population_untransformed_original <- gpdd$population_untransformed
@@ -26,18 +24,6 @@ gpdd$population_untransformed_original <- gpdd$population_untransformed
 gpdd <- arrange(gpdd, main_id, series_step)
 
 gpdd <- subset(gpdd, sampling_protocol != "Harvest")
-
-# additional plan based on Brook et al. 2006:
-# - fill in single zeros with lowest value
-# - turn multiple zeros into multiple NAs but don't necessarily remove; the windowing procedure might find a usable length
-# - allow down to 15 time steps not just 25
-# - don't exclude based on tax. class
-# - only keep those with full species name
-# - USE THE UNTRANSFORMED DATA!!!!!
-# - take 10^ of all those columns with negative values or "log" in notes
-# - bring in the correlates data from Brook e al. 2006
-
-
 
 # hidden harvests: the fur trade stats:
 gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
@@ -73,7 +59,6 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
   x
 })
 
-
 # substitute single zeros for the lowest value
 # as in Brook et al. 2006
 # (slightly different since they did the first 0 no matter what)
@@ -88,10 +73,9 @@ gpdd <-
       if(y$population_untransformed[i] == 0 &
           y$population_untransformed[i-1] != 0 & y$population_untransformed[i+1] != 0) {
 
-        #lowest_non_zero <- min(y$population[-which(y$population == 0)])
-        #y$population[i] <- lowest_non_zero
-
-        lowest_non_zero <- min(y$population_untransformed[-which(y$population_untransformed == 0)], na.rm = TRUE)
+        lowest_non_zero <-
+          min(y$population_untransformed[-which(y$population_untransformed == 0)],
+            na.rm = TRUE)
         y$population_untransformed[i] <- lowest_non_zero
 
         y$decimal_year_begin[i] <- mean(c(y$decimal_year_begin[i-1],
@@ -99,7 +83,12 @@ gpdd <-
         y$decimal_year_end[i] <- mean(c(y$decimal_year_end[i-1],
           y$decimal_year_end[i + 1]))
         y$sample_year[i] <- mean(c(y$sample_year[i-1], y$sample_year[i + 1]))
-        copy_cols <- c("time_period_id", "taxon_id", "location_id", "sampling_units", "sampling_protocol", "sampling_effort", "sampling_frequency", "dataset_length", "notes", "datasource_id", "taxon_name", "common_name", "taxonomic_phylum", "taxonomic_class", "taxonomic_order", "taxonomic_family", "exact_name", "long_dd", "lat_dd", "ref", "data_medium", "data_notes")
+        copy_cols <- c("time_period_id", "taxon_id", "location_id",
+          "sampling_units", "sampling_protocol", "sampling_effort",
+          "sampling_frequency", "dataset_length", "notes", "datasource_id",
+          "taxon_name", "common_name", "taxonomic_phylum", "taxonomic_class",
+          "taxonomic_order", "taxonomic_family", "exact_name", "long_dd",
+          "lat_dd", "ref", "data_medium", "data_notes")
         y[i, copy_cols] <- y[i-1, copy_cols]
          y$zero_sub[i] <- TRUE
       }
@@ -109,18 +98,9 @@ gpdd <-
   return(y)
 })
 
- #fix the flags:
-#gpdd$zero_sub[is.na(gpdd$population_untransformed)] <- FALSE
-
 # now turn the remaining zeros to NAs for our windowing function
 # below
-#gpdd$population[gpdd$population == 0] <- NA
 gpdd$population_untransformed[gpdd$population_untransformed == 0] <- NA
-
-# remove those with zeros; won't work with growth rates
-# gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
-#   if(min(y$population) > 0) y
-# })
 
 # find those with uneven sampling intervals:
 multi_sample_diff_ids <-
@@ -134,7 +114,6 @@ gpdd <- subset(gpdd, !main_id %in% multi_sample_diff_ids$main_id)
 saveRDS(gpdd, file = "gpdd-temp.rds") # save time later if needed
 
 # remove those with 4 or more identical values in a row:
-
 check_identical_window <- function(x) {
   ident_window <- FALSE
   x <- as.numeric(na.omit(x))
@@ -160,28 +139,13 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
     x
 })
 
-# And remove classes with 1 or fewer populations
-# this removes crustacea
-#pop_counts <- gpdd %>% group_by(main_id) %>%
-  #summarise(tc = taxonomic_class[1]) %>%
-  #group_by(tc) %>% summarise(n = length(main_id))
-#gpdd <- filter(gpdd, !taxonomic_class %in% filter(pop_counts, n <= 1)$tc)
-
-#gpdd <- gpdd %>% group_by(main_id) %>%
-#  mutate(pgrowth = c(NA, diff(log(population))))
-
-
-# impute single non-continous NA values and keep track of how many you do
-#y <- subset(gpdd, main_id == 1356)
-#y$population[49] <- NA
-
 gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
   y$interpolated <- FALSE
   interpolated_count <- 0
   for(i in 2:(nrow(y)-1)) {
-    if(is.na(y$population_untransformed[i]) & !is.na(y$population_untransformed[i-1]) & !is.na(y$population_untransformed[i+1])) {
-      #y$population[i] <- exp(mean(c(log(y$population[i-1]),
-            #log(y$population[i + 1]))))
+    if(is.na(y$population_untransformed[i])
+      & !is.na(y$population_untransformed[i-1])
+      & !is.na(y$population_untransformed[i+1])) {
       y$population_untransformed[i] <- exp(mean(c(log(y$population_untransformed[i-1]),
         log(y$population_untransformed[i + 1]))))
       y$decimal_year_begin[i] <- mean(c(y$decimal_year_begin[i-1],
@@ -190,7 +154,12 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
           y$decimal_year_end[i + 1]))
       y$sample_year[i] <- mean(c(y$sample_year[i-1], y$sample_year[i + 1]))
       interpolated_count <- interpolated_count + 1
-      copy_cols <- c("time_period_id", "taxon_id", "location_id", "sampling_units", "sampling_protocol", "sampling_effort", "sampling_frequency", "dataset_length", "notes", "datasource_id", "taxon_name", "common_name", "taxonomic_phylum", "taxonomic_class", "taxonomic_order", "taxonomic_family", "exact_name", "long_dd", "lat_dd", "ref", "data_medium", "data_notes")
+      copy_cols <- c("time_period_id", "taxon_id", "location_id",
+        "sampling_units", "sampling_protocol", "sampling_effort",
+        "sampling_frequency", "dataset_length", "notes", "datasource_id",
+        "taxon_name", "common_name", "taxonomic_phylum", "taxonomic_class",
+        "taxonomic_order", "taxonomic_family", "exact_name", "long_dd",
+        "lat_dd", "ref", "data_medium", "data_notes")
       y[i, copy_cols] <- y[i-1, copy_cols]
       y$interpolated[i] <- TRUE
     }
@@ -203,7 +172,8 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
 # window if it's 25 or over steps
 #
 # For testing:
-#  junk <- data.frame(main_id = rep("a", 11), population = c(4, 4, 3, 2, 3, 3, 4, 4, 3, 4, 4))
+#  junk <- data.frame(main_id = rep("a", 11),
+#    population = c(4, 4, 3, 2, 3, 3, 4, 4, 3, 4, 4))
 #
 #  plyr::ddply(junk, "main_id", function(y) {
 #    rl <- rle(is.na(y$population))
@@ -241,14 +211,15 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
 # a bit of manual tuning to note in ms:
 # Remove this heron population, it is duplicated:
 # main_id = 20531 and 10139
-#jj <- subset(gpdd, main_id %in% c(20531, 10139))[,c("main_id", "series_step", "population")]
-#ggplot(jj, aes(series_step, population, colour = as.factor(main_id))) + geom_point()
+# jj <- subset(gpdd, main_id %in% c(20531, 10139))[,c("main_id", "series_step", "population")]
+# ggplot(jj, aes(series_step, population, colour = as.factor(main_id))) + geom_point()
 gpdd <- subset(gpdd, main_id != 20531)
 gpdd <- mutate(gpdd, label = paste(main_id, common_name))
 
 # looks like this value should be interpolated not zero subbed:
 # main ID: 20659
-gpdd$population_untransformed[gpdd$data_id == 1022378] <- exp(mean(c(log(7643), log(7117))))
+gpdd$population_untransformed[gpdd$data_id == 1022378] <-
+  exp(mean(c(log(7643), log(7117))))
 gpdd$zero_sub[gpdd$data_id == 1022378] <- FALSE
 gpdd$interpolated[gpdd$data_id == 1022378] <- TRUE
 
@@ -269,15 +240,11 @@ gpdd$interpolated[gpdd$data_id == 1022378] <- TRUE
 #   }
 # })
 
-# Remove id 10008 a water vole
-# obviously some major gpdd error between untransformed and population counts
-# gpdd <- subset(gpdd, main_id != 10008)
+gpdd %>% group_by(taxonomic_class, main_id) %>% summarise(n = n()) %>%
+  summarise(n = n())
 
-gpdd %>% group_by(taxonomic_class, main_id) %>% summarise(n = n())  %>% summarise(n = n())
-
-#
 # now focus the taxonomy slightly
-#
+# TODO note these steps:
 gpdd <- subset(gpdd, taxonomic_class != "Angiospermopsida (Dicotyledoneae)")
 gpdd <- subset(gpdd, taxonomic_class != "Angiospermopsida (Monocotyledonae)")
 gpdd <- subset(gpdd, taxonomic_class != "Bacillariophyceae")
@@ -287,11 +254,11 @@ gpdd <- subset(gpdd, !grepl("^[A-Za-z]+ $", taxon_name))
 gpdd <- subset(gpdd, !grepl("^[A-Za-z]+$", taxon_name))
 gpdd <- subset(gpdd, !grepl("Unknown", taxon_name))
 
-#unique(subset(gpdd, grepl("^[A-Za-z]+ $", taxon_name))$main_id)
-#subset(gpdd, grepl("^[A-Za-z]+$", taxon_name))
-#subset(gpdd, grepl("Unknown", taxon_name))
-
-gpdd %>% group_by(main_id, common_name) %>% summarise(rel = reliability[1]) %>% arrange(desc(rel)) %>% group_by(rel) %>% summarise(n = n()) %>% as.data.frame
+gpdd %>% group_by(main_id, common_name) %>%
+  summarise(rel = reliability[1]) %>%
+  arrange(desc(rel)) %>%
+  group_by(rel) %>%
+  summarise(n = n()) %>% as.data.frame
 
 # and remove those that we zero-subbed more than N times:
 # this doesn't remove many, but it removes a few silly ones
@@ -308,13 +275,6 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
   if(rel[1] != 1)
     x
 })
-
-# TODO more filtering?
-#gpdd <- gpdd %>% filter(gpdd, reliability != 1)
-#[1] "Middleton, A.D. 1934 Periodic fluctuations in British game populations. Journal of Animal Ecology, 3:231-49"
-
-#unique(gpdd$ref)[grep("game", unique(gpdd$ref))]
-#unique(gpdd$ref)[grep(" bag ", unique(gpdd$ref))]
 
 stat_table <-
   gpdd %>% group_by(taxonomic_class, main_id) %>%
@@ -335,26 +295,39 @@ write.csv(stat_table, file = "stat_table.csv", row.names = FALSE)
 
 stat_table$max_N <- NULL
 
-names(stat_table) <- c("Taxonomic class", "Populations", "Orders", "Species", "Median length", "Interpolated pts", "Zeros pts")
+names(stat_table) <- c("Taxonomic class", "Populations", "Orders", "Species",
+  "Median length", "Interpolated pts", "Zeros pts")
 library(xtable)
-print.xtable(xtable(stat_table, caption = "Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, and total number of substituted zeros."), include.rownames = FALSE, file = "stat-table.tex", booktabs = TRUE,  caption.placement = "top")
-
+print.xtable(xtable(stat_table,
+    caption = "Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, and total number of substituted zeros."),
+  include.rownames = FALSE, file = "stat-table.tex",
+  booktabs = TRUE,  caption.placement = "top")
 
 saveRDS(gpdd, file = "gpdd-clean.rds")
 
 # massive ts plot:
 library(ggplot2)
-p <- ggplot(gpdd, aes(series_step, log10(population_untransformed), colour = taxonomic_class)) + geom_point() + geom_line() + facet_wrap(~label, scales = "free") + geom_point(data = subset(gpdd, interpolated == TRUE), aes(series_step, log10(population_untransformed)), colour = "black", pch = 21) + geom_point(data = subset(gpdd, zero_sub == TRUE), aes(series_step, log10(population_untransformed)), colour = "black", pch = 20) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), strip.background = element_blank()) + xlab("Time series step") + ylab("log10(Abundance)")
+p <- ggplot(gpdd, aes(series_step, log10(population_untransformed), colour = taxonomic_class)) +
+  geom_point() + geom_line() +
+  facet_wrap(~label, scales = "free") +
+  geom_point(data = subset(gpdd, interpolated == TRUE),
+    aes(series_step, log10(population_untransformed)), colour = "black", pch = 21) +
+  geom_point(data = subset(gpdd, zero_sub == TRUE),
+    aes(series_step, log10(population_untransformed)), colour = "black", pch = 20) +
+  theme(panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    strip.background = element_blank()) +
+  xlab("Time series step") + ylab("log10(Abundance)")
 ggsave("all-clean-ts-3.pdf", width = 50, height = 50, limitsize = FALSE)
 
-p<-ggplot(subset(gpdd, assumed_log10 == TRUE), aes(series_step, log10(population_untransformed))) + geom_point() + geom_line() + facet_wrap(~label, scales = "free")
+p <- ggplot(subset(gpdd, assumed_log10 == TRUE),
+  aes(series_step, log10(population_untransformed))) +
+  geom_point() + geom_line() +
+  facet_wrap(~label, scales = "free")
 ggsave("log10-assumed.pdf", width = 20, height = 20)
 
-
-# remove those with irregular collection interval:
-# x <- gpdd %>% group_by("main_id") %>% summarise(n_collect_interval = length(unique(decimal_year_end - decimal_year_begin)), collect_interval = mean(decimal_year_end - decimal_year_begin), taxonomic_class = unique(taxonomic_class), taxonomic_order = unique(taxonomic_order))
-
-# PanTHERIA:
+# PanTHERIA: (not using this now)
 pantheria <- "http://esapubs.org/archive/ecol/E090/184/PanTHERIA_1-0_WR05_Aug2008.txt"
 download.file(pantheria, destfile = "mammals.txt")
 mammals <- read.table("mammals.txt", sep = "\t", header = TRUE,
@@ -365,4 +338,3 @@ names(mammals) <- gsub("([A-Z])", "_\\L\\1", names(mammals), perl = TRUE)
 names(mammals) <- gsub("^_", "", names(mammals), perl = TRUE)
 mammals[mammals == -999] <- NA
 saveRDS(mammals, file = "mammals.rds")
-
