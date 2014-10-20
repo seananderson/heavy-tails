@@ -28,54 +28,68 @@ with modelling and policy implications
 
 \section{Introduction}
 
-Black swans are unexpected extreme events with dramatic consequences. One of
-the most striking black swans in ecology was the asteroid marking the mass
-extinction of the K-T boundary (REF). Today, it is the extremeness of climate
---- particularly in concert with shifts in mean temperature --- that is
-expected to cause the greatest societal damage (REF).
+Black swans are unexpected extreme events with dramatic consequences
+\citep{taleb2007,sornette2009}. One of the most striking black swans in ecology
+was the asteroid marking the mass extinction of the K-T boundary (REF). Today,
+it is the extremeness of climate, in concert with shifts in mean temperature,
+that is expected to cause the greatest societal damage \citep{ipcc2012}.
+However, whereas extremes in the physical environment such as wave height, rain
+fall, and temperature are present and widely accepted
+\citep{gaines1993,katz2005}, it remains unclear the extent to which ecological
+systems buffer or suffer from black swans \citep{nunez2012}.
 
-However, while extremes in the physical environment are present and widely
-accepted, it remains unclear the extent to which ecological systems buffer or
-suffer from black swans.
+Existing evidence for black swans or heavy tails in population dynamics is
+mostly anecdotal or for particular systems. For example, \citet{doak2008}
+reviewed a collection of field experiment population dynamic surprises and
+conclude that these are more common than we typically assume. \citet{nunez2012}
+compiled a list of major events on geologic and contemporary scales that could
+be considered ecological black swans. Other work has identified heavy-tail
+dynamics for particular systems. For example, \citet{segura2013} identified
+heavy tails in time series of marine microbe populations and \citet{drake2014}
+identified heavy tails in time to extinction for experimental waterflea
+populations. However, systematic evidence has remained elusive.
+\citet{keitt1998} tested for power-law tail distributions in breeding bird
+abundance, but later worked showed the apparent heavy tails were a result of
+mixing populations of different species \citep{allen2001}. A large scale
+analysis of the Global Population Dynamics Database (GPDD) by
+\citet{halley2002} found little evidence for heavy-tail distributions in longer
+abundance time series.
 
-Existing evidence for black swans or heavy tails in population dynamics is thus
-far limited. Considerable work has focussed on heavy tails in physical
-environmental processes in, for example, rain fall (REF), wave height (REF),
-earth quake magnitude, climate temperature (REF). time to extinction, plankton
-time series, GPDD work found little evidence subsequent work suggested, but...
-Ward applied a data-intense method and found evidence for.
+%Considerable work has focussed on heavy tails in physical environmental
+%processes in, for example, rain fall (REF), wave height (REF), earth quake
+%magnitude, climate temperature (REF). time to extinction, plankton time series,
+%GPDD work found little evidence subsequent work suggested, but... Ward applied
+%a data-intense method and found evidence for.
+
+%Ecological population dynamic models typically assume 'thin tailed'
+%distributions, such as the normal distribution on a multiplicative scale (e.g.
+%REF). We define black swan dynamics as cases where jumps in population
+%abundance from time step to time step. from heavy-tailed distributions.
 
 There are two key reasons why we may find little evidence of ecological black
-swans. First, they might not exist. Indeed, the majority of population
-dynamics model fitting and risk forecasting assumes that population dynamics
-are not heavy tailed (e.g.~REF, REF, REF). Alternatively, population dynamics
-might be heavy tailed, but a paucity of statistical methods and shortness of
-available time series has limited our ability to detect them. For example,
-a commonly applied probability distribution to detect the shape of time series
-tails (the generalized extreme value distribution) requires lumping data into
-the most extreme event per unit time (e.g.~heaviest rainfall per year) and
-therefore requires a considerable quantity of data (REF). Previous work into
-the shape of population dynamic tails, has focused on model comparison to
-identify parsimonious explanations from a set of particular hypotheses, but
-does not quantify the magnitude of heavy tails on a continuous scale or put the
-conclusions in a probabilistic framework (REF). Furthermore, information
-criteria are poor at distinguishing subtle differences in population dynamics
-for the relatively short time series that are most readily available (REF CHANGE
-THIS?).
-
-Or bring back in Ward - data intensive, can't be applied to most individual
-time series
-
-plankton --- hideous distribution to fit, even harder in population dynamics
-framework -and what about seasonal cycles, density dependence?
-
-GPDD - model competition and finding most parsimonious explanation from set of
-hypotheses --- but only \emph{very} heavy from not heavy
-
-GEV --- super data intensive
-
-tipping point and regime shift methods --- say something\ldots{} not
-appropriate for most of the data available
+swans. First, they might not exist. Indeed, the majority of population dynamics
+model fitting and risk forecasting assumes that population dynamics are not
+heavy tailed (e.g.~REF, REF, REF). Alternatively, dynamics might be heavy
+tailed, but a paucity of statistical methods for the frequently available short
+time series has limited our ability to detect them. For example, a commonly
+applied probability distribution to detect the shape of time series tails (the
+generalized extreme value distribution) requires lumping data into the most
+extreme event per unit time (e.g.~heaviest rainfall per year) and therefore
+requires a considerable quantity of data (REF). Previous large-scale work on
+the distribution of abundance trends focused on model comparison to identify
+parsimonious descriptions, but has not quantified the magnitude of heavy tails
+on a continuous scale (REF). Furthermore, information criteria are poor at
+distinguishing subtle differences in population dynamics for the relatively
+short time series that are most readily available (REF CHANGE THIS?).
+%bring in Ward - great method but data intensive, can't be applied to most
+%individual time series from the GPDD
+%plankton --- hideous distribution to fit, even harder in population dynamics
+%framework -and what about seasonal cycles, density dependence?
+%GPDD - model competition and finding most parsimonious explanation from set of
+%hypotheses --- but only \emph{very} heavy from not heavy
+%GEV --- super data intensive
+%tipping point and regime shift methods --- say something\ldots{} not
+%appropriate for most of the data available
 
 Here we develop a probabilist framework for identifying ecological black swans
 in population dynamic process noise --- the stochastic jumps from time step to
@@ -94,16 +108,16 @@ predation, parasites, and their interactions were common documented causes. We
 found little evidence that intrinsic life-history characteristics were related
 to the probability of black swans.
 
-Papers to work in: \citep{inchausti2002, halley2002, inchausti2001}
-\citep{jentsch2007} \citep{ward2007} \citep{garcia-carreras2011}
-\citep{sornette2009} \citep{nunez2012} \citep{thompson2013}
-\citep{beaugrand2012} \citep{pine-iii2009} \citep{doak2008} Extreme rain and
-monsoons over India increasing \citep{goswami2006} \citep{smale2013}
-\citep{easterling2000} \citep{scheffer2003} \citep{katz2005} \citep{taleb2007}
-\citep{vasseur2014} \citep{vert-pre2013} \citep{lindenmayer2010}
-\citep{valpine2002} \citep{gregory2010} \citet{garcia-carreras2011}
-\citeauthor{brook2006} \citetext{\citeyear{brook2006};
-  \citealp{herrandoprez2014}} \citep{sibly2005, ziebarth2010}
+% Papers to work in: \citep{inchausti2002, halley2002, inchausti2001}
+% \citep{jentsch2007} \citep{ward2007} \citep{garcia-carreras2011}
+% \citep{sornette2009} \citep{nunez2012} \citep{thompson2013}
+% \citep{beaugrand2012} \citep{pine-iii2009} \citep{doak2008} Extreme rain and
+% monsoons over India increasing \citep{goswami2006} \citep{smale2013}
+% \citep{easterling2000} \citep{scheffer2003} \citep{katz2005} \citep{taleb2007}
+% \citep{vasseur2014} \citep{vert-pre2013} \citep{lindenmayer2010}
+% \citep{valpine2002} \citep{gregory2010} \citet{garcia-carreras2011}
+% \citeauthor{brook2006} \citetext{\citeyear{brook2006};
+%   \citealp{herrandoprez2014}} \citep{sibly2005, ziebarth2010}
 
 \section{Methods}
 
