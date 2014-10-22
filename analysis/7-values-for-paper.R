@@ -63,6 +63,28 @@ pheavy_overall <- gtemp %>% group_by(type) %>% summarise(n = n(), h = length(whi
 temp <- gpdd %>% group_by(main_id) %>% summarise(assume_log10 = assumed_log10[1]) %>% summarise(total_assumed_log10 = sum(assume_log10))
 total_assumed_log10 <- temp$total_assumed_log10
 
+## To obtain:
+## Methods:
+## - median time steps
+## - range of time steps (methods 2nd para.)
+##
+## Results:
+## - Pr(v < 10) > 0.5:
+## - counts for birds, mammals, insects, fishes
+## - how many orders had at least one black swan population?
+## - how many populations with nu < 10 to nu > 10 with obs. error?
+## - how much more probable were heavy tails with 40 time steps. vs. 30 time
+##   steps? (percentage and absolute)
+##
+## Discussion:
+## - Ricker / gompertz range of pops with black swans as percent
+##
+## Supplement:
+## - "the model still categorized XX\% of cases as heavy tailed when v = 5"
+##   (with observation error)
+## - how many autocorrelation residual Gompertz models didn't converge ("MCMC
+##   chains for a small number..."
+
 zz <- file("values.tex", "w")
 write_tex(perc_imputed_pops, "percImputedPops")
 write_tex(perc_imputed_points, "percImputedPoints")
