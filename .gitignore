@@ -34,3 +34,4 @@ notes.md
 mammals.txt
 packrat/lib*/
 *.tex.latexmain
+text/introduction.mindnode/*
