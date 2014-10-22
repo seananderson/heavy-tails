@@ -8,9 +8,9 @@ The analysis (`analysis/`) can be run by `source()`ing the `.R` files in
 sequence (`1-...R`, `2-...R`, etc.) in an R console. Files that start with the
 same number can be sourced in any order. Note that some components (population
 dynamic model fitting files that start with `2-` and beta-distribution
-multilevel models starting with `5.X-` may take a long time to fit (many hours
-to days). These were run on the [WestGrid](https://www.westgrid.ca/) computing
-facilities.
+multilevel models starting with `5.X-` may take a long time to fit (from hours
+to approximately a day depending on the file). These were run on the
+[WestGrid](https://www.westgrid.ca/) computing facilities.
 
 The `analysis/gpdd/` folder contains data from the Global Population Dynamics
 Database:
