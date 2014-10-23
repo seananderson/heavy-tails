@@ -43,7 +43,7 @@ systems buffer or suffer from black swans \citep{nunez2012}.
 There is compelling anecdotal evidence for ecological black swans, but
 systematic evidence has been elusive. A survey of ecologists indicated that
 surprising results in field experiments may be far more common than we assume
-\citep{doak2008}. And, a number of major environmental events on geologic and
+\citep{doak2008}, and a number of major environmental events on geologic and
 contemporary time scales could be considered to have caused ecological black
 swans \citep{nunez2012}. Other work has detected heavy-tail dynamics for
 particular systems. For example, \citet{segura2013} identified heavy tails in
@@ -74,7 +74,7 @@ dynamics are not heavy tailed (e.g.~REF, REF, REF).
 Alternatively, dynamics might be heavy tailed, but a paucity of statistical
 methods appropriate for short time series has limited our
 ability to detect them.
-For example, (1) the generalized extreme value (GEV) distribution has been
+As four examples: (1) The generalized extreme value (GEV) distribution has been
 applied to environmental data (REF).
 The GEV describes the distribution of the most extreme
 event per time interval (e.g.~heaviest rainfall per year), but this approach
@@ -83,9 +83,9 @@ requires long time series that can be condensed into time intervals (REF).
 other (REF), but information criteria likely have
 trouble accurately distinguishing such subtle differences in population
 dynamics for short time series (REF).
-(3) A catastrophic mixture distribution model allows one to elegantly quantify
-the probability that population events are catastrophic is also data intensive
-\citep{ward2007}.
+(3) A catastrophic mixture distribution model allows one to quantify the
+probability that population events are catastrophic but is also relatively data
+intensive \citep{ward2007}.
 (4) Other research has focussed on tipping points and regime shifts, but such
 methods are usually focussed on entire communities or ecosystems (e.g.\ REF).
 Furthermore, black swans are more general than tipping points --- they don't
@@ -164,8 +164,8 @@ Fig.~\ref{fig:all-ts}).
 
 Our main analysis focuses on the commonly applied Gompertz population dynamics
 model (REFs?). The Gompertz model represents population growth as a linear
-function in $\log$ space. If we let $x_t$ represent the $\log$ abundance ($N$)
-at time $t$, we can represent the Gompertz model as:
+function in $\log$ space. If we let $x_t$ represent the $\log$ abundance at
+time $t$, we can represent the Gompertz model as:
 \begin{align*}
 x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Normal}(0, \sigma^2).
