@@ -351,13 +351,17 @@ taxonomic order ($\alpha^\mathrm{order}_k$), and species
   \mathrm{species}}$. Where possible, we also allowed for error distributions
 around the predictors by incorporating the standard deviation of the posterior
 samples for the Gompertz parameters $\lambda$, $b$, and $\sigma$ around the
-mean point value as normal distributions (not shown in the above equation). We
-log transformed $\sigma$, time-series length, and lifespan to match the way
+mean point value as normal distributions (not shown in the above equation).
+
+We log transformed $\sigma$, time-series length, and lifespan to match the way
 they are visually represented in Fig.~\ref{fig:correlates} and to make the
 relationship approximately linear on the logit-transformed response scale. All
 input variables were standardized by subtracting their mean and dividing by two
 standard deviations \citep{gelman2008c} to make their coefficients comparable
-in magnitude.
+in magnitude. We excluded body length from the analysis because it was highly
+correlated with lifespan, and lifespan exhibited more overlap across taxonomy
+than body length. Lifespan is also more directly related to time and potential
+mechanisms driving black swan dynamics.
 
 We incorporated weakly informative priors into our model: $\mathrm{Cauchy}(0,
 10)$ on the global intercept $\alpha$, $\mathrm{Half\mhyphen Cauchy}(0, 2.5)$ on
