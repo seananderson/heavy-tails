@@ -28,15 +28,15 @@ with modelling and policy implications
 
 \section{Introduction}
 
-Black swans are unexpected extreme events with potentially dramatic consequences
-\citep{taleb2007,sornette2009}. One of the most striking black swans in ecology
-was the asteroid marking the mass extinction of the K-T boundary (REF). Today,
-it is the extremeness of climate, in concert with shifts in mean temperature,
-that is expected to cause the greatest societal damage \citep{ipcc2012}.
-But, while extremes in the physical environment such as wave height, rain
-fall, and temperature are present and widely accepted
-\citep{gaines1993,katz2005}, it remains unclear the extent to which ecological
-systems buffer or suffer from black swans \citep{nunez2012}.
+Black swans are unexpected extreme events with potentially dramatic
+consequences \citep{taleb2007,sornette2009}. One of the most striking black
+swans in ecology was the asteroid marking the mass extinction of the K-T
+boundary \citep{harnik2012}. Today, it is the extremeness of climate, in
+concert with shifts in mean temperature, that is expected to cause the greatest
+societal damage \citep{ipcc2012}. But, while extremes in the physical
+environment such as wave height, rain fall, and temperature are present and
+widely accepted \citep{gaines1993,katz2005}, it remains unclear the extent to
+which ecological systems buffer or suffer from black swans \citep{nunez2012}.
 
 %Existing evidence for black swans or heavy tails in population dynamics is
 %mostly anecdotal or for particular systems.
@@ -56,58 +56,23 @@ large scale analysis of the Global Population Dynamics Database (GPDD) found
 little evidence for heavy-tail distributions in longer abundance time series
 \citet{halley2002}.
 
-%Considerable work has focussed on heavy tails in physical environmental
-%processes in, for example, rain fall (REF), wave height (REF), earth quake
-%magnitude, climate temperature (REF). time to extinction, plankton time series,
-%GPDD work found little evidence subsequent work suggested, but... Ward applied
-%a data-intense method and found evidence for.
-
-%Ecological population dynamic models typically assume 'thin tailed'
-%distributions, such as the normal distribution on a multiplicative scale (e.g.
-%REF). We define black swan dynamics as cases where jumps in population
-%abundance from time step to time step. from heavy-tailed distributions.
-
 There are two key reasons why we may find little evidence of ecological black
 swans. First, they might not systematically exist. Indeed, the majority of
-model fitting and risk forecasting assumes that population
-dynamics are not heavy tailed (e.g.~REF, REF, REF).
-Alternatively, dynamics might be heavy tailed, but a paucity of statistical
-methods appropriate for short time series has limited our
-ability to detect them.
-As four examples: (1) The generalized extreme value (GEV) distribution has been
-applied to environmental data (REF).
-The GEV describes the distribution of the most extreme
-event per time interval (e.g.~heaviest rainfall per year), but this approach
-requires long time series that can be condensed into time intervals (REF).
-(2) Heavy- and thin-tailed distributions have been competed with each
-other (REF), but information criteria likely have
-trouble accurately distinguishing such subtle differences in population
-dynamics for short time series (REF).
-(3) A catastrophic mixture distribution model allows one to quantify the
-probability that population events are catastrophic but is also relatively data
+model fitting and risk forecasting assumes that population dynamics are not
+heavy tailed \citep[e.g.][]{brook2006a,dennis2006,knape2012}. Alternatively,
+dynamics might be heavy tailed, but a paucity of statistical methods
+appropriate for commonly available series has limited our ability to detect
+them. For example: (1) The generalized extreme value (GEV) distribution has
+been applied to environmental data \citep[e.g.][]{katz2005}. The GEV describes
+the distribution of the most extreme event per time interval (e.g.~heaviest
+rainfall per year), but this approach requires long time series that can be
+condensed into time intervals. (2) Thin- and heavy-tailed distributions have
+been competed with each other in an information theoretic framework
+\citep{halley2002}, but this analysis does not quantify the probability of
+black swans on a continuous scale or allow for population dynamics. (3) Fitting
+a catastrophic mixture distribution state space model allows one to quantify
+the probability that population events are catastrophic but is also data
 intensive \citep{ward2007}.
-(4) Other research has focussed on tipping points and regime shifts, but such
-methods are usually focussed on entire communities or ecosystems (e.g.\ REF).
-Furthermore, black swans are more general than tipping points --- they don't
-necessarily imply a permanent change of state.
-
-% For example, a commonly applied probability distribution to detect the shape of
-% time series tails (the generalized extreme value distribution) requires lumping
-% data into the most extreme event per unit time (e.g.~heaviest rainfall per
-% year) and therefore requires a considerable quantity of data (REF). Previous
-% large-scale work on the distribution of abundance trends focused on model
-% comparison to identify parsimonious descriptions, but has not quantified the
-% magnitude of heavy tails on a continuous scale (REF). Furthermore, information
-% criteria are poor at distinguishing subtle differences in population dynamics
-% for the relatively short time series that are most readily available (REF
-% CHANGE THIS?).
-%bring in Ward - great method but data intensive, can't be applied to most
-%individual time series from the GPDD plankton --- hideous distribution to fit,
-%even harder in population dynamics framework -and what about seasonal cycles,
-%density dependence? GPDD - model competition and finding most parsimonious
-%explanation from set of hypotheses --- but only \emph{very} heavy from not
-%heavy GEV --- super data intensive tipping point and regime shift methods ---
-%say something\ldots{} not appropriate for most of the data available
 
 Here we develop a framework for identifying ecological black swans in
 population dynamic process noise --- the stochastic jumps from time step to
@@ -125,17 +90,6 @@ a limited number of populations. When they occur, extreme climate, predation,
 parasites, and their interactions are common documented causes. We find little
 evidence that intrinsic life-history characteristics are related to the
 probability of black swans.
-
-% Papers to work in: \citep{inchausti2002, halley2002, inchausti2001}
-% \citep{jentsch2007} \citep{ward2007} \citep{garcia-carreras2011}
-% \citep{sornette2009} \citep{nunez2012} \citep{thompson2013}
-% \citep{beaugrand2012} \citep{pine-iii2009} \citep{doak2008} Extreme rain and
-% monsoons over India increasing \citep{goswami2006} \citep{smale2013}
-% \citep{easterling2000} \citep{scheffer2003} \citep{katz2005} \citep{taleb2007}
-% \citep{vasseur2014} \citep{vert-pre2013} \citep{lindenmayer2010}
-% \citep{valpine2002} \citep{gregory2010} \citet{garcia-carreras2011}
-% \citeauthor{brook2006} \citetext{\citeyear{brook2006};
-%   \citealp{herrandoprez2014}} \citep{sibly2005, ziebarth2010}
 
 \section{Methods}
 
@@ -163,9 +117,10 @@ with a median of \medianTimeSteps~time steps (range of
 \subsection{Population models}
 
 Our main analysis focuses on the commonly applied Gompertz population dynamics
-model (REFs?). The Gompertz model represents population growth as a linear
-function in $\log$ space. If we let $x_t$ represent the $\log$ abundance at
-time $t$, we can represent the Gompertz model as:
+model \citep[e.g.][]{knape2012,dennis2014,connors2014}. The Gompertz model
+represents population growth as a linear function in $\log$ space. If we let
+$x_t$ represent the $\log$ abundance at time $t$, we can represent the Gompertz
+model as:
 \begin{align*}
 x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Normal}(0, \sigma^2).
@@ -175,7 +130,7 @@ individuals at time $t + 1$ if $N_t = 1$. The model is density independent if
 $b = 1$, maximally density dependent if $b = 0$, and inversely density
 dependent if $b < 0$. The process noise $\epsilon_t$ is modelled as normally
 distributed with standard deviation $\sigma$. In previous analyses of the GPDD,
-the Gompertz has proved to be the most frequently parsimonious model
+the Gompertz has proved to be the most frequently parsimonious population model
 \citep{brook2006}.
 
 We extended the standard Gompertz model by allowing the process noise to be
@@ -208,7 +163,7 @@ We estimated all models in a Bayesian framework using Stan \citep[][version
 2.4.0]{stan-manual2014} via the R computing environment \citep{r2014}. Stan
 samples from the posterior distribution with an adaptive version of Hamiltonian
 Markov chain Monte Carlo called the No-U-Turn Sampler and generally obtains
-less correlated chains than algorithms such as the Gibbs sampler
+less correlated samples than algorithms such as the Gibbs sampler
 \citep{hoffman2014}. We assured that chains had sufficiently converged and the
 sampler had obtained sufficient independent samples from the posterior
 ($\widehat{R} < 1.05$, $n_\mathrm{eff} > 200$; Supporting Material). We used
@@ -232,13 +187,6 @@ The Gompertz model assumes that population growth rate declines linearly with
 log abundance. We also fit an alternative model, the Ricker-logistic model,
 which assumes that population growth rate declines linearly with abundance
 itself (Supporting Material).
-
-% TODO - make sure this is in the supp? However, simultaneously estimating
-% observation error
-%and process noise in a state space framework is a challenging computational
-%problem \citep[e.g.][]{dennis2006, knape2008} even with longer time series and
-%without estimating the shape of the process error tails;
-
 
 \subsection{Covariates of population dynamic black swans}
 
@@ -335,7 +283,7 @@ will underestimate the probability of black swans. The presence of black swans
 highlights the importance of developing management strategies that detect
 quickly, respond to, and are robust to extremes in population dynamics ---
 particularly as the frequency and magnitude of climatic extremes increase over
-the next century (REF).
+the next century \citep{easterling2000,ipcc2012}.
 
 Our results clarify previous related analyses. Previous work with an older
 version of the GPDD assessed the distribution of abundance time series but
@@ -423,34 +371,19 @@ plans. A similar focus could benefit resource management once our ability to
 predict the spatial probability and covariates of ecological black swans
 improves. Second, we can choose management policy that is robust to heavy
 tails. For example, setting target population abundances that are appropriately
-far from critical limits may buffer black swan events (REF), and
-maintaining genetic, phenotypic, and behavioural diversity may allow some
-components of populations persist when others are affected by extreme disease
-or environmental forces (REF). Finally, extreme and `unexpected', `surprising', or
-`counterintuitive' ecological dynamics offer a tremendous opportunity to learn
-about ecological systems, evaluate when our models break down, and tune future
-management policy (REF, REF). In recent decades ecology has moved toward
-focussing on aspects of variance in addition to mean responses (REF). Our
-results and other recent work suggests that an added focus on extremes
+far from critical limits may buffer black swan events
+\citep[e.g.][]{caddy1996}, and maintaining genetic, phenotypic, and behavioural
+diversity may allow some components of populations persist when others are
+affected by extreme disease or environmental forces
+\citep[e.g.][]{schindler2010, anderson2014}. Finally, extreme and `unexpected',
+`surprising', or `counterintuitive' ecological dynamics offer a tremendous
+opportunity to learn about ecological systems, evaluate when our models break
+down, and tune future management policy \citep{doak2008, pine-iii2009,
+  lindenmayer2010}. In recent decades ecology has moved toward focussing on
+aspects of variance in addition to mean responses \citep[e.g.][]{loreau2010a,
+  thompson2013}. Our results suggests that an added focus on extremes
 represents the next frontier, particularly in the face expected increases in
-extreme climate (REF).
-
-%ecological resource management can draw from other disciplines focussed on
-%heavy tails, design policy that is robust to heavy tails, and take black swan
-%events as opportunities for insight.
-%The 'portfolio effect' is often used in the context of dampening variability
-%(REFs), but the ultimate portfolio effect is maintaining some stability in the
-%face of black swan events.
-%unlikely to forecast black swans, at least with any useful advanced warning
-%but we might be able to determine probabilities and develop policy that is
-%robust to, encourages rapid detection, and that is flexible enough to respond
-%quickly to black swans
-%example of earth quakes - spatial planning, early warning systems, education
-%systems, a general idea about the probability in given places, build buildings
-%that are robust
-%Suggests that it's important to have policy that is robust to the uncertainty
-%about black swans and that can respond and adapt rapidly following black swans
-%foot and mouth disease and earthquakes?
+extreme climate \citep{meehl2004,ipcc2012}.
 
 \section{Acknowledgements}
 
@@ -476,7 +409,6 @@ regression\\
 The GPDD IDs used in our analysis\\
 All code and data to recreate our analysis is available at:\\
 \url{https://github.com/seananderson/heavy-tails}
-
 
 \bibliographystyle{ecologyletters}
 \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
