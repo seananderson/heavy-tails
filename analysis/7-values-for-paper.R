@@ -2,6 +2,8 @@
 # paper
 #
 library(dplyr)
+source("5-shape-data.R")
+p_inc <- readRDS("prob_inc_heavy_with_n.rds")
 
 write_tex <- function(x, macro, ...) {
   out <- paste0("\\newcommand{\\", macro, "}{", x, "}")
@@ -9,35 +11,33 @@ write_tex <- function(x, macro, ...) {
   cat("\n", file = zz)
   #writeLines(out, con = "values.tex", ...)
 }
+zz <- file("values.tex", "w") # open .tex file to write to throughout
 
-# what's the median and mean nu in the exponential prior?
-x <- rexp(2e7, 0.01)
-x <- x[x > 2]
-median(x)
-mean(x)
-length(x[x < 10])/length(x)
+# # what's the median and mean nu in the exponential prior?
+# x <- rexp(2e7, 0.01)
+# x <- x[x > 2]
+# median(x)
+# mean(x)
+# length(x[x < 10])/length(x)
 
 # how much was imputed?
 gpdd <- readRDS("gpdd-clean.rds")
-perc_imputed <- gpdd %>% group_by(main_id) %>% summarise(has_imputed = ifelse(max(interpolated) == 1, TRUE, FALSE)) %>% summarise(percent_imputed = sum(has_imputed)/length(has_imputed)) %>% round(2) * 100
+perc_imputed <- gpdd %>% group_by(main_id) %>%
+  summarise(has_imputed = ifelse(max(interpolated) == 1, TRUE, FALSE)) %>%
+  summarise(percent_imputed = sum(has_imputed)/length(has_imputed)) %>%
+  round(2) * 100
 perc_imputed_pops <- as.character(perc_imputed$percent_imputed)
 
 perc_imputed_points <- round(sum(gpdd$interpolated)/nrow(gpdd) * 100, 1)
 
-fig2_pop_n <- filter(gpdd, taxonomic_class %in% c("Aves", "Mammalia", "Insecta", "Osteichthyes")) %>% summarise(n = length(unique(main_id))) %>% summarise(N = sum(n))
+fig2_pop_n <- filter(gpdd, taxonomic_class %in%
+    c("Aves", "Mammalia", "Insecta", "Osteichthyes")) %>%
+  summarise(n = length(unique(main_id))) %>% summarise(N = sum(n))
 fig2_pop_n <- fig2_pop_n$N
 
 NPops <- length(unique(gpdd$main_id))
 NOrders <- length(unique(gpdd$taxonomic_order))
 NClasses <- length(unique(gpdd$taxonomic_class))
-
-
-# p_base <- round(length(which(gomp_hat_base$p10 > 0.5)) / NPops * 100)
-# p_obs <- round(length(which(gomp_hat_obs_0.2$p10 > 0.5)) / NPops * 100)
-# p_logistic <- round(length(which(gomp_hat_logistic$p10 > 0.5)) / NPops * 100)
-# p_rate <- round(length(which(gomp_hat_rate$p10 > 0.5)) / NPops * 100)
-# MinPNu10 <- min(p_base, p_obs, p_logistic)
-# MaxPNu10 <- max(p_base, p_obs, p_logistic)
 
 cols_include <- c("taxonomic_class", "main_id", "p10", "nu_50", "type",
   "max_rhat", "min_neff")
@@ -52,30 +52,107 @@ gtemp <- rbind(
   gomp_hat_logistic[,cols_include],
   gomp_hat_obs_0.2[,cols_include])
 
-# gtemp %>% filter(max_rhat < 1.05) %>% group_by(taxonomic_class, type) %>% summarise(n = n(), h =  length(which(p10 > 0.5)), p = round(100 * h / n))
+pheavy_class <- gtemp %>% filter(max_rhat < 1.05) %>%
+  group_by(taxonomic_class, type) %>%
+  summarise(n = n(), h =  length(which(p10 > 0.5)), p = round(100 * h / n)) %>%
+  group_by(taxonomic_class) %>%
+  summarise(min_p = min(p), max_p = max(p)) %>%
+  filter(min_p > 0)
 
-pheavy_class <- gtemp %>% filter(max_rhat < 1.05) %>% group_by(taxonomic_class, type) %>% summarise(n = n(), h =  length(which(p10 > 0.5)), p = round(100 * h / n)) %>% group_by(taxonomic_class) %>% summarise(min_p = min(p), max_p = max(p)) %>% filter(min_p > 0)
+pheavy_overall <- gtemp %>%
+  group_by(type) %>%
+  summarise(n = n(), h = length(which(p10 > 0.5)), p = round(100 * h / n))
 
-
-
-pheavy_overall <- gtemp %>% group_by(type) %>% summarise(n = n(), h = length(which(p10 > 0.5)), p = round(100 * h / n))
-
-temp <- gpdd %>% group_by(main_id) %>% summarise(assume_log10 = assumed_log10[1]) %>% summarise(total_assumed_log10 = sum(assume_log10))
+temp <- gpdd %>% group_by(main_id) %>%
+  summarise(assume_log10 = assumed_log10[1]) %>%
+  summarise(total_assumed_log10 = sum(assume_log10))
 total_assumed_log10 <- temp$total_assumed_log10
 
 ## To obtain:
 ## Methods:
 ## - median time steps
 ## - range of time steps (methods 2nd para.)
-##
+step_stats <- gpdd %>% group_by(main_id) %>% summarise(time_steps = n()) %>%
+  summarise(
+    p25 = round(quantile(time_steps, probs = 0.25)),
+    p50 = quantile(time_steps, probs = 0.50),
+    p75 = round(quantile(time_steps, probs = 0.75)),
+    max = max(time_steps),
+    min = min(time_steps),
+    mean = round(mean(time_steps), 1))
+write_tex(step_stats$p50, "medianTimeSteps")
+write_tex(step_stats$mean, "meanTimeSteps")
+write_tex(step_stats$min, "minTimeSteps")
+write_tex(step_stats$max, "maxTimeSteps")
+
 ## Results:
 ## - Pr(v < 10) > 0.5:
 ## - counts for birds, mammals, insects, fishes
+fract_heavy <- gomp_hat_base %>%
+  group_by(taxonomic_class) %>%
+  summarise(n_all = n(), n_heavy =length(which(p10 > 0.5))) %>%
+  filter(n_all > 15) %>%
+  mutate(p_heavy = round(100 * n_heavy / n_all))
+write_tex(subset(fract_heavy, taxonomic_class == "Aves")$n_all, "birdN")
+write_tex(subset(fract_heavy, taxonomic_class == "Insecta")$n_all, "insectsN")
+write_tex(subset(fract_heavy, taxonomic_class == "Mammalia")$n_all, "mammalsN")
+write_tex(subset(fract_heavy, taxonomic_class == "Osteichthyes")$n_all, "fishN")
+write_tex(subset(fract_heavy, taxonomic_class == "Aves")$n_heavy, "birdNH")
+write_tex(subset(fract_heavy, taxonomic_class == "Insecta")$n_heavy, "insectsNH")
+write_tex(subset(fract_heavy, taxonomic_class == "Mammalia")$n_heavy, "mammalsNH")
+write_tex(subset(fract_heavy, taxonomic_class == "Osteichthyes")$n_heavy, "fishNH")
+# percentages:
+write_tex(subset(fract_heavy, taxonomic_class == "Aves")$p_heavy, "birdPH")
+write_tex(subset(fract_heavy, taxonomic_class == "Insecta")$p_heavy, "insectsPH")
+write_tex(subset(fract_heavy, taxonomic_class == "Mammalia")$p_heavy, "mammalsPH")
+write_tex(subset(fract_heavy, taxonomic_class == "Osteichthyes")$p_heavy, "fishPH")
+
 ## - how many orders had at least one black swan population?
+NOrdersHeavy <- gomp_hat_base %>% group_by(taxonomic_order) %>%
+  summarise(n_heavy = length(which(p10 > 0.5))) %>%
+  filter(n_heavy >= 1) %>%
+  nrow
+write_tex(NOrdersHeavy, "NOrdersHeavy")
+write_tex(round(100*NOrdersHeavy/NOrders), "POrdersHeavy")
+
 ## - how many populations with nu < 10 to nu > 10 with obs. error?
-## - how much more probable were heavy tails with 40 time steps. vs. 30 time
+base_heavy_main_ids_0.50 <- subset(gomp_hat_base, p10 > 0.50)[, "main_id"]
+base50Obs50Switch <- filter(gomp_hat_obs_0.2,
+  main_id %in% base_heavy_main_ids_0.50 & p10 <= 0.5) %>% nrow
+write_tex(base50Obs50Switch, "base50Obs50Switch")
+base_heavy_main_ids_0.75 <- subset(gomp_hat_base, p10 > 0.75)[, "main_id"]
+base75Obs50Switch <- filter(gomp_hat_obs_0.2,
+  main_id %in% base_heavy_main_ids_0.75 & p10 <= 0.5) %>% nrow
+
+write_tex(base75Obs50Switch, "base75Obs50Switch")
+write_tex(length(base_heavy_main_ids_0.50), "totalHeavy50")
+write_tex(length(base_heavy_main_ids_0.75), "totalHeavy75")
+write_tex(round(100*base50Obs50Switch/length(base_heavy_main_ids_0.50)),
+  "base50Obs50SwitchPerc")
+write_tex(round(100*base75Obs50Switch/length(base_heavy_main_ids_0.50)),
+  "base75Obs50SwitchPerc")
+
+# now with respect to median estimates:
+base_heavy_main_ids_lt10 <- subset(gomp_hat_base, nu_50 <= 10)[, "main_id"]
+baseNuTenObsTenSwitch <- filter(gomp_hat_obs_0.2,
+  main_id %in% base_heavy_main_ids_lt10 & nu_50 > 10) %>% nrow
+write_tex(baseNuTenObsTenSwitch, "baseNuTenObsTenSwitch")
+write_tex(length(base_heavy_main_ids_lt10), "baseNuTen")
+
+base_heavy_main_ids_lt5 <- subset(gomp_hat_base, nu_50 <= 5)[, "main_id"]
+baseNuFiveObsTenSwitch <- filter(gomp_hat_obs_0.2,
+  main_id %in% base_heavy_main_ids_lt5 & nu_50 > 10) %>% nrow
+write_tex(baseNuFiveObsTenSwitch, "baseNuFiveObsTenSwitch")
+
+## - how much more probable were heavy tails with 60 time steps. vs. 30 time
 ##   steps? (percentage and absolute)
-##
+pHeavyN30 <- round(100 * p_inc[p_inc$N == 30, "p"])
+pHeavyN60 <- round(100 * p_inc[p_inc$N == 60, "p"])
+pIncHeavyN30N60 <- pHeavyN60 / pHeavyN30
+write_tex(pHeavyN30, "pHeavyNThirty")
+write_tex(pHeavyN60, "pHeavyNSixty")
+write_tex(pIncHeavyN30N60, "pIncHeavyNThirtyNSixty")
+
 ## Discussion:
 ## - Ricker / gompertz range of pops with black swans as percent
 ##
@@ -85,7 +162,7 @@ total_assumed_log10 <- temp$total_assumed_log10
 ## - how many autocorrelation residual Gompertz models didn't converge ("MCMC
 ##   chains for a small number..."
 
-zz <- file("values.tex", "w")
+
 write_tex(perc_imputed_pops, "percImputedPops")
 write_tex(perc_imputed_points, "percImputedPoints")
 write_tex(fig2_pop_n, "nuCoefPopN")
