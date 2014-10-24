@@ -10,7 +10,7 @@ drivers are unclear.
 
 Black swans are statistically improbable events that nonetheless occur ---
 often with profound implications. While extremes in the physical
-environment,such as monsoons and heat waves, are widely studied and increasing
+environment, such as monsoons and heat waves, are widely studied and increasing
 in magnitude and frequency, it remains unclear the extent to which ecological
 populations buffer or suffer from extremes. Here, we develop a probability
 model to estimate the degree of heavy-tailedness (presence of black swans) in
@@ -157,8 +157,8 @@ filtered the data (Supporting Material). Our filtering removed populations from
 less reliable data sources, removed those without sufficient data for our
 models, and interpolated some missing values. Our final dataset contained
 \NPops~populations across \NOrders~taxonomic orders and seven taxonomic classes
-with a median of XX time steps (range of XX--XX) (Table S1,
-Fig.~\ref{fig:all-ts}).
+with a median of \medianTimeSteps~time steps (range of
+\minTimeSteps--\maxTimeSteps) (Table S1, Fig.~\ref{fig:all-ts}).
 
 \subsection{Population models}
 
@@ -265,14 +265,15 @@ generating hypotheses about the causes of population dynamic black swans.
 
 We found strong but rare evidence for black-swan dynamics. Defining black-swan
 dynamics as a greater than $0.5$ probability that $\nu < 10$, we observed black
-swans most frequently for birds (X\%) followed by mammals (X\%), insects (X\%),
-and fishes (X\%) (Fig.~\ref{fig:nu-coefs}, \ref{fig:heavy-ts}). Black swans
-were taxonomically widespread, occurring for at least one population in X\% of
-the taxonomic orders recorded. Accounting for time series length and partially
-pooling inference across taxonomic class and order with a multilevel model,
-there was stronger evidence for black swans in insect populations than is
-apparent in Fig.~\ref{fig:nu-coefs} --- four of 10 orders with the highest
-median probability of heavy tails were insect orders --- however, there was
+swans most frequently for birds (\birdPH\%) followed by mammals (\mammalsPH\%),
+insects (\insectsPH\%), and fishes (\fishPH\%) (Fig.~\ref{fig:nu-coefs},
+\ref{fig:heavy-ts}). Black swans were taxonomically widespread, occurring for
+at least one population in \POrdersHeavy\% of the taxonomic orders recorded.
+Accounting for time series length and partially pooling inference across
+taxonomic class and order with a multilevel model, there was stronger evidence
+for black swans in insect populations than is apparent in
+Fig.~\ref{fig:nu-coefs} --- four of 10 orders with the highest median
+probability of heavy tails were insect orders --- however, there was
 considerable uncertainty in these estimates (Fig.~\ref{fig:order-estimates}).
 
 The majority of our heavy-tailed estimates were robust to alternative
@@ -281,9 +282,9 @@ autocorrelation structure in the residuals, modelling population growth rates
 without density dependence, or modelling the population dynamics as
 Ricker-logistic did not systematically alter our conclusions. Allowing for
 a fixed quantity of observation error decreased our estimates of black-swan
-dynamics, increasing the median estimate of $\nu$ from $<10$ to $>10$ in X of
-XX populations although the majority of $\nu$ estimates remained qualitatively
-similar (Fig.~\ref{fig:alt})
+dynamics, increasing the median estimate of $\nu$ from $<10$ to $>10$ in
+$\baseNuTenObsTenSwitch$ of $\baseNuTen$ populations although the majority of
+$\nu$ estimates remained qualitatively similar (Fig.~\ref{fig:alt})
 
 Across populations, the probability of observing black swan dynamics was
 positively related to time-series length and negatively related to magnitude of
@@ -292,10 +293,11 @@ process noise ($\sigma$) but not clearly related to population growth rate
 (Fig.~\ref{fig:correlates}, \ref{fig:correlate-coefs}). Longer time-series
 length was the strongest covariate of observing black swan dynamics (as was
 similarly observed in simulation testing, Fig.~\ref{fig:sim-nu}). For example,
-we were about 15\% TODO more likely to observe heavy tails in a population with
-40 time steps than in one with 30 time steps (Fig.~\ref{fig:perc-inc-p}).
-However, the absolute change in probability with increased time series length
-was small ($0.X$ vs. $0.X$ in the previous example, Fig.~\ref{fig:correlates}).
+we were about \pIncHeavyNThirtyNSixty~times more likely to observe heavy tails
+in a population with 60 time steps than in one with 30 time steps
+(Fig.~\ref{fig:perc-inc-p}). However, the absolute change in probability with
+increased time series length was small ($0.\pHeavyNSixty$ vs.\
+$0.\pHeavyNThirty$ in the previous example, Fig.~\ref{fig:correlates}).
 
 We assembled the documented causes of black swan population dynamics in seven
 populations with high probabilities of heavy tails (Table 1). The majority of
@@ -319,21 +321,21 @@ took the population three times longer to recover than predicted
 
 We found strong evidence that the multiplicative process noise jumps from time
 step to time step were greater than we would expect under a normal distribution
-and a Gompertz or Ricker-logistic model in XX--XX\% of populations assessed. We
-detected black swans more frequently for longer time series and for populations
-with a smaller magnitude of process error, as we might expect. However, we
-failed to find strong evidence that black swans were associated with density
-dependence, population growth rate, or lifespan. In cases that we verified,
-black swans were often a result of the interaction between elements of extreme
-climate, predators and parasite cycles, and strong changes in human pressures.
-Our empirical results, sensitivity tests, and simulation tests suggest that
-estimating the tail shape of process error is a viable method of detecting
-heavy-tailed population dynamics and if anything will underestimate the
-probability of black swans. The presence of black swans highlights the
-importance of developing management strategies that detect quickly, respond
-to, and are robust to extremes in population dynamics --- particularly as the
-frequency and magnitude of climatic extremes increase over the next century
-(REF).
+and a Gompertz or Ricker-logistic model in \overallMinPerc--\overallMaxPerc\%
+of populations assessed. We detected black swans more frequently for longer
+time series and for populations with a smaller magnitude of process error, as
+we might expect. However, we failed to find strong evidence that black swans
+were associated with density dependence, population growth rate, or lifespan.
+In cases that we verified, black swans were often a result of the interaction
+between elements of extreme climate, predators and parasite cycles, and strong
+changes in human pressures. Our empirical results, sensitivity tests, and
+simulation tests suggest that estimating the tail shape of process error is
+a viable method of detecting heavy-tailed population dynamics and if anything
+will underestimate the probability of black swans. The presence of black swans
+highlights the importance of developing management strategies that detect
+quickly, respond to, and are robust to extremes in population dynamics ---
+particularly as the frequency and magnitude of climatic extremes increase over
+the next century (REF).
 
 Our results clarify previous related analyses. Previous work with an older
 version of the GPDD assessed the distribution of abundance time series but
