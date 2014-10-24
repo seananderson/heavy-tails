@@ -5,11 +5,13 @@
 library(rstan)
 source("5-shape-data.R")
 
+# scale by 2 standard deviations and subtract mean:
 gelm_scale <- function(x) {
   (x - mean(x, na.rm = TRUE)) / (2 * sd(x, na.rm = TRUE))
 }
 
-ghb <- dplyr::select(gomp_hat_base, Lifesp, sigma_proc_50, b_50, lambda_50, dataset_length, p10, main_id)
+ghb <- dplyr::select(gomp_hat_base, Lifesp, sigma_proc_50, b_50, lambda_50,
+  dataset_length, p10, main_id)
 ghb <- na.omit(ghb)
 ghb$log_Lifesp_scaled <- gelm_scale(log(ghb$Lifesp))
 ghb$log_sigma_proc_50_scaled <- gelm_scale(log(ghb$sigma_proc_50))
@@ -32,7 +34,6 @@ dat$lambda_scaled_mean <- gelm_scale(dat$mean_lambda)
 dat$lambda_scaled_sd <- dat$sd_lambda / (2 * sd(dat$mean_lambda))
 dat$b_scaled_mean <- gelm_scale(dat$mean_b)
 dat$b_scaled_sd <- dat$sd_b / (2 * sd(dat$mean_b))
-#dat <- na.omit(dat)
 dat <- droplevels(dat)
 dat$taxonomic_order <- as.factor(dat$taxonomic_order)
 dat$taxonomic_class <- as.factor(dat$taxonomic_class)
@@ -54,7 +55,6 @@ m.stan.beta4 <- sampling(stan_beta4,
     x1 = as.numeric(d$lambda_scaled_mean),
     x2 = as.numeric(d$b_scaled_mean),
     x3 = as.numeric(d$log_sigma_scaled_mean),
-    #x4 = as.numeric(d$dataset_length) - mean(as.numeric(d$dataset_length)),
     x4 = as.numeric(d$log_dataset_length_scaled),
     x5 = as.numeric(d$log_Lifesp_scaled),
     x1_sigma = as.numeric(d$lambda_scaled_sd),
@@ -77,67 +77,72 @@ rstan::traceplot(m.stan.beta4, pars = c("b1", "b2", "b3", "b4", "b5",
 dev.off()
 
 saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
+m <- readRDS("beta-stan-samples.rds") # or reload this
 sink("beta-stan-samples-2.txt")
-print(m.stan.beta4)
+print(m)
 sink()
-m <- readRDS("beta-stan-samples.rds")
 
-
-d <- left_join(d, a_class_df)
-d <- left_join(d, a_order_df)
-d_re <- dplyr::select(d, order_id, class_id, a_order, a_class)
-d_re <- d_re[!duplicated(d_re), ]
+# d <- left_join(d, a_class_df)
+# d <- left_join(d, a_order_df)
+# d_re <- dplyr::select(d, order_id, class_id, a_order, a_class)
+# d_re <- d_re[!duplicated(d_re), ]
 
 means <- plyr::laply(extract(m), mean)[1:5]
 ord <- order(means)
 
-coefs <- c(expression(lambda), expression(b), expression(log(sigma)), expression(log(Timeseries~length)), expression(log(Lifespan)))
+coefs <- c(expression(lambda), expression(b), expression(log(sigma)),
+  expression(log(Timeseries~length)), expression(log(Lifespan)))
 
 pdf("stan-beta-correlates.pdf", width = 4, height = 6)
-par(mfrow = c(5, 1), mar = c(0,0,0,0), cex = 0.9, xpd = FALSE, oma = c(4, 4, 1, 1))
+par(mfrow = c(5, 1), mar = c(0,0,0,0), cex = 0.9, xpd = FALSE,
+  oma = c(4, 4, 1, 1))
 par(tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
 for(i in ord) {
   x <- density(extract(m)[[i]])
   plot(1, 1, xlim = c(-1, 1), ylim = c(0, 4),
     main = "", axes = FALSE, yaxs = "i", type = "n")
-  polygon(c(x$x, rev(x$x)), c(x$y, rep(0, length(x$y))), border = "grey50", col = "grey90", lwd = 1.5)
+  polygon(c(x$x, rev(x$x)), c(x$y, rep(0, length(x$y))), border = "grey50",
+    col = "grey90", lwd = 1.5)
   box()
   abline(v = 0, lty = 1, col = "grey60")
   legend(-1.2, 3.8, legend = coefs[i], bty = "n", adj = c(0, 0))
   axis(2, at = c(0, 2), las = 1)
 }
 axis(1)
-mtext("Coefficient value\n(per 2 SDs of predictor)", side = 1, line = 2.4, cex = 0.9, outer = TRUE)
+mtext("Coefficient value\n(per 2 SDs of predictor)", side = 1, line = 2.4,
+  cex = 0.9, outer = TRUE)
 mtext("Probability density", side = 2, line = 1.8, cex = 0.9, outer = TRUE)
 dev.off()
 
 mu_a <- extract(m, pars = "mu_a")[[1]]
 b4 <- extract(m, pars = "b4")[[1]]
 
-pdf("stan-beta-prediction.pdf", width = 4.5, height = 4)
-par(mfrow = c(1, 1), mar = c(0,0,0,0), cex = 0.8, xpd = FALSE, oma = c(4, 4, 1, 1))
-par(tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25", las = 1)
-plot(x, x, ylim = c(-0.0, 1.01), type = "n", xaxt = "n", yaxs = "i")
-axis(1, at = (log(ticks) - mean(log(ghb$dataset_length))) / zsd, labels = ticks)
-
-#for(i in 1:nrow(d_re)) {
-  #y_hat <- mu_a[i] + d_re$a_class[i] + d_re$a_order[i] + b4[i] * x
-  #lines(x, plogis(y_hat), col = "#FF000090")
-#}
-set.seed(1)
-with(d, points(log_dataset_length_scaled, p10, pch = 21, col = "#00000030", bg = "#00000010"))
-for(i in sample(1:length(mu_a), 1000)) {
-  y_hat <- mu_a[i] + b4[i] * x
-  lines(x, plogis(y_hat), col = "#0000FF09")
-}
-mtext("Timeseries steps", side = 1, outer = TRUE, line = 2.2, cex = 0.9)
-mtext(quote(Pr(nu<10)), side = 2, outer = TRUE, line = 2.2, cex = 0.9, las = 0)
-dev.off()
+# pdf("stan-beta-prediction.pdf", width = 4.5, height = 4)
+# par(mfrow = c(1, 1), mar = c(0,0,0,0), cex = 0.8, xpd = FALSE, oma = c(4, 4, 1, 1))
+# par(tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25", las = 1)
+# plot(x, x, ylim = c(-0.0, 1.01), type = "n", xaxt = "n", yaxs = "i")
+# axis(1, at = (log(ticks) - mean(log(ghb$dataset_length))) / zsd, labels = ticks)
+#
+# #for(i in 1:nrow(d_re)) {
+#   #y_hat <- mu_a[i] + d_re$a_class[i] + d_re$a_order[i] + b4[i] * x
+#   #lines(x, plogis(y_hat), col = "#FF000090")
+# #}
+# set.seed(1)
+# with(d, points(log_dataset_length_scaled, p10, pch = 21, col = "#00000030",
+#   bg = "#00000010"))
+# for(i in sample(1:length(mu_a), 1000)) {
+#   y_hat <- mu_a[i] + b4[i] * x
+#   lines(x, plogis(y_hat), col = "#0000FF09")
+# }
+# mtext("Timeseries steps", side = 1, outer = TRUE, line = 2.2, cex = 0.9)
+# mtext(quote(Pr(nu<10)), side = 2, outer = TRUE, line = 2.2, cex = 0.9, las = 0)
+# dev.off()
 
 # and get predictions for log sigma
 b3 <- extract(m, pars = "b3")[[1]]
 
-x <- seq(min(d$log_sigma_scaled_mean), max(d$log_sigma_scaled_mean), length.out = 100)
+x <- seq(min(d$log_sigma_scaled_mean), max(d$log_sigma_scaled_mean),
+  length.out = 100)
 zsd <- 2 * sd(dat$mean_log_sigma_proc)
 x_raw <- exp(x * zsd + mean(dat$mean_log_sigma_proc))
 pred_sigma <- data.frame(sigma_proc_mean = x_raw, log_sigma_scaled_mean = x)
@@ -146,12 +151,12 @@ p <- matrix(ncol = length(x), nrow = length(mu_a))
 for(i in 1:length(mu_a)) {
   p[i,] <- plogis(mu_a[i] + b3[i] * x)
 }
-pred_sigma <- data.frame(pred_sigma, plyr::adply(p, 2, quantile, probs = c(0.05, 0.5, 0.95)))
+pred_sigma <- data.frame(pred_sigma, plyr::adply(p, 2, quantile,
+  probs = c(0.05, 0.5, 0.95)))
 
 # and get % increase in Pr(nu < 10) with an increase in 10 data points:
-
-x <- seq(min(d$log_dataset_length_scaled), max(d$log_dataset_length_scaled), length.out = 4000)
-#x <- seq(min(d$log_dataset_length_scaled), max(d$log_dataset_length_scaled)*2.5, length.out = 2000)
+x <- seq(min(d$log_dataset_length_scaled), max(d$log_dataset_length_scaled),
+  length.out = 4000)
 zsd <- 2 * sd(log(ghb$dataset_length))
 x_raw <- exp(x * zsd + mean(log(ghb$dataset_length)))
 ticks <- c(20, 40, 60, 80, 100, 120)
@@ -160,7 +165,8 @@ p <- matrix(ncol = length(x), nrow = length(mu_a))
 for(i in 1:length(mu_a)) {
   p[i,] <- plogis(mu_a[i] + b4[i] * x)
 }
-pred_dataset_length <- data.frame(pred_dataset_length, plyr::adply(p, 2, quantile, probs = c(0.5)))
+pred_dataset_length <- data.frame(pred_dataset_length,
+  plyr::adply(p, 2, quantile, probs = c(0.5)))
 
 p_inc <- plyr::ldply(seq(20, 110, 10), function(i) {
  p <- dplyr::filter(pred_dataset_length, dataset_length > i)[1,"X50."]
@@ -170,12 +176,19 @@ p_perc_inc <- vector(length = (nrow(p_inc) - 1))
 for(i in 1:(nrow(p_inc)-1)) {
   p_perc_inc[i] <- p_inc$p[i+1] / p_inc$p[i]
 }
+
 pdf("perc-prob-increase-with-n.pdf", width = 4.5, height = 3.7)
 par(mar = c(4, 6, 1.5, 1), oma = c(0, 0, 0, 0), cex = 0.8)
 par(tck = -0.015, mgp = c(2.8, 0.4, 0), col.axis = "grey25", col = "grey25", las = 1)
-plot(p_inc$N[-length(p_inc$N)], 100 * (p_perc_inc - 1), xlab = "", ylab = "Expected percent increase in probability of detecting\nheavy tails with 10 additional time steps of data", pch = 21, col = "grey30", bg = "grey80", las = 1, ylim = c(0, max(100 * (p_perc_inc-1))))
+plot(p_inc$N[-length(p_inc$N)], 100 * (p_perc_inc - 1), xlab = "",
+  ylab = paste("Expected percent increase in probability of detecting\nheavy",
+    "tails with 10 additional time steps of data"),
+  pch = 21, col = "grey30", bg = "grey80", las = 1,
+  ylim = c(0, max(100 * (p_perc_inc-1))))
 mtext("Initial time-series length", side = 1, line = 2, cex = 0.8)
 dev.off()
+
+saveRDS(p_inc, file = "prob_inc_heavy_with_n.rds")
 
 # look at residuals:
 #d$stan_mu <- apply(extract(m, pars = "mu")[[1]], 2, mean)
