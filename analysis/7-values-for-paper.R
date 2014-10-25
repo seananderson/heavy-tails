@@ -59,6 +59,10 @@ pheavy_class <- gtemp %>% filter(max_rhat < 1.05) %>%
   summarise(min_p = min(p), max_p = max(p)) %>%
   filter(min_p > 0)
 
+pheavy_type <- gtemp %>% filter(max_rhat < 1.05) %>%
+  group_by(type) %>%
+  summarise(n = n(), h =  length(which(p10 > 0.5)), p = round(100 * h / n))
+
 pheavy_overall <- gtemp %>%
   group_by(type) %>%
   summarise(n = n(), h = length(which(p10 > 0.5)), p = round(100 * h / n))
@@ -119,18 +123,18 @@ write_tex(round(100*NOrdersHeavy/NOrders), "POrdersHeavy")
 base_heavy_main_ids_0.50 <- subset(gomp_hat_base, p10 > 0.50)[, "main_id"]
 base50Obs50Switch <- filter(gomp_hat_obs_0.2,
   main_id %in% base_heavy_main_ids_0.50 & p10 <= 0.5) %>% nrow
-write_tex(base50Obs50Switch, "base50Obs50Switch")
+write_tex(base50Obs50Switch, "baseFiftyObsFiftySwitch")
 base_heavy_main_ids_0.75 <- subset(gomp_hat_base, p10 > 0.75)[, "main_id"]
 base75Obs50Switch <- filter(gomp_hat_obs_0.2,
   main_id %in% base_heavy_main_ids_0.75 & p10 <= 0.5) %>% nrow
 
-write_tex(base75Obs50Switch, "base75Obs50Switch")
-write_tex(length(base_heavy_main_ids_0.50), "totalHeavy50")
-write_tex(length(base_heavy_main_ids_0.75), "totalHeavy75")
+write_tex(base75Obs50Switch, "baseSeventyFiveObsFiftySwitch")
+write_tex(length(base_heavy_main_ids_0.50), "totalHeavyFifty")
+write_tex(length(base_heavy_main_ids_0.75), "totalHeavySeventyFive")
 write_tex(round(100*base50Obs50Switch/length(base_heavy_main_ids_0.50)),
-  "base50Obs50SwitchPerc")
+  "baseFiftyObsFiftySwitchPerc")
 write_tex(round(100*base75Obs50Switch/length(base_heavy_main_ids_0.50)),
-  "base75Obs50SwitchPerc")
+  "baseSeventyFiveObsFiftySwitchPerc")
 
 # now with respect to median estimates:
 base_heavy_main_ids_lt10 <- subset(gomp_hat_base, nu_50 <= 10)[, "main_id"]
