@@ -19,8 +19,8 @@ gpdd <- readRDS("gpdd.rds")
 # for checking later:
 gpdd$population_untransformed_original <- gpdd$population_untransformed
 
-# There are a couple that need this
-# and tripped me up before:
+# There are a couple that are out of order
+# this tripped me up before:
 gpdd <- arrange(gpdd, main_id, series_step)
 
 gpdd <- subset(gpdd, sampling_protocol != "Harvest")
@@ -48,7 +48,7 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
 })
 
 # now deal with hidden logged values
-# assume those with zeros are logged:
+# assume those with < 0 are logged:
 # (some say, some don't)
 gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
   x$assumed_log10 <- FALSE
@@ -139,6 +139,7 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
     x
 })
 
+# do the interpolation:
 gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
   y$interpolated <- FALSE
   interpolated_count <- 0
@@ -223,28 +224,10 @@ gpdd$population_untransformed[gpdd$data_id == 1022378] <-
 gpdd$zero_sub[gpdd$data_id == 1022378] <- FALSE
 gpdd$interpolated[gpdd$data_id == 1022378] <- TRUE
 
-# or this:
-# if it's above the 75th quantile of all abundances, interpolate instead of
-# zero subbing
-# this only affects a few, but will err on the side of not making fake
-# black swans:
-
-# plyr::ddply(jj, "main_id", function(x) {
-#   if(sum(x$zero_sub, na.rm = TRUE) > 0) { # worth a check
-#     for(i in 2:nrow(x)) {
-#       if(x$zero_sub[i] == TRUE) { # check if we should impute instead
-#         quant.50 <- as.numeric(quantile(x$population_untransformed,
-#             probs = 0.50, na.rm = TRUE))
-#       }
-#     }
-#   }
-# })
-
 gpdd %>% group_by(taxonomic_class, main_id) %>% summarise(n = n()) %>%
   summarise(n = n())
 
-# now focus the taxonomy slightly
-# TODO note these steps:
+# now focus the taxonomy slightly:
 gpdd <- subset(gpdd, taxonomic_class != "Angiospermopsida (Dicotyledoneae)")
 gpdd <- subset(gpdd, taxonomic_class != "Angiospermopsida (Monocotyledonae)")
 gpdd <- subset(gpdd, taxonomic_class != "Bacillariophyceae")
@@ -307,7 +290,8 @@ saveRDS(gpdd, file = "gpdd-clean.rds")
 
 # massive ts plot:
 library(ggplot2)
-p <- ggplot(gpdd, aes(series_step, log10(population_untransformed), colour = taxonomic_class)) +
+p <- ggplot(gpdd, aes(series_step, log10(population_untransformed),
+  colour = taxonomic_class)) +
   geom_point() + geom_line() +
   facet_wrap(~label, scales = "free") +
   geom_point(data = subset(gpdd, interpolated == TRUE),
