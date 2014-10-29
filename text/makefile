@@ -3,7 +3,7 @@ MS = ms
 SOM = supp
 VERSION = 3
 
-all: quick
+all: text
 
 quick:
 	pdflatex $(TEXT)
