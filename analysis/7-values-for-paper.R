@@ -163,9 +163,27 @@ write_tex(pIncHeavyN30N60, "pIncHeavyNThirtyNSixty")
 ## Supplement:
 ## - "the model still categorized XX\% of cases as heavy tailed when v = 5"
 ##   (with observation error)
+check_nu <- readRDS("check_nu.rds")
+
+n_correct <- nrow(filter(check_nu, sigma_obs_true == 0.2,
+  sigma_obs_assumed == 0.001, p_0.1 > 0.5, nu_true == 5))
+n_tot <- max(check_nu$id)
+obsErrorNuFivePerc <- round(100 * (n_correct / n_tot))
+write_tex(obsErrorNuFivePerc, "obsErrorNuFivePerc")
+
 ## - how many autocorrelation residual Gompertz models didn't converge ("MCMC
 ##   chains for a small number..."
+modelsNoConvergeAROne <- nrow(filter(gomp_hat_ar1,
+  max_rhat > 1.05 | min_neff <  200))
+write_tex(modelsNoConvergeAROne, "modelsNoConvergeAROne")
 
+ar1_no_converge <- filter(gomp_hat_ar1,
+  max_rhat > 1.05 | min_neff <  200) %>% select(main_id)
+
+modelsNoConvergeAROneHeavyBase <-
+  filter(gomp_hat_base, main_id %in% ar1_no_converge$main_id) %>%
+  filter(p10 > 0.5) %>% nrow
+write_tex(modelsNoConvergeAROneHeavyBase, "modelsNoConvergeAROneHeavyBase")
 
 write_tex(perc_imputed_pops, "percImputedPops")
 write_tex(perc_imputed_points, "percImputedPoints")
