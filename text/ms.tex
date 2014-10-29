@@ -267,18 +267,16 @@ took the population three times longer to recover than predicted
 
 \section{Discussion}
 
-We found strong evidence that the multiplicative process noise jumps from time
-step to time step were greater than we would expect under a normal distribution
-and a Gompertz or Ricker-logistic model in \overallMinPerc--\overallMaxPerc\%
+We found strong evidence that the process noise in ecological time series was heavy-tailed under the Gompertz or Ricker-logistic models in \overallMinPerc--\overallMaxPerc\%
 of populations assessed. We detected black swans more frequently for longer
 time series and for populations with a smaller magnitude of process error, as
 we might expect. However, we failed to find strong evidence that black swans
 were associated with density dependence, population growth rate, or lifespan.
 In cases that we verified, black swans were often a result of the interaction
 between elements of extreme climate, predators and parasite cycles, and strong
-changes in human pressures. Our empirical results, sensitivity tests, and
-simulation tests suggest that estimating the tail shape of process error is
-a viable method of detecting heavy-tailed population dynamics and if anything
+changes in human pressures. Our empirical results, sensitivity analyses, and
+simulation tests suggest that estimating the tail shape of process noise is
+a viable method of detecting black swan population dynamics and if anything
 will underestimate the probability of black swans. The presence of black swans
 highlights the importance of developing management strategies that detect
 quickly, respond to, and are robust to extremes in population dynamics ---
@@ -295,7 +293,7 @@ support for these distributions in longer time series. However, black swan
 events are by definition rare, and the majority of time series in the GPDD are
 short for these purposes. Therefore, we would not expect to observe black swans
 in a large proportion of populations. Furthermore, by probabilistically
-quantifying process noise tail behaviour on a continuous spectrum, and allowing
+quantifying process noise tails on a continuous spectrum, and allowing
 for non-stationary time series and density dependence, our analysis allows for
 a more nuanced description of the evidence of ecological black swans. In an
 earlier study, \citet{keitt1998} described heavy (power law) tails in breeding
@@ -331,10 +329,10 @@ of populations are located in the United Kingdom. Although we expect that we
 would find strong but rare evidence for black swans in other large taxonomic or
 geographic samples, the common forces driving those black swans (e.g.~severe
 winters in Table~1) likely differ. Second, in a large database with disparate
-data sources, we cannot ensure the quality of every data point. Recording
-mistakes undoubtedly comprise some of the black swans we detected. Conversely,
-recording mistakes could mask heavy tails if initial observations are assumed
-to be recording errors and are discarded or altered. Third, the temporal scales
+data sources, we cannot ensure the quality of every data point;
+it is likely that some of the black swans in our dataset are 
+recording mistakes mistakes.
+Conversely, recording mistakes could mask heavy tails if initial observations are discarded or altered as assumed errors. Third, the temporal scales
 of observation and population dynamics vary considerably across populations in
 the GPDD and this likely influences the detection of heavy tails. For example,
 if we make frequent observations relative to generation time (e.g.~for many
@@ -346,7 +344,7 @@ across extreme and less-extreme events and dampen black swan dynamics.
 Our results suggest important future issues to address about ecological black
 swans. Given that black swans do occur, can we forecast the probability of
 black swans in space and time? Furthermore, what management policies allow us
-to detect them quickly after they happen? Secondly, can we isolate the
+to detect them quickly after they happen? Can we isolate the
 components of ecological dynamics that experience black swans events by moving
 from phenomenological models such as the Gompertz to mechanistic models, that
 take into account, for example, recruitment? We expect that greater insight
@@ -354,7 +352,7 @@ into the mechanisms and covariates of ecological black swans may be best
 obtained through specific geographic and taxonomic subsets of data where longer
 time series are available \citep[e.g.][]{segura2013}. Finally, what is the
 impact of allowing for black swans in forecasts of ecological risk? Financial
-analysts are concerned with the shape of financial-return distribution tails
+analysts are concerned with the shape of financial-return-distribution tails
 because these impact estimates of risk --- the probability of a specific
 magnitude of undesired event occurring \citep{rachev2008}. It is possible that
 a comparable focus in ecology would alter our perception of ecological
@@ -367,23 +365,24 @@ response is focussed on black swan events. Similarly to ecological black swans,
 we can rarely predict the specific location and timing of large earthquakes.
 But, earthquake preparedness involves spatial planning based on forecast
 probabilities to focus early detection efforts and develop disaster response
-plans. A similar focus could benefit resource management once our ability to
+plans (e.g.~REF).
+A similar focus could benefit resource management once our ability to
 predict the spatial probability and covariates of ecological black swans
 improves. Second, we can choose management policy that is robust to heavy
 tails. For example, setting target population abundances that are appropriately
 far from critical limits may buffer black swan events
 \citep[e.g.][]{caddy1996}, and maintaining genetic, phenotypic, and behavioural
 diversity may allow some components of populations persist when others are
-affected by extreme disease or environmental forces
-\citep[e.g.][]{schindler2010, anderson2014}. Finally, extreme and `unexpected',
-`surprising', or `counterintuitive' ecological dynamics offer a tremendous
+affected by disease or extreme environmental forces
+\citep[e.g.][]{schindler2010, anderson2014}. Finally, extreme and unexpected,
+surprising, or counterintuitive ecological dynamics offer a tremendous
 opportunity to learn about ecological systems, evaluate when our models break
 down, and tune future management policy \citep{doak2008, pine-iii2009,
   lindenmayer2010}. In recent decades ecology has moved toward focussing on
 aspects of variance in addition to mean responses \citep[e.g.][]{loreau2010a,
   thompson2013}. Our results suggests that an added focus on extremes
 represents the next frontier, particularly in the face expected increases in
-extreme climate \citep{meehl2004,ipcc2012}.
+climate extremes \citep{meehl2004,ipcc2012}.
 
 \section{Acknowledgements}
 
@@ -407,7 +406,7 @@ Table S1\\
 Example Stan code for a heavy-tailed Gompertz model and multilevel beta
 regression\\
 The GPDD IDs used in our analysis\\
-All code and data to recreate our analysis is available at:\\
+All code and data to recreate our analysis are available at:\\
 \url{https://github.com/seananderson/heavy-tails}
 
 \bibliographystyle{ecologyletters}
