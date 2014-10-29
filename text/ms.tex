@@ -9,14 +9,14 @@ drivers are unclear.
 \section{Abstract}
 
 Black swans are statistically improbable events that nonetheless occur ---
-often with profound implications. While extremes in the physical
-environment, such as monsoons and heat waves, are widely studied and increasing
-in magnitude and frequency, it remains unclear the extent to which ecological
-populations buffer or suffer from extremes. Here, we develop a probability
-model to estimate the degree of heavy-tailedness (presence of black swans) in
-ecological process noise. We apply our model to \NPops~time series from around
-the world across \NOrders~taxonomic orders and seven classes. We find strong
-evidence of black swans, but they are rare, occurring in
+often with profound implications. While extremes in the physical environment,
+such as monsoons and heat waves, are widely studied and increasing in magnitude
+and frequency, it remains unclear the extent to which ecological populations
+buffer or suffer from extremes. Here, we develop a probability model to
+estimate the degree of heavy-tailedness (presence of black swans) in ecological
+process noise. We apply our model to \NPops~time series from around the world
+across \NOrders~taxonomic orders and seven classes. We find strong evidence of
+black swans, but they are rare, occurring in
 \overallMinPerc--\overallMaxPerc\%of populations; most frequently for birds
 (\AvesRangePerc\%) followed by mammals (\MammaliaRangePerc\%), insects
 (\InsectaRangePerc\%), and fishes(\OsteichthyesRangePerc\%). When they occur,
@@ -30,7 +30,7 @@ with modelling and policy implications
 
 Black swans are unexpected extreme events with potentially dramatic
 consequences \citep{taleb2007,sornette2009}. One of the most striking black
-swans in ecology was the asteroid marking the mass extinction of the K-T
+swans in ecology is the asteroid marking the mass extinctions of the K-T
 boundary \citep{harnik2012}. Today, it is the extremeness of climate, in
 concert with shifts in mean temperature, that is expected to cause the greatest
 societal damage \citep{ipcc2012}. But, while extremes in the physical
@@ -62,17 +62,16 @@ model fitting and risk forecasting assumes that population dynamics are not
 heavy tailed \citep[e.g.][]{brook2006a,dennis2006,knape2012}. Alternatively,
 dynamics might be heavy tailed, but a paucity of statistical methods
 appropriate for commonly available series has limited our ability to detect
-them. For example: (1) The generalized extreme value (GEV) distribution has
-been applied to environmental data \citep[e.g.][]{katz2005}. The GEV describes
-the distribution of the most extreme event per time interval (e.g.~heaviest
-rainfall per year), but this approach requires long time series that can be
-condensed into time intervals. (2) Thin- and heavy-tailed distributions have
+them. For example: (1) The generalized extreme value distribution has been
+applied to environmental data \citep[e.g.][]{katz2005}. This distribution
+describes the most extreme event per time interval (e.g.~heaviest rainfall per
+year), but requires long time series that can be condensed into time intervals.
+(2) Fitting a catastrophic mixture distribution in a state space model allows
+one to quantify the probability that population events are extreme but is also
+data intensive \citep{ward2007} (3) Thin- and heavy-tailed distributions have
 been competed with each other in an information theoretic framework
 \citep{halley2002}, but this analysis did not quantify the probability of black
-swans on a continuous scale or allow for population dynamics. (3) Fitting
-a catastrophic mixture distribution state space model allows one to quantify
-the probability that population events are extreme on a continuous scale but is
-data intensive \citep{ward2007}.
+swans on a continuous scale or allow for standard population dynamics.
 
 Here we develop a framework for identifying ecological black swans in
 population dynamic process noise --- the stochastic jumps from time step to
@@ -119,8 +118,10 @@ with a median of \medianTimeSteps~time steps (range of
 Our main analysis focuses on the commonly applied Gompertz population dynamics
 model \citep[e.g.][]{knape2012,dennis2014,connors2014}. The Gompertz model
 represents population growth as a linear function in $\log$ space. If we let
-$x_t$ represent the $\log$ abundance ($N$) at time $t$, we can represent the Gompertz
-model as:
+$x_t$ represent the $\log$ abundance ($N$) at time $t$, we can represent the
+Gompertz model as:
+
+\vspace{-6mm}
 \begin{align*}
 x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Normal}(0, \sigma^2).
@@ -133,9 +134,11 @@ distributed with standard deviation $\sigma$. In previous analyses of the GPDD,
 the Gompertz has proved to be the most frequently parsimonious population model
 \citep{brook2006}.
 
-We extended the standard Gompertz model by allowing the process noise to be
+We extended the Gompertz model by allowing the process noise to be
 drawn from a Student-t distribution with degrees of freedom parameter $\nu$,
 and scale parameter $\sigma$:
+
+\vspace{-6mm}
 \begin{align*}
 \epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma).
 \end{align*}
@@ -147,17 +150,6 @@ nearly zero ($2.9\cdot10^{-5}$\%). As $\nu$ approaches infinity the
 distribution approaches the normal distribution. By estimating the value of
 $\nu$ we can quantity how heavy-tailed the process noise deviations are
 (Fig.~\ref{fig:didactic}).
-
-We chose weakly informative priors to incorporate our understanding of
-plausible population dynamics \citep[Supporting Material]{gelman2014}. For
-$\nu$, we chose an exponential prior with rate parameter of $0.01$ truncated at
-values above two (Fig.~\ref{fig:priors}) --- a slightly less informative prior
-than suggested by \citet{fernandez1998}. This prior gives only a 7.7\%
-probability that $\nu < 10$ but constrains the sampling sufficiently to avoid
-wandering off towards infinity --- above approximately $\nu = 20$ the
-t distribution is so similar to the normal distribution that time series of the
-length considered here are unlikely to be informative about the precise value
-of $\nu$ (Fig.~\ref{fig:didactic}).
 
 We estimated all models in a Bayesian framework using Stan \citep[][version
 2.4.0]{stan-manual2014} via the R computing environment \citep{r2014}. Stan
@@ -171,6 +163,17 @@ simulated data to test how easily we could detect $\nu$ given different sample
 sizes and to ensure we could recover unbiased parameter estimates from the
 Gompertz model (Supporting Material, Fig.~\ref{fig:sim-nu},
 \ref{fig:sim-gompertz}, \ref{fig:sim-gompertz-boxplots}).
+
+We chose weakly informative priors to incorporate our understanding of
+plausible population dynamics \citep[Supporting Material]{gelman2014}. For
+$\nu$, we chose an exponential prior with rate parameter of $0.01$ truncated at
+values above two (Fig.~\ref{fig:priors}) --- a slightly less informative prior
+than suggested by \citet{fernandez1998}. This prior gives only a 7.7\%
+probability that $\nu < 10$ but constrains the sampling sufficiently to avoid
+wandering off towards infinity --- above approximately $\nu = 20$ the
+t distribution is so similar to the normal distribution that time series of the
+length considered here are unlikely to be informative about the precise value
+of $\nu$ (Fig.~\ref{fig:didactic}).
 
 We fit four alternative population models to test if they systematically
 changed our conclusions. (1) Autocorrelation has been suggested as a reason for
@@ -194,13 +197,13 @@ We investigated possible covariates of heavy-tailed population dynamics
 visually and through multilevel modelling. We plotted characteristics of the
 time series ($\sigma$, $\lambda$, $b$, and time-series length) along with two
 life-history characteristics (body length and maximum lifespan obtained from
-\citet{brook2006a}) against our estimates of $\nu$. We formally investigated
-these relationships by fitting beta regression multilevel models to the
-probability that $\nu$ was less than $10$ (i.e.~approximately the probability
-of heavy tails). For covariates that were derived from Gompertz model parameter
-estimates, we incorporated standard deviations around the means. To account for
-broad patterns of phylogenetic relatedness, we allowed for varying intercepts
-at the taxonomic class, order, and species level (Supporting Material).
+\citet{brook2006a}) against our estimated probability of heavy tails, Pr$(\nu
+< 10) > 0.5$. We formally investigated these relationships by fitting beta
+regression multilevel models. For covariates that were derived from Gompertz
+model parameter estimates, we incorporated standard deviations around the
+means. To account for broad patterns of phylogenetic relatedness, we allowed
+for varying intercepts at the taxonomic class, order, and species level
+(Supporting Material).
 
 Finally, we investigated a sample of populations that our method categorized as
 having a high probability of heavy tails (Pr$(\nu < 10) > 0.5$). Where
@@ -211,18 +214,19 @@ generating hypotheses about the causes of population dynamic black swans.
 
 \section{Results}
 
-We found strong but rare evidence for black-swan dynamics. Defining black-swan
-dynamics as a greater than $0.5$ probability that $\nu < 10$, we observed black
-swans most frequently for birds (\birdPH\%) followed by mammals (\mammalsPH\%),
-insects (\insectsPH\%), and fishes (\fishPH\%) (Fig.~\ref{fig:nu-coefs},
-\ref{fig:heavy-ts}). Black swans were taxonomically widespread, occurring for
-at least one population in \POrdersHeavy\% of the taxonomic orders recorded.
-Accounting for time series length and partially pooling inference across
-taxonomic class and order with a multilevel model, there was stronger evidence
-for black swans in insect populations than is apparent in
-Fig.~\ref{fig:nu-coefs} --- four of 10 orders with the highest median
-probability of heavy tails were insect orders --- however, there was
-considerable uncertainty in these estimates (Fig.~\ref{fig:order-estimates}).
+We found strong but rare evidence for black-swan population dynamics. Defining
+black-swan dynamics as a greater than $0.5$ probability that $\nu < 10$, our
+main Gompertz model found evidence for heavy tails most frequently for birds
+(\birdPH\%) followed by mammals (\mammalsPH\%), insects (\insectsPH\%), and
+fishes (\fishPH\%) (Figs~\ref{fig:nu-coefs}, \ref{fig:heavy-ts}). Black swans
+were taxonomically widespread, occurring for at least one population in
+\POrdersHeavy\% of the taxonomic orders recorded. Accounting for time series
+length and partially pooling inference across taxonomic class and order with
+a multilevel model, there was stronger evidence for black swans in insect
+populations than is apparent in Fig.~\ref{fig:nu-coefs} --- four of 10 orders
+with the highest median probability of heavy tails were insect orders ---
+however, there was considerable uncertainty in these estimates
+(Fig.~\ref{fig:order-estimates}).
 
 The majority of our heavy-tailed estimates were robust to alternative
 population models and observation error (Fig.~\ref{fig:alt}). Including an
@@ -230,8 +234,8 @@ autocorrelation structure in the residuals, modelling population growth rates
 without density dependence, or modelling the population dynamics as
 Ricker-logistic did not systematically alter our conclusions. Allowing for
 a fixed quantity of observation error decreased our estimates of black-swan
-dynamics, increasing the median estimate of $\nu$ from $<10$ to $>10$ in
-$\baseNuTenObsTenSwitch$ of $\baseNuTen$ populations although the majority of
+dynamics, increasing the median estimate of $\nu$ from $<10$ to $\ge 10$ in
+$\baseNuTenObsTenSwitch$ of $\baseNuTen$ populations, although the majority of
 $\nu$ estimates remained qualitatively similar (Fig.~\ref{fig:alt})
 
 Across populations, the probability of observing black swan dynamics was
@@ -240,7 +244,7 @@ process noise ($\sigma$) but not clearly related to population growth rate
 ($\lambda$), density dependence ($b$), or maximum lifespan
 (Fig.~\ref{fig:correlates}, \ref{fig:correlate-coefs}). Longer time-series
 length was the strongest covariate of observing black swan dynamics (as was
-similarly observed in simulation testing, Fig.~\ref{fig:sim-nu}). For example,
+also observed in simulation testing, Fig.~\ref{fig:sim-nu}). For example,
 we were about \pIncHeavyNThirtyNSixty~times more likely to observe heavy tails
 in a population with 60 time steps than in one with 30 time steps
 (Fig.~\ref{fig:perc-inc-p}). However, the absolute change in probability with
@@ -251,24 +255,24 @@ We assembled the documented causes of black swan population dynamics in seven
 populations with high probabilities of heavy tails (Table 1). The majority of
 documented events were downward black swans and the majority involved
 a confluence of events. For example, a shortage of nest sites for the shag
-long-necked bird in the UK was thought to reduce population productivity and
-make the population vulnerable when a red tide hit in 1968 \citep{potts1980}.
-The population experienced a black swan downswing, but the new availability of
-nest sites resulted in a rapid population upswing \citep{potts1980}. As
-another example, an interaction between environmentally and predation-mediated
-population cycles are thought to have caused a downward black swan for a water
-vole population \citep{saucy1994}. Other black swans were the result of
-a sequence of extreme climate events on their own. For example, severe winters
-in 1929, 1940--1942, and 1962--1963 were associated with black swan downswings
-in grey heron abundance in the UK \citep{stafford1971}. Our analysis finds
-that the last event was a combination of two black swan events in a row and it
-took the population three times longer to recover than predicted
-\citep{stafford1971}.
+long-necked bird in the United Kingdom was thought to reduce population
+productivity and make the population vulnerable when a red tide hit in 1968
+\citep{potts1980}. The population experienced a black swan downswing, but the
+new availability of nest sites resulted in a rapid population upswing
+\citep{potts1980}. As another example, an interaction between environmental-
+and predation-mediated population cycles are thought to have caused a downward
+black swan for a water vole population \citep{saucy1994}. Other black swans
+were the result of a sequence of extreme climate events on their own. For
+example, severe winters in 1929, 1940--1942, and 1962--1963 were associated
+with black swan downswings in grey heron abundance in the United Kingdom
+\citep{stafford1971}. Our analysis finds that the last event was a combination
+of two black swan events in a row and it took the population three times longer
+to recover than predicted \citep{stafford1971}.
 
 \section{Discussion}
 
 We found strong evidence that the process noise in ecological time series was
-heavy-tailed under the Gompertz or Ricker-logistic models in
+heavy-tailed under  Gompertz or Ricker-logistic models in
 \overallMinPerc--\overallMaxPerc\% of populations assessed. We detected black
 swans more frequently for longer time series and for populations with a smaller
 magnitude of process error, as we might expect. However, we failed to find
@@ -287,7 +291,7 @@ frequency and magnitude of climatic extremes increase over the next century
 
 Our results clarify previous related analyses. Previous work with an older
 version of the GPDD assessed the distribution of abundance time series but
-focused on identifying if the lognormal distribution was the most frequently
+focused on identifying if the log-normal distribution was the most frequently
 parsimonious model \citep{halley2002}. For heavy-tailed distributions,
 \citet{halley2002} fit the extremely heavy-tailed Cauchy distribution and the
 four-parameter Levy stable distribution and found little information criteria
@@ -300,10 +304,10 @@ non-stationary time series and density dependence, our analysis allows for
 a more nuanced description of the evidence of ecological black swans. In an
 earlier study, \citet{keitt1998} described heavy (power law) tails in breeding
 bird population abundance. However, this finding was challenged by
-\citet{allen2001}, who showed that mixing data across species could create
+\citet{allen2001}, who showed that mixing data across species could
 falsely generate heavy tails. This rebuttal supports our use of the
 t distribution to represent heavy tails, since a t distribution can be
-represented by a mixture of normal distributions \citep[with
+represented by a mixture of normal distributions \citep[with the same mean and
 inverse-gamma-distributed variances,][]{gelman2014}.
 
 We might expect to observe black swan dynamics in ecological time series
@@ -328,12 +332,14 @@ First, the GPDD data represent a taxonomically and geographically biased sample
 of populations --- the longer time series we focus on are dominated by
 commercially and recreationally important species and a disproportionate number
 of populations are located in the United Kingdom. Although we expect that we
-would find strong but rare evidence for black swans in other large taxonomic or
-geographic samples, the common forces driving those black swans (e.g.~severe
-winters in Table~1) likely differ. Second, in a large database with disparate
+would find qualitatively similar evidence for black swans in many other large
+taxonomic or
+geographic samples of populations, the common forces driving
+those black swans likely differ (e.g.~severe
+winters in Table~1). Second, in a large database with disparate
 data sources, we cannot ensure the quality of every data point; it is likely
-that some of the black swans in our dataset are recording mistakes mistakes.
-Conversely, recording mistakes could mask heavy tails if initial observations
+that some of the black swans in our dataset are recording mistakes.
+Conversely, recording mistakes could mask heavy tails if extreme observations
 are discarded or altered as assumed errors. Third, the temporal scales of
 observation and population dynamics vary considerably across populations in the
 GPDD and this likely influences the detection of heavy tails. For example, if
@@ -347,12 +353,13 @@ Our results suggest important future issues to address about ecological black
 swans. Given that black swans do occur, can we forecast the probability of
 black swans in space and time? Furthermore, what management policies allow us
 to detect them quickly after they happen? Can we isolate the components of
-ecological dynamics that experience black swans events by moving from
+ecological dynamics that experience black swans by moving from
 phenomenological models such as the Gompertz to mechanistic models, that take
 into account, for example, recruitment? We expect that greater insight into the
 mechanisms and covariates of ecological black swans may be best obtained
 through specific geographic and taxonomic subsets of data where longer time
-series are available \citep[e.g.][]{segura2013}. Finally, what is the impact of
+series with low levels of observation error are available
+\citep[e.g.][]{segura2013}. Finally, what is the impact of
 allowing for black swans in forecasts of ecological risk? Financial analysts
 are concerned with the shape of financial-return-distribution tails because
 these impact estimates of risk --- the probability of a specific magnitude of
@@ -367,7 +374,7 @@ response is focussed on black swan events. Similarly to ecological black swans,
 we can rarely predict the specific location and timing of large earthquakes.
 But, earthquake preparedness involves spatial planning based on forecast
 probabilities to focus early detection efforts and develop disaster response
-plans (e.g.~REF). A similar focus could benefit resource management once our
+plans (e.g.~REF-TODO). A similar focus might benefit resource management once our
 ability to predict the spatial probability and covariates of ecological black
 swans improves. Second, we can choose management policy that is robust to heavy
 tails. For example, setting target population abundances that are appropriately
@@ -378,7 +385,7 @@ affected by disease or extreme environmental forces
 \citep[e.g.][]{schindler2010, anderson2014}. Finally, extreme and unexpected,
 surprising, or counterintuitive ecological dynamics offer a tremendous
 opportunity to learn about ecological systems, evaluate when our models break
-down, and tune future management policy \citep{doak2008, pine-iii2009,
+down, and adjust future management policy \citep{doak2008, pine-iii2009,
   lindenmayer2010}. In recent decades ecology has moved toward focussing on
 aspects of variance in addition to mean responses \citep[e.g.][]{loreau2010a,
   thompson2013}. Our results suggests that an added focus on extremes
@@ -428,17 +435,18 @@ tails, represented by the Student-t degrees of freedom parameter $\nu$. (a, b)
 The probability density for t distributions with a scale parameter of 1 and
 different values of $\nu$. Small values of $\nu$ create heavy tails. As $\nu$
 approaches infinity the distribution approaches the normal distribution. For
-example, at $\nu = 2$, the probability of drawing a value less than -5 is
+example, at $\nu = 2$, the probability of drawing a value more than five
+standard deviations below the mean is
 1.8\%, whereas the probability of drawing such a value from a normal
-distribution is nearly zero ($2.9\cdot10^{-5}$\%). (c--e) Simulated population
-dynamics from a Gompertz model with process noise drawn from t distributions
-with different values of $\nu$. Coloured dots in panels c and d represent jumps
-with less than a 1 in 1000 chance of occurring in a normal distribution. (f--h)
-Estimates of $\nu$ from models fit to the times series in panels c--e. Shown
-are the posterior samples (histograms), median and interquartile range of the
-posterior (IQR) (dots and line segments), and the exponential prior on $\nu$
-(dashed lines). Colour shading behind panels f--h illustrates the region of
-heavy tails.}
+distribution is nearly zero. (c--e) Simulated population dynamics from
+a Gompertz model with process noise drawn from t distributions with different
+values of $\nu$. Coloured dots in panels c and d represent jumps with less than
+a 1 in 1000 chance of occurring in a normal distribution. (f--h) Estimates of
+$\nu$ from models fit to the times series in panels c--e. Shown are the
+posterior samples (histograms), median and interquartile range of the posterior
+(IQR) (dots and line segments), and the exponential prior on $\nu$ (dashed
+lines). Colour shading behind panels f--h illustrates the region of heavy
+tails.}
 \label{fig:didactic}
 \end{center}
 \end{figure}
@@ -458,7 +466,7 @@ populations. Inset plots show probability that $\nu < 10$ (probability of
 heavy tails) for populations arranged by taxonomic order and sorted by
 decreasing mean Pr($\nu < 10$). Taxonomic orders with three or fewer
 populations in panel a are omitted for space. Red to yellow points highlight
-populations with a high probability of heavy-tailed dynamics.
+populations with a high to moderately high probability of heavy-tailed dynamics.
 } \label{fig:nu-coefs} \end{center} \end{figure}
 
 \clearpage

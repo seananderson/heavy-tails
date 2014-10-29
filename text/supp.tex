@@ -82,142 +82,57 @@ values.
 
 For the Gompertz model, our weakly-informative priors (Fig.~\ref{fig:priors}) were:
 \begin{align*}
-b &\sim \mathrm{Uniform}(-1, 2)\\
-\lambda &\sim \mathrm{Normal}(0, 10^2)\\
-\sigma &\sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)\\
-\nu &\sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2). \end{align*}
+b &\sim \mathrm{Uniform}(-1, 2)\\ \lambda &\sim \mathrm{Normal}(0, 10^2)\\
+\sigma &\sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)\\ \nu &\sim
+\mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2). \end{align*}
 Our prior on $b$ was uninformative between values of $-1$ and $2$. We would not
 expect values of $b$ with levels of density dependence as low as $-1$ (very
-strong inverse density dependence), nor would we generally expect values above $1$. We
-allowed values of $b$ above $1$ to allow for somewhat non-stationary time
-series of growth rates. The estimates of $b$ were well within these bounds. Our
-prior on $\lambda$ was very weakly informative within the range of expected
-values for population growth and is similar to the default priors suggested by
-\citet{gelman2008d} for intercepts of regression models. Our prior on $\sigma$
-follows \citet{gelman2006c} and \citet{gelman2008d} and is based on our
-expected range of the value in nature from previous studies
-\citep[e.g.][]{connors2014}. In our testing of a subsample of populations, our
-parameter estimates were not qualitatively changed by switching to an
-uninformative uniform prior on $\sigma$, but the weakly informative Half-Cauchy prior
-substantially sped up chain convergence.
+strong inverse density dependence), nor would we generally expect values above
+$1$. We allowed values of $b$ above $1$ to allow for non-stationary time series
+of growth rates. The estimates of $b$ were well within these bounds. Our prior
+on $\lambda$ was very weakly informative within the range of expected values
+for population growth and is similar to the default priors suggested by
+\citet{gelman2008d} for intercepts of regression models. Our Half-Cauchy prior
+on $\sigma$ follows \citet{gelman2006c} and \citet{gelman2008d} and the scale
+parameter of $2.5$ is based on our expected range of the value in nature from
+previous studies \citep[e.g.][]{connors2014}. In our testing of a subsample of
+populations, our parameter estimates were not qualitatively changed by
+switching to an uninformative uniform prior on $\sigma$, but the weakly
+informative Half-Cauchy prior substantially sped up chain convergence.
 
-Our prior on $\nu$ was based on \citet{fernandez1998}. They chose a more
-informative exponential rate parameter of $0.1$. We chose a less informative
-rate parameter of $0.01$ and truncated the distribution at $2$, since at $\nu
-< 2$ the variance of the t distribution is undefined. This prior gives only
-a $7.7$\% probability $\nu < 10$ but constrains the sampling sufficiently to
-avoid wandering off towards infinity --- above approximately $\nu = 20$ the
+Our prior on $\nu$ was based on \citet{fernandez1998}. They chose an
+exponential rate parameter of $0.1$. We chose a less informative rate
+parameter of $0.01$ and truncated the distribution at $2$, since at $\nu < 2$
+the variance of the t distribution is undefined. This prior gives only
+a $7.7$\% probability that $\nu < 10$ but constrains the sampling sufficiently
+to avoid wandering off towards infinity --- above approximately $\nu = 20$ the
 t distribution is so similar to the normal distribution
 (Fig.~\ref{fig:didactic}) that time series of the length considered here are
-unlikely to be informative about the precise value of $\nu$. In the
-scenario where the data are not heavy tailed (e.g.~Fig.~\ref{fig:didactic}e, h)
-the posterior will approximately match the prior (prior median $= 71$, mean $= 102$)
-and not be flagged as likely heavy tailed using the metrics we used in our paper
-(e.g.~Pr$(\nu < 10) > 0.5$).
+unlikely to be informative about the precise value of $\nu$. In the scenario
+where the data are informative about heavy tails
+(e.g.~Fig.~\ref{fig:didactic}e,~h), the posterior will approximately match the
+prior (prior median $= 71$, mean $= 102$) and the metrics used in our paper
+(e.g.~Pr$(\nu < 10) > 0.5$) are unlikely to flag the population as heavy
+tailed.
 
 We fitted our models with Stan 2.4.0 \citep{stan-manual2014}, and R 3.1.1
 \citep{r2014}. We began with four chains and $2000$ iterations, discarding the
-first $1000$ as warm up (i.e.~4000 total samples). If $\hat{R}$ (the scale
-reduction factor --- a measure of chain convergence) was greater than $1.05$
-for any parameter or the minimum effective sample size, $n_\mathrm{eff}$, (a
-measure of the effective number of uncorrelated samples) for any parameter was
-less than $200$, we doubled both the total iterations and warm up period and
-sampled from the model again. These thresholds are in excess of the minimums
-recommended by \citet{gelman2006a} of $\hat{R} < 1.1$ and effective sample size
-$> 100$ for reliable point estimates and confidence intervals. In the majority
-of cases our minimum thresholds were greatly exceeded. We continued this
-procedure up to $8000$ iterations ($16000$ total samples) by which all chains
-were deemed to have sufficiently converged. These chain lengths may seem low to
-those familiar with software such as WinBUGS or JAGS, but the No-U-Turn
-Hamiltonian Markov chain Monte Carlo Sampler in Stan generally requires far
-fewer iterations to obtain equivalent effective sample sizes \citep{stan-manual2014}.
+first $1000$ as warm up (i.e.~4000 total samples). If $\hat{R}$ (the potential
+scale reduction factor --- a measure of chain convergence) was greater than
+$1.05$ for any parameter or the minimum effective sample size,
+$n_\mathrm{eff}$, (a measure of the effective number of uncorrelated samples)
+for any parameter was less than $200$, we doubled both the total iterations
+and warm up period and sampled from the model again. These thresholds are in
+excess of the minimums recommended by \citet{gelman2006a} of $\hat{R} < 1.1$
+and effective sample size $> 100$ for reliable point estimates and confidence
+intervals. In the majority of cases our minimum thresholds were greatly
+exceeded. We continued this procedure up to $8000$ iterations ($16000$ total
+samples) by which all chains were deemed to have sufficiently converged. These
+chain lengths may seem low to those familiar with software such as WinBUGS or
+JAGS, but the No-U-Turn Hamiltonian Markov chain Monte Carlo Sampler in Stan
+generally requires far fewer iterations to obtain equivalent effective sample
+sizes \citep{stan-manual2014}.
 
-\section{Simulation testing the model}
-
-We performed two types of simulation testing. First, we tested how easily the
-Student-t distribution $\nu$ parameter could be recovered given different true
-values of $\nu$ and different sample sizes. Second, we tested the ability of the
-heavy-tailed Gompertz model to obtain unbiased parameter estimates of $\nu$
-given that a set of process deviations was provided in which the effective
-$\nu$ value was close to the true $\nu$ value.
-
-We separated our simulation into these two components to avoid confounding two
-issues. (1) With smaller sample sizes, there may not be a stochastic draw from
-the tails of a distribution. In that case, no model, no matter how perfect,
-will be able to detect the shape of the tails. (2) Complex models may return
-biased parameter estimates if there are conceptual, computational, or coding
-errors. Our first simulation tested the first issue and our second simulation
-tested the latter. In general, out simulations show that, if anything, our
-model under predicts the magnitude and frequency of heavy tailed events ---
-especially given the length of the time series in the GPDD.
-
-\subsection{Estimating $\nu$ simulations}
-
-First, we tested the ability to estimate $\nu$ given different true values of
-$\nu$ and different sample sizes. We took stochastic draws from t distributions with
-different $\nu$ values ($\nu = 3, 5, 10,$ and $10^6$ [$\approx$ normal]), with
-central tendency parameters of $0$, and scale parameters of $1$. We started with
-$1600$ stochastic draws and then fitted the models again at the first $800, 400,
-200, 100, 50,$ and $25$ draws. Each time we recorded the posterior samples of
-$\nu$.
-
-We found that we could consistently and precisely recover median posterior
-estimates of $\nu$ near the true value of $\nu$ with large samples ($\ge 200$)
-(Fig.~\ref{fig:sim-gompertz} upper panels). At smaller samples we could still
-usually qualitatively distinguish heavy from not-heavy tails, but the
-model tended to underestimate how heavy the tails were. At the same time, the
-model tended to overestimate how large the scale parameter was
-(Fig.~\ref{fig:sim-gompertz} lower panels).
-
-\subsection{Heavy-tailed Gompertz model simulations}
-
-In the second part of our simulation testing, we tested the ability of the
-heavy-tailed Gompertz model to obtain unbiased parameter estimates given that
-process deviations were provided in which our simpler model (previous
-section) could accurately estimate the value of $\nu$. To generate these process
-deviations, we repeatedly drew proposed candidate process deviations and estimated the
-central tendency, scale, and $\nu$ values each time. We recorded when
-$\hat{\nu}$ (median of the posterior) was within $0.2$ CVs (coefficient of
-variations) of the true $\nu$
-value and used this set of random seed values in our Gompertz simulation. We
-then fitted our Gompertz models to the simulated datasets with all parameters
-(except $\nu$) set near the median values estimated in the GPDD. We repeated
-this with $50$ and $100$ samples without observation error, $50$ samples with
-observation error ($\sigma_\mathrm{obs} = 0.2$), and $50$ samples with the same
-observation error and a Gompertz model that allowed for correctly specified
-observation error magnitude.
-
-Our results show that the more-complicated Gompertz model can still recapture
-the true value of $\nu$ when the process noise was chosen so that appropriate
-tail events were present (Figs~\ref{fig:sim-gompertz} and
-\ref{fig:sim-gompertz-boxplots}, red and green symbols in the top rows).
-Likewise, the other Gompertz parameters were estimated without any systematic
-bias (Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and
-green symbols). The addition of observation error caused the model to tend to
-underestimate the degree of heavy-tailedness, overestimate the magnitude of
-process noise, somewhat overestimate $\lambda$, and overestimate density
-dependence (blue symbols in Figs~\ref{fig:sim-gompertz} and
-\ref{fig:sim-gompertz-boxplots}). The overestimation of density dependence with
-observation error is a known phenomenon \citep{knape2012}. Fitting a model with
-correctly specified observation error made marginal improvements to model
-bias (purple symbols in Figs~\ref{fig:sim-gompertz} and
-\ref{fig:sim-gompertz-boxplots}).
-
-When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the
-models distinguished heavy and not-heavy tails reasonably well. Without
-observation error, and using a probability of $0.5$ as a threshold, the model
-would have miscategorized only one of $40$ simulations at $\nu = 5$ across
-a sample size of $50$ or $100$ data points (Fig.~\ref{fig:sim-prob}, upper
-panels). The model would have correctly categorized all cases where the process
-noise was not heavy tailed (indicated as ``$\nu =$ infinity'' in
-Fig.~\ref{fig:sim-prob}) and all cases where $\nu = 3$. With $0.2$ standard
-deviations of observation error, the model still categorized XX\% of cases as
-heavy tailed when $\nu = 5$ and all cases where $\nu = 3$. Allowing for
-observation error made little improvement to the detection of heavy tails
-(Fig.~\ref{fig:sim-prob}, lower-left vs.\ lower-right panel). Therefore, we
-chose to focus on the simpler model without observation error in the main
-text, particularly given that the true magnitude of observation error was
-unknown in the empirical data.
 
 \section{Alternative population models}
 
@@ -238,7 +153,7 @@ x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, \phi \epsilon_{t-1}, \sigma).
 \end{align*}
 In addition to the parameters in the original Gompertz model, we estimate an
-additional parameter $\phi$, which represents the relationship between
+additional parameter $\phi$, which represents the dependence of
 subsequent residuals. Based on the results of previous analyses with the GPDD
 \citep[e.g.][]{connors2014} and the chosen priors in previous analyses
 \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when
@@ -246,10 +161,13 @@ running our model across all populations, we placed a weakly informative prior
 on $\phi$ that assumed the greatest probability density near zero with the
 reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose
 $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1,
-\mathrm{max.} = 1)$. The MCMC chains for a small number of these models (XX) did
-not converge according to our criteria ($\widehat{R} < 1.05, n_\mathrm{eff}
-> 200$) after 8000 iterations of four chains. We did not include these models in
-Fig.~\ref{fig:alt}.
+\mathrm{max.} = 1)$. The MCMC chains did
+not converge for \modelsNoConvergeAROne\ populations according to
+our criteria ($\widehat{R} < 1.05, n_\mathrm{eff}
+> 200$) after 8000 iterations of four chains. This included only
+\modelsNoConvergeAROneHeavyBase\ populations in which
+Pr($\nu < 10$) $> 0.5$ categorized them as heavy in the main Gompertz model.
+We did not include these models in Fig.~\ref{fig:alt}.
 
 \subsection{Assumed density independence}\label{assumed-density-independence}
 
@@ -312,6 +230,92 @@ between zero and maximum observed, which is more informative). We set the prior
 on $r_\mathrm{max}$ as uniform between 0 and 20 as in \citet{clark2010}. We used
 the same priors on $\nu$ and $\sigma$ as in the Gompertz model.
 
+\section{Simulation testing the model}
+
+We performed two types of simulation testing. First, we tested how easily the
+Student-t distribution $\nu$ parameter could be recovered given different true
+values of $\nu$ and different sample sizes. Second, we tested the ability of the
+heavy-tailed Gompertz model to obtain unbiased parameter estimates of $\nu$
+given that a set of process deviations was provided in which the effective
+$\nu$ value was close to the true $\nu$ value.
+
+We separated our simulation into these two components to avoid confounding two
+issues. (1) With smaller sample sizes, there may not be a stochastic draw from
+the tails of a distribution. In that case, no model, no matter how perfect,
+will be able to detect the shape of the tails. (2) Complex models may return
+biased parameter estimates if there are conceptual, computational, or coding
+errors. Our first simulation tested the first issue and our second simulation
+tested the latter. In general, our simulations show that, if anything, our
+model under predicts the magnitude and probability of heavy tailed events ---
+especially given the length of the time series in the GPDD.
+
+\subsection{Estimating $\nu$ from a stationary t distribution}
+
+First, we tested the ability to estimate $\nu$ given different true values of
+$\nu$ and different sample sizes. We took stochastic draws from t distributions with
+different $\nu$ values ($\nu = 3, 5, 10,$ and $10^6$ [$\approx$ normal]), with
+central tendency parameters of $0$, and scale parameters of $1$. We started with
+$1600$ stochastic draws and then fitted the models again at the first $800, 400,
+200, 100, 50,$ and $25$ draws. Each time we recorded the posterior samples of
+$\nu$.
+
+We found that we could consistently and precisely recover median posterior
+estimates of $\nu$ near the true value of $\nu$ with large samples ($\ge 200$)
+(Fig.~\ref{fig:sim-gompertz} upper panels). At smaller samples we could still
+usually qualitatively distinguish heavy from not-heavy tails, but the model
+tended to underestimate how heavy the tails were. At the same time, at smaller
+sample sizes, the model tended to overestimate how large the scale parameter
+was (Fig.~\ref{fig:sim-gompertz} lower panels).
+
+\subsection{Heavy-tailed Gompertz model simulations}
+
+In the second part of our simulation testing, we tested the ability of the
+heavy-tailed Gompertz model to obtain unbiased parameter estimates given that
+process deviations were provided in which our simpler model (previous section)
+could accurately estimate the value of $\nu$. To generate these process
+deviations, we repeatedly drew proposed candidate process deviations and
+estimated the central tendency, scale, and $\nu$ values each time. We recorded
+when $\hat{\nu}$ (median of the posterior) was within $0.2$ CVs (coefficient of
+variations) of the true $\nu$ value and used this set of random seed values in
+our Gompertz simulation. We then fitted our Gompertz models to the simulated
+datasets with all parameters (except $\nu$) set near the median values
+estimated in the GPDD. We repeated this with $50$ and $100$ samples without
+observation error, $50$ samples with observation error ($\sigma_\mathrm{obs}
+= 0.2$), and $50$ samples with the same observation error and a Gompertz model
+that allowed for correctly specified observation error magnitude.
+
+Our results show that the Gompertz model can recapture the true value of $\nu$
+when the process noise was chosen so that appropriate tail events were present
+(Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and green
+symbols in the top rows). Likewise, the other Gompertz parameters were
+estimated without any systematic bias (Figs~\ref{fig:sim-gompertz} and
+\ref{fig:sim-gompertz-boxplots}, red and green symbols). The addition of
+observation error caused the model to tend to underestimate the degree of
+heavy-tailedness, overestimate the magnitude of process noise, somewhat
+overestimate $\lambda$, and overestimate density dependence (blue symbols in
+Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}). The
+overestimation of density dependence with observation error is a known
+phenomenon \citep{knape2012}. Fitting a model with correctly specified
+observation error made marginal improvements to model bias (purple symbols in
+Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}).
+
+When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the
+models distinguished heavy and not-heavy tails reasonably well. Without
+observation error, and using a probability of $0.5$ as a threshold, the model
+correctly classified all simulated systems with normally distributed process
+noise as not heavy tailed. The model would have miscategorized only one of $40$
+simulations at $\nu = 5$ across a sample size of $50$ or $100$ data points
+(Fig.~\ref{fig:sim-prob}, upper panels). The model would have correctly
+categorized all cases where the process noise was not heavy tailed (indicated
+as ``$\nu =$ infinity'' in Fig.~\ref{fig:sim-prob}) and all cases where $\nu
+= 3$. With $0.2$ standard deviations of observation error, the model still
+categorized \obsErrorNuFivePerc\% of cases as heavy tailed when $\nu = 5$ and
+all cases where $\nu = 3$. Allowing for observation error made little
+improvement to the detection of heavy tails (Fig.~\ref{fig:sim-prob},
+lower-left vs.\ lower-right panel). Therefore, we chose to focus on the simpler
+model without observation error in the main text, particularly given that the
+true magnitude of observation error was unknown in the empirical data.
+
 \section{Modelling covariates of heavy-tailed dynamics}
 
 We fitted a multilevel beta regression model to the predicted probability of
@@ -350,7 +354,7 @@ taxonomic order ($\alpha^\mathrm{order}_k$), and species
   \mathrm{class}}$, $\sigma_{\alpha \; \mathrm{order}}$, and $\sigma_{\alpha \;
   \mathrm{species}}$. Where possible, we also allowed for error distributions
 around the predictors by incorporating the standard deviation of the posterior
-samples for the Gompertz parameters $\lambda$, $b$, and $\sigma$ around the
+samples for the Gompertz parameters $\lambda$, $b$, and $\log \sigma$ around the
 mean point value as normal distributions (not shown in the above equation).
 
 We log transformed $\sigma$, time-series length, and lifespan to match the way
@@ -368,23 +372,23 @@ We incorporated weakly informative priors into our model: $\mathrm{Cauchy}(0,
 all standard deviation parameters, $\mathrm{Half\mhyphen Cauchy}(0, 10)$ on the
 dispersion parameter $\phi_\mathrm{disp}$, and $\mathrm{Cauchy}(0, 2.5)$ on all
 other parameters \citep{gelman2006c, gelman2008d}. Compared to normal priors,
-the Cauchy priors concentrate more probability density at reasonably parameter
-values while allowing for higher probability density far into the tails, thereby
+the Cauchy priors concentrate more probability density around expected parameter
+values while allowing for a higher probability density far into the tails, thereby
 allowing the data to dominate the posterior more strongly if it disagrees with
 the prior. Our conclusions were not qualitatively changed by using uniform
 priors. We fitted our models with 5000 total iterations per chain, 2500 warm-up
 iterations, four chains, and discarding every second sample to save memory. We
 checked for chain convergence visually and with the same criteria as before
-($\widehat{R} < 1.05$ and $n_\mathrm{eft} >200$ for all parameters).
+($\widehat{R} < 1.05$ and $n_\mathrm{eff} >200$ for all parameters).
 
 To derive taxonomic-order-level estimates of the probability of heavy tails
 accounting for time-series length (Fig \ref{fig:order-estimates}), we fitted
-a separate multilevel model with the same structure but with only time-series
-length as a predictor. (In this case, we did not want to control for intrinsic
-population characteristics such as density dependence.) Since our predictors were
-centered by subtracting their mean value, we obtained order-level
-estimates of the probability of heavy tails at mean time-series length by
-adding the posteriors for $\alpha$, $\alpha^\mathrm{class}_j$, and
+a separate multilevel model with the same structure but with only $\log$
+time-series length as a predictor. (In this case, we did not want to control
+for intrinsic population characteristics such as density dependence.) Since our
+predictors were centered by subtracting their mean value, we obtained
+order-level estimates of the probability of heavy tails at mean log time-series
+length by adding the posteriors for $\alpha$, $\alpha^\mathrm{class}_j$, and
 $\alpha^\mathrm{order}_k$.
 
 \bibliographystyle{ecologyletters}
@@ -428,7 +432,7 @@ $\alpha^\mathrm{order}_k$.
 \includegraphics[width=\textwidth]{../analysis/priors-gomp-base.pdf}
 \caption{
   Probability density of the Bayesian priors for the Gompertz models. From left
-  to right: (1) per capita growth rate at $\ln$(abundance) = $0$: $\lambda \sim
+  to right: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim
   \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process
   noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0,
   2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim
@@ -454,8 +458,7 @@ $\alpha^\mathrm{order}_k$.
   indicate the true population value. When a small number of samples are drawn
   there may not be samples sufficiently far into the tails to recapture the
   true $\nu$ value; however, heavy tails are still distinguished from normal
-  tails in most cases, even with only 25 or 50 samples. TODO switch to nu
-  = black swan, 3, 5, and normal.
+  tails in most cases, even with only 25 or 50 samples.
 }
 \label{fig:sim-nu}
 \end{center}
@@ -468,7 +471,7 @@ $\alpha^\mathrm{order}_k$.
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz.pdf}
 \caption{
   Simulation testing the Gompertz estimation model when the process deviation
-  draws were chosen so that $\nu$ can be estimated close to the true value
+  draws were chosen so that $\nu$ could be estimated close to the true value
   outside the full population model (``effective $\nu$'' within a CV of 0.2 of
   specified $\nu$). The simulation was run across population $\nu$ values
   (columns) and different scenarios (colours): (1) 100 time steps and no
@@ -477,7 +480,8 @@ $\alpha^\mathrm{order}_k$.
   ignored, and (4) 50 time steps with observation error in which the quantity
   of observation error was assumed known. Dashed horizontal lines show the true
   population values; these true values were chosen to represent approximately
-  the median values as estimated from the GPDD. Individual dots and lines
+  the median values as estimated from the Global Population Dynamics Database.
+  Individual dots and lines
   represent a stochastic draws from the true population distribution and
   a model fitting (median and 80\% credible intervals). The panels from top to
   bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate
@@ -494,7 +498,8 @@ $\alpha^\mathrm{order}_k$.
   The distribution of median estimates from the same simulation as described in
   Fig.~\ref{fig:sim-gompertz}. The boxes show the interquartile range. The
   whiskers extend to $1.5$ times the interquartile range and outliers are shown
-  as dots.
+  as dots. Note that these distributions represent the output from only 20
+  simulation iterations, so there is some level of remaining sampling noise.
 }
 \label{fig:sim-gompertz-boxplots}
 \end{center}
@@ -520,12 +525,11 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=0.9\textwidth]{../analysis/ts-gpdd-heavy-eg-log10-base.pdf}
 \caption{
-  Time series for populations with p($\nu < 10$) $>$ 0.5 using the base
+  Time series for populations with Pr($\nu < 10$) $>$ 0.5 using the base
   Gompertz population model. Panels are ordered by increasing p($\nu < 10$).
-  Vertical axes are on a log10 scale. Colours indicate taxonomic classes. TODO
-  add dots for upswings and downswings as in Table 1. The labels on each panel
-  indicate p($\nu < 10$) $>$ 0.5, the common name for the species, and the GPDD
-  ID number.
+  Vertical axes are on a log10 scale. Colours indicate taxonomic classes. The
+  labels on each panel indicate p($\nu < 10$) $>$ 0.5, the common name for the
+  species, and the Global Population Dynamics Database ID number.
 }
 \label{fig:heavy-ts}
 \end{center}
@@ -563,7 +567,7 @@ $\alpha^\mathrm{order}_k$.
   relationship. Different colours indicate various taxonomic classes. The
   grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken
   as a threshold of heavy-tailed dynamics. The Gompertz observation error model
-  assumes a fixed standard deviation of observation error of $0.2$ on the log
+  assumes a fixed standard deviation of observation error of $0.2$ on a log
   scale.
 }
 \label{fig:alt}
@@ -609,7 +613,7 @@ a 12\% increased probability of observing heavy tails in a time series that has
 
 \noindent
 Example Stan code for a heavy-tailed Gompertz model with AR1 correlated
-residuals and a specified level of observation error:
+residuals and a specified level of observation error. The specific code for used for the various models in our analysis is available at \url{https://github.com/seananderson/heavy-tails}.
 
 \begin{spacing}{1.15}
 \begin{footnotesize}
@@ -664,7 +668,7 @@ Stan code for the multilevel beta regression:
 \clearpage
 
 \noindent
-The GPDD IDs used in our analysis:
+The GPDD IDs used in our analysis. See \url{https://github.com/seananderson/heavy-tails}.
 
 \begin{footnotesize}
 \noindent
