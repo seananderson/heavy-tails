@@ -36,3 +36,5 @@ packrat/lib*/
 *.tex.latexmain
 text/introduction.mindnode/*
 heavy-tails.Rproj
+
+text/email-notes.tex
