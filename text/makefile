@@ -5,17 +5,14 @@ VERSION = 3
 
 all: text
 
+text:
+	latexmk $(TEXT)
+
 quick:
 	pdflatex $(TEXT)
 
-text: 
-	latexmk $(TEXT)
-
 dropbox: text rtf
 	cp $(TEXT).pdf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).pdf
-	cp $(TEXT).tex ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).tex
-	cp $(MS).tex ~/Dropbox/heavy-tails/$(MS)-v$(VERSION).tex
-	cp $(SOM).tex ~/Dropbox/heavy-tails/$(SOM)-v$(VERSION).tex
 	mv $(TEXT).rtf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).rtf
 
 rtf: text
