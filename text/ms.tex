@@ -120,8 +120,6 @@ model \citep[e.g.][]{knape2012,dennis2014,connors2014}. The Gompertz model
 represents population growth as a linear function in $\log$ space. If we let
 $x_t$ represent the $\log$ abundance ($N$) at time $t$, we can represent the
 Gompertz model as:
-
-\vspace{-6mm}
 \begin{align*}
 x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Normal}(0, \sigma^2).
@@ -137,8 +135,6 @@ the Gompertz has proved to be the most frequently parsimonious population model
 We extended the Gompertz model by allowing the process noise to be
 drawn from a Student-t distribution with degrees of freedom parameter $\nu$,
 and scale parameter $\sigma$:
-
-\vspace{-6mm}
 \begin{align*}
 \epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma).
 \end{align*}
