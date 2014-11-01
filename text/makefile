@@ -12,7 +12,7 @@ quick:
 	pdflatex $(TEXT)
 
 dropbox: text rtf
-	rm ~/Dropbox/heavy-tails/*
+	#rm ~/Dropbox/heavy-tails/*
 	cp $(TEXT).pdf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).pdf
 	mv $(TEXT).rtf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).rtf
 

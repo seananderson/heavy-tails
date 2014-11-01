@@ -224,12 +224,12 @@ x_t &= x_{t-1} + r_{\mathrm{max}}\left(1 - \frac{N_{t-1}}{K}\right) + \epsilon_t
 \epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma),
 \end{align*}
 where $r_\mathrm{max}$ represents the theoretical maximum population growth
-rate that is obtained when $N$ (abundance) $= 0$. The parameter $K$ represents
+rate that is obtained when $N_t$ (abundance at time $t$) $= 0$. The parameter $K$ represents
 the carrying capacity and, as before, $x_t$ represents the $\log$ transformed
 abundance at time $t$. The Ricker-logistic model assumes a linear decrease in
-population growth rate ($x_t - x_{t-1}$) with increases in abundance ($N_t$).
+population growth rate with increases in abundance.
 In contrast, the Gompertz model assumes a linear decrease in population growth
-rate with increases in \textit{log} abundance ($x_t$) (REF).
+rate with increases in \textit{log} abundance ($x_t$) \citep[e.g.][]{thibaut2012}.
 
 To fit the Ricker-logistic models, we chose a prior on $K$ uniform between zero
 and twice the maximum observed abundance (\citet{clark2010} chose uniform
