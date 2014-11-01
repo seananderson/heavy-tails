@@ -33,8 +33,8 @@ increase over the next century.
 
 Black swans are unexpected extreme events with potentially dramatic
 consequences \citep{taleb2007,sornette2009}. One of the most striking black
-swans in ecology is the asteroid marking the mass extinctions of the K-T
-boundary TODO-REF \citep{harnik2012}. Today, climate extremes, in concert with
+swans in ecology is the asteroid marking the end-Cretaceous mass extinction 65 million
+years ago \citep{alvarez1980,harnik2012}. Today, climate extremes, in concert with
 shifts in mean temperature, are expected to cause the greatest ecological and
 societal damage \citep{ipcc2012}. But, while extremes in the physical
 environment such as wave height, storm severity, and temperature are are
@@ -105,7 +105,7 @@ We obtained abundance time series from the Global Population Dynamics Database
 (GPDD) \citep{gpdd2010}. The GPDD contains nearly 5000 time series of abundance
 across $\sim$1000 species and $\sim$100 taxonomic orders. To derive
 a high-quality subset of populations that were suitable for our analyses, we
-filtered the data (Supporting Material). Our filtering removed populations from
+filtered the data (Supporting Information). Our filtering removed populations from
 less reliable data sources, removed those without sufficient data for our
 models, and interpolated some missing values \citep[\textit{sensu}][]{brook2006a}.
 Our final dataset contained \NPops~populations across \NOrders~taxonomic orders
@@ -154,14 +154,14 @@ Markov chain Monte Carlo called the No-U-Turn Sampler and generally obtains
 less correlated samples than algorithms such as the Gibbs sampler
 \citep{hoffman2014}. We assured that chains had sufficiently converged and the
 sampler had obtained sufficient independent samples from the posterior
-($\widehat{R} < 1.05$, $n_\mathrm{eff} > 200$; Supporting Material). We used
+($\widehat{R} < 1.05$, $n_\mathrm{eff} > 200$; Supporting Information). We used
 simulated data to test how easily we could detect $\nu$ given different sample
 sizes and to ensure we could recover unbiased parameter estimates from the
-Gompertz model (Supporting Material).
+Gompertz model (Supporting Information).
 
 We chose weakly informative priors to incorporate our understanding of
 plausible population dynamics 
-(\citeauthor{gelman2014} \citeyear{gelman2014}; Supporting Material). 
+(\citeauthor{gelman2014} \citeyear{gelman2014}; Supporting Information). 
 For $\nu$, we chose an exponential prior with rate parameter of $0.01$ truncated at
 values above two (Fig.~\ref{fig:priors}) --- a slightly less informative prior
 than suggested by \citet{fernandez1998}. This prior gives only a $7.7$\%
@@ -185,7 +185,7 @@ quantity of observation error ($0.2$ standard deviations on a log scale). (4)
 The Gompertz model assumes that population growth rate declines linearly with
 log abundance. We also fit an alternative model, the Ricker-logistic model,
 which assumes that population growth rate declines linearly with abundance
-itself (Supporting Material).
+itself (Supporting Information).
 
 \subsection{Covariates of population dynamic black swans}
 
@@ -199,7 +199,7 @@ regression multilevel models. For covariates that were derived from Gompertz
 model parameter estimates, we incorporated standard deviations around the
 means. To account for broad patterns of phylogenetic relatedness, we allowed
 for varying intercepts at the taxonomic class, order, and species level
-(Supporting Material).
+(Supporting Information).
 
 Finally, we investigated a sample of populations that our method categorized as
 having a high probability of heavy tails (Pr$(\nu < 10) > 0.5$). Where
@@ -375,7 +375,7 @@ response is focussed on black swan events. Similarly to ecological black swans,
 we can rarely predict the specific location and timing of large earthquakes.
 But, earthquake preparedness involves spatial planning based on forecast
 probabilities to focus early detection efforts and develop disaster response
-plans (e.g.~REF-TODO). A similar focus might benefit resource management once
+plans (e.g.~REFERENCE?). A similar focus might benefit resource management once
 our ability to predict the spatial probability and covariates of ecological
 black swans improves. Second, we can develop management policy that is robust
 to heavy tails. For example, setting target population abundances that are
@@ -407,9 +407,9 @@ Graduate Fellowship (SCA), the Natural Sciences and Engineering Research
 Council of Canada (NKD, ABC), the Canada Research Chairs Program (NKD), and
 TODO (TAB).
 
-\section{Supplementary Material}
+\section{Supporting Information}
 
-The following supplementary material is available online for this article:\\
+The following supporting information is available online for this article:\\
 Figures S1--S11\\
 Table S1\\
 Example Stan code for a heavy-tailed Gompertz model and multilevel beta
@@ -493,7 +493,7 @@ Circles representing a few sharks, crustaceans, and gastropods are filled in
 white. Median and 90\% credible interval posterior predictions of a beta
 regression multilevel model are shown in panels a and d where there was a high
 probability the slope coefficient was different from zero (Supporting
-Material).
+Information).
 }
 \label{fig:correlates}
 \end{center}
