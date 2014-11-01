@@ -4,11 +4,9 @@ stan_t <- readRDS("stan-t.rds")
 get_effective_nu_seeds <- function(nu_true = 5, cv = 0.2, N = 50,
   seed_N = 20, start_seed = 0, sigma_proc = 0.5) {
 
-  N <- N
   sigma_proc <- sigma_proc
   nu <- nu_true
   i <- start_seed
-  cv <- cv
   j <- 1
   seeds <- rep(0, length = seed_N)
   nu_ests <- rep(0, length = seed_N)
