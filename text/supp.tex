@@ -18,7 +18,7 @@ Population Dynamics Database (GPDD):
   populations with the words \texttt{harvest} or \texttt{fur} in the cited
   reference title.
 
-\item We removed all populations with uneven sampling intervals. I.e.~we removed
+\item We removed all populations with uneven sampling intervals, i.e.\ we removed
   populations that didn't have a constant difference between the ``decimal year
   begin'' and ``decimal year end'' columns.
 
@@ -26,26 +26,26 @@ Population Dynamics Database (GPDD):
   (on a scale of $1$ to $5$, with $1$ being the lowest quality data)
   \citep[following][]{sibly2005, ziebarth2010}
 
-\item Populations with negative abundance values were assumed to be log values
-  and transformed by taking $10$ to the power of the recorded abundance. In many
-  cases this was noted for the population, but not in all cases. We inspected
-  each of these \totalAssumedLog~time series to make sure our assumption made
-  sense.
+\item Populations with negative abundance values were assumed to be log10
+  values and transformed by taking $10$ to the power of the recorded abundance.
+  In many cases this was noted for the population, but not in all cases. We
+  inspected each of these \totalAssumedLog~time series to make sure our
+  assumption made sense.
 
 \item We filled in all missing time steps with \texttt{NA} values and imputed
   single missing values with the geometric mean of the previous and following
   values. We chose a geometric mean to be linear on the log scale that the
   Gompertz and Ricker-logistic models were fitted on.
 
-\item We filled in single recorded values of zero with the lowest non-zero value
-  in the time series \citep[following][]{brook2006a}. This assumes that single
-  values of zero result from abundance being low enough that censusing missed
-  present individuals. We turned multiple zero values in a row into \texttt{NA}
-  values. This implies that multiple zero values were either censusing errors or
-  caused by emigration. Regardless, our population models were fitted on
-  a multiplicative (log) scale and so could not account for zero abundance. To
-  avoid distorting the original data too strongly, we removed populations in
-  which we filled in more than four zeros.
+\item We filled in single recorded values of zero with the lowest non-zero
+  value in the time series \citep[following][]{brook2006a}. This assumes that
+  single values of zero result from abundance being low enough that censusing
+  overlooked individuals that were actually present. We turned multiple zero
+  values in a row into \texttt{NA} values. This implies that multiple zero
+  values were either censusing errors or caused by emigration. Regardless, our
+  population models were fitted on a multiplicative (log) scale and so could
+  not account for zero abundance. To avoid distorting the original data too
+  strongly, we removed populations in which we filled in more than four zeros.
 
 \item We removed all populations without at least four unique values
   \citep[following][]{brook2006a}.
@@ -101,15 +101,15 @@ switching to an uninformative uniform prior on $\sigma$, but the weakly
 informative Half-Cauchy prior substantially sped up chain convergence.
 
 Our prior on $\nu$ was based on \citet{fernandez1998}. They chose an
-exponential rate parameter of $0.1$. We chose a less informative rate
-parameter of $0.01$ and truncated the distribution at $2$, since at $\nu < 2$
-the variance of the t distribution is undefined. This prior gives only
-a $7.7$\% probability that $\nu < 10$ but constrains the sampling sufficiently
-to avoid wandering off towards infinity --- above approximately $\nu = 20$ the
+exponential rate parameter of $0.1$. We chose a less informative rate parameter
+of $0.01$ and truncated the distribution at $2$, since at $\nu < 2$ the
+variance of the t distribution is undefined. This prior gives only a $7.7$\%
+probability that $\nu < 10$ but constrains the sampling sufficiently to avoid
+wandering off towards infinity --- above approximately $\nu = 20$ the
 t distribution is so similar to the normal distribution
 (Fig.~\ref{fig:didactic}) that time series of the length considered here are
 unlikely to be informative about the precise value of $\nu$. In the scenario
-where the data are informative about heavy tails
+where the data are uninformative about heavy tails
 (e.g.~Fig.~\ref{fig:didactic}e,~h), the posterior will approximately match the
 prior (prior median $= 71$, mean $= 102$) and the metrics used in our paper
 (e.g.~Pr$(\nu < 10) > 0.5$) are unlikely to flag the population as heavy
@@ -168,6 +168,7 @@ our criteria ($\widehat{R} < 1.05, n_\mathrm{eff}
 \modelsNoConvergeAROneHeavyBase\ populations in which
 Pr($\nu < 10$) $> 0.5$ categorized them as heavy in the main Gompertz model.
 We did not include these models in Fig.~\ref{fig:alt}.
+\textit{TODO perhaps I should go up to 16,000 so that more converge.}
 
 \subsection{Assumed density independence}\label{assumed-density-independence}
 
@@ -182,19 +183,25 @@ x_t &= \lambda + x_{t-1} + \epsilon_t\\
 \end{align*}
 We fit this model for three reasons: (1) it is computationally simpler and so
 provides a check that our more complicated full Gompertz model was obtaining
-ballpark reasonable estimates of $\nu$, (2) it provides a test of whether
-density dependence was systematically affecting our perception of heavy tails,
-(3) it matches how some previous authors have modelled heavy tails without
-accounting for density dependence \citep{segura2013}.
+reasonable estimates of $\nu$, (2) it provides a test of whether density
+dependence was systematically affecting our perception of heavy tails, (3) it
+matches how some previous authors have modelled heavy tails without accounting
+for density dependence \citep{segura2013}.
 
 \subsection{Assumed observation error}
 
 Observation error can bias parameter estimates \citep[e.g.][]{knape2012} and is
-known to affect the ability to detect extreme events \citep{ward2007}. However,
-simultaneously estimating observation and process noise is a challenging
-problem and is known to result in identifiability issues with the Gompertz
-population model \citep{knape2008}. Furthermore, our model estimates an
-additional parameter --- the shape of the process deviation tails ---
+known to affect the ability to detect extreme events \citep{ward2007}. In our
+main analysis, we fit a model that ignored observation error. One way to
+account for observation error would be to fit a full state-space model that
+simultaneously estimates the magnitude of process noise and observation error.
+However, simultaneously estimating observation and process noise is
+a challenging problem (e.g.\ because the observation and process noise
+parameters tend to negatively covary in model fitting) and is known to
+sometimes result in identifiability issues with the Gompertz population model
+\citep{knape2008}. Furthermore, our model was applied to hundreds of time
+series, often of short length (as few as 20 time steps) and our model estimates
+an additional parameter --- the shape of the process deviation tails ---
 potentially making identifiability and computational issues even greater.
 Therefore, we considered a version of the base Gompertz model that allowed for
 a fixed level of observation error:
@@ -270,19 +277,52 @@ was (Fig.~\ref{fig:sim-gompertz} lower panels).
 \subsection{Heavy-tailed Gompertz model simulations}
 
 In the second part of our simulation testing, we tested the ability of the
-heavy-tailed Gompertz model to obtain unbiased parameter estimates given that
-process deviations were provided in which our simpler model (previous section)
-could accurately estimate the value of $\nu$. To generate these process
-deviations, we repeatedly drew proposed candidate process deviations and
-estimated the central tendency, scale, and $\nu$ values each time. We recorded
-when $\hat{\nu}$ (median of the posterior) was within $0.2$ CVs (coefficient of
-variations) of the true $\nu$ value and used this set of random seed values in
-our Gompertz simulation. We then fitted our Gompertz models to the simulated
-datasets with all parameters (except $\nu$) set near the median values
-estimated in the GPDD. We repeated this with $50$ and $100$ samples without
-observation error, $50$ samples with observation error ($\sigma_\mathrm{obs}
-= 0.2$), and $50$ samples with the same observation error and a Gompertz model
-that allowed for correctly specified observation error magnitude.
+heavy-tailed Gompertz model to obtain unbiased parameter estimates 
+when the process noise was chosen so that appropriate tail events were present.
+To generate these process deviations for the $\nu = 3$ and $\nu = 5$ scenarios, we
+repeatedly drew proposed candidate process deviations and estimated the central
+tendency, scale, and $\nu$ values each time. We recorded when $\hat{\nu}$
+(median of the posterior) was within $0.2$ CVs (coefficient of variations) of
+the true $\nu$ value and used this set of random seed values in our Gompertz
+simulation. The following simplified R code illustrates this procedure 
+(the actual code is available at \url{https://github.com/seananderson/heavy-tails}):
+
+\begin{footnotesize}
+\begin{verbatim}
+get_effective_nu_seeds <- function(nu_true = 5, cv = 0.2, N = 50, seed_N = 20) {
+  # nu_true: The true nu value
+  # cv:      The permitted effective nu coefficient of variation
+  # N:       The length of time series
+  # seed_N:  The number of seed values to generate
+  seeds <- numeric(length = seed_N)
+  seed_value <- 0
+  for (i in seq_len(seed_N)) {
+    nu_close <- FALSE
+    while (!nu_close) {
+      seed_value <- seed_value + 1
+      set.seed(i)
+      y <- rt(N, df = nu_true)
+      sm <- rstan::stan(... # fit the Stan model here
+      med_nu_hat <- median(rstan::extract(sm, pars = "nu")[[1]])
+      if (med_nu_hat > (nu_true - cv) & med_nu_hat < (nu_true + cv)) {
+        nu_close <- TRUE
+        seeds[i] <- seed_value
+      }
+    }
+  }
+  seeds
+}
+nu_3_seeds_N50 <- get_effective_nu_seeds(nu_true = 3)
+nu_5_seeds_N50 <- get_effective_nu_seeds(nu_true = 5)
+\end{verbatim}
+\end{footnotesize}
+
+We then fitted our Gompertz models to the simulated datasets with all
+parameters (except $\nu$) set near the median values estimated in the GPDD. We
+repeated this with $50$ and $100$ samples without observation error, $50$
+samples with observation error ($\sigma_\mathrm{obs} = 0.2$), and $50$ samples
+with the same observation error and a Gompertz model that allowed for correctly
+specified observation error magnitude.
 
 Our results show that the Gompertz model can recapture the true value of $\nu$
 when the process noise was chosen so that appropriate tail events were present
@@ -341,7 +381,7 @@ B_i &= \phi_\mathrm{disp} (1 - \mu_i)\\
   \: \text{for } k = 1, \dots, 38\\
 \alpha^\mathrm{species}_l &\sim
   \mathrm{Normal}(0, \sigma^2_{\alpha \; \mathrm{species}}),
-  \: \text{for } l = 1, \dots, 301,\\
+  \: \text{for } l = 1, \dots, 301,
 \end{align*}
 where $A$ and $B$ represent the beta distribution shape parameters; $\mu_i$
 represents the predicted value for population $i$, class $j$, order $k$, and
@@ -449,86 +489,12 @@ $\alpha^\mathrm{order}_k$.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
-\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
-\caption{
-  Testing the ability to estimate $\nu$ (top panels) and the scale parameter of
-  the process deviations (bottom panels) for a given number of samples (columns)
-  drawn from a distribution with a given true $\nu$ value (rows). The red lines
-  indicate the true population value. When a small number of samples are drawn
-  there may not be samples sufficiently far into the tails to recapture the
-  true $\nu$ value; however, heavy tails are still distinguished from normal
-  tails in most cases, even with only 25 or 50 samples.
-}
-\label{fig:sim-nu}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/sim-gompertz.pdf}
-\caption{
-  Simulation testing the Gompertz estimation model when the process deviation
-  draws were chosen so that $\nu$ could be estimated close to the true value
-  outside the full population model (``effective $\nu$'' within a CV of 0.2 of
-  specified $\nu$). The simulation was run across population $\nu$ values
-  (columns) and different scenarios (colours): (1) 100 time steps and no
-  observation error, (2) 50 time steps and no observation error, (3) 50 time
-  steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
-  ignored, and (4) 50 time steps with observation error in which the quantity
-  of observation error was assumed known. Dashed horizontal lines show the true
-  population values; these true values were chosen to represent approximately
-  the median values as estimated from the Global Population Dynamics Database.
-  Individual dots and lines
-  represent a stochastic draws from the true population distribution and
-  a model fitting (median and 80\% credible intervals). The panels from top to
-  bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate
-  parameter $\lambda$, and the density dependence parameter $b$.
-}
-\label{fig:sim-gompertz}
-\end{center}
-\end{figure}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/sim-gompertz-boxplots.pdf}
-\caption{
-  The distribution of median estimates from the same simulation as described in
-  Fig.~\ref{fig:sim-gompertz}. The boxes show the interquartile range. The
-  whiskers extend to $1.5$ times the interquartile range and outliers are shown
-  as dots. Note that these distributions represent the output from only 20
-  simulation iterations, so there is some level of remaining sampling noise.
-}
-\label{fig:sim-gompertz-boxplots}
-\end{center}
-\end{figure}
-
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/check-sim-box.pdf}
-\caption{
-  The probability that $\nu < 10$ (i.e.\ the approximate probability of heavy
-  tails) for the same simulation scenarios as shown in
-  Fig.~\ref{fig:sim-gompertz} and Fig.~\ref{fig:sim-gompertz-boxplots}. Within
-  each scenario the dots represent stochastic draws from the true population
-  distributions combined with model fits.
-}
-\label{fig:sim-prob}
-\end{center}
-\end{figure}
-
-
-\begin{figure}[htbp]
-\begin{center}
 \includegraphics[width=0.9\textwidth]{../analysis/ts-gpdd-heavy-eg-log10-base.pdf}
 \caption{
   Time series for populations with Pr($\nu < 10$) $>$ 0.5 using the base
-  Gompertz population model. Panels are ordered by increasing p($\nu < 10$).
+  Gompertz population model. Panels are ordered by increasing Pr($\nu < 10$).
   Vertical axes are on a log10 scale. Colours indicate taxonomic classes. The
-  labels on each panel indicate p($\nu < 10$) $>$ 0.5, the common name for the
+  labels on each panel indicate Pr($\nu < 10$) $>$ 0.5, the common name for the
   species, and the Global Population Dynamics Database ID number.
 }
 \label{fig:heavy-ts}
@@ -576,6 +542,85 @@ $\alpha^\mathrm{order}_k$.
 
 \clearpage
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
+\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
+\caption{
+  Testing the ability to estimate $\nu$ (top panels) and the scale parameter of
+  the process deviations (bottom panels) for a given number of samples (columns)
+  drawn from a distribution with a given true $\nu$ value (rows). The red lines
+  indicate the true population value. When a small number of samples are drawn
+  there may not be samples sufficiently far into the tails to recapture the
+  true $\nu$ value; however, heavy tails are still distinguished from normal
+  tails in most cases, even with only 25 or 50 samples.
+}
+\label{fig:sim-nu}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{../analysis/sim-gompertz.pdf}
+\caption{
+  Simulation testing the Gompertz estimation model when the process deviation
+  draws were chosen so that $\nu$ could be estimated close to the true value
+  outside the full population model (``effective $\nu$'' within a CV of 0.2 of
+  specified $\nu$). The simulation was run across population $\nu$ values
+  (columns) and different scenarios (colours): (1) 100 time steps and no
+  observation error, (2) 50 time steps and no observation error, (3) 50 time
+  steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
+  ignored, and (4) 50 time steps with observation error in which the quantity
+  of observation error was assumed known. Dashed horizontal lines show the true
+  population values; these true values were chosen to represent approximately
+  the median values as estimated from the Global Population Dynamics Database.
+  Individual dots and lines
+  represent a stochastic draws from the true population distribution and
+  a model fitting (median and 80\% credible intervals). The panels from top to
+  bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate
+  parameter $\lambda$, and the density dependence parameter $b$.
+}
+\label{fig:sim-gompertz}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{../analysis/sim-gompertz-boxplots.pdf}
+\caption{
+  The distribution of median estimates from the same simulation as described in
+  Fig.~\ref{fig:sim-gompertz}. The boxes show the interquartile range. The
+  whiskers extend to $1.5$ times the interquartile range and outliers are shown
+  as dots. Note that these distributions represent the output from only 20
+  simulation iterations, so there is some level of remaining sampling noise.
+  \textit{TODO wondering now if I should run these for more iterations to make
+    these less noisy.}
+}
+\label{fig:sim-gompertz-boxplots}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{../analysis/check-sim-box.pdf}
+\caption{
+  The probability that $\nu < 10$ (i.e.\ the approximate probability of heavy
+  tails) for the same simulation scenarios as shown in
+  Fig.~\ref{fig:sim-gompertz} and Fig.~\ref{fig:sim-gompertz-boxplots}. Within
+  each scenario the dots represent stochastic draws from the true population
+  distributions combined with model fits.
+}
+\label{fig:sim-prob}
+\end{center}
+\end{figure}
+
+\clearpage
 
 \begin{figure}[htbp]
 \begin{center}
@@ -593,6 +638,8 @@ $\alpha^\mathrm{order}_k$.
     \label{fig:correlate-coefs}
 \end{center}
 \end{figure}
+
+\clearpage
 
 \begin{figure}[htbp]
 \begin{center}
