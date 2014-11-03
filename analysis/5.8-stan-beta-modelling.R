@@ -82,11 +82,6 @@ sink("beta-stan-samples-2.txt")
 print(m)
 sink()
 
-# d <- left_join(d, a_class_df)
-# d <- left_join(d, a_order_df)
-# d_re <- dplyr::select(d, order_id, class_id, a_order, a_class)
-# d_re <- d_re[!duplicated(d_re), ]
-
 means <- plyr::laply(extract(m), mean)[1:5]
 ord <- order(means)
 
@@ -116,27 +111,6 @@ dev.off()
 
 mu_a <- extract(m, pars = "mu_a")[[1]]
 b4 <- extract(m, pars = "b4")[[1]]
-
-# pdf("stan-beta-prediction.pdf", width = 4.5, height = 4)
-# par(mfrow = c(1, 1), mar = c(0,0,0,0), cex = 0.8, xpd = FALSE, oma = c(4, 4, 1, 1))
-# par(tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25", las = 1)
-# plot(x, x, ylim = c(-0.0, 1.01), type = "n", xaxt = "n", yaxs = "i")
-# axis(1, at = (log(ticks) - mean(log(ghb$dataset_length))) / zsd, labels = ticks)
-#
-# #for(i in 1:nrow(d_re)) {
-#   #y_hat <- mu_a[i] + d_re$a_class[i] + d_re$a_order[i] + b4[i] * x
-#   #lines(x, plogis(y_hat), col = "#FF000090")
-# #}
-# set.seed(1)
-# with(d, points(log_dataset_length_scaled, p10, pch = 21, col = "#00000030",
-#   bg = "#00000010"))
-# for(i in sample(1:length(mu_a), 1000)) {
-#   y_hat <- mu_a[i] + b4[i] * x
-#   lines(x, plogis(y_hat), col = "#0000FF09")
-# }
-# mtext("Timeseries steps", side = 1, outer = TRUE, line = 2.2, cex = 0.9)
-# mtext(quote(Pr(nu<10)), side = 2, outer = TRUE, line = 2.2, cex = 0.9, las = 0)
-# dev.off()
 
 # and get predictions for log sigma
 b3 <- extract(m, pars = "b3")[[1]]
@@ -189,9 +163,3 @@ mtext("Initial time-series length", side = 1, line = 2, cex = 0.8)
 dev.off()
 
 saveRDS(p_inc, file = "prob_inc_heavy_with_n.rds")
-
-# look at residuals:
-#d$stan_mu <- apply(extract(m, pars = "mu")[[1]], 2, mean)
-#library(ggplot2)
-#ggplot(d, aes(qlogis(stan_mu), qlogis(stan_mu) - qlogis(p10))) + geom_point(aes(colour = taxonomic_order, size = p10)) + theme(legend.position = "none")
-#ggplot(d, aes((stan_mu), (stan_mu) - (p10))) + geom_point(aes(colour = taxonomic_order, size = p10)) + theme(legend.position = "none")
