@@ -308,15 +308,3 @@ p <- ggplot(subset(gpdd, assumed_log10 == TRUE),
   geom_point() + geom_line() +
   facet_wrap(~label, scales = "free")
 ggsave("log10-assumed.pdf", width = 20, height = 20)
-
-# PanTHERIA: (not using this now)
-pantheria <- "http://esapubs.org/archive/ecol/E090/184/PanTHERIA_1-0_WR05_Aug2008.txt"
-download.file(pantheria, destfile = "mammals.txt")
-mammals <- read.table("mammals.txt", sep = "\t", header = TRUE,
-  stringsAsFactors = FALSE)
-names(mammals) <- sub("X[0-9._]+", "", names(mammals))
-names(mammals) <- sub("MSW05_", "", names(mammals))
-names(mammals) <- gsub("([A-Z])", "_\\L\\1", names(mammals), perl = TRUE)
-names(mammals) <- gsub("^_", "", names(mammals), perl = TRUE)
-mammals[mammals == -999] <- NA
-saveRDS(mammals, file = "mammals.rds")
