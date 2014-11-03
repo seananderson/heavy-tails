@@ -30,7 +30,7 @@ Brook, B.W., Traill, L.W. & Bradshaw, C.J.A. (2006).
 Minimum viable population sizes and global extinction risk are unrelated.
 *Ecol. Lett.* 9, 375-382. <http://doi.org/10.1111/j.1461-0248.2006.00883.x>
 
-The analysis was run with the following R packages in R 3.1.1 (local) or 3.1.0
+The analysis was run with the following R packages in R 3.1.2 (local) or 3.1.0
 (WestGrid):
 
 ### Statistics
