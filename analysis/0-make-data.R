@@ -41,7 +41,7 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
   steps_df <- data.frame(series_step =
       min(y$series_step, na.rm = TRUE):max(y$series_step, na.rm = TRUE),
     stringsAsFactors = FALSE, main_id = y$main_id[1])
-  out <- plyr::join(steps_df, y, by = "series_step")
+  out <- plyr::join(steps_df, y, by = c("main_id", "series_step"))
   out <- dplyr::arrange(out, series_step)
   as.data.frame(out)
 })
