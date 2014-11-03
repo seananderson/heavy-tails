@@ -9,7 +9,6 @@ gpdd <- readRDS("gpdd-clean.rds")
 gomp_hat_base <- readRDS("gomp-base-hat.rds")
 gomp_hat_logistic <- readRDS("logistic-hat.rds")
 gomp_hat_ar1 <- readRDS("gomp-ar1-hat.rds")
-gomp_hat_obs_equal <- readRDS("gomp-obs-equal-hat.rds")
 gomp_hat_obs_0.2 <- readRDS("gomp-obs-0.2-hat.rds")
 gomp_hat_rate <- readRDS("rate-hat.rds")
 
