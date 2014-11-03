@@ -12,6 +12,10 @@ multilevel models starting with `5.X-`) may take a long time to fit (from hours
 to approximately a day depending on the file). These were run on the
 [WestGrid](https://www.westgrid.ca/) computing facilities.
 
+While I'm still actively working on this analysis, watch out for hardcoded file
+paths. These make it much easier for me to quickly work on the WestGrid servers.
+For example, see `root_folder = "/global/scratch/anderson/heavy"` in [this file](https://github.com/seananderson/heavy-tails/blob/master/analysis/1.5-compile-fit-function.R). Eventually I plan to remove these *and* add an option to download my previously run models.
+
 The `analysis/gpdd/` folder contains data from the Global Population Dynamics
 Database:
 
