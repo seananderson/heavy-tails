@@ -43,8 +43,7 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
     stringsAsFactors = FALSE, main_id = y$main_id[1])
   out <- plyr::join(steps_df, y, by = "series_step")
   out <- dplyr::arrange(out, series_step)
-  out <- as.data.frame(out)
-  return(out)
+  as.data.frame(out)
 })
 
 # now deal with hidden logged values
@@ -69,15 +68,15 @@ gpdd <-
   y$zero_sub <- FALSE
   for(i in 2:(nrow(y)-1)) {
     if(!is.na(y$population_untransformed[i]) &
-        !is.na(y$population_untransformed[i-1]) & !is.na(y$population_untransformed[i+1])) {
+        !is.na(y$population_untransformed[i-1]) &
+        !is.na(y$population_untransformed[i+1])) {
       if(y$population_untransformed[i] == 0 &
-          y$population_untransformed[i-1] != 0 & y$population_untransformed[i+1] != 0) {
-
+          y$population_untransformed[i-1] != 0 &
+          y$population_untransformed[i+1] != 0) {
         lowest_non_zero <-
           min(y$population_untransformed[-which(y$population_untransformed == 0)],
             na.rm = TRUE)
         y$population_untransformed[i] <- lowest_non_zero
-
         y$decimal_year_begin[i] <- mean(c(y$decimal_year_begin[i-1],
           y$decimal_year_begin[i + 1]))
         y$decimal_year_end[i] <- mean(c(y$decimal_year_end[i-1],
@@ -94,8 +93,7 @@ gpdd <-
       }
     }
   }
-  print(unique(y$main_id))
-  return(y)
+  y
 })
 
 # now turn the remaining zeros to NAs for our windowing function
