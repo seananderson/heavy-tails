@@ -7,19 +7,15 @@ cols_df <- data.frame(col =
 
 comp_panel <- function(xdat, ydat, xlab, ylab) {
 
-
   not_converged <- which(ydat$max_rhat > 1.05)
   if(length(not_converged) > 0) {
     xdat <- xdat[-not_converged, ]
     ydat <- ydat[-not_converged, ]
   }
-
   # colours:
 
   xdat <- inner_join(xdat, lookup[,c("main_id", "taxonomic_class")])
-  #   ydat <- inner_join(ydat, lookup[,c("main_id", "taxonomic_class")])
   xdat <- inner_join(xdat, cols_df)
-  #   ydat <- inner_join(ydat, cols_df)
 
   set.seed(1)
   scramble <- sample(1:nrow(xdat))
@@ -46,9 +42,6 @@ comp_panel <- function(xdat, ydat, xlab, ylab) {
   par(xpd = FALSE)
   abline(a = 0, b = 1)
   par(xpd = NA)
-
-  #   rect(0.2, 0, 0.5, 0.2, col = "#00000020", border = "#00000050")
-  #   rect(0, 0.2, 0.2, 0.5, col = "#00000020", border = "#00000050")
 }
 
 pdf("gomp-comparison.pdf", width = 7, height = 6.8)
