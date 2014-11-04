@@ -264,6 +264,8 @@ $\alpha^\mathrm{order}_k$.
 \clearpage
 \renewcommand{\thetable}{S\arabic{table}}
 \setcounter{table}{0}
+TODO ``Chondrichtyhes'' IS A TYPO IN THE GPDD DATA\\
+TODO ADD TOTAL NUMBER OF POINTS ON RIGHT COLUMN
 \input{../analysis/stat-table}
 \clearpage
 
@@ -278,6 +280,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/all-clean-ts-3.pdf}
 \caption{
+TODO WILL SPLIT OVER PAGES BY CLASS
   All filtered times series used in our analysis. The abundances are shown on
   a log10 vertical axis. Colours indicate taxonomic classes. Open black circles
   indicate abundance values that were interpolated. Closed black circles
@@ -294,6 +297,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/priors-gomp-base.pdf}
 \caption{
+TODO WILL ADD ALTERNATIVE $\nu$ PRIORS
   Probability density of the Bayesian priors for the Gompertz models. From left
   to right: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim
   \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process
@@ -314,6 +318,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=0.9\textwidth]{../analysis/ts-gpdd-heavy-eg-log10-base.pdf}
 \caption{
+TODO WILL INDICATE UPS AND DOWNS AND MATCH STYLE TO FIG S1
   Time series for populations with Pr($\nu < 10$) $>$ 0.5 using the base
   Gompertz population model. Panels are ordered by increasing Pr($\nu < 10$).
   Vertical axes are on a log10 scale. Colours indicate taxonomic classes. The
@@ -330,6 +335,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=0.27\textwidth]{../analysis/order-level-estimates.pdf}
 \caption{
+TODO WILL COMBINE WITH COEFFICIENT POSTERIORS IN MAIN TEXT FIG 4
   Taxonomic-order-level posterior estimates of probability that $\nu < 10$ from
   a beta regression multilevel model accounting for the effect of time-series
   length. Estimates are at the geometric mean of time series length across all
@@ -388,6 +394,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz.pdf}
 \caption{
+TODO WILL REMOVE ALL OR MOST OF THIS
   Simulation testing the Gompertz estimation model when the process deviation
   draws were chosen so that $\nu$ could be estimated close to the true value
   outside the full population model (``effective $\nu$'' within a CV of 0.2 of
@@ -415,13 +422,12 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz-boxplots.pdf}
 \caption{
+TODO WILL REMOVE ALL OR MOST OF THIS
   The distribution of median estimates from the same simulation as described in
   Fig.~\ref{fig:sim-gompertz}. The boxes show the interquartile range. The
   whiskers extend to $1.5$ times the interquartile range and outliers are shown
   as dots. Note that these distributions represent the output from only 20
   simulation iterations, so there is some level of remaining sampling noise.
-  \textit{TODO wondering now if I should run these for more iterations to make
-    these less noisy.}
 }
 \label{fig:sim-gompertz-boxplots}
 \end{center}
@@ -433,6 +439,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/check-sim-box.pdf}
 \caption{
+TODO WILL REMOVE ALL OR MOST OF THIS
   The probability that $\nu < 10$ (i.e.\ the approximate probability of heavy
   tails) for the same simulation scenarios as shown in
   Fig.~\ref{fig:sim-gompertz} and Fig.~\ref{fig:sim-gompertz-boxplots}. Within
@@ -449,6 +456,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=0.5\textwidth]{../analysis/stan-beta-correlates}
 \caption{
+TODO WILL MOVE TO MAIN TEXT WITH ORDER-LEVEL ESTIMATES
   Main effect posterior densities for potential correlates of heavy-tailed
   dynamics. The response variable was Pr($\nu < 10$) (approximately the
   probability of heavy tails). The beta regression model was fit on a logit
@@ -468,6 +476,7 @@ $\alpha^\mathrm{order}_k$.
 \begin{center}
 \includegraphics[width=0.70\textwidth]{../analysis/perc-prob-increase-with-n}
 \caption{
+TODO WILL DELETE THIS
 Expected percent increase in the probability of detecting heavy tails, Pr($\nu
 < 10$), with an additional ten time steps of data. These values are based on
 the curve shown in Fig.~\ref{fig:correlates}d, which is based on the
