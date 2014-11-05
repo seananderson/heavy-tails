@@ -16,6 +16,9 @@ fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
     # getDoParWorkers() # check
   }
 
+  if(!file.exists(paste0(root_folder, "/", sub_folder)))
+    dir.create(paste0(root_folder, "/", sub_folder), recursive = TRUE)
+
   max_rhat <- 999
   min_neff <- 0
   file_base <- paste0(root_folder, "/", sub_folder, "/", file_prefix, "-")
