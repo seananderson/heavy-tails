@@ -5,15 +5,14 @@ fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
   pars = c("lambda", "sigma_proc", "nu", "b", "phi"), max_rhat_allowed = 1.05,
   min_neff_allowed = 200, iterations = 2000, max_iterations = 8000,
   iteration_increment = 2, warmup = 1000, chains = 4, overwrite = FALSE,
-  .parallel = TRUE, refresh = -1) {
+  .parallel = TRUE, refresh = -1, cores = 4) {
 
   library(rstan)
 
   if(.parallel) {
     library(doParallel)
     library(foreach)
-    registerDoParallel(cores = 2)
-    # getDoParWorkers() # check
+    registerDoParallel(cores = cores)
   }
 
   if(!file.exists(paste0(root_folder, "/", sub_folder)))
@@ -25,6 +24,7 @@ fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
 
   plyr::d_ply(gpdd_dat, "main_id", function(x) {
     this_file <- paste0(file_base, unique(x$main_id))
+    message(paste("Sampling from", unique(x$main_id)))
 
     # some models (Ricker-logistic) may model growth rates as the response
     # or use data scaled to the maximum for computational reasons:
