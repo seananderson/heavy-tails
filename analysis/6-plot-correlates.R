@@ -1,4 +1,5 @@
 # a pretty version of the correlates of nu plot for the main paper
+# need to run 5.8... first
 
 # randomly sort the rows:
 set.seed(1)
