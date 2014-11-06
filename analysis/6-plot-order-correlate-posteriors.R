@@ -46,23 +46,23 @@ for(i in seq_along(op)) {
         a_order[, op[[i]]$order_id] +
         a_class[, op[[i]]$class_id])
   op[[i]]$dens <- density(op[[i]]$post,
-    from = quantile(op[[i]]$post, probs = 0.005)[[1]],
-    to = quantile(op[[i]]$post, probs = 0.995)[[1]])
+    from = quantile(op[[i]]$post, probs = 0.001)[[1]],
+    to = quantile(op[[i]]$post, probs = 0.999)[[1]])
   op[[i]]$med_post <- median(op[[i]]$post)
   op[[i]]$med_dens_height <-
     op[[i]]$dens$y[max(which(op[[i]]$dens$x < op[[i]]$med_post))]
 }
 
-x <- rexp(1e6, 0.01)
+x <- rexp(2e6, 0.01)
 x <- x[x > 2]
 prior_p10 <- length(x[x < 10])/length(x)
 
-pdf("asdf.pdf", width = 3.5, height = 4.5)
+pdf("order-posteriors.pdf", width = 3.5, height = 4.5)
 par(mfrow = c(1, 1), mar = c(2.7,8,0,0), oma = c(0.2, 0.2, 1.1, 0.8),
   tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
 par(cex = 0.8)
 
-xlim <- c(-.02, 0.29)
+xlim <- c(-.025, 0.29)
 plot(1, 1, xlim = xlim, ylim = c(length(op), 1), type = "n",
   ylab = "", xlab = "", axes = FALSE, xaxs = "i")
 abline(v = prior_p10, lty = 2, col = "grey40", lwd = 0.6)
@@ -70,6 +70,9 @@ scaling_factor <- 55
 for(i in seq_along(op)) {
   segments(xlim[1]+0.05, i, min(op[[i]]$dens$x), i, col = "grey90")
   segments(max(op[[i]]$dens$x), i, xlim[2], i, col = "grey90")
+  polygon(c(op[[i]]$dens$x, rev(op[[i]]$dens$x)),
+    i + c(op[[i]]$dens$y/scaling_factor, -rev(op[[i]]$dens$y/scaling_factor)),
+    border = "grey50", lwd = 0.5, col = "white")
   polygon(c(op[[i]]$dens$x, rev(op[[i]]$dens$x)),
     i + c(op[[i]]$dens$y/scaling_factor, -rev(op[[i]]$dens$y/scaling_factor)),
     border = "grey50", lwd = 1.5, col = paste0(op[[i]]$col, "90"))
@@ -80,7 +83,7 @@ for(i in seq_along(op)) {
     i + op[[i]]$med_dens_height/scaling_factor,
     col = "grey50", lwd = 1.5)
   par(xpd = NA)
-  add_phylopic(op[[i]]$img, alpha = 1, x = 0.008, y = i,
+  add_phylopic(op[[i]]$img, alpha = 1, x = 0.004, y = i,
     ysize = 0.9 * or$scaling_factor[i], xy_ratio = 35, color = "grey45")
   par(xpd = FALSE)
 }
