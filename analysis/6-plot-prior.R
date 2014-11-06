@@ -27,9 +27,9 @@ plot_prior <- function(x, y, xlab, xlim = NULL, add = FALSE, lty = 1,
   }
 }
 
-pdf("priors-gomp-base.pdf", width = 7, height = 7)
+ pdf("priors-gomp-base.pdf", width = 6, height = 6)
 # par(mfrow = c(2, 2), cex = 0.8, las = 1, mar = c(4.5, 3.5, 0, 0),
-  oma = c(1, 1, 1, 1))
+#   oma = c(1, 1, 1, 1))
 par(mfrow = c(2, 2), mar = c(3,3,0,0), oma = c(.5, 3, .5, .5),
   tck = -0.02, mgp = c(1.5, 0.4, 0), col.axis = "grey25", col = "grey25", las = 1)
 x <- seq(-9, 9, length.out = 200)
@@ -49,18 +49,19 @@ plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.005),
 # text(1, 0.2/100, "Weaker\nprior", pos = 4, cex = 0.9)
 
 TeachingDemos::subplot({
-  plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.02), "",
-    col = "grey70", log = "x", ylim = NULL, lty = "93", yaxt = "n", xaxt = "n",
+  x <- seq(2, 500, length.out = 2000)
+  plot_prior(log(x), dtrunc(x, "exp", a = 2, b = Inf, rate = 0.02), "",
+    col = "grey70", log = "", ylim = NULL, lty = "93", yaxt = "n", xaxt = "n",
     ylab = "")
-  plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.01),
+  plot_prior(log(x), dtrunc(x, "exp", a = 2, b = Inf, rate = 0.01),
     expression(nu), add = TRUE, lty = 1, col = "black")
-  plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.005),
+  plot_prior(log(x), dtrunc(x, "exp", a = 2, b = Inf, rate = 0.005),
     expression(nu), add = TRUE, lty = "93", col = "grey20")
-  axis(2, at = c(0, 0.01, 0.02))
-  axis(1, at = c(2, 5, 20, 50, 200))
-  text(1.7, 1.2/100, "Base prior", pos = 4, cex = 0.9)
-  text(1.7, 1.8/100, "Stonger prior", cex = 0.9, pos = 4)
-  text(1.7, 0.2/100, "Weaker\nprior", pos = 4, cex = 0.9)
+   axis(2, at = c(0, 0.01, 0.02))
+   axis(1, labels = c(2, 5, 20, 200), at = log(c(2, 5, 20, 200)))
+  text(0.5, 1.2/100, "Base prior", pos = 4, cex = 0.9)
+  text(0.5, 1.8/100, "Stonger prior", cex = 0.9, pos = 4)
+  text(0.5, 0.2/100, "Weaker\nprior", pos = 4, cex = 0.9)
 
 },
   x = c(200, 500),
