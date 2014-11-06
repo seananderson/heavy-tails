@@ -43,6 +43,7 @@ dat$sp_id <- as.numeric(dat$exact_name)
 dat$class_id <- as.numeric(dat$taxonomic_class)
 
 d <- dat
+saveRDS(d, file = "beta-modelling-dat.rds")
 
 stan_beta4 <- stan_model("betareg4.stan")
 
