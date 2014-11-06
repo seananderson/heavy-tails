@@ -43,8 +43,8 @@ for(i in seq_along(op)) {
 
 for(i in seq_along(op)) {
   op[[i]]$post <- plogis(mu_a +
-        a_order[, op[[i]]$order_id] +
-        a_class[, op[[i]]$class_id])
+      a_order[, op[[i]]$order_id] +
+      a_class[, op[[i]]$class_id])
   op[[i]]$dens <- density(op[[i]]$post,
     from = quantile(op[[i]]$post, probs = 0.001)[[1]],
     to = quantile(op[[i]]$post, probs = 0.999)[[1]])
@@ -57,13 +57,66 @@ x <- rexp(2e6, 0.01)
 x <- x[x > 2]
 prior_p10 <- length(x[x < 10])/length(x)
 
-pdf("order-posteriors.pdf", width = 3.5, height = 4.5)
-par(mfrow = c(1, 1), mar = c(2.7,8,0,0), oma = c(0.2, 0.2, 1.1, 0.8),
-  tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
+pdf("order-posteriors-covariates.pdf", width = 3, height = 5.6)
+layout(mat =c(rep(1, 4), rep(2, 9)))
+par(mar = c(4.1,2,0,0), oma = c(0.2, 5.2, 1.5, 0.8),
+  tck = -0.04, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
 par(cex = 0.8)
 
+################
+# the main coefficients:
+m <- readRDS("beta-stan-samples.rds") # or reload this
+
+means <- plyr::laply(extract(m), mean)[1:5]
+ord <- order(means)
+
+coefs <- c(expression(lambda), expression(b), expression(log(sigma)),
+  expression(log(Time~steps)), expression(log(Lifespan)))
+
+plot(1, 1, xlim = c(-1, 1), ylim = c(0.5, 5.5), main = "", axes = FALSE, yaxs = "i",
+  type = "n", yaxs = "i", yaxt = "n", xlab = "", ylab = "")
+scaling_factor <- 12
+
+abline(v = 0, lty = 1, col = "grey60")
+j <- 0
+for(i in ord) {
+  j <- j + 1
+  em <- extract(m)[[i]]
+  x <- density(em,
+    from = quantile(em, probs = 0.0001),
+    to = quantile(em, probs = 0.9999))
+
+  x_med <- median(em)
+  x_med_dens_height <- x$y[max(which(x$x < x_med))]
+
+  polygon(c(x$x, rev(x$x)),
+    j + c(x$y/scaling_factor, -rev(x$y/scaling_factor)),
+    border = "grey50", lwd = 1.5, col = "grey90")
+  segments(
+    x_med,
+    j - x_med_dens_height/scaling_factor,
+    x_med,
+    j + x_med_dens_height/scaling_factor,
+    col = "grey50", lwd = 1.5)
+}
+axis(1)
+axis(2, at = 1:5, labels = coefs[ord], las = 1, lwd = 0, line = -0.6)
+
+# axis(2, at = seq_along(op),
+#   labels = as.character(unlist(lapply(op, function(x) x$taxonomic_order))),
+#   las = 1, lwd = 0, line = -0.6)
+# text(as.numeric(lapply(extract(m), median)[ord]),
+#   1:5-0.4, coefs[ord])
+mtext("Coefficient value\n(per 2 SDs of predictor)", side = 1, line = 2.4,
+  cex = 0.8, outer = FALSE)
+mtext("(a)", side = 3, line = 0.5, cex = 0.8, adj = -0.7)
+
+#############################
+# the order-level intercepts:
+par(tck = -0.02)
+
 xlim <- c(-.025, 0.29)
-plot(1, 1, xlim = xlim, ylim = c(length(op), 1), type = "n",
+plot(1, 1, xlim = xlim, ylim = c(1, length(op)), type = "n",
   ylab = "", xlab = "", axes = FALSE, xaxs = "i")
 abline(v = prior_p10, lty = 2, col = "grey40", lwd = 0.6)
 scaling_factor <- 55
@@ -92,6 +145,8 @@ axis(2, at = seq_along(op),
   labels = as.character(unlist(lapply(op, function(x) x$taxonomic_order))),
   las = 1, lwd = 0, line = -0.6)
 axis(1, at = seq(0, 0.3, 0.1))
-mtext(quote(Pr(nu<10)), side = 1, line = 2, cex = 0.85)
-# box()
+mtext(quote(Pr(nu<10)), side = 1, line = 2, cex = 0.8)
+mtext("Probability of black swans", side = 1, line = 3, cex = 0.8)
+mtext("(b)", side = 3, line = 0, cex = 0.8, adj = -0.7)
+
 dev.off()
