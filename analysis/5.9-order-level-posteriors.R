@@ -5,6 +5,7 @@ library("rstan")
 library("ggplot2")
 
 stan_beta5 <- stan_model("betareg5.stan")
+d <- readRDS("beta-modelling-dat.rds")
 
 m.stan.beta5 <- sampling(stan_beta5,
   data = list(
