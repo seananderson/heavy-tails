@@ -85,32 +85,3 @@ lu <- plyr::join(lu, cols_df)
 x <- rexp(1e7, 0.01)
 x <- x[x > 2]
 prior_p10 <- length(x[x < 10])/length(x)
-
-pdf("order-level-estimates.pdf", width = 2.6, height = 10.5)
-par(mfrow = c(length(unique(a_df$order_id)), 1), cex = 0.8, mar = c(0,0,0,0),
-  oma = c(3.5, 3, .5, .5), tcl = -0.05, mgp = c(2, 0.4, 0))
-for(i in a_df$order_id) {
-  i_order <- i
-  i_class <- unique(lu[lu$order_id == i, "class_id"])
-  a <- plogis(mu_a + a_order[, i_order] + a_class[,i_class])
-  den <- density(a)
-  plot(1, 1, type = "n", xlim = c(0.05, 0.18), ylim = c(0, 42), xaxt = "n",
-    yaxt = "n", axes = FALSE, main = "", yaxs = "i")
-  polygon(c(den$x, rev(den$x)), c(den$y, rep(0, length(den$y))),
-    border = "grey60", lwd = 2, col = unique(lu[lu$order_id == i, "col"]))
-  segments(median(a), 0, median(a), 22, col = "grey60", lwd = 1.4)
-  abline(v = prior_p10, lty = 2, col = "grey50", lwd = 0.6)
-
-  box(col =  "grey80", lwd = 0.9)
-  par(xpd = NA)
-  legend("topleft", legend = lu[lu$order_id == i, "taxonomic_order"], bty = "n",
-    inset = c(-0.1, -0.15))
-  par(xpd = FALSE)
-}
-axis(1, at = c(0, 0.05, 0.1, 0.15, 0.2), col.axis = "grey20", col = "grey50")
-  par(xpd = NA)
-mtext("Posterior probability density", side = 2, line  = 0.5, outer = TRUE,
-  las = 0, col = "grey20", cex = 0.9)
-mtext(quote(Pr(nu<10)), side = 1, line  = 2.3, outer = TRUE, las = 0,
-  col = "grey20", cex = 0.9)
-dev.off()
