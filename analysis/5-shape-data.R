@@ -12,6 +12,8 @@ gomp_hat_ar1 <- readRDS("gomp-ar1-hat.rds")
 gomp_hat_obs_0.2 <- readRDS("gomp-obs-0.2-hat.rds")
 gomp_hat_rate <- readRDS("rate-hat.rds")
 
+gomp_hat_weaker <- readRDS("gomp-base-weaker-hat.rds")
+
 brook <- read.csv("brook-etal.csv", stringsAsFactors = FALSE)
 
 gpdd$dataset_length <- NULL
@@ -40,6 +42,7 @@ gomp_hat_base <- inner_join(gomp_hat_base, lookup, by = "main_id")
 gomp_hat_ar1 <- inner_join(gomp_hat_ar1, lookup, by = "main_id")
 gomp_hat_obs_0.2 <- inner_join(gomp_hat_obs_0.2, lookup, by = "main_id")
 gomp_hat_logistic <- inner_join(gomp_hat_logistic, lookup, by = "main_id")
+gomp_hat_weaker <- inner_join(gomp_hat_weaker, lookup, by = "main_id")
 ar1_vs_base <- inner_join(ar1_vs_base, lookup, by = "main_id")
 
 # for the paper:
