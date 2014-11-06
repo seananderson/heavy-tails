@@ -3,19 +3,31 @@
 # observation error and the degree of heavy-tailedness.
 
 # Check priors:
-plot_prior <- function(x, y, xlab, xlim = NULL) {
-  plot(x, y, type = "l", xlab = xlab, ylab = "Probability density",
-    ylim = c(0, max(y)*1.04), yaxs = "i", xaxs = "i", xlim = xlim)
+plot_prior <- function(x, y, xlab, xlim = NULL, add = FALSE, lty = 1,
+  col = "black") {
+  if(!add) {
+    plot(x, y, type = "l", lty = lty, xlab = xlab, ylab = "Probability density",
+      ylim = c(0, max(y)*1.04), yaxs = "i", xaxs = "i", xlim = xlim, col = col)
+  } else {
+    lines(x, y, lty = lty, col = col)
+  }
 }
 
 pdf("priors-gomp-base.pdf", width = 10, height = 3.7)
 par(mfrow = c(1, 4), cex = 0.8)
-x <- seq(-10, 10, length.out = 200)
+x <- seq(-8, 8, length.out = 200)
 plot_prior(x, dnorm(x, 0, 10), expression(lambda))
-x <- seq(0, 10, length.out = 200)
+x <- seq(0, 6, length.out = 200)
 plot_prior(x, dcauchy(x, 0, 2.5), expression(sigma[proc]))
-x <- seq(2, 300, length.out = 200)
-plot_prior(x, dexp(x, 0.01), expression(nu))
+x <- seq(2, 125, length.out = 200)
+plot_prior(x, dexp(x, 0.01), expression(nu), col = "black")
+plot_prior(x, dexp(x, 0.005), expression(nu), add = TRUE, lty = "93",
+  col = "grey60")
+plot_prior(x, dexp(x, 0.05), expression(nu), add = TRUE, lty = "22",
+  col = "grey60")
+text(90, 6/1000, "Base prior")
+text(50, 9/1000, "Stonger prior")
+text(1, 4/1000, "Weaker\nprior", pos = 4)
 x <- seq(-1.1, 1.1, length.out = 200)
 plot_prior(x, dnorm(x, 0, 1) * dunif(x, -1, 1), expression(phi), xlim = c(-1.1, 1.1))
 dev.off()
