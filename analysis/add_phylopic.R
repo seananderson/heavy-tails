@@ -21,8 +21,8 @@ add_phylopic <- function(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL,
   }
   if (!is.null(x) && !is.null(y) && !is.null(ysize)){
     aspratio <- nrow(mat) / ncol(mat) ## get aspect ratio of original image
-    ymin <- y + ysize / 2
-    ymax <- y - ysize / 2
+    ymin <- y - ysize / 2
+    ymax <- y + ysize / 2
     xmin <- x - (ysize / aspratio / 2 / xy_ratio)
     xmax <- x + (ysize / aspratio / 2 / xy_ratio)
   } else {
