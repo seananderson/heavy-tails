@@ -35,21 +35,13 @@ for(i in 1:length(classes)) {
   par(xpd = NA)
   add_label(label = paste0("(", letters[i], ") ", classes[i]))
   if(i == 1) {
-    mtext("Heavy tails", side = 2, line = 1.8, adj = 0.90, col = "grey55")
-    mtext("Normal tails", side = 2, line = 1.8, adj = -0.09, col = "grey55")
+    mtext("Heavy", side = 2, line = 2.5, adj = 0.90, col = "grey55")
+    mtext("tails", side = 2, line = 1.5, adj = 0.85, col = "grey55")
+    mtext("Normal", side = 2, line = 2.5, adj = -0.09, col = "grey55")
+    mtext("tails", side = 2, line = 1.5, adj = 0, col = "grey55")
   }
   par(xpd = FALSE)
   axis(2, las = 1, at = 1/ticks, labels = ticks)
-
-  #locs <- 1/ticks
-  #for(j in 1:length(cols)) {
-  #rect(0, locs[j], 100, locs[j+1], border = NA,
-  #col = paste0(cols[j], "35"))
-  #}
-
-  #segments(1/x$nu_5, x$sort_id_perc, 1/x$nu_95, x$sort_id_perc, lwd = 1.1, col = "grey60")
-  #segments(1/x$nu_25, x$sort_id_perc, 1/x$nu_75, x$sort_id_perc, lwd = 1.1, col = "grey30")
-  #points(1/x$nu_50, x$sort_id_perc, pch = 21, col = "white", lwd = 0.5, bg = "white", cex = 0.4)
 
   cols_df_coefs <- data.frame(
     col = c(rev(RColorBrewer::brewer.pal(6, "YlOrRd"))[-6], "grey50"),
@@ -57,7 +49,7 @@ for(i in 1:length(classes)) {
   x$coef_col <- as.character(cols_df_coefs$col[findInterval(x$nu_50, cols_df_coefs$cuts)])
 
   segments(x$sort_id_perc, 1/x$nu_5, x$sort_id_perc, 1/x$nu_95, lwd = 1.1, col = "grey60")
-  segments(x$sort_id_perc, 1/x$nu_25, x$sort_id_perc, 1/x$nu_75, lwd = 1.1, col = "grey30")
+  segments(x$sort_id_perc, 1/x$nu_25, x$sort_id_perc, 1/x$nu_75, lwd = 1.3, col = "grey30")
   points(x$sort_id_perc, 1/x$nu_50, pch = 21, col = "grey10", lwd = 0.5, bg = x$coef_col, cex = 0.7)
 
   par(xpd = NA)
@@ -82,11 +74,17 @@ for(i in 1:length(classes)) {
     arrange(med_p10) %>% mutate(p10_order = 1:length(med_p10))
   x <- plyr::join(x, p, by = "taxonomic_order")
 
+  # in the following, the first 5 are for the heavy points
+  # and the last one is for the normal points
   cols_df <- data.frame(
-    col = rev((c(rev(RColorBrewer::brewer.pal(6, "YlOrRd"))[-6], "grey90"))),
+    col = rev((c(rev(RColorBrewer::brewer.pal(6, "YlOrRd"))[-6], "#00000007"))),
+    bg = rev(c(rep("grey40", 5), "#33333350")),
+    cex = rev(c(rep(0.75, 5), 0.65)),
     cuts = rev(c(0.8, 0.7, 0.6, 0.5, 0.4, 0)), stringsAsFactors = FALSE)
 
   x$p_col <- as.character(cols_df$col[findInterval(x$p10, cols_df$cuts)])
+  x$bg <- as.character(cols_df$bg[findInterval(x$p10, cols_df$cuts)])
+  x$cex <- as.numeric(cols_df$cex[findInterval(x$p10, cols_df$cuts)])
 
   TeachingDemos::subplot({
     plot(x$p10, x$p10_order, type = "n", xlab = "", ylab = "", las = 1, bty = "n", yaxt = "n", xaxt = "n", axes = FALSE)
@@ -95,7 +93,7 @@ for(i in 1:length(classes)) {
     mtext(expression(p(nu<10)), side = 1, line = 1.4, cex = 0.8, col = "grey30")
     abline(h = as.numeric(as.factor(x$taxonomic_order)), col = "grey93", lwd = 0.7, lty = 1)
     par(xpd = NA)
-    points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = x$p_col, col = "grey40", cex = 0.7, lwd = 0.9)
+    points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = x$p_col, col = x$bg, cex = x$cex, lwd = 0.8)
     par(xpd = FALSE)
   },
     x = c(60, 95),
