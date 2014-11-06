@@ -68,14 +68,16 @@ make_panel <- function(x, xl = NULL, xu = NULL, log = "", yaxis = FALSE,
   box()
   par(xpd = NA)
   lab <- letters[i]
-  legend("topleft", legend = substitute(paste("(", lab, ") ", label)),
-    bty = "n", inset = c(-0.1, -0.15), cex = 0.9)
+# legend("topleft", legend = substitute(paste("(", lab, ") ", label)),
+  legend("topleft", legend = substitute(paste("(", lab, ")")),
+    bty = "n", inset = c(-0.1, -0.03), cex = 0.9)
+  mtext(substitute(label), side = 1, line = 1.5)
   par(xpd = FALSE)
 }
 
 pdf("correlates-p10.pdf", width = 7, height = 4.6)
-par(mfrow = c(2, 3), mar = c(3.2,0,0,0), oma = c(.2, 4.2,1.1, 5.4),
-  tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
+par(mfrow = c(2, 3), mar = c(3.2,0,0,0), oma = c(0, 4.2,1.1, 5.4),
+  tck = -0.02, mgp = c(2, 0.3, 0), col.axis = "grey25", col = "grey25")
 par(cex = 0.9)
 
 i <<- 0
@@ -134,8 +136,8 @@ with(gomp_hat_base_corr, make_panel(x = Len, log = "x",
 with(gomp_hat_base_corr, make_panel(x = Lifesp/12, log = "x",
   label = "Lifespan (years)", xaxis_ticks = c(0.2, 1, 5, 20)))
 
-mtext("Possible covariate value", side = 1, outer = TRUE, line = -1.4,
-  cex = 0.9)
+# mtext("Possible covariate value", side = 1, outer = TRUE, line = 0,
+#   cex = 0.9)
 mtext(quote(Pr(nu<10)), side = 2,
   outer = TRUE, line = 2.8, cex = 0.9, adj = 0.6)
 
