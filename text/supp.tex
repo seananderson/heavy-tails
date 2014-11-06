@@ -219,18 +219,9 @@ TODO WILL SPLIT OVER PAGES BY CLASS
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{../analysis/priors-gomp-base.pdf}
+\includegraphics[width=0.8\textwidth]{../analysis/priors-gomp-base.pdf}
 \caption{
-TODO WILL ADD ALTERNATIVE $\nu$ PRIORS
-  Probability density of the Bayesian priors for the Gompertz models. From left
-  to right: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim
-  \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process
-  noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0,
-  2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim
-  \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4) AR1
-  correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen
-    Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$,
-  the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$.
+  Probability density of the Bayesian priors for the Gompertz models. From left to right and then top to bottom: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. The $\nu$ panel also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$.
 }
   \label{fig:priors}
 \end{center}
@@ -250,28 +241,6 @@ TODO WILL INDICATE UPS AND DOWNS AND MATCH STYLE TO FIG S1
   species, and the Global Population Dynamics Database ID number.
 }
 \label{fig:heavy-ts}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.27\textwidth]{../analysis/order-level-estimates.pdf}
-\caption{
-TODO WILL COMBINE WITH COEFFICIENT POSTERIORS IN MAIN TEXT FIG 4
-TODO note that this isn't all orders!
-  Taxonomic-order-level posterior estimates of probability that $\nu < 10$ from
-  a beta regression multilevel model accounting for the effect of time-series
-  length. Estimates are at the geometric mean of time series length across all
-  the data (approximately 27 time steps). Colour shading refers to the
-  taxonomic classes as indicated in Fig.~\ref{fig:nu-coefs} and
-  Fig.~\ref{fig:correlates} (yellow for fishes, green for insects, purple for
-  birds, and red for mammals). Short vertical line segments indicate median
-  posterior estimates. Long dotted vertical line throughout the figure
-  indicates the median expected Pr($\nu < 10$) from the prior distribution.
-}
-\label{fig:order-estimates}
 \end{center}
 \end{figure}
 
@@ -372,44 +341,6 @@ TODO WILL REMOVE ALL OR MOST OF THIS
   distributions combined with model fits.
 }
 \label{fig:sim-prob}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.5\textwidth]{../analysis/stan-beta-correlates}
-\caption{
-TODO WILL MOVE TO MAIN TEXT WITH ORDER-LEVEL ESTIMATES
-  Main effect posterior densities for potential correlates of heavy-tailed
-  dynamics. The response variable was Pr($\nu < 10$) (approximately the
-  probability of heavy tails). The beta regression model was fit on a logit
-  scale with random intercepts for taxonomic class, taxonomic order, and
-  species. All covariates were standardized by subtracting their mean and
-  dividing by twice their standard deviation. Therefore, the coefficient values
-  represent the expected effect of a change in two standard deviations of the
-  raw input variable on the logit-transformed response variable.
-}
-    \label{fig:correlate-coefs}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.70\textwidth]{../analysis/perc-prob-increase-with-n}
-\caption{
-TODO WILL DELETE THIS
-Expected percent increase in the probability of detecting heavy tails, Pr($\nu
-< 10$), with an additional ten time steps of data. These values are based on
-the curve shown in Fig.~\ref{fig:correlates}d, which is based on the
-coefficient in Fig.~\ref{fig:correlate-coefs}. For example, we have about
-a 12\% increased probability of observing heavy tails in a time series that has
-60 time steps vs.\ a time series with 50 time steps.
-}
-\label{fig:perc-inc-p}
 \end{center}
 \end{figure}
 
