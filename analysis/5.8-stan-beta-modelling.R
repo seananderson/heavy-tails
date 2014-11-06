@@ -45,7 +45,12 @@ dat$class_id <- as.numeric(dat$taxonomic_class)
 d <- dat
 saveRDS(d, file = "beta-modelling-dat.rds")
 
-stan_beta4 <- stan_model("betareg4.stan")
+if(!file.exists("betareg4.rds")) {
+  stan_beta4 <- stan_model("betareg4.stan")
+  saveRDS(stan_beta4, file = "betareg4.rds")
+} else {
+  stan_beta4 <- readRDS("betareg4.rds")
+}
 
 m.stan.beta4 <- sampling(stan_beta4,
   data = list(
@@ -141,7 +146,7 @@ for(i in 1:length(mu_a)) {
   p[i,] <- plogis(mu_a[i] + b4[i] * x)
 }
 pred_dataset_length <- data.frame(pred_dataset_length,
-  plyr::adply(p, 2, quantile, probs = c(0.5)))
+  plyr::adply(p, 2, quantile, probs = c(0.05, 0.5, 0.95)))
 
 p_inc <- plyr::ldply(seq(20, 110, 10), function(i) {
  p <- dplyr::filter(pred_dataset_length, dataset_length > i)[1,"X50."]
@@ -152,15 +157,15 @@ for(i in 1:(nrow(p_inc)-1)) {
   p_perc_inc[i] <- p_inc$p[i+1] / p_inc$p[i]
 }
 
-pdf("perc-prob-increase-with-n.pdf", width = 4.5, height = 3.7)
-par(mar = c(4, 6, 1.5, 1), oma = c(0, 0, 0, 0), cex = 0.8)
-par(tck = -0.015, mgp = c(2.8, 0.4, 0), col.axis = "grey25", col = "grey25", las = 1)
-plot(p_inc$N[-length(p_inc$N)], 100 * (p_perc_inc - 1), xlab = "",
-  ylab = paste("Expected percent increase in probability of detecting\nheavy",
-    "tails with 10 additional time steps of data"),
-  pch = 21, col = "grey30", bg = "grey80", las = 1,
-  ylim = c(0, max(100 * (p_perc_inc-1))))
-mtext("Initial time-series length", side = 1, line = 2, cex = 0.8)
-dev.off()
-
+# pdf("perc-prob-increase-with-n.pdf", width = 4.5, height = 3.7)
+# par(mar = c(4, 6, 1.5, 1), oma = c(0, 0, 0, 0), cex = 0.8)
+# par(tck = -0.015, mgp = c(2.8, 0.4, 0), col.axis = "grey25", col = "grey25", las = 1)
+# plot(p_inc$N[-length(p_inc$N)], 100 * (p_perc_inc - 1), xlab = "",
+#   ylab = paste("Expected percent increase in probability of detecting\nheavy",
+#     "tails with 10 additional time steps of data"),
+#   pch = 21, col = "grey30", bg = "grey80", las = 1,
+#   ylim = c(0, max(100 * (p_perc_inc-1))))
+# mtext("Initial time-series length", side = 1, line = 2, cex = 0.8)
+# dev.off()
+#
 saveRDS(p_inc, file = "prob_inc_heavy_with_n.rds")

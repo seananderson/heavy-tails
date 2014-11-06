@@ -4,8 +4,11 @@
 library("rstan")
 library("ggplot2")
 
-if(!file.exists("betareg5.stan") {
+if(!file.exists("betareg5.rds") {
   stan_beta5 <- stan_model("betareg5.stan")
+  saveRDS(stan_beta5, "betareg5.rds")
+} else {
+  stan_beta5 <- readRDS("betareg5.rds")
 }
 d <- readRDS("beta-modelling-dat.rds")
 
