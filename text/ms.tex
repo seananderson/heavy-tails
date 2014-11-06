@@ -149,3 +149,15 @@ Potential covariates of heavy-tailed population dynamics (indicated by a high pr
 \label{fig:correlates}
 \end{center}
 \end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.45\textwidth]{../analysis/order-posteriors-covariates.pdf}
+\caption{
+Posterior probability distributions from beta regression multilevel models.
+(a) Main effect posterior densities for potential covariates of heavy-tailed dynamics. The response variable was Pr($\nu < 10$) (approximately the probability of heavy tails). The beta regression model was fit on a logit scale with hierarchical intercepts for taxonomic class, taxonomic order, and species. All covariates were standardized by subtracting their mean and dividing by twice their standard deviation.
+(b) Taxonomic-order-level posterior densities of Pr($\nu < 10$) after accounting for time-series length. Estimates are at the geometric mean of time series length across all the data (approximately 27 time steps). Colour shading refers to taxonomic class (yellow: fishes, green: insects, purple: birds, and red: mammals). Short vertical line segments indicate median posterior estimates. Long dotted vertical line in panel b indicates the median expected Pr($\nu < 10$) from the prior distribution.
+}
+\label{fig:posteriors}
+\end{center}
+\end{figure}
