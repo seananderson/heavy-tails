@@ -2,34 +2,74 @@
 # See how the ability to detect heavy tails deteriorates with sample size,
 # observation error and the degree of heavy-tailedness.
 
+# truncated distribution function from:
+# http://www.jstatsoft.org/v16/c02/paper
+dtrunc <- function(x, spec, a = -Inf, b = Inf, ...) {
+  tt <- rep(0, length(x))
+  g <- get(paste("d", spec, sep = ""), mode = "function")
+  G <- get(paste("p", spec, sep = ""), mode = "function")
+  tt[x>=a & x<=b] <- g(x[x>=a&x<=b], ...)/(G(b, ...) - G(a, ...))
+  tt
+}
+
 # Check priors:
 plot_prior <- function(x, y, xlab, xlim = NULL, add = FALSE, lty = 1,
-  col = "black") {
+  col = "black", log = "", ylim = NULL, ylab = "", ...) {
+  if(is.null(ylim)) {
+    ylim <- c(0, max(y)*1.04)
+  }
   if(!add) {
-    plot(x, y, type = "l", lty = lty, xlab = xlab, ylab = "Probability density",
-      ylim = c(0, max(y)*1.04), yaxs = "i", xaxs = "i", xlim = xlim, col = col)
+    plot(x, y, type = "l", lty = lty, xlab = xlab, ylab = ylab,
+      ylim = ylim, yaxs = "i", xaxs = "i", xlim = xlim, col = col,
+      log = log, ...)
   } else {
     lines(x, y, lty = lty, col = col)
   }
 }
 
-pdf("priors-gomp-base.pdf", width = 10, height = 3.7)
-par(mfrow = c(1, 4), cex = 0.8)
-x <- seq(-8, 8, length.out = 200)
+pdf("priors-gomp-base.pdf", width = 7, height = 7)
+# par(mfrow = c(2, 2), cex = 0.8, las = 1, mar = c(4.5, 3.5, 0, 0),
+  oma = c(1, 1, 1, 1))
+par(mfrow = c(2, 2), mar = c(3,3,0,0), oma = c(.5, 3, .5, .5),
+  tck = -0.02, mgp = c(1.5, 0.4, 0), col.axis = "grey25", col = "grey25", las = 1)
+x <- seq(-9, 9, length.out = 200)
 plot_prior(x, dnorm(x, 0, 10), expression(lambda))
 x <- seq(0, 6, length.out = 200)
 plot_prior(x, dcauchy(x, 0, 2.5), expression(sigma[proc]))
-x <- seq(2, 125, length.out = 200)
-plot_prior(x, dexp(x, 0.01), expression(nu), col = "black")
-plot_prior(x, dexp(x, 0.005), expression(nu), add = TRUE, lty = "93",
-  col = "grey60")
-plot_prior(x, dexp(x, 0.05), expression(nu), add = TRUE, lty = "22",
-  col = "grey60")
-text(90, 6/1000, "Base prior")
-text(50, 9/1000, "Stonger prior")
-text(1, 4/1000, "Weaker\nprior", pos = 4)
+x <- seq(2, 500, length.out = 2000)
+plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.02), expression(nu),
+  col = "grey70", log = "", ylim = NULL, lty = "93")
+plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.01),
+  expression(nu), add = TRUE, lty = 1, col = "black")
+plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.005),
+  expression(nu), add = TRUE, lty = "93", col = "grey20")
+
+# text(1.7, 1.2/100, "Base prior", pos = 4, cex = 0.9)
+# text(1, 1.2/100, "Stonger prior", cex = 0.9, pos = 4)
+# text(1, 0.2/100, "Weaker\nprior", pos = 4, cex = 0.9)
+
+TeachingDemos::subplot({
+  plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.02), "",
+    col = "grey70", log = "x", ylim = NULL, lty = "93", yaxt = "n", xaxt = "n",
+    ylab = "")
+  plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.01),
+    expression(nu), add = TRUE, lty = 1, col = "black")
+  plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.005),
+    expression(nu), add = TRUE, lty = "93", col = "grey20")
+  axis(2, at = c(0, 0.01, 0.02))
+  axis(1, at = c(2, 5, 20, 50, 200))
+  text(1.7, 1.2/100, "Base prior", pos = 4, cex = 0.9)
+  text(1.7, 1.8/100, "Stonger prior", cex = 0.9, pos = 4)
+  text(1.7, 0.2/100, "Weaker\nprior", pos = 4, cex = 0.9)
+
+},
+  x = c(200, 500),
+  y = c(0.01, 0.02))
+
 x <- seq(-1.1, 1.1, length.out = 200)
-plot_prior(x, dnorm(x, 0, 1) * dunif(x, -1, 1), expression(phi), xlim = c(-1.1, 1.1))
+plot_prior(x, dtrunc(x, "norm", a = -1, b = 1, mean = 0, sd = 1),
+  expression(phi), xlim = c(-1.1, 1.1))
+mtext("Probability density", side = 2, outer = TRUE, line = 1, las = 0, cex = 0.9)
 dev.off()
 
 # How much probability mass is below 10 and above 2 in the prior?
