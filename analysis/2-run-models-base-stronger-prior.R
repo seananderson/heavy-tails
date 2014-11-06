@@ -4,7 +4,6 @@
 source("1.5-compile-fit-function.R")
 source("1.6-extract-function.R")
 
-model <- readRDS("stan-gomp-bda.rds")
 model <- readRDS("stan-gomp.rds")
 gpdd <- readRDS("gpdd-clean.rds")
 id <- "gomp-base-stronger"
