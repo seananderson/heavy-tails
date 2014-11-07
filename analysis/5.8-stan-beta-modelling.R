@@ -2,7 +2,8 @@
 # this version is a streamlined version with the final analysis
 # see 5.6-... for the intermediate work
 
-library(rstan)
+library("rstan")
+# library("stanhelpers") # for easy parallel Stan, from https://github.com/seananderson/stanhelpers
 source("5-shape-data.R")
 
 # scale by 2 standard deviations and subtract mean:
@@ -52,41 +53,42 @@ if(!file.exists("betareg4.rds")) {
   stan_beta4 <- readRDS("betareg4.rds")
 }
 
-m.stan.beta4 <- sampling(stan_beta4,
-  data = list(
-    N = nrow(d),
-    n_order = max(d$order_id),
-    n_class = max(d$class_id),
-    n_sp = max(d$sp_id),
-    x1 = as.numeric(d$lambda_scaled_mean),
-    x2 = as.numeric(d$b_scaled_mean),
-    x3 = as.numeric(d$log_sigma_scaled_mean),
-    x4 = as.numeric(d$log_dataset_length_scaled),
-    x5 = as.numeric(d$log_Lifesp_scaled),
-    x1_sigma = as.numeric(d$lambda_scaled_sd),
-    x2_sigma = as.numeric(d$b_scaled_sd),
-    x3_sigma = as.numeric(d$log_sigma_scaled_sd),
-    order_id = d$order_id,
-    class_id = d$class_id,
-    sp_id = as.numeric(d$sp_id),
-    y = d$p10),
-  pars = c("b1", "b2", "b3", "b4", "b5", "mu_a",
-    "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
-    "a_class", "a_order"),
-  iter = 5000, chains = 4, thin = 2)
-
-png("trace-beta.png", width = 700, height = 1000)
-rstan::traceplot(m.stan.beta4, pars = c("b1", "b2", "b3", "b4", "b5",
-    "mu_a", "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi"),
-  nrow = 5, ncol = 2,
-  inc_warmup = FALSE)
-dev.off()
-
-saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
-m <- readRDS("beta-stan-samples.rds") # or reload this
-sink("beta-stan-samples-2.txt")
-print(m)
-sink()
+if(!file.exists("beta-stan-samples.rds")) {
+  m.stan.beta4 <- sampling(stan_beta4,
+    data = list(
+      N = nrow(d),
+      n_order = max(d$order_id),
+      n_class = max(d$class_id),
+      n_sp = max(d$sp_id),
+      x1 = as.numeric(d$lambda_scaled_mean),
+      x2 = as.numeric(d$b_scaled_mean),
+      x3 = as.numeric(d$log_sigma_scaled_mean),
+      x4 = as.numeric(d$log_dataset_length_scaled),
+      x5 = as.numeric(d$log_Lifesp_scaled),
+      x1_sigma = as.numeric(d$lambda_scaled_sd),
+      x2_sigma = as.numeric(d$b_scaled_sd),
+      x3_sigma = as.numeric(d$log_sigma_scaled_sd),
+      order_id = d$order_id,
+      class_id = d$class_id,
+      sp_id = as.numeric(d$sp_id),
+      y = d$p10),
+    pars = c("b1", "b2", "b3", "b4", "b5", "mu_a",
+      "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
+      "a_class", "a_order"),
+    iter = 5000, chains = 4, thin = 2)
+  png("trace-beta.png", width = 700, height = 1000)
+  rstan::traceplot(m.stan.beta4, pars = c("b1", "b2", "b3", "b4", "b5",
+      "mu_a", "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi"),
+    nrow = 5, ncol = 2,
+    inc_warmup = FALSE)
+  dev.off()
+  saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
+} else {
+  m <- readRDS("beta-stan-samples.rds") # or reload this
+  sink("beta-stan-samples-2.txt")
+  print(m)
+  sink()
+}
 
 means <- plyr::laply(extract(m), mean)[1:5]
 ord <- order(means)

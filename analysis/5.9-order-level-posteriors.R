@@ -12,27 +12,29 @@ if(!file.exists("betareg5.rds")) {
 }
 d <- readRDS("beta-modelling-dat.rds")
 
-m.stan.beta5 <- sampling(stan_beta5,
-  data = list(
-    N = nrow(d),
-    n_order = max(d$order_id),
-    n_class = max(d$class_id),
-    n_sp = max(d$sp_id),
-    x1 = as.numeric(d$log_dataset_length_scaled),
-    order_id = d$order_id,
-    class_id = d$class_id,
-    sp_id = as.numeric(d$sp_id),
-    y = d$p10),
-  pars = c("b1", "mu_a",
-    "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
-    "a_class", "a_order"),
-  iter = 5000, chains = 4, thin = 2)
-saveRDS(m.stan.beta5, file = "beta-stan-samples-n-only.rds")
-sink("beta-stan-stamples-n-only.txt")
-print(m.stan.beta5)
-sink()
-
-m <- readRDS("beta-stan-samples-n-only.rds")
+if(!file.exists("beta-stan-samples-n-only.rds")) {
+  m.stan.beta5 <- sampling(stan_beta5,
+    data = list(
+      N = nrow(d),
+      n_order = max(d$order_id),
+      n_class = max(d$class_id),
+      n_sp = max(d$sp_id),
+      x1 = as.numeric(d$log_dataset_length_scaled),
+      order_id = d$order_id,
+      class_id = d$class_id,
+      sp_id = as.numeric(d$sp_id),
+      y = d$p10),
+    pars = c("b1", "mu_a",
+      "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
+      "a_class", "a_order"),
+    iter = 5000, chains = 4, thin = 2)
+  saveRDS(m.stan.beta5, file = "beta-stan-samples-n-only.rds")
+  sink("beta-stan-stamples-n-only.txt")
+  print(m.stan.beta5)
+  sink()
+} else {
+  m <- readRDS("beta-stan-samples-n-only.rds")
+}
 
 lu <- d[,c("order_id", "class_id", "taxonomic_class", "taxonomic_order")]
 lu <- lu[!duplicated(lu), ]
