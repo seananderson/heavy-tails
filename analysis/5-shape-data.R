@@ -11,9 +11,20 @@ gomp_hat_logistic <- readRDS("logistic-hat.rds")
 gomp_hat_ar1 <- readRDS("gomp-ar1-hat.rds")
 gomp_hat_obs_0.2 <- readRDS("gomp-obs-0.2-hat.rds")
 gomp_hat_rate <- readRDS("rate-hat.rds")
-
 gomp_hat_weaker <- readRDS("gomp-base-weaker-hat.rds")
 gomp_hat_stronger <- readRDS("gomp-base-stronger-hat.rds")
+
+# in later work, I discovered that further populations should be removed
+# but, some of these have already been run in my locally cached files
+# therefore, I will remove all GPDD main_ids not in `gpdd`:
+clean_main_ids <- unique(gpdd$main_id)
+gomp_hat_base <- filter(gomp_hat_base, main_id %in% clean_main_ids)
+gomp_hat_logistic <- filter(gomp_hat_logistic, main_id %in% clean_main_ids)
+gomp_hat_ar1 <- filter(gomp_hat_ar1, main_id %in% clean_main_ids)
+gomp_hat_obs_0.2 <- filter(gomp_hat_obs_0.2, main_id %in% clean_main_ids)
+gomp_hat_rate <- filter(gomp_hat_rate, main_id %in% clean_main_ids)
+gomp_hat_weaker <- filter(gomp_hat_weaker, main_id %in% clean_main_ids)
+gomp_hat_stronger <- filter(gomp_hat_stronger, main_id %in% clean_main_ids)
 
 brook <- read.csv("brook-etal.csv", stringsAsFactors = FALSE)
 
