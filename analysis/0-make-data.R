@@ -264,6 +264,15 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
     x
 })
 
+# and remove 3 populations that I discovered were data entry errors in the GPDD
+# these were populations with a high probability of heavy tails
+# and that I found the original paper with the data to cross check:
+gpdd <- filter(gpdd, !main_id %in% c(1207, 6531, 6566))
+
+# and main_id 10139 is a duplicate of 20579, but 20579 is a longer version
+# so remove 10139:
+gpdd <- filter(gpdd, !main_id %in% 10139)
+
 stat_table <-
   gpdd %>% group_by(taxonomic_class, main_id) %>%
   summarise(x = n(), x_zero_sub = sum(zero_sub),
@@ -330,7 +339,6 @@ make_big_ts_plot(gpdd[gpdd$taxonomic_class == "Aves", ], id = "birds",
 make_big_ts_plot(gpdd[gpdd$taxonomic_class %in%
   c("Gastropoda", "Crustacea", "Chondrichtyhes", "Osteichthyes"), ],
   id = "fishes-others", width = 24, height = 20)
-#make_big_ts_plot(gpdd[gpdd$taxonomic_class %in% c("Gastropoda", "Crustacea", "Chondrichtyhes"), ], id = "others", width = 24, height = 20)
 
 # y <- subset(gpdd, ref == "Lindstrom, J., Ranta, E. Kaitala, V. & Linden, H. 1995 The clockwork of Finnish tetraonid population dynamics. Oikos, 74:185-194")
 # ggplot(y, aes(decimal_year_begin, log10(population_untransformed))) + geom_line() + facet_wrap(~main_id)
