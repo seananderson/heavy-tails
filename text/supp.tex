@@ -17,7 +17,7 @@ We applied the following data selection and quality-control rules to the Global 
 
 \item We removed all populations rated as $< 2$ in the GPDD quality assessment (on a scale of $1$ to $5$, with $1$ being the lowest quality data) \citep[following][]{sibly2005, ziebarth2010}.
 
-\item Populations with negative abundance values were assumed to be log10 values and transformed by taking $10$ to the power of the recorded abundance. In many cases this was noted for the population, but not in all cases. We inspected each of these \totalAssumedLog~time series to make sure our assumption made sense.
+\item Populations with negative abundance values were removed. Of the populations that remained at the end of our other filtering rules, the remaining populations with negative abundances listed were all from time series that had been standardized by subtracting the mean and dividing by the standard deviation. We verified this by locating the original papers the datasets were extracted from: \citet{colebrook1978} for zooplankton and \citet{lindstrom1995} for grouse. Since the papers did not include the original mean time-series values we could not back transform these data points.
 
 \item We filled in all missing time steps with \texttt{NA} values and imputed single missing values with the geometric mean of the previous and following values. We chose a geometric mean to be linear on the log scale that the Gompertz and Ricker-logistic models were fit on.
 
