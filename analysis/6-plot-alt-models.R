@@ -1,3 +1,10 @@
+source("5-shape-data.R")
+
+gomp_hat_base <- arrange(gomp_hat_base, main_id)
+gomp_hat_obs_0.2 <- arrange(gomp_hat_obs_0.2, main_id)
+gomp_hat_logistic <- arrange(gomp_hat_logistic, main_id)
+gomp_hat_rate <- arrange(gomp_hat_rate, main_id)
+
 cols_df <- data.frame(col =
     c(RColorBrewer::brewer.pal(4, "Set3")[c(3, 4, 1, 2)],
       rep("#FFFFFF", 3)),
