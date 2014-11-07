@@ -91,13 +91,13 @@ for(i in ord) {
 
   polygon(c(x$x, rev(x$x)),
     j + c(x$y/scaling_factor, -rev(x$y/scaling_factor)),
-    border = "grey50", lwd = 1.5, col = "grey90")
+    border = "grey50", lwd = 1, col = "grey90")
   segments(
     x_med,
     j - x_med_dens_height/scaling_factor,
     x_med,
     j + x_med_dens_height/scaling_factor,
-    col = "grey50", lwd = 1.5)
+    col = "grey50", lwd = 1)
 }
 axis(1)
 axis(2, at = 1:5, labels = coefs[ord], las = 1, lwd = 0, line = -0.6)
@@ -128,13 +128,13 @@ for(i in seq_along(op)) {
     border = "grey50", lwd = 0.5, col = "white")
   polygon(c(op[[i]]$dens$x, rev(op[[i]]$dens$x)),
     i + c(op[[i]]$dens$y/scaling_factor, -rev(op[[i]]$dens$y/scaling_factor)),
-    border = "grey50", lwd = 1.5, col = paste0(op[[i]]$col, "90"))
+    border = "grey50", lwd = 1, col = paste0(op[[i]]$col, "90"))
   segments(
     op[[i]]$med_post,
     i - op[[i]]$med_dens_height/scaling_factor,
     op[[i]]$med_post,
     i + op[[i]]$med_dens_height/scaling_factor,
-    col = "grey50", lwd = 1.5)
+    col = "grey50", lwd = 1)
   par(xpd = NA)
   add_phylopic(op[[i]]$img, alpha = 1, x = 0.004, y = i,
     ysize = 0.9 * or$scaling_factor[i], xy_ratio = 35, color = "grey45")
