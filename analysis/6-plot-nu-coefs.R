@@ -87,13 +87,17 @@ for(i in 1:length(classes)) {
   x$cex <- as.numeric(cols_df$cex[findInterval(x$p10, cols_df$cuts)])
 
   TeachingDemos::subplot({
-    plot(x$p10, x$p10_order, type = "n", xlab = "", ylab = "", las = 1, bty = "n", yaxt = "n", xaxt = "n", axes = FALSE)
-    axis(2, at = p$p10_order, labels = p$taxonomic_order, las = 1, cex = 0.8, cex.axis= 0.8, lwd = 0, col.axis = "grey30", line = -0.36)
-    axis(1, at = c(0, 0.5, 1), col = "grey30", lwd = 0.7, tck = -0.04, mgp = c(2, 0.25, 0), col.axis = "grey30", cex.axis = 0.8)
+    plot(x$p10, x$p10_order, type = "n", xlab = "", ylab = "", las = 1,
+      bty = "n", yaxt = "n", xaxt = "n", axes = FALSE, xlim = c(0, 1), xaxs = "i")
+    axis(2, at = p$p10_order, labels = p$taxonomic_order, las = 1,
+      cex = 0.8, cex.axis= 0.8, lwd = 0, col.axis = "grey30", line = -0.36)
+    axis(1, at = c(0, 0.5, 1), col = "grey30", lwd = 0.7, tck = -0.04,
+      mgp = c(2, 0.25, 0), col.axis = "grey30", cex.axis = 0.8)
     mtext(expression(p(nu<10)), side = 1, line = 1.4, cex = 0.8, col = "grey30")
     abline(h = as.numeric(as.factor(x$taxonomic_order)), col = "grey93", lwd = 0.7, lty = 1)
     par(xpd = NA)
-    points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = x$p_col, col = x$bg, cex = x$cex, lwd = 0.8)
+    points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = x$p_col,
+      col = x$bg, cex = x$cex, lwd = 0.8)
     par(xpd = FALSE)
   },
     x = c(60, 95),
