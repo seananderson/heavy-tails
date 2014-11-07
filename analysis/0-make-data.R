@@ -272,17 +272,25 @@ stat_table <-
     n_interpolated = sum(x_impute),
     n_zero_sub = sum(x_zero_sub)
     ) %>% arrange(desc(n)) %>% as.data.frame
+
+stats2 <- gpdd %>% group_by(taxonomic_class) %>%
+  summarize(n_points = length(population))
+stat_table <- plyr::join(stat_table, stats2)
 write.csv(stat_table, file = "stat_table.csv", row.names = FALSE)
 
 stat_table$max_N <- NULL
 
+
 names(stat_table) <- c("Taxonomic class", "Populations", "Orders", "Species",
-  "Median length", "Interpolated pts", "Zeros pts")
+  "Median length", "Interpolated pts", "Zeros pts", "Total pts")
+# Fix a spelling mistake in the GPDD:
+stat_table$`Taxonomic class`[stat_table$`Taxonomic class` == "Chondrichtyhes"] <-
+    "Chondrichthyes"
 library(xtable)
 print.xtable(xtable(stat_table,
-    caption = "Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, and total number of substituted zeros."),
+    caption = "Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, total number of substituted zeros, and total number of time steps."),
   include.rownames = FALSE, file = "stat-table.tex",
-  booktabs = TRUE,  caption.placement = "top")
+  booktabs = TRUE,  caption.placement = "top", size = "footnotesize")
 
 saveRDS(gpdd, file = "gpdd-clean.rds")
 
