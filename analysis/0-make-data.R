@@ -49,13 +49,20 @@ gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
 # now deal with hidden logged values
 # assume those with < 0 are logged:
 # (some say, some don't)
-gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
-  x$assumed_log10 <- FALSE
-  if(min(x$population_untransformed, na.rm = TRUE) < 0) {
-    x$population_untransformed <- 10^x$population_untransformed
-    x$assumed_log10 <- TRUE
-  }
-  x
+# 20141107: actually, all that are left at the end are not
+# actually log10 values, instead they are standardized
+# (subtracted mean and divided by SD)
+# therefore, I'm removing them here
+# gpdd <- plyr::ddply(gpdd, "main_id", function(x) {
+#   x$assumed_log10 <- FALSE
+#   if(min(x$population_untransformed, na.rm = TRUE) < 0) {
+#     x$population_untransformed <- 10^x$population_untransformed
+#     x$assumed_log10 <- TRUE
+#   }
+#   x
+# })
+gpdd <- plyr::ddply(gpdd, "main_id", function(y) {
+  if(min(y$population_untransformed, na.rm = TRUE) >= 0) y
 })
 
 # substitute single zeros for the lowest value
@@ -325,10 +332,21 @@ make_big_ts_plot(gpdd[gpdd$taxonomic_class %in%
   id = "fishes-others", width = 24, height = 20)
 #make_big_ts_plot(gpdd[gpdd$taxonomic_class %in% c("Gastropoda", "Crustacea", "Chondrichtyhes"), ], id = "others", width = 24, height = 20)
 
+# y <- subset(gpdd, ref == "Lindstrom, J., Ranta, E. Kaitala, V. & Linden, H. 1995 The clockwork of Finnish tetraonid population dynamics. Oikos, 74:185-194")
+# ggplot(y, aes(decimal_year_begin, log10(population_untransformed))) + geom_line() + facet_wrap(~main_id)
 
+# p <- ggplot(subset(gpdd, assumed_log10 == TRUE & !main_id %in% unique(y$main_id)),
+#   aes(series_step, population)) +
+#   geom_point() + geom_line() +
+#   facet_wrap(~label, scales = "free")
 
-p <- ggplot(subset(gpdd, assumed_log10 == TRUE),
-  aes(series_step, log10(population_untransformed))) +
-  geom_point() + geom_line() +
-  facet_wrap(~label, scales = "free")
-ggsave("log10-assumed.pdf", width = 20, height = 20)
+# p <- ggplot(subset(gpdd, assumed_log10 == TRUE & !main_id %in% unique(y$main_id)),
+#   aes(series_step, population_untransformed_original)) +
+#   geom_point() + geom_line() +
+#   facet_wrap(~label, scales = "free")
+
+# p <- ggplot(subset(gpdd, assumed_log10 == TRUE & !main_id %in% unique(y$main_id)),
+#   aes(series_step, population_untransformed)) +
+#   geom_point() + geom_line() +
+#   facet_wrap(~label, scales = "free")
+# ggsave("log10-assumed.pdf", width = 20, height = 20)
