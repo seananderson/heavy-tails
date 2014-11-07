@@ -67,10 +67,10 @@ pheavy_overall <- gtemp %>%
   group_by(type) %>%
   summarise(n = n(), h = length(which(p10 > 0.5)), p = round(100 * h / n))
 
-temp <- gpdd %>% group_by(main_id) %>%
-  summarise(assume_log10 = assumed_log10[1]) %>%
-  summarise(total_assumed_log10 = sum(assume_log10))
-total_assumed_log10 <- temp$total_assumed_log10
+#temp <- gpdd %>% group_by(main_id) %>%
+  #summarise(assume_log10 = assumed_log10[1]) %>%
+  #summarise(total_assumed_log10 = sum(assume_log10))
+#total_assumed_log10 <- temp$total_assumed_log10
 
 ## To obtain:
 ## Methods:
@@ -188,13 +188,16 @@ write_tex(modelsNoConvergeAROneHeavyBase, "modelsNoConvergeAROneHeavyBase")
 write_tex(perc_imputed_pops, "percImputedPops")
 write_tex(perc_imputed_points, "percImputedPoints")
 write_tex(fig2_pop_n, "nuCoefPopN")
-write_tex(total_assumed_log10, "totalAssumedLog")
+#write_tex(total_assumed_log10, "totalAssumedLog")
 for(cl in unique(pheavy_class$taxonomic_class)) {
   write_tex(paste0(
     pheavy_class[pheavy_class$taxonomic_class == cl, "min_p"],
     "--",
     pheavy_class[pheavy_class$taxonomic_class == cl, "max_p"]),
     paste0(cl, "RangePerc"))
+}
+if(!"Osteichthyes" %in% unique(pheavy_class$taxonomic_class)) {
+  write_tex(0, "OsteichthyesRangePerc")
 }
 
 write_tex(min(pheavy_overall$p), "overallMinPerc")
