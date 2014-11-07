@@ -188,7 +188,6 @@ To derive taxonomic-order-level estimates of the probability of heavy tails acco
 \clearpage
 \renewcommand{\thetable}{S\arabic{table}}
 \setcounter{table}{0}
-TODO ``Chondrichtyhes'' IS A TYPO IN THE GPDD DATA\\
 TODO ADD TOTAL NUMBER OF POINTS ON RIGHT COLUMN
 \input{../analysis/stat-table}
 \clearpage
@@ -221,9 +220,9 @@ TODO WILL SPLIT OVER PAGES BY CLASS
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/priors-gomp-base.pdf}
 \caption{
-  Probability density of the Bayesian priors for the Gompertz models. From left to right and then top to bottom: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. The $\nu$ panel also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$.
+Probability density of the Bayesian priors for the Gompertz models. From left to right and then top to bottom: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. The $\nu$ panel also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis.
 }
-  \label{fig:priors}
+\label{fig:priors}
 \end{center}
 \end{figure}
 
@@ -300,23 +299,22 @@ Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. Shown 
 % \begin{center}
 % \includegraphics[width=\textwidth]{../analysis/sim-gompertz.pdf}
 % \caption{
-% TODO WILL REMOVE ALL OR MOST OF THIS
-%   Simulation testing the Gompertz estimation model when the process deviation
-%   draws were chosen so that $\nu$ could be estimated close to the true value
-%   outside the full population model (``effective $\nu$'' within a CV of 0.2 of
-%   specified $\nu$). The simulation was run across population $\nu$ values
-%   (columns) and different scenarios (colours): (1) 100 time steps and no
-%   observation error, (2) 50 time steps and no observation error, (3) 50 time
-%   steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
-%   ignored, and (4) 50 time steps with observation error in which the quantity
-%   of observation error was assumed known. Dashed horizontal lines show the true
-%   population values; these true values were chosen to represent approximately
-%   the median values as estimated from the Global Population Dynamics Database.
-%   Individual dots and lines
-%   represent a stochastic draws from the true population distribution and
-%   a model fitting (median and 80\% credible intervals). The panels from top to
-%   bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate
-%   parameter $\lambda$, and the density dependence parameter $b$.
+% Simulation testing the Gompertz estimation model when the process deviation
+% draws were chosen so that $\nu$ could be estimated close to the true value
+% outside the full population model (``effective $\nu$'' within a CV of 0.2 of
+% specified $\nu$). The simulation was run across population $\nu$ values
+% (columns) and different scenarios (colours): (1) 100 time steps and no
+% observation error, (2) 50 time steps and no observation error, (3) 50 time
+% steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
+% ignored, and (4) 50 time steps with observation error in which the quantity
+% of observation error was assumed known. Dashed horizontal lines show the true
+% population values; these true values were chosen to represent approximately
+% the median values as estimated from the Global Population Dynamics Database.
+% Individual dots and lines
+% represent a stochastic draws from the true population distribution and
+% a model fitting (median and 80\% credible intervals). The panels from top to
+% bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate
+% parameter $\lambda$, and the density dependence parameter $b$.
 % }
 % \label{fig:sim-gompertz}
 % \end{center}
@@ -328,7 +326,6 @@ Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. Shown 
 % \begin{center}
 % \includegraphics[width=\textwidth]{../analysis/sim-gompertz-boxplots.pdf}
 % \caption{
-% TODO WILL REMOVE ALL OR MOST OF THIS
 %   The distribution of median estimates from the same simulation as described in
 %   Fig.~\ref{fig:sim-gompertz}. The boxes show the interquartile range. The
 %   whiskers extend to $1.5$ times the interquartile range and outliers are shown
@@ -345,12 +342,20 @@ Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. Shown 
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/check-sim-box.pdf}
 \caption{
-TODO WILL REMOVE ALL OR MOST OF THIS
-  The probability that $\nu < 10$ (i.e.\ the approximate probability of heavy
-  tails) for the same simulation scenarios as shown in
-  Fig.~\ref{fig:sim-gompertz} and Fig.~\ref{fig:sim-gompertz-boxplots}. Within
-  each scenario the dots represent stochastic draws from the true population
-  distributions combined with model fits.
+Simulation testing the Gompertz estimation model when the process deviation
+draws were chosen so that $\nu$ could be estimated close to the true value
+outside the full population model (``effective $\nu$'' within a CV of 0.2 of
+specified $\nu$).
+Plots show the probability that $\nu < 10$ (i.e.\ the approximate probability
+of heavy tails) across three population $\nu$ values
+(3, 5, and normal) and different scenarios panels: (1) 100 time steps and no
+observation error, (2) 50 time steps and no observation error, (3) 50 time
+steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
+ignored, and (4) 50 time steps with observation error in which the quantity
+of observation error was assumed known.
+Within
+each scenario the dots represent stochastic draws from the true population
+distributions combined with model fits.
 }
 \label{fig:sim-prob}
 \end{center}

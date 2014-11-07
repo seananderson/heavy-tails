@@ -117,9 +117,11 @@ All code and data to recreate our analysis are available at:\\
 
 \input{sparks.tex}
 
+\clearpage
+
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{../analysis/t-nu-eg.pdf}
+\includegraphics[width=\textwidth]{../analysis/t-nu-eg2.pdf}
 \caption{
 An illustration of fitting population dynamic models that allow for heavy tails, represented by the Student-t degrees of freedom parameter $\nu$. (a, b) The probability density for t distributions with a scale parameter of 1 and different values of $\nu$. Small values of $\nu$ create heavy tails. As $\nu$ approaches infinity the distribution approaches the normal distribution. For example, at $\nu = 2$, the probability of drawing a value more than five standard deviations below the mean is 1.8\%, whereas the probability of drawing such a value from a normal distribution is nearly zero ($2.9\cdot10^{-5}$\%). (c--e) Simulated population dynamics from a Gompertz model with process noise drawn from t distributions with three different values of $\nu$. Coloured dots in panels c and d represent jumps with less than a 1 in 1000 chance of occurring in a normal distribution. (f--h) Estimates of $\nu$ from models fit to the times series in panels c--e. Shown are the posterior samples (histograms), median and interquartile range of the posterior (IQR) (dots and line segments), and the exponential prior on $\nu$ (dashed lines). Colour shading behind panels f--h illustrates the region of heavy tails.
 }
