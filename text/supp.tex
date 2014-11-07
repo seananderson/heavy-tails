@@ -199,18 +199,43 @@ TODO ADD TOTAL NUMBER OF POINTS ON RIGHT COLUMN
 \renewcommand{\thefigure}{S\arabic{figure}}
 \setcounter{figure}{0}
 
+% \begin{figure}[htbp]
+% \begin{center}
+% \includegraphics[width=\textwidth]{../analysis/all-clean-ts-3.pdf}
+% \caption{
+% TODO WILL SPLIT OVER PAGES BY CLASS
+%   All filtered times series used in our analysis. The abundances are shown on
+%   a log10 vertical axis. Colours indicate taxonomic classes. Open black circles
+%   indicate abundance values that were interpolated. Closed black circles
+%   indicate single abundance values that were recorded as zero but were set to
+%   the next lowest observed abundance.
+% }
+%     \label{fig:all-ts}
+% \end{center}
+% \end{figure}
+
+\begin{centering}
+\clearpage
+\includegraphics[width=\textwidth]{../analysis/all-clean-ts-mammals.pdf}\\
+Figure~\ref{fig:all-ts} (mammals) continued on next page \ldots
+
+\clearpage
+\includegraphics[width=\textwidth]{../analysis/all-clean-ts-birds.pdf}\\
+Figure~\ref{fig:all-ts} (birds) continued on next page \ldots
+
+\clearpage
+\includegraphics[width=\textwidth]{../analysis/all-clean-ts-insects.pdf}\\
+Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
+
+\end{centering}
+
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{../analysis/all-clean-ts-3.pdf}
+\includegraphics[width=\textwidth]{../analysis/all-clean-ts-fishes-others.pdf}
 \caption{
-TODO WILL SPLIT OVER PAGES BY CLASS
-  All filtered times series used in our analysis. The abundances are shown on
-  a log10 vertical axis. Colours indicate taxonomic classes. Open black circles
-  indicate abundance values that were interpolated. Closed black circles
-  indicate single abundance values that were recorded as zero but were set to
-  the next lowest observed abundance.
+  (fishes, crustaceans, gastropods, sharks). All filtered time series used in our analysis. The abundances are shown on a log10 vertical axis. Throughout this figure, red dots indicate values that were interpolated and red circles indicate values that were recorded as zero but were set to the next lowest observed abundance. Numbers before each species name are the GPDD main identification numbers.
 }
-    \label{fig:all-ts}
+\label{fig:all-ts}
 \end{center}
 \end{figure}
 
