@@ -80,7 +80,7 @@ for(i in 1:length(classes)) {
     col = rev((c(rev(RColorBrewer::brewer.pal(6, "YlOrRd"))[-6], "#00000007"))),
     bg = rev(c(rep("grey40", 5), "#33333350")),
     cex = rev(c(rep(0.75, 5), 0.65)),
-    cuts = rev(c(0.8, 0.7, 0.6, 0.5, 0.4, 0)), stringsAsFactors = FALSE)
+    cuts = rev(c(0.9, 0.8, 0.7, 0.6, 0.5, 0)), stringsAsFactors = FALSE)
 
   x$p_col <- as.character(cols_df$col[findInterval(x$p10, cols_df$cuts)])
   x$bg <- as.character(cols_df$bg[findInterval(x$p10, cols_df$cuts)])
