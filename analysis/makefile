@@ -1,5 +1,15 @@
 CACHE = ~/Dropbox/heavy-tails/cache
 
+all: analysis
+
+analysis:
+	R CMD BATCH --no-save make.R
+
+# Warning: this will take a *long* time to rebuild after:
+clean:
+	rm *.rds
+	rm *.rda
+
 sendCacheToDropbox:
 	cp gpdd-clean.rds $(CACHE)
 	cp gomp-base-hat.rds $(CACHE)
