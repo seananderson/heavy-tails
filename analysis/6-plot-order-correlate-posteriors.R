@@ -26,6 +26,30 @@ or[or$taxonomic_order == "Pleuronectiformes", "scaling_factor"] <- 0.8
 # to get ordering right:
 or <- plyr::join(a_df[,c("taxonomic_order", "sorted_order")], or)
 
+
+# get citation details:
+if(!file.exists("phylopic-metadata.rds")) {
+  or_temp <- plyr::ldply(seq_len(nrow(or)), function(i) {
+    temp <- rphylopic::image_get(uuid = or$hash[i], options = c("credit", "licenseURL"))
+    temp <- lapply(temp, function(x) ifelse(is.null(x), "", x))
+    data.frame(credit = temp$credit, licenseURL = temp$licenseURL)
+  })
+  saveRDS(or_temp, file = "phylopic-metadata.rds")
+} else {
+  or_temp <- readRDS("phylopic-metadata.rds")
+}
+or <- data.frame(or, or_temp)
+
+library("xtable")
+or_table <- or[ ,c("taxonomic_order", "credit", "licenseURL")]
+or_table$licenseURL <- paste0("\\url{", or_table$licenseURL, "}")
+or_table$credit <- gsub("&", "and", or_table$credit)
+names(or_table) <- c("Taxonomic order", "Credit", "License URL")
+
+print.xtable(xtable(or_table, caption = ""),
+  include.rownames = FALSE, file = "phylopic.tex", booktabs = TRUE,
+  sanitize.text.function = identity, only.contents = TRUE)
+
 if(any(!file.exists(paste0("silhouettes/", or$taxonomic_order, ".png")))) {
   for(i in 1:nrow(or)) {
     download.file(or$png_url[i],
