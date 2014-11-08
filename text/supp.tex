@@ -54,11 +54,9 @@ We fit our models with Stan 2.4.0 \citep{stan-manual2014}, and R 3.1.1 \citep{r2
 
 \section{Alternative priors}
 
-TODO
+To test if the prior on $\nu$ influenced our estimate of black-swan dynamics, we refit our models with weaker and stronger priors. Our base model used a prior on $\nu$ of Truncated-Exponential(0.02, min.\ = 2). For a weaker prior we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}). Note that the base and weaker priors are relatively flat within the region of $\nu < 20$---the region we are mostly concerned about when categorizing populations as heavy- or thin-tailed.
 
-Fig.~\ref{fig:priors}
-
-Fig.~\ref{fig:alt-priors}
+Our results show that these weaker and stronger priors would have little influence on our conclusions about heavy-tailed dynamics (Fig.~\ref{fig:alt-priors}). When the data are informative about tail behaviour (i.e.\ when there is strong evidence of low $\nu$ values, upper-right of Fig.~\ref{fig:alt-priors}), the prior has little impact on the estimate of $\nu$. When the data are less informative about $\nu$ (i.e.\ when there are no or few tail events and time series are short or noisy), the prior can pull the estimate of $\nu$ towards larger or smaller values (Fig.~\ref{fig:alt-priors}). The vast majority of the populations with Pr$(\nu < 10)$ in the base prior are not altered qualitatively by this range of prior strength.
 
 \section{Alternative population models}
 
@@ -72,7 +70,7 @@ parameter was fit to the process noise residuals:
 x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, \phi \epsilon_{t-1}, \sigma).
 \end{align*}
-In addition to the parameters in the original Gompertz model, we estimate an additional parameter $\phi$, which represents the dependence of subsequent residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. The MCMC chains did not converge for \modelsNoConvergeAROne\ populations according to our criteria ($\widehat{R} < 1.05, n_\mathrm{eff} > 200$) after 8000 iterations of four chains. This included only \modelsNoConvergeAROneHeavyBase\ populations in which Pr($\nu < 10$) $> 0.5$ categorized them as heavy in the main Gompertz model. We did not include these models in Fig.~\ref{fig:alt}. \textit{TODO perhaps I should go up to 16,000 so that more converge.}
+In addition to the parameters in the original Gompertz model, we estimate an additional parameter $\phi$, which represents the dependence of subsequent residuals. Based on the results of previous analyses with the GPDD \citep[e.g.][]{connors2014} and the chosen priors in previous analyses \citep[e.g.][]{thorson2014a} and to greatly speed up chain convergence when running our model across all populations, we placed a weakly informative prior on $\phi$ that assumed the greatest probability density near zero with the reduced possibility of $\phi$ being near $-1$ or $1$. Specifically, we chose $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. The MCMC chains did not converge for \modelsNoConvergeAROne\ populations according to our criteria ($\widehat{R} < 1.05, n_\mathrm{eff} > 200$) after 8000 iterations of four chains. This included only \modelsNoConvergeAROneHeavyBase\ populations in which Pr($\nu < 10$) $> 0.5$ categorized them as heavy in the main Gompertz model. We did not include these models in Fig.~\ref{fig:alt}.
 
 \subsection{Assumed density independence}\label{assumed-density-independence}
 
@@ -152,8 +150,11 @@ nu_5_seeds_N50 <- get_effective_nu_seeds(nu_true = 5)
 
 We then fit our Gompertz models to the simulated datasets with all parameters (except $\nu$) set near the median values estimated in the GPDD. We repeated this with $50$ and $100$ samples without observation error, $50$ samples with observation error ($\sigma_\mathrm{obs} = 0.2$), and $50$ samples with the same observation error and a Gompertz model that allowed for correctly specified observation error magnitude.
 
-TODO, rework this paragraph:
-Our results show that the Gompertz model can recapture the true value of $\nu$ when the process noise was chosen so that appropriate tail events were present (Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and green symbols in the top rows). Likewise, the other Gompertz parameters were estimated without any systematic bias (Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and green symbols). The addition of observation error caused the model to tend to underestimate the degree of heavy-tailedness, overestimate the magnitude of process noise, somewhat overestimate $\lambda$, and overestimate density dependence (blue symbols in Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}). The overestimation of density dependence with observation error is a known phenomenon \citep{knape2012}. Fitting a model with correctly specified observation error made marginal improvements to model bias (purple symbols in Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}).
+Our results indicate that the Gompertz model can recapture the true value of $\nu$ when the process noise was chosen so that appropriate tail events were present (TODO FIG).
+The addition of observation error caused the model to tend to underestimate the degree of heavy-tailedness. Fitting a model with correctly specified observation error did not make substantial improvements to model bias.
+
+%(Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and green symbols in the top rows). Likewise, the other Gompertz parameters were estimated without any systematic bias (Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and green symbols). 
+%, overestimate the magnitude of process noise, somewhat overestimate $\lambda$, and overestimate density dependence (blue symbols in Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}). The overestimation of density dependence with observation error is a known phenomenon \citep{knape2012}. Fitting a model with correctly specified observation error made marginal improvements to model bias (purple symbols in Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}).
 
 When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the models distinguished heavy and not-heavy tails reasonably well. Without observation error, and using a probability of $0.5$ as a threshold, the model correctly classified all simulated systems with normally distributed process noise as not heavy tailed. The model would have miscategorized only one of $40$ simulations at $\nu = 5$ across a sample size of $50$ or $100$ data points (Fig.~\ref{fig:sim-prob}, upper panels). The model would have correctly categorized all cases where the process noise was not heavy tailed (indicated as ``$\nu =$ infinity'' in Fig.~\ref{fig:sim-prob}) and all cases where $\nu = 3$. With $0.2$ standard deviations of observation error, the model still categorized \obsErrorNuFivePerc\% of cases as heavy tailed when $\nu = 5$ and all cases where $\nu = 3$. Allowing for observation error made little improvement to the detection of heavy tails (Fig.~\ref{fig:sim-prob}, lower-left vs.\ lower-right panel). Therefore, we chose to focus on the simpler model without observation error in the main text, particularly given that the true magnitude of observation error was unknown in the empirical data.
 
@@ -220,7 +221,7 @@ To derive taxonomic-order-level estimates of the probability of heavy tails acco
 \singlespacing
 \begin{footnotesize}
 \begin{longtable}{>{\RaggedRight}m{1.5cm}>{\RaggedRight}p{4.3cm}>{\RaggedRight}p{0.8cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.0cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.3cm}}
-\caption{Populations with Pr$(\nu < 10) > 0.5$. TODO}\\
+\caption{All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events. (TODO add what probability these are.)}\\
 \toprule
 \input{../analysis/cause-table.tex}
 \label{tab:causes-supp}
@@ -234,21 +235,6 @@ To derive taxonomic-order-level estimates of the probability of heavy tails acco
 
 \renewcommand{\thefigure}{S\arabic{figure}}
 \setcounter{figure}{0}
-
-% \begin{figure}[htbp]
-% \begin{center}
-% \includegraphics[width=\textwidth]{../analysis/all-clean-ts-3.pdf}
-% \caption{
-% TODO WILL SPLIT OVER PAGES BY CLASS
-%   All filtered times series used in our analysis. The abundances are shown on
-%   a log10 vertical axis. Colours indicate taxonomic classes. Open black circles
-%   indicate abundance values that were interpolated. Closed black circles
-%   indicate single abundance values that were recorded as zero but were set to
-%   the next lowest observed abundance.
-% }
-%     \label{fig:all-ts}
-% \end{center}
-% \end{figure}
 
 \begin{centering}
 \clearpage
@@ -281,29 +267,13 @@ Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/priors-gomp-base.pdf}
 \caption{
-Probability density of the Bayesian priors for the Gompertz models. From left to right and then top to bottom: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. The $\nu$ panel also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis.
+Probability density of the Bayesian priors for the Gompertz models. From left to right and then top to bottom: (1) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. The $\nu$ panel also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis. Note that the base and weaker priors are relatively flat within the region of $\nu < 20$ that we are concerned with.
 }
 \label{fig:priors}
 \end{center}
 \end{figure}
 
 \clearpage
-
-% \begin{figure}[htbp]
-% \begin{center}
-% \includegraphics[width=0.9\textwidth]{../analysis/ts-gpdd-heavy-eg-log10-base.pdf}
-% \caption{
-%   Time series for populations with Pr($\nu < 10$) $>$ 0.5 using the base
-%   Gompertz population model. Panels are ordered by increasing Pr($\nu < 10$).
-%   Vertical axes are on a log10 scale. Colours indicate taxonomic classes. The
-%   labels on each panel indicate Pr($\nu < 10$) $>$ 0.5, the common name for the
-%   species, and the Global Population Dynamics Database ID number.
-% }
-% \label{fig:heavy-ts}
-% \end{center}
-% \end{figure}
-%
-% \clearpage
 
 \begin{figure}[htbp]
 \begin{center}
@@ -352,49 +322,6 @@ Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. Shown 
 \label{fig:sim-nu}
 \end{center}
 \end{figure}
-
-\clearpage
-
-% \begin{figure}[htbp]
-% \begin{center}
-% \includegraphics[width=\textwidth]{../analysis/sim-gompertz.pdf}
-% \caption{
-% Simulation testing the Gompertz estimation model when the process deviation
-% draws were chosen so that $\nu$ could be estimated close to the true value
-% outside the full population model (``effective $\nu$'' within a CV of 0.2 of
-% specified $\nu$). The simulation was run across population $\nu$ values
-% (columns) and different scenarios (colours): (1) 100 time steps and no
-% observation error, (2) 50 time steps and no observation error, (3) 50 time
-% steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
-% ignored, and (4) 50 time steps with observation error in which the quantity
-% of observation error was assumed known. Dashed horizontal lines show the true
-% population values; these true values were chosen to represent approximately
-% the median values as estimated from the Global Population Dynamics Database.
-% Individual dots and lines
-% represent a stochastic draws from the true population distribution and
-% a model fitting (median and 80\% credible intervals). The panels from top to
-% bottom show $1/\nu$, process noise scale parameter $\sigma$, growth rate
-% parameter $\lambda$, and the density dependence parameter $b$.
-% }
-% \label{fig:sim-gompertz}
-% \end{center}
-% \end{figure}
-
-\clearpage
-
-% \begin{figure}[htbp]
-% \begin{center}
-% \includegraphics[width=\textwidth]{../analysis/sim-gompertz-boxplots.pdf}
-% \caption{
-%   The distribution of median estimates from the same simulation as described in
-%   Fig.~\ref{fig:sim-gompertz}. The boxes show the interquartile range. The
-%   whiskers extend to $1.5$ times the interquartile range and outliers are shown
-%   as dots. Note that these distributions represent the output from only 20
-%   simulation iterations, so there is some level of remaining sampling noise.
-% }
-% \label{fig:sim-gompertz-boxplots}
-% \end{center}
-% \end{figure}
 
 \clearpage
 
