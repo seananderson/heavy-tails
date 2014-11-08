@@ -3,6 +3,7 @@
 # a_df_select <- filter(a_df, n_pops > 3)
 
 source("add_phylopic.R") # modifed from Scott's rphylopic package
+subtext_col <- "grey50"
 
 class_cols <- lu[, c("taxonomic_class", "col")]
 class_cols <- class_cols[!duplicated(class_cols), ]
@@ -10,7 +11,7 @@ class_cols <- class_cols[!duplicated(class_cols), ]
 a_df <- plyr::join(a_df, class_cols, by = "taxonomic_class")
 
 # get silhouette images:
-or <- read.table("orders.csv", stringsAsFactors = F, header = T)
+or <- read.table("orders.csv", stringsAsFactors = FALSE, header = TRUE)
 or <- mutate(or,
   hash = gsub("http://phylopic.org/image/([0-9a-z-]+)/", "\\1", url),
   svg_url = paste0("http://phylopic.org/assets/images/submissions/",
@@ -22,6 +23,8 @@ or[or$taxonomic_order == "Gadiformes", "scaling_factor"] <- 0.6
 or[or$taxonomic_order == "Salmoniformes", "scaling_factor"] <- 0.6
 or[or$taxonomic_order == "Perciformes", "scaling_factor"] <- 0.6
 or[or$taxonomic_order == "Pleuronectiformes", "scaling_factor"] <- 0.8
+# to get ordering right:
+or <- plyr::join(a_df[,c("taxonomic_order", "sorted_order")], or)
 
 if(any(!file.exists(paste0("silhouettes/", or$taxonomic_order, ".png")))) {
   for(i in 1:nrow(or)) {
@@ -75,7 +78,7 @@ coefs <- c(expression(lambda), expression(b), expression(log(sigma)),
 
 plot(1, 1, xlim = c(-1, 1), ylim = c(0.5, 5.5), main = "", axes = FALSE, yaxs = "i",
   type = "n", yaxs = "i", yaxt = "n", xlab = "", ylab = "")
-scaling_factor <- 12
+scaling_factor <- 8
 
 abline(v = 0, lty = 1, col = "grey60")
 j <- 0
@@ -107,8 +110,10 @@ axis(2, at = 1:5, labels = coefs[ord], las = 1, lwd = 0, line = -0.6)
 #   las = 1, lwd = 0, line = -0.6)
 # text(as.numeric(lapply(extract(m), median)[ord]),
 #   1:5-0.4, coefs[ord])
-mtext("Coefficient value\n(per 2 SDs of predictor)", side = 1, line = 2.4,
+mtext("Coefficient value", side = 1, line = 1.55,
   cex = 0.8, outer = FALSE)
+mtext("(per 2 SDs of predictor)", side = 1, line = 2.6,
+  cex = 0.8, outer = FALSE, col = subtext_col)
 mtext("(a)", side = 3, line = 0.5, cex = 0.8, adj = -0.7)
 
 #############################
@@ -119,7 +124,7 @@ xlim <- c(-.025, 0.29)
 plot(1, 1, xlim = xlim, ylim = c(1, length(op)), type = "n",
   ylab = "", xlab = "", axes = FALSE, xaxs = "i")
 abline(v = prior_p10, lty = 2, col = "grey40", lwd = 0.6)
-scaling_factor <- 55
+scaling_factor <- 63
 for(i in seq_along(op)) {
   segments(xlim[1]+0.05, i, min(op[[i]]$dens$x), i, col = "grey90")
   segments(max(op[[i]]$dens$x), i, xlim[2], i, col = "grey90")
@@ -146,7 +151,8 @@ axis(2, at = seq_along(op),
   las = 1, lwd = 0, line = -0.6)
 axis(1, at = seq(0, 0.3, 0.1))
 mtext(quote(Pr(nu<10)), side = 1, line = 2, cex = 0.8)
-mtext("Probability of black swans", side = 1, line = 3, cex = 0.8)
+mtext("Probability of black swans", side = 1, line = 3, cex = 0.8,
+  col = subtext_col)
 mtext("(b)", side = 3, line = 0, cex = 0.8, adj = -0.7)
 
 dev.off()
