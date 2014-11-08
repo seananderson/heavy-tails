@@ -189,6 +189,23 @@ We incorporated weakly informative priors into our model: $\mathrm{Cauchy}(0, 10
 
 To derive taxonomic-order-level estimates of the probability of heavy tails accounting for time-series length (Fig.~\ref{fig:posteriors}b), we fit a separate multilevel model with the same structure but with only $\log$ time-series length as a predictor. (In this case, we did not want to control for intrinsic population characteristics such as density dependence.) Since our predictors were centered by subtracting their mean value, we obtained order-level estimates of the probability of heavy tails at mean log time-series length by adding the posteriors for $\alpha$, $\alpha^\mathrm{class}_j$, and $\alpha^\mathrm{order}_k$.
 
+\section{Additional acknowledgements}
+
+Many of the silhouette images used in Figs~\ref{fig:nu-coefs}, \ref{fig:correlates} and \ref{fig:posteriors} were obtained from \texttt{phylopic.org} under Creative Commons licenses. We vectorized the salmon in Fig.~\ref{fig:nu-coefs} and Fig.~\ref{fig:correlates} ourselves. The bird in these figures was obtained from \texttt{phylopic.org} under a Creative Commons Attribution 3.0 Unported license with credit to Jean-Raphaël Guillaumin {[}photography{]} and T. Michael Keesey {[}vectorization{]}). The silhouettes in Fig.~\ref{fig:posteriors} were obtained from the following sources:
+
+\LTcapwidth=\textwidth
+\singlespacing
+\begin{footnotesize}
+\begin{longtable}{>{\RaggedRight}m{3.2cm}>{\RaggedRight}p{6.5cm}>{\RaggedRight}p{5.0cm}}
+%\caption{Phylopic credits}\\
+\toprule
+\input{../analysis/phylopic.tex}
+\label{tab:phylopic}
+\end{longtable}
+\end{footnotesize}
+\onehalfspacing
+
+
 \bibliographystyle{ecologyletters}
 \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
 
