@@ -29,7 +29,9 @@ We applied the following data selection and quality-control rules to the Global 
 
 \item We then wrote an algorithm to find the longest unbroken window of abundance (no \texttt{NA}s) with at least $20$ time steps in each population time series. If there were any populations with multiple windows of identical length, we took the most recent window. This is a longer window than used in some previous analyses \citep[e.g.][]{brook2006a}, but since our model attempts to capture the shape of the distribution tails, our model requires more data.
 
-\item Finally, we removed GPDD Main ID \texttt{20531}, which we noticed was a duplicate of \texttt{10139} (a heron population). We removed a limited number of populations from class Angiospermopsida and Bacillariophyceae to focus the taxonomy in our analysis. We also removed any populations with an \texttt{Unknown} taxonomic class.
+\item We removed GPDD Main IDs \texttt{20531} and \texttt{10139}, which we noticed were duplicates of \texttt{20579} (a heron population). \texttt{20579} contained additional years of data not present in \texttt{10139}. We removed a limited number of populations from class Angiospermopsida and Bacillariophyceae to focus the taxonomy in our analysis. We also removed any populations with an \texttt{Unknown} taxonomic class.
+
+\item Finally, we removed populations with the following GPDD Main IDs, which we discovered data entry errors when verifying the populations with suspected black swans: \texttt{1207} because 1957 was entered as 2 but should have been 27 \citep{kendeigh1982}, \texttt{6531} because 1978 was entered as 7 should have been 47 \citep{minot1986}, and \texttt{6566} because the data did not match the graph \citep{heessen1996}.
 
 \end{enumerate}
 
@@ -49,6 +51,14 @@ Our prior on $b$ was uninformative between values of $-1$ and $2$. We would not 
 Our prior on $\nu$ was based on \citet{fernandez1998}. They chose an exponential rate parameter of $0.1$. We chose a less informative rate parameter of $0.01$ and truncated the distribution at $2$, since at $\nu < 2$ the variance of the t distribution is undefined. This prior gives only a $7.7$\% probability that $\nu < 10$ but constrains the sampling sufficiently to avoid wandering off towards infinity --- above approximately $\nu = 20$ the t distribution is so similar to the normal distribution (Fig.~\ref{fig:didactic}) that time series of the length considered here are unlikely to be informative about the precise value of $\nu$. In the scenario where the data are uninformative about heavy tails (e.g.~Fig.~\ref{fig:didactic}e,~h), the posterior will approximately match the prior (prior median $= 71$, mean $= 102$) and the metrics used in our paper (e.g.~Pr$(\nu < 10) > 0.5$) are unlikely to flag the population as heavy tailed.
 
 We fit our models with Stan 2.4.0 \citep{stan-manual2014}, and R 3.1.1 \citep{r2014}. We began with four chains and $2000$ iterations, discarding the first $1000$ as warm up (i.e.~4000 total samples). If $\hat{R}$ (the potential scale reduction factor --- a measure of chain convergence) was greater than $1.05$ for any parameter or the minimum effective sample size, $n_\mathrm{eff}$, (a measure of the effective number of uncorrelated samples) for any parameter was less than $200$, we doubled both the total iterations and warm up period and sampled from the model again. These thresholds are in excess of the minimums recommended by \citet{gelman2006a} of $\hat{R} < 1.1$ and effective sample size $> 100$ for reliable point estimates and confidence intervals. In the majority of cases our minimum thresholds were greatly exceeded. We continued this procedure up to $8000$ iterations ($16000$ total samples) by which all chains were deemed to have sufficiently converged. These chain lengths may seem low to those familiar with software such as WinBUGS or JAGS, but the No-U-Turn Hamiltonian Markov chain Monte Carlo Sampler in Stan generally requires far fewer iterations to obtain equivalent effective sample sizes \citep{stan-manual2014}.
+
+\section{Alternative priors}
+
+TODO
+
+Fig.~\ref{fig:priors}
+
+Fig.~\ref{fig:alt-priors}
 
 \section{Alternative population models}
 
@@ -104,7 +114,7 @@ We separated our simulation into these two components to avoid confounding two i
 
 First, we tested the ability to estimate $\nu$ given different true values of $\nu$ and different sample sizes. We took stochastic draws from t distributions with different $\nu$ values ($\nu = 3, 5, 10,$ and $10^6$ [$\approx$ normal]), with central tendency parameters of $0$, and scale parameters of $1$. We started with $1600$ stochastic draws and then fit the models again at the first $800, 400, 200, 100, 50,$ and $25$ draws. Each time we recorded the posterior samples of $\nu$.
 
-We found that we could consistently and precisely recover median posterior estimates of $\nu$ near the true value of $\nu$ with large samples ($\ge 200$) (Fig.~\ref{fig:sim-gompertz} upper panels). At smaller samples we could still usually qualitatively distinguish heavy from not-heavy tails, but the model tended to underestimate how heavy the tails were. At the same time, at smaller sample sizes, the model tended to overestimate how large the scale parameter was (Fig.~\ref{fig:sim-gompertz} lower panels).
+We found that we could consistently and precisely recover median posterior estimates of $\nu$ near the true value of $\nu$ with large samples ($\ge 200$) (Fig.~\ref{fig:sim-nu} upper panels). At smaller samples we could still usually qualitatively distinguish heavy from not-heavy tails, but the model tended to underestimate how heavy the tails were. At the same time, at smaller sample sizes, the model tended to overestimate how large the scale parameter was (Fig.~\ref{fig:sim-nu} lower panels).
 
 \subsection{Heavy-tailed Gompertz model simulations}
 
@@ -142,6 +152,7 @@ nu_5_seeds_N50 <- get_effective_nu_seeds(nu_true = 5)
 
 We then fit our Gompertz models to the simulated datasets with all parameters (except $\nu$) set near the median values estimated in the GPDD. We repeated this with $50$ and $100$ samples without observation error, $50$ samples with observation error ($\sigma_\mathrm{obs} = 0.2$), and $50$ samples with the same observation error and a Gompertz model that allowed for correctly specified observation error magnitude.
 
+TODO, rework this paragraph:
 Our results show that the Gompertz model can recapture the true value of $\nu$ when the process noise was chosen so that appropriate tail events were present (Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and green symbols in the top rows). Likewise, the other Gompertz parameters were estimated without any systematic bias (Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and green symbols). The addition of observation error caused the model to tend to underestimate the degree of heavy-tailedness, overestimate the magnitude of process noise, somewhat overestimate $\lambda$, and overestimate density dependence (blue symbols in Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}). The overestimation of density dependence with observation error is a known phenomenon \citep{knape2012}. Fitting a model with correctly specified observation error made marginal improvements to model bias (purple symbols in Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}).
 
 When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the models distinguished heavy and not-heavy tails reasonably well. Without observation error, and using a probability of $0.5$ as a threshold, the model correctly classified all simulated systems with normally distributed process noise as not heavy tailed. The model would have miscategorized only one of $40$ simulations at $\nu = 5$ across a sample size of $50$ or $100$ data points (Fig.~\ref{fig:sim-prob}, upper panels). The model would have correctly categorized all cases where the process noise was not heavy tailed (indicated as ``$\nu =$ infinity'' in Fig.~\ref{fig:sim-prob}) and all cases where $\nu = 3$. With $0.2$ standard deviations of observation error, the model still categorized \obsErrorNuFivePerc\% of cases as heavy tailed when $\nu = 5$ and all cases where $\nu = 3$. Allowing for observation error made little improvement to the detection of heavy tails (Fig.~\ref{fig:sim-prob}, lower-left vs.\ lower-right panel). Therefore, we chose to focus on the simpler model without observation error in the main text, particularly given that the true magnitude of observation error was unknown in the empirical data.
@@ -173,10 +184,9 @@ where $A$ and $B$ represent the beta distribution shape parameters; $\mu_i$ repr
 
 We log transformed $\sigma$, time-series length, and lifespan to match the way they are visually represented in Fig.~\ref{fig:correlates} and to make the relationship approximately linear on the logit-transformed response scale. All input variables were standardized by subtracting their mean and dividing by two standard deviations to make their coefficients comparable in magnitude \citep{gelman2008c}. We excluded body length as a covariate because it was highly correlated with lifespan, and lifespan exhibited more overlap across taxonomy than body length. Lifespan is also more directly related to time and potential mechanisms driving black-swan dynamics.
 
-We incorporated weakly informative priors into our model: $\mathrm{Cauchy}(0,
-10)$ on the global intercept $\alpha$, $\mathrm{Half\mhyphen Cauchy}(0, 2.5)$ on all standard deviation parameters, $\mathrm{Half\mhyphen Cauchy}(0, 10)$ on the dispersion parameter $\phi_\mathrm{disp}$, and $\mathrm{Cauchy}(0, 2.5)$ on all other parameters \citep{gelman2006c, gelman2008d}. Compared to normal priors, the Cauchy priors concentrate more probability density around expected parameter values while allowing for a higher probability density far into the tails, thereby allowing the data to dominate the posterior more strongly if it disagrees with the prior. Our conclusions were not qualitatively changed by using uniform priors. We fit our models with 5000 total iterations per chain, 2500 warm-up iterations, four chains, and discarding every second sample to save memory. We checked for chain convergence visually and with the same criteria as before ($\widehat{R} < 1.05$ and $n_\mathrm{eff} >200$ for all parameters).
+We incorporated weakly informative priors into our model: $\mathrm{Cauchy}(0, 10)$ on the global intercept $\alpha$, $\mathrm{Half\mhyphen Cauchy}(0, 2.5)$ on all standard deviation parameters, $\mathrm{Half\mhyphen Cauchy}(0, 10)$ on the dispersion parameter $\phi_\mathrm{disp}$, and $\mathrm{Cauchy}(0, 2.5)$ on all other parameters \citep{gelman2006c, gelman2008d}. Compared to normal priors, the Cauchy priors concentrate more probability density around expected parameter values while allowing for a higher probability density far into the tails, thereby allowing the data to dominate the posterior more strongly if it disagrees with the prior. Our conclusions were not qualitatively changed by using uniform priors. We fit our models with 5000 total iterations per chain, 2500 warm-up iterations, four chains, and discarding every second sample to save memory. We checked for chain convergence visually and with the same criteria as before ($\widehat{R} < 1.05$ and $n_\mathrm{eff} >200$ for all parameters).
 
-To derive taxonomic-order-level estimates of the probability of heavy tails accounting for time-series length (Fig \ref{fig:order-estimates}), we fit a separate multilevel model with the same structure but with only $\log$ time-series length as a predictor. (In this case, we did not want to control for intrinsic population characteristics such as density dependence.) Since our predictors were centered by subtracting their mean value, we obtained order-level estimates of the probability of heavy tails at mean log time-series length by adding the posteriors for $\alpha$, $\alpha^\mathrm{class}_j$, and $\alpha^\mathrm{order}_k$.
+To derive taxonomic-order-level estimates of the probability of heavy tails accounting for time-series length (Fig.~\ref{fig:posteriors}b), we fit a separate multilevel model with the same structure but with only $\log$ time-series length as a predictor. (In this case, we did not want to control for intrinsic population characteristics such as density dependence.) Since our predictors were centered by subtracting their mean value, we obtained order-level estimates of the probability of heavy tails at mean log time-series length by adding the posteriors for $\alpha$, $\alpha^\mathrm{class}_j$, and $\alpha^\mathrm{order}_k$.
 
 \bibliographystyle{ecologyletters}
 \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
@@ -196,7 +206,7 @@ To derive taxonomic-order-level estimates of the probability of heavy tails acco
 
 \singlespacing
 \begin{footnotesize}
-\begin{longtable}{>{\RaggedRight}m{1.5cm}>{\RaggedRight}p{4.3cm}>{\RaggedRight}p{0.8cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.0cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{0.8cm}}
+\begin{longtable}{>{\RaggedRight}m{1.5cm}>{\RaggedRight}p{4.3cm}>{\RaggedRight}p{0.8cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.0cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.3cm}}
 \caption{Populations with Pr$(\nu < 10) > 0.5$. TODO}\\
 \toprule
 \input{../analysis/cause-table.tex}
@@ -307,7 +317,7 @@ Probability density of the Bayesian priors for the Gompertz models. From left to
 \caption{
 Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. Shown are medians of the posterior (dots) and 50\% credible intervals (segments). The diagonal line indicates a one-to-one relationship. Different colours indicate various taxonomic classes. The grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics. The base, weaker, and stronger priors on $\nu$ are illustrated in Fig.~\ref{fig:priors}. In general, the estimates are nearly identical in cases where the data are informative about low values of $\nu$. When the data are less informative about low values of $\nu$, the prior can slightly pull the estimates of $\nu$ towards higher or lower values.
 }
-\label{fig:alt}
+\label{fig:alt-priors}
 \end{center}
 \end{figure}
 

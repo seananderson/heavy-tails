@@ -15,6 +15,7 @@ dropbox: text rtf
 	#rm ~/Dropbox/heavy-tails/*
 	cp $(TEXT).pdf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).pdf
 	mv $(TEXT).rtf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).rtf
+	open ~/Dropbox/heavy-tails/
 
 rtf: text
 	latex2rtf -E0 anderson-etal-blackswan-timeseries.tex
