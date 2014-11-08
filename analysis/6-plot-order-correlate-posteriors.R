@@ -41,10 +41,12 @@ if(!file.exists("phylopic-metadata.rds")) {
 or <- data.frame(or, or_temp)
 
 library("xtable")
-or_table <- or[ ,c("taxonomic_order", "credit", "licenseURL")]
+or_table <- or[ ,c("taxonomic_order", "credit", "licenseURL", "url")]
 or_table$licenseURL <- paste0("\\url{", or_table$licenseURL, "}")
+or_table$url <- paste0("\\url{", or_table$url, "}")
 or_table$credit <- gsub("&", "and", or_table$credit)
-names(or_table) <- c("Taxonomic order", "Credit", "License URL")
+names(or_table) <- c("Taxonomic order", "Credit", "License URL", "URL")
+or_table$URL <- NULL # don't use after all
 
 print.xtable(xtable(or_table, caption = ""),
   include.rownames = FALSE, file = "phylopic.tex", booktabs = TRUE,
