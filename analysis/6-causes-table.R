@@ -30,7 +30,7 @@ heavy <- mutate(heavy,
     "Description" = reasons, "Pr($\\nu < 10$" = p10, "$\\widehat{\\nu}$" = nu_hat)
 
 print.xtable(xtable(heavy,
-    caption = "TODO"),
+    caption = ""),
   include.rownames = FALSE, file = "cause-table.tex",
   booktabs = TRUE,  caption.placement = "top", size = "footnotesize",
   sanitize.text.function = identity, only.contents = TRUE)
