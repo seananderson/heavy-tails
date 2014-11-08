@@ -83,12 +83,12 @@ if(!file.exists("beta-stan-samples.rds")) {
     inc_warmup = FALSE)
   dev.off()
   saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
-} else {
-  m <- readRDS("beta-stan-samples.rds") # or reload this
-  sink("beta-stan-samples-2.txt")
-  print(m)
-  sink()
 }
+
+m <- readRDS("beta-stan-samples.rds") # or reload this
+sink("beta-stan-samples-2.txt")
+print(m)
+sink()
 
 means <- plyr::laply(extract(m), mean)[1:5]
 ord <- order(means)
