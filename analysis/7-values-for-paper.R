@@ -14,11 +14,12 @@ write_tex <- function(x, macro, ...) {
 zz <- file("values.tex", "w") # open .tex file to write to throughout
 
 # # what's the median and mean nu in the exponential prior?
-# x <- rexp(2e7, 0.01)
-# x <- x[x > 2]
-# median(x)
-# mean(x)
-# length(x[x < 10])/length(x)
+set.seed(1)
+x <- rexp(3e6, 0.01)
+x <- x[x > 2]
+write_tex(round(mean(x), 0) , "basePriorMean")
+write_tex(round(median(x), 0) , "basePriorMedian")
+write_tex(round(100*length(x[x < 10])/length(x), 1) , "basePriorProbHeavy")
 
 # how much was imputed?
 gpdd <- readRDS("gpdd-clean.rds")
@@ -205,4 +206,11 @@ write_tex(max(pheavy_overall$p), "overallMaxPerc")
 write_tex(NPops, "NPops")
 write_tex(NOrders, "NOrders")
 write_tex(NClasses, "NClasses")
+
+stat_table <- read.csv("stat_table.csv", stringsAsFactors = FALSE)
+
+interpPointsPerc <- round((sum(stat_table$n_zero_sub) + sum(stat_table$n_interpolated)) / sum(stat_table$n_points) * 100, 0)
+
+write_tex(interpPointsPerc, "interpPointsPerc")
+
 close(zz)
