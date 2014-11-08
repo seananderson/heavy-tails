@@ -3,6 +3,7 @@
 
 library("rstan")
 library("ggplot2")
+library("dplyr")
 
 if(!file.exists("betareg5.rds")) {
   stan_beta5 <- stan_model("betareg5.stan")
