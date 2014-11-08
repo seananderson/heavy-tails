@@ -151,12 +151,12 @@ write_tex(baseNuFiveObsTenSwitch, "baseNuFiveObsTenSwitch")
 
 ## - how much more probable were heavy tails with 60 time steps. vs. 30 time
 ##   steps? (percentage and absolute)
-pHeavyN30 <- round(100 * p_inc[p_inc$N == 30, "p"])
-pHeavyN60 <- round(100 * p_inc[p_inc$N == 60, "p"])
+pHeavyN30 <- p_inc[p_inc$N == 30, "p"]
+pHeavyN60 <- p_inc[p_inc$N == 60, "p"]
 pIncHeavyN30N60 <- pHeavyN60 / pHeavyN30
-write_tex(pHeavyN30, "pHeavyNThirty")
-write_tex(pHeavyN60, "pHeavyNSixty")
-write_tex(pIncHeavyN30N60, "pIncHeavyNThirtyNSixty")
+write_tex(sprintf("%.2f", round(pHeavyN30, 2)), "pHeavyNThirty")
+write_tex(sprintf("%.2f", round(pHeavyN60, 2)), "pHeavyNSixty")
+write_tex(sprintf("%.1f", round(pIncHeavyN30N60, 1)), "pIncHeavyNThirtyNSixty")
 
 ## Discussion:
 ## - Ricker / gompertz range of pops with black swans as percent
