@@ -1,33 +1,42 @@
 # All steps to run the analysis
-# Created in Vim with :read !ls *.R
+# =============================
+#
+# - Alternatively, run `make` from the Terminal
+# - Run `make clean` in the Terminal to remove all cached `.rds` files
+# - Note that re-running all the model fitting will take a long time (days)
+# - If you have cloned the repository from GitHub, then most of the cached
+#   files will already be available.
+# - You can download a full set of cached files from:
+#   https://www.dropbox.com/sh/70acgteewinzasn/AAC0AKrrnhfxrEP79jbyHcwfa?dl=0
 
 if(!file.exists("gpdd-clean.rds"))
   source("0-make-data.R") # takes a few minutes
 # Begin: on the westgrid server
 # Compile Stan models:
-if(any(!file.exists(c("stan-gomp.rds", "stan-gomp-bda.rds", "stan-gomp-ar1.rds",
-      "stan-gomp-obs.rds", "stan-t.rds", "stan-logistic.rds",
-      "stan-gomp2-ar1.rds", "stan-rate.rds", "stan-gomp-uniform.rds")))) {
-  source("1-compile-models.R") # warning: takes a long time
-}
+stan_models <- c("stan-gomp.rds", "stan-gomp-bda.rds", "stan-gomp-ar1.rds",
+  "stan-gomp-obs.rds", "stan-t.rds", "stan-logistic.rds",
+  "stan-gomp2-ar1.rds", "stan-rate.rds", "stan-gomp-uniform.rds")
+if(any(!file.exists(stan_models)))
+  source("1-compile-models.R") # warning: takes ~10 minutes
 # Functions used in the fitting:
 source("1.5-compile-fit-function.R")
 source("1.6-extract-function.R")
 # Run main models:
+# warning: these take a long time to run (hours to a day each)
 if(!file.exists("logistic-hat.rds"))
-  source("2-run-model-logistic.R") # warning: takes a long time
+  source("2-run-model-logistic.R")
 if(!file.exists("gomp-ar1-hat.rds"))
-  source("2-run-models-ar1.R") # warning: takes a long time
+  source("2-run-models-ar1.R")
 if(!file.exists("gomp-base-stronger-hat.rds"))
-  source("2-run-models-base-stronger-prior.R") # warning: takes a long time
+  source("2-run-models-base-stronger-prior.R")
 if(!file.exists("gomp-base-weaker-hat.rds"))
-  source("2-run-models-base-weaker-prior.R") # warning: takes a long time
+  source("2-run-models-base-weaker-prior.R")
 if(!file.exists("gomp-base-hat.rds"))
-  source("2-run-models-base.R") # warning: takes a long time
+  source("2-run-models-base.R")
 if(!file.exists("gomp-obs-0.2-hat.rds"))
-  source("2-run-models-obs-0.2.R") # warning: takes a long time
+  source("2-run-models-obs-0.2.R")
 if(!file.exists("rate-hat.rds"))
-  source("2-run-models-rate.R") # warning: takes a long time
+  source("2-run-models-rate.R")
 if(!file.exists("gomp-base-mean-sd.rds"))
   source("2.1-get-base-mean-sd.R")
 # Simulation testing
@@ -42,16 +51,19 @@ if(!file.exists("check_nu.rds"))
 source("3.4-plot-test-gomp-models.R")
 source("5-shape-data.R")
 # Begin: on the westgrid server
-source("5.8-stan-beta-modelling.R") # warning: takes a long time; caching implemented
-source("5.9-order-level-posteriors.R") # warning: takes a long time; caching implemented
+# warning: takes a long time; caching implemented
+source("5.8-stan-beta-modelling.R")
+# warning: takes a long time; caching implemented
+source("5.9-order-level-posteriors.R")
 # End: on the westgrid server
 source("6-plot-alt-models.R")
 source("6-plot-correlates.R") # must run 5.8.. first
 source("6-plot-eg-ts-gpdd.R")
-# source("6-plot-gomp-samples.R") # old
 source("6-plot-nu-coefs.R")
 source("6-plot-order-correlate-posteriors.R") # must run 5.9... first
 source("6-plot-prior.R")
 source("6-plot-sparks.R")
 source("6-plot-t-nu-eg.R")
 source("7-values-for-paper.R")
+
+# Created in Vim with :read !ls *.R
