@@ -32,6 +32,10 @@ make_spark <- function(x) {
   par(xpd = NA)
   with(x, plot(seq_along(population_untransformed), population_untransformed, type = "l", axes = FALSE,
       xlab = "", ylab = "", yaxs = "i", xaxs = "i", log = "y"))
+
+# check for interpolation and blacks swan association:
+# with(x, points(seq_along(population_untransformed), population_untransformed,
+# cex = ifelse(interpolated | zero_sub, 5, 1)))
   if(length(bsw_l) > 0)
     points(bsw_l, x$population_untransformed[bsw_l], col = "red", pch = 20, cex = 3)
   if(length(bsw_u) > 0)
