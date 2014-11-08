@@ -36,7 +36,7 @@ We applied the following data selection and quality-control rules to the Global 
 \end{enumerate}
 
 \noindent
-We provide a supplemental figure of all the time series included in our analysis and indicate which values were interpolated (\percImputedPops\% of populations had at least one point interpolated also only \percImputedPoints\% of the total observations were interpolated) (Fig.~\ref{fig:all-ts}). Note that interpolation is highly unlikely to lead to black-swan detections, since black swans involve extreme increases or decreases. Table S1 shows the final taxonomic breakdown and the number of populations with interpolated values.
+We provide a supplemental figure of all the time series included in our analysis and indicate which values were interpolated (\percImputedPops\% of populations had at least one point interpolated also only \percImputedPoints\% of the total observations were interpolated) (Fig.~\ref{fig:all-ts}). Note that interpolation is highly unlikely to lead to black-swan detections, since black swans involve extreme increases or decreases. Table~\ref{tab:stats} shows the final taxonomic breakdown and the number of populations with interpolated values.
 
 \section{Details on the heavy-tailed Gompertz probability model}
 
@@ -198,7 +198,20 @@ To derive taxonomic-order-level estimates of the probability of heavy tails acco
 \clearpage
 \renewcommand{\thetable}{S\arabic{table}}
 \setcounter{table}{0}
-\input{../analysis/stat-table}
+
+
+\begin{table}
+\begin{footnotesize}
+\caption{Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, total number of substituted zeros, and total number of time steps.}
+\smallskip
+\begin{tabular}{lrrrrrrrr}
+\toprule
+\input{../analysis/stat-table.tex}
+\label{tab:stats}
+\end{tabular}
+\end{footnotesize}
+\end{table}
+
 \clearpage
 
 \LTcapwidth=\textwidth
