@@ -5,7 +5,11 @@ if(!file.exists("gpdd-clean.rds"))
   source("0-make-data.R") # takes a few minutes
 # Begin: on the westgrid server
 # Compile Stan models:
-source("1-compile-models.R") # warning: takes a long time
+if(any(!file.exists(c("stan-gomp.rds", "stan-gomp-bda.rds", "stan-gomp-ar1.rds",
+      "stan-gomp-obs.rds", "stan-t.rds", "stan-logistic.rds",
+      "stan-gomp2-ar1.rds", "stan-rate.rds", "stan-gomp-uniform.rds")))) {
+  source("1-compile-models.R") # warning: takes a long time
+}
 # Functions used in the fitting:
 source("1.5-compile-fit-function.R")
 source("1.6-extract-function.R")
