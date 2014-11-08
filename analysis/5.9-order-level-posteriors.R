@@ -32,9 +32,8 @@ if(!file.exists("beta-stan-samples-n-only.rds")) {
   sink("beta-stan-stamples-n-only.txt")
   print(m.stan.beta5)
   sink()
-} else {
-  m <- readRDS("beta-stan-samples-n-only.rds")
 }
+m <- readRDS("beta-stan-samples-n-only.rds")
 
 lu <- d[,c("order_id", "class_id", "taxonomic_class", "taxonomic_order")]
 lu <- lu[!duplicated(lu), ]
