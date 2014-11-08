@@ -191,6 +191,20 @@ To derive taxonomic-order-level estimates of the probability of heavy tails acco
 \input{../analysis/stat-table}
 \clearpage
 
+\LTcapwidth=\textwidth
+\bibpunct{}{}{;}{a}{}{;}
+
+\singlespacing
+\begin{footnotesize}
+\begin{longtable}{>{\RaggedRight}m{1.5cm}>{\RaggedRight}p{4.3cm}>{\RaggedRight}p{0.8cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.0cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{0.8cm}}
+\caption{Populations with Pr$(\nu < 10) > 0.5$. TODO}\\
+\toprule
+\input{../analysis/cause-table.tex}
+\label{tab:causes-supp}
+\end{longtable}
+\end{footnotesize}
+\onehalfspacing
+
 % ------------------------------
 % Supplemental Figures
 % ------------------------------
@@ -252,21 +266,21 @@ Probability density of the Bayesian priors for the Gompertz models. From left to
 
 \clearpage
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.9\textwidth]{../analysis/ts-gpdd-heavy-eg-log10-base.pdf}
-\caption{
-  Time series for populations with Pr($\nu < 10$) $>$ 0.5 using the base
-  Gompertz population model. Panels are ordered by increasing Pr($\nu < 10$).
-  Vertical axes are on a log10 scale. Colours indicate taxonomic classes. The
-  labels on each panel indicate Pr($\nu < 10$) $>$ 0.5, the common name for the
-  species, and the Global Population Dynamics Database ID number.
-}
-\label{fig:heavy-ts}
-\end{center}
-\end{figure}
-
-\clearpage
+% \begin{figure}[htbp]
+% \begin{center}
+% \includegraphics[width=0.9\textwidth]{../analysis/ts-gpdd-heavy-eg-log10-base.pdf}
+% \caption{
+%   Time series for populations with Pr($\nu < 10$) $>$ 0.5 using the base
+%   Gompertz population model. Panels are ordered by increasing Pr($\nu < 10$).
+%   Vertical axes are on a log10 scale. Colours indicate taxonomic classes. The
+%   labels on each panel indicate Pr($\nu < 10$) $>$ 0.5, the common name for the
+%   species, and the Global Population Dynamics Database ID number.
+% }
+% \label{fig:heavy-ts}
+% \end{center}
+% \end{figure}
+%
+% \clearpage
 
 \begin{figure}[htbp]
 \begin{center}
