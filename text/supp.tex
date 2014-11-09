@@ -218,7 +218,6 @@ Many of the silhouette images used in Figs~\ref{fig:nu-coefs}, \ref{fig:correlat
 \renewcommand{\thetable}{S\arabic{table}}
 \setcounter{table}{0}
 
-
 \begin{table}
 \begin{footnotesize}
 \caption{Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, total number of substituted zeros, and total number of time steps.}
@@ -239,7 +238,7 @@ Many of the silhouette images used in Figs~\ref{fig:nu-coefs}, \ref{fig:correlat
 \singlespacing
 \begin{footnotesize}
 \begin{longtable}{>{\RaggedRight}m{1.5cm}>{\RaggedRight}p{4.3cm}>{\RaggedRight}p{0.8cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.0cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.3cm}}
-\caption{All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events. (TODO add what probability these are.)}\\
+\caption{All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events that have a $10 \cdot 10^{-4}$ probability or less of occurring if the population dynamics were explained by a Gompertz model with normally distributed process noise with a standard deviation equal to the scale parameter in the fitted t distribution.}\\
 \toprule
 \input{../analysis/cause-table.tex}
 \label{tab:causes-supp}
