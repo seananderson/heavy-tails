@@ -213,4 +213,14 @@ interpPointsPerc <- round((sum(stat_table$n_zero_sub) + sum(stat_table$n_interpo
 
 write_tex(interpPointsPerc, "interpPointsPerc")
 
+# count ups and downs:
+heavy_res <- readRDS("heavy_residuals.rds")
+heavy_res <- heavy_res %>% mutate(bs_l = res < l, bs_u = res > u)
+n_bs_up <- sum(heavy_res$bs_u, na.rm = TRUE)
+n_bs_down <- sum(heavy_res$bs_l, na.rm = TRUE)
+write_tex(n_bs_up, "nBSUp")
+write_tex(n_bs_down, "nBSDown")
+write_tex(sprintf("%.1f", round(n_bs_down/n_bs_up, 1)), "ratioBSDownToUp")
+write_tex(round(n_bs_down / (sum(n_bs_down, n_bs_up))*100), "percBSDown")
+
 close(zz)
