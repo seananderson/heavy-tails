@@ -162,7 +162,7 @@ When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the mo
 We fit a multilevel beta regression model to the predicted probability of heavy tails, Pr($\nu < 10$), to investigate potential covariates of heavy-tailed dynamics. The beta distribution is useful when response data range on a continuous scale between zero and one \citep{ferrari2004}. We used a logit link function as is typically used in logistic regression. The model was as follows:
 
 \begin{align*}
-\mathrm{Pr}(\nu_i < 0.5) &\sim \mathrm{Beta}(A_i, B_i)\\
+\mathrm{Pr}(\nu_i < 10) &\sim \mathrm{Beta}(A_i, B_i)\\
 \mu_i &= \mathrm{logit}^{-1}(\alpha
   + \alpha^\mathrm{class}_{j[i]}
   + \alpha^\mathrm{order}_{k[i]}
