@@ -1,6 +1,6 @@
 # this file compiles the Stan models, nothing more
 
-library(rstan)
+library("rstan")
 
 stan_model <-
 'data {
@@ -28,35 +28,6 @@ model {
 
 stan_gomp <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp, file = "stan-gomp.rds")
-
-# Same model but with a uniform prior on 1/nu as in Gelman et al. BDA
-stan_model <-
-  'data {
-  int<lower=0> N; // rows of data
-  vector[N] y; // vector to hold observations
-  real b_lower;
-  real b_upper;
-}
-parameters {
-  real lambda;
-  real<lower=b_lower, upper=b_upper> b;
-  real<lower=0> sigma_proc;
-  real<lower=0, upper=0.5> inv_nu;
-}
-transformed parameters {
-  real nu;
-  nu <- 1/inv_nu;
-}
-model {
-  lambda ~ normal(0, 10);
-  sigma_proc ~ cauchy(0, 2.5);
-  for (i in 2:N) {
-    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
-  }
-}
-'
-stan_gomp_bda <- stan_model(model_code = stan_model)
-saveRDS(stan_gomp_bda, file = "stan-gomp-bda.rds")
 
 # with autocorrelation:
 

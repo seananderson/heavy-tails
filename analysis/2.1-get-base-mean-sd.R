@@ -4,7 +4,7 @@ gpdd <- readRDS("gpdd-clean.rds")
 out <- plyr::ldply(unique(gpdd$main_id), function(x) {
   folder <- paste0("/global/scratch/anderson/heavy/gomp-base/sm-", x, ".rds")
 
-  library(rstan)
+  library("rstan")
   sm <- readRDS(folder)
 
   samp_s <- extract(sm, pars = "sigma_proc")[[1]]
