@@ -6,9 +6,7 @@
 #
 # Note that phi is being ignored now
 
-library(rstan)
-#stan_gomp_ar1_obs <- readRDS("stan-gomp-ar1-obs.rds")
-#stan_gomp_ar1 <- readRDS("stan-gomp-ar1.rds")
+library("rstan")
 stan_gomp_obs <- readRDS("stan-gomp-obs.rds")
 stan_gomp <- readRDS("stan-gomp.rds")
 

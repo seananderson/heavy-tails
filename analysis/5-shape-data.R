@@ -2,7 +2,7 @@
 # the original gpdd and mammal life history databases
 # it then does some reshaping for plotting purposes
 
-library(dplyr)
+library("dplyr")
 
 gpdd <- readRDS("gpdd-clean.rds")
 
@@ -90,7 +90,7 @@ gomp_hat_base$log10_MinAge <- log10(gomp_hat_base$MinAge)
 gomp_hat_base$log10_Lifesp <- log10(gomp_hat_base$Lifesp)
 
 # make a long data version for ggplot:
-library(reshape2)
+library("reshape2")
 gomp_hat_base_long <- melt(gomp_hat_base,
   id.vars = c("main_id", "taxonomic_class", "taxonomic_order", "taxon_name"),
   measure.vars = c("log_sigma_proc_50", "dataset_length", "b_50", "lambda_50"))

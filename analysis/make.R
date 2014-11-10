@@ -13,7 +13,7 @@ if(!file.exists("gpdd-clean.rds"))
   source("0-make-data.R") # takes a few minutes
 # Begin: on the westgrid server
 # Compile Stan models:
-stan_models <- c("stan-gomp.rds", "stan-gomp-bda.rds", "stan-gomp-ar1.rds",
+stan_models <- c("stan-gomp.rds", "stan-gomp-bda.rds",
   "stan-gomp-obs.rds", "stan-t.rds", "stan-logistic.rds",
   "stan-gomp2-ar1.rds", "stan-rate.rds", "stan-gomp-uniform.rds")
 if(any(!file.exists(stan_models)))

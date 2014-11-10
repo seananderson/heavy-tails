@@ -1,7 +1,6 @@
-# this file produces some values for inclusion of the text of the associated
-# paper
-#
-library(dplyr)
+# this file produces some values for inclusion of the text of the associated paper
+
+library("dplyr")
 source("5-shape-data.R")
 p_inc <- readRDS("prob_inc_heavy_with_n.rds")
 
@@ -9,7 +8,6 @@ write_tex <- function(x, macro, ...) {
   out <- paste0("\\newcommand{\\", macro, "}{", x, "}")
   cat(out, file = zz)
   cat("\n", file = zz)
-  #writeLines(out, con = "values.tex", ...)
 }
 zz <- file("values.tex", "w") # open .tex file to write to throughout
 
@@ -67,11 +65,6 @@ pheavy_type <- gtemp %>% filter(max_rhat < 1.05) %>%
 pheavy_overall <- gtemp %>%
   group_by(type) %>%
   summarise(n = n(), h = length(which(p10 > 0.5)), p = round(100 * h / n))
-
-#temp <- gpdd %>% group_by(main_id) %>%
-  #summarise(assume_log10 = assumed_log10[1]) %>%
-  #summarise(total_assumed_log10 = sum(assume_log10))
-#total_assumed_log10 <- temp$total_assumed_log10
 
 ## To obtain:
 ## Methods:

@@ -3,7 +3,7 @@ extract_model <- function(id, get_phi = TRUE,
   file_prefix = "sm",
   type = c("gompertz", "logistic", "rate")) {
 
-  library(rstan)
+  library("rstan")
 
   sm <- readRDS(paste0(root_folder, "/", sub_folder, "/", file_prefix, "-",
     id, ".rds"))

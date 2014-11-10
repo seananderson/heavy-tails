@@ -29,38 +29,6 @@ model {
 stan_gomp <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp, file = "stan-gomp.rds")
 
-# with autocorrelation:
-
-stan_model <-
-  'data {
-  int<lower=0> N; // rows of data
-  vector[N] y; // vector to hold observations
-  real<lower=0> nu_rate; // rate parameter for nu exponential prior
-  real b_lower;
-  real b_upper;
-}
-parameters {
-  real lambda;
-  real<lower=b_lower, upper=b_upper> b;
-  real<lower=0> sigma_proc;
-  real<lower=2> nu;
-  real<lower=-1, upper=1> phi;
-}
-model {
-  nu ~ exponential(nu_rate);
-  lambda ~ normal(0, 10);
-  sigma_proc ~ cauchy(0, 2.5);
-  phi ~ normal(0, 1);
-  for (i in 3:N) {
-    y[i] ~ student_t(nu,
-            (lambda + b * y[i-1]) + phi * (y[i-1] - (lambda + b * y[i-2])),
-            sigma_proc);
-  }
-}
-'
-stan_gomp_ar1 <- stan_model(model_code = stan_model)
-saveRDS(stan_gomp_ar1, file = "stan-gomp-ar1.rds")
-
 # with fixed observation error (and no autocorrelation):
 
 stan_model <-
@@ -208,31 +176,3 @@ model {
 
 stan_rate <- stan_model(model_code = stan_model)
 saveRDS(stan_rate, file = "stan-rate.rds")
-
-# uniform prior on sigma:
-
-stan_model <-
-  'data {
-  int<lower=0> N; // rows of data
-  vector[N] y; // vector to hold observations
-  real<lower=0> nu_rate; // rate parameter for nu exponential prior
-  real b_lower;
-  real b_upper;
-}
-parameters {
-  real lambda;
-  real<lower=b_lower, upper=b_upper> b;
-  real<lower=0, upper=20> sigma_proc;
-  real<lower=2> nu;
-}
-model {
-  nu ~ exponential(nu_rate);
-  lambda ~ normal(0, 10);
-  for (i in 2:N) {
-    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
-  }
-}
-'
-
-stan_gomp_uniform <- stan_model(model_code = stan_model)
-saveRDS(stan_gomp_uniform, file = "stan-gomp-uniform.rds")

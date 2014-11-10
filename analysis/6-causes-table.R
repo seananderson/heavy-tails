@@ -33,5 +33,4 @@ print.xtable(xtable(heavy,
     caption = ""),
   include.rownames = FALSE, file = "cause-table.tex",
   booktabs = TRUE,  caption.placement = "top", size = "footnotesize",
-  sanitize.text.function = identity, only.contents = TRUE)
-
+  sanitize.text.function = identity, only.contents = TRUE, timestamp = NULL)

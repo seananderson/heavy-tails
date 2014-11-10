@@ -1,6 +1,6 @@
 # a pretty version of nu coeffs and p(nu < 10) for a main paper figure
 
-library(grImport)
+library("grImport")
 
 classes <- c("Aves","Mammalia", "Insecta", "Osteichthyes")
 cols <- c(rev(RColorBrewer::brewer.pal(5, "YlOrRd"))[-c(4, 5)])

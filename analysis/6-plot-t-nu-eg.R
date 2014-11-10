@@ -2,7 +2,7 @@
 # to justify tailing off prior around 100 or 200
 #pdf("t-nu.pdf", width = 5, height = 4.5)
 
-library(rstan)
+library("rstan")
 
 bs_cols <- c(rev(RColorBrewer::brewer.pal(5, "YlOrRd"))[-5], "grey30")
 

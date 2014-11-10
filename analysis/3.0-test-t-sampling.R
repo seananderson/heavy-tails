@@ -2,7 +2,7 @@
 # in terms of the frequency that nu is estimated correctly
 # this is part 1 of 2 simulation testing checks
 
-library(rstan)
+library("rstan")
 stan_t <- readRDS("stan-t.rds")
 
 # take a basic t- dist

@@ -3,7 +3,7 @@ CACHE = ~/Dropbox/heavy-tails/cache
 all: analysis
 
 analysis:
-	R CMD BATCH --no-save make.R
+	Rscript --vanilla make.R
 
 # Warning: this will take a *long* time to rebuild after:
 clean:

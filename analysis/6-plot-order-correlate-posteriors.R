@@ -50,7 +50,7 @@ or_table$URL <- NULL # don't use after all
 
 print.xtable(xtable(or_table, caption = ""),
   include.rownames = FALSE, file = "phylopic.tex", booktabs = TRUE,
-  sanitize.text.function = identity, only.contents = TRUE)
+  sanitize.text.function = identity, only.contents = TRUE, timestamp = NULL)
 
 if(any(!file.exists(paste0("silhouettes/", or$taxonomic_order, ".png")))) {
   for(i in 1:nrow(or)) {

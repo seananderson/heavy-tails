@@ -1,4 +1,4 @@
-library(rstan)
+library("rstan")
 stan_t <- readRDS("stan-t.rds")
 
 get_effective_nu_seeds <- function(nu_true = 5, cv = 0.2, N = 50,
