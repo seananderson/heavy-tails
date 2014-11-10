@@ -29,14 +29,14 @@ We applied the following data selection and quality-control rules to the Global 
 
 \item We then wrote an algorithm to find the longest unbroken window of abundance (no \texttt{NA}s) with at least $20$ time steps in each population time series. If there were any populations with multiple windows of identical length, we took the most recent window. This is a longer window than used in some previous analyses \citep[e.g.][]{brook2006a}, but since our model attempts to capture the shape of the distribution tails, our model requires more data.
 
-\item We removed GPDD Main IDs \texttt{20531} and \texttt{10139}, which we noticed were duplicates of \texttt{20579} (a heron population). \texttt{20579} contained additional years of data not present in \texttt{10139}. We removed a limited number of populations from class Angiospermopsida and Bacillariophyceae to focus the taxonomy in our analysis. We also removed any populations with an \texttt{Unknown} taxonomic class.
+\item We removed GPDD Main IDs \texttt{20531} and \texttt{10139}, which we noticed were duplicates of \texttt{20579} (a heron population). \texttt{20579} contained additional years of data not present in \texttt{10139}. We removed a limited number of populations from class Angiospermopsida and Bacillariophyceae to focus the taxonomy in our analysis on animals. We also removed any populations with an \texttt{Unknown} taxonomic class.
 
-\item Finally, we removed populations with the following GPDD Main IDs, which we discovered data entry errors when verifying the populations with suspected black swans: \texttt{1207} because 1957 was entered as 2 but should have been 27 \citep{kendeigh1982}, \texttt{6531} because 1978 was entered as 7 should have been 47 \citep{minot1986}, and \texttt{6566} because the data did not match the graph \citep{heessen1996}.
+\item Finally, we removed populations with the following GPDD Main IDs, which we discovered data entry errors when verifying the populations with suspected black swans: \texttt{1207} because the 1957 data point was entered as 2 but should have been 27 \citep{kendeigh1982}, \texttt{6531} because the 1978 data point was entered as 7 should have been 47 \citep{minot1986}, and \texttt{6566} because some of the data did not match the graph \citep{heessen1996}.
 
 \end{enumerate}
 
 \noindent
-We provide a supplemental figure of all the time series included in our analysis and indicate which values were interpolated (\percImputedPops\% of populations had at least one point interpolated also only \percImputedPoints\% of the total observations were interpolated) (Fig.~\ref{fig:all-ts}). Note that interpolation is highly unlikely to lead to black-swan detections, since black swans involve extreme increases or decreases. Table~\ref{tab:stats} shows the final taxonomic breakdown and the number of populations with interpolated values.
+We provide a supplemental figure of all the time series included in our analysis and indicate which values were interpolated (non-zero interpolations) (\percImputedPops\% of populations had at least one point interpolated but only \percImputedPoints\% of the total observations were interpolated) (Fig.~\ref{fig:all-ts}). Note that interpolation is highly unlikely to lead to black-swan detections, since black swans involve extreme increases or decreases. Table~\ref{tab:stats} shows the final taxonomic breakdown and the number of populations with interpolated values.
 
 \section{Details on the heavy-tailed Gompertz probability model}
 
