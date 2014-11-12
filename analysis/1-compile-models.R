@@ -1,6 +1,6 @@
 # this file compiles the Stan models, nothing more
 
-library("rstan")
+library(rstan)
 
 stan_model <-
 'data {
