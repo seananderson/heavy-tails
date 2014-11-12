@@ -103,8 +103,8 @@ plot(1, 1, xlim = xlim, ylim = c(1, length(op)), type = "n",
 abline(v = prior_p10, lty = 2, col = "grey40", lwd = 0.6)
 scaling_factor <- 63
 for(i in seq_along(op)) {
-  segments(xlim[1]+0.05, i, min(op[[i]]$dens$x), i, col = "grey90")
-  segments(max(op[[i]]$dens$x), i, xlim[2], i, col = "grey90")
+  #segments(xlim[1]+0.05, i, min(op[[i]]$dens$x), i, col = "grey90")
+  #segments(max(op[[i]]$dens$x), i, xlim[2], i, col = "grey90")
   polygon(c(op[[i]]$dens$x, rev(op[[i]]$dens$x)),
     i + c(op[[i]]$dens$y/scaling_factor, -rev(op[[i]]$dens$y/scaling_factor)),
     border = "grey50", lwd = 0.5, col = "white")
