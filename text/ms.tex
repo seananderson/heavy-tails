@@ -10,7 +10,7 @@ buffer or suffer from such extremes. Here, we develop a probability model to
 estimate the degree of heavy-tailedness (presence of black swans) in
 ecological process noise. We apply our model to \NPops~time series from around
 the world across \NOrders~taxonomic orders and seven classes. We find strong
-evidence of black swans, but they are rare occurring in
+evidence of black swans, but they are rare, occurring in
 \overallMinPerc--\overallMaxPerc\% of populations: most frequently for birds
 (\AvesRangePerc\%) followed by mammals (\MammaliaRangePerc\%), and insects
 (\InsectaRangePerc\%). Black swans were predominantly (\percBSDown \%)
@@ -50,15 +50,15 @@ considered black swans \citep{nunez2012}. In fact, anecdotes of population
 catastrophes are numerous and catastrophes may be the most important element
 affecting population persistence \citep{mangel1994}. For marine mammal
 populations, we have compelling evidence of catastrophes \citep{gerber2001,
-  ward2007}, and recently, heavy-tailed distributions have been discovered in
-time-series of marine microbe abundance \citep{segura2013} and time to
-extinction for experimental waterflea populations \citep{drake2014}. Despite
-these anecotes, as far as we can tell there have been two systematic surveys
-for ecological black swans: one with North American breeding birds and the
-other with the Global Population Dynamics Database, which uncovered little
-clear evidence for them \citep{keitt1998,allen2001,halley2002}. Nevertheless
-there are methodological challenges to their detection
-\citep{allen2001,ward2007}.
+  ward2007}, and recently, time-series of marine microbe abundance
+\citep{segura2013} and time to extinction for experimental waterflea
+populations \citep{drake2014} have been found to have heavier tailed
+distributions than the normal. Despite these anecdotes, as far as we can tell
+there have been two systematic surveys for ecological black swans: one with
+North American breeding birds and the other with the Global Population
+Dynamics Database, which uncovered little clear evidence for them
+\citep{keitt1998,allen2001,halley2002}. Nevertheless there are methodological
+challenges to their detection \citep{allen2001,ward2007}.
 
 There are two key reasons why we may find little evidence of ecological black
 swans. First, they might not exist in higher taxa. Indeed, the majority of
@@ -77,6 +77,8 @@ to compare the support for fits of thin- and heavy-tailed distributions
 \citep{halley2002}, but this analysis did not quantify the probability of black
 swans or allow for population dynamics.
 
+
+%TODO: this paragraph is written as if geared towards a methods journal. I suggest starting with a statement of general aim rather than method.
 Here we develop a framework for identifying ecological black swans in the
 process noise of population dynamics, i.e.\ the stochastic jumps in abundance
 from one time step to the next. Our framework quantifies both the magnitude and
@@ -209,6 +211,7 @@ population.
 
 \section{Results}
 
+%TODO: where did this threshold come from?  (nu < 10)
 We found strong, but rare, evidence for black-swan population dynamics. By
 defining black-swan dynamics as a greater than $0.5$ probability that $\nu <
 10$, our main Gompertz model found evidence for heavy tails most frequently
@@ -221,6 +224,7 @@ evidence for black swans in insect populations than is visually apparent in
 Fig.~\ref{fig:nu-coefs}---four of 10 orders with the highest median
 probability of heavy tails were insect orders---however, there was
 considerable uncertainty in these estimates (Fig.~\ref{fig:posteriors}a).
+%TODO: these multilevel modelling results (and fig 3, 4) are out of order
 
 The majority of our heavy-tailed estimates were robust to alternative
 population models, observation error, and choice of priors. Our conclusions
@@ -252,12 +256,16 @@ Fig.~\ref{fig:correlates}).
 We examined all time series with published explanations of why the black-swan
 events occurred (Tables~\ref{tab:sparks} and \ref{tab:causes-supp}). The
 majority (\percBSDown \%) of documented events were downward black swans and
+%TODO: what else would cause a black swan event? How defined "unfortunate"?
 involved a series of unfortunate events. For example, a shortage of nest sites
+%TODO how about just calling it a piscivorous waterfowl or something like that
 for the shag long-necked bird (\textit{Phalacrocorax aristotelis}) in the
+%TODO why did this make the population more vulnerable? Seems like it wouldn't make it more vulnerable I guess I am trying to figure out if these are additive or synergistic. I am guessing you want to avoid those terms, but I might just be more straight with language and avoid the "more vulnerable" phrase.
 United Kingdom reduced population productivity and made the population more
 vulnerable when a red tide hit in 1968 \citep{potts1980}. The population
 experienced a black-swan downswing, but the new availability of nest sites
 resulted in a rapid population upswing \citep{potts1980}. As another example,
+% TODO true interaction term or just synchronous events?
 an interaction between environmental- and predation-mediated population cycles
 are thought to have caused a downward black-swan event for a water vole
 (\textit{Arvicola terrestris}) population \citep{saucy1994}. Other black swans
@@ -272,10 +280,12 @@ three times longer to recover than predicted \citep{stafford1971}.
 \section{Discussion}
 
 We found strong evidence for black swans (heavy-tailed process noise) in 3--5\%
+% TODO but the students t is a symmetric distribution is that cool?
 of ecological time series. Black swans were usually downward events and were
 detected more frequently in longer time series and in populations with a
 smaller magnitude of process noise. Black swans were not associated with
 density dependence, population growth rate, or lifespan. In verified cases,
+% TODO 'interaction' word
 black-swan events were often a result of the interaction between elements of
 extreme climate, predators and parasite cycles, and strong changes in human
 pressures. Our empirical results, sensitivity analyses, and simulation tests
