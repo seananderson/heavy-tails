@@ -17,7 +17,7 @@ dropbox: text rtf
 	open ~/Dropbox/heavy-tails/
 
 rtf: text
-	latex2rtf -E0 anderson-etal-blackswan-timeseries.tex
+	latex2rtf -E0 $(TEXT).tex
 
 extractbib: text
 	bibtool -x $(MS).aux -o $(MS).bib -- 'expand.macros = ON'
