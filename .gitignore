@@ -33,15 +33,11 @@ packrat/lib*/
 *.tex.latexmain
 text/introduction.mindnode/*
 heavy-tails.Rproj
-
 text/email-notes.tex
-
 text/potential-referees.md
-
 analysis/analysis.Rproj
-
 analysis/beta-stan-samples-2.txt
-
 analysis/heavy.csv
-
 analysis/brook-etal-2006-supp.xls
+*.html
+Session.vim
