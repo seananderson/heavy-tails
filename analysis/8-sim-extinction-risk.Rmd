@@ -1,0 +1,146 @@
+This file looks at quasi-extinction probability with heavy vs. normal tails
+
+Do downwards heavy tails really matter for extinction risk?
+
+First, we'll figure out approximately what skewness values to use to get ballpark 85% downward deviations. This is to approximately match the skewness we see in the GPDD:
+
+```{r}
+library("skewt")
+perc_downs <- function(df, gamma) {
+  N <- 1e6
+  proc_error <- rskt(N, df = df, gamma = gamma)
+  # hist(proc_error)
+  l <- qnorm(0.0001, 0, sd = 1)
+  u <- qnorm(0.9999, 0, sd = 1)
+  downs <- sum(proc_error < l) / N
+  ups <- sum(proc_error > u) / N
+  downs / (downs + ups)
+}
+perc_downs(df = 2, gamma = 0.75)
+perc_downs(df = 3, gamma = 0.75)
+```
+
+So, 0.75 gets us in the ballpark of 85% percent downs.
+
+Now, we'll write a little C++ function to simulate from a Gompertz model. We'll do this in C++ just to make everything fast after this.
+
+```{r}
+library("Rcpp")
+cppFunction("
+  NumericVector gompertz(double n, double lambda, double b,
+    NumericVector proc_error, double y1) {
+    NumericVector y(n);
+    y(0) = y1;
+    for (int i = 1; i < n; ++i) {
+      y(i) = lambda + b * y(i - 1) + proc_error(i - 1);
+    }
+    return y;
+}")
+```
+
+And we'll write a function to simulate a time series, check how many generations go below some threshold, and return the data in a form we can use. I've picked parameter values to be approximately at the mean values in the GPDD (I'll check these more precisely). I'm running the simulation, by default, for 200 generations and discarding the first 50 as burn in.
+
+```{r}
+sim_gomp_extinction <- function(lambda = 1, phi = 0.3, b = 0.5, N = 200,
+  gamma = 0.75, df = 3, thresh = 3, make_plot = FALSE, sigma = 0.2, burnin = 50,
+  return_dat = FALSE, id = 1) {
+  y1 <- lambda / b
+  proc_error_raw <- rskt(N, df = df, gamma = gamma) / (1 / sigma)
+  proc_error <- vector(mode = "numeric", length = N)
+  proc_error[1] <- proc_error_raw[1]
+  for (i in 2:N) {
+    proc_error[i] <- proc_error_raw[i] + phi * proc_error[i - 1]
+  }
+  y <- gompertz(N, lambda, b, proc_error, y1)
+  y <- y[(burnin + 1):N]
+  if(make_plot) {
+    par(mfrow = c(2, 1))
+    plot(y, type = "o")
+    abline(h = lambda / b, col = "red")
+    abline(h = mean(y), col = "blue")
+    plot(exp(y), type = "o")
+    abline(h = thresh, col = "green", lwd = 2)
+  }
+  if(return_dat) {
+    y_return <- y
+    generation <- seq_along(y)
+  } else {
+    y_return <- NA
+    generation <- NA
+  }
+    data.frame(phi = phi, b = b, N = N, N_burned = N - burnin, gamma = gamma,
+      df = df, sigma = sigma, thresh = thresh, lambda = lambda,
+      n_ext = sum(exp(y) < thresh), mean_log_abund = mean(y),
+      dat = y_return, generation = generation, id = id)
+}
+```
+
+Let's figure out what a good threshold for 10% of longterm mean is with our parameter values. We'll run a really long time series and get the mean abundance at nu = 3:
+
+```{r}
+expectation <- sim_gomp_extinction(N = 1e6, df = 3)
+expect_abund <- exp(expectation$mean_log_abund)
+expect_abund
+thresh <- 0.1
+```
+
+Set up parallel processing:
+
+```{r}
+library("doParallel")
+library("foreach")
+registerDoParallel(cores = 4)
+```
+
+And run the simulation for 2000 repetitions across nu values of 2, 3, and 1e6 (i.e. normal):
+
+```{r}
+set.seed(123)
+reps <- 2000
+out <- list(length = 3)
+out[[1]] <- plyr::ldply(seq_len(reps), function(i)
+  sim_gomp_extinction(df = 2, thresh = expect_abund*thresh), .parallel = TRUE)
+out[[2]] <- plyr::ldply(seq_len(reps), function(i)
+  sim_gomp_extinction(df = 3, thresh = expect_abund*thresh), .parallel = TRUE)
+out[[3]] <- plyr::ldply(seq_len(reps), function(i)
+  sim_gomp_extinction(df = 1e6, thresh = expect_abund*thresh), .parallel = TRUE)
+out <- do.call("rbind", out)
+```
+
+Plot the output:
+
+```{r}
+library("ggplot2")
+ggplot(out, aes(as.factor(df), n_ext/N_burned)) + geom_boxplot() +
+  ylab("Probability of abundance falling below 10% of longterm mean") +
+  xlab(expression(nu~(t-distribution~degrees~of~freedom)))
+```
+
+Now we'll get some time series to plot as examples:
+
+```{r}
+set.seed(111)
+out_plot <- list(length = 3)
+reps <- 3
+out_plot[[1]] <- plyr::ldply(seq_len(reps), function(i)
+  sim_gomp_extinction(N = 200, df = 2, thresh = expect_abund*thresh, return_dat = TRUE, id = i))
+out_plot[[2]] <- plyr::ldply(seq_len(reps), function(i)
+  sim_gomp_extinction(N = 200, df = 3, thresh = expect_abund*thresh, return_dat = TRUE, id = i))
+out_plot[[3]] <- plyr::ldply(seq_len(reps), function(i)
+  sim_gomp_extinction(N = 200, df = 1e6, thresh = expect_abund*thresh, return_dat = TRUE, id = i))
+out_plot <- do.call("rbind", out_plot)
+```
+
+Columns are repetitions. Rows are different degrees of heavy tails (nu values):
+
+```{r}
+ggplot(out_plot, aes(generation, dat)) + geom_point() + 
+  geom_line() + facet_grid(df~id) +
+  geom_hline(yintercept = log(expect_abund * thresh)) + 
+  ylab("Scaled abundance") + xlab("Generation")
+
+ggplot(out_plot, aes(generation, exp(dat))) + geom_point() + 
+  geom_line() + facet_grid(df~id) +
+  geom_hline(yintercept = expect_abund * thresh) + 
+  ylab("log(Scaled abundance)") + xlab("Generation")
+```
