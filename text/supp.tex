@@ -520,7 +520,8 @@ sources (metadata obtained with the help of the rphylopic R package,
 \begin{table}
 \begin{footnotesize}
 
-\caption{Summary statistics for the filtered Global Population Dynamics
+\caption[Summary statistics for the filtered Global Population Dynamics
+  Database time series arranged by taxonomic class.]{Summary statistics for the filtered Global Population Dynamics
   Database time series arranged by taxonomic class. Columns are: number of
   populations, number of taxonomic orders, numbers of species, median time
   series length, total number of interpolated time steps, total number of
@@ -544,7 +545,8 @@ sources (metadata obtained with the help of the rphylopic R package,
 \begin{footnotesize}
 \begin{longtable}{>{\RaggedRight}m{1.5cm}>{\RaggedRight}p{4.3cm}>{\RaggedRight}p{0.8cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.0cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.3cm}}
 
-\caption{All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed
+\caption[All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed
+  Gompertz population dynamics model.]{All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed
   Gompertz population dynamics model. Shown are the log abundance time series,
   population descriptions, Global Population Dynamics Database Main IDs,
   citation for the data source or separate verification literature, a
@@ -591,12 +593,12 @@ Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/all-clean-ts-fishes-others.pdf}
 
-\caption{(fishes, crustaceans, gastropods, sharks). All filtered time series
-  used in our analysis. The abundances are shown on a log10 vertical axis.
-  Throughout this figure, red dots indicate values that were interpolated and
-  blue dots indicate values that were recorded as zero but were set to the
-  next lowest observed abundance. Numbers before each species name are the
-  GPDD Main ID numbers.}
+\caption[All filtered time series used in our analysis.]{(fishes, crustaceans,
+  gastropods, sharks). All filtered time series used in our analysis. The
+  abundances are shown on a log10 vertical axis. Throughout this figure, red
+  dots indicate values that were interpolated and blue dots indicate values
+  that were recorded as zero but were set to the next lowest observed
+  abundance. Numbers before each species name are the GPDD Main ID numbers.}
 
 \label{fig:all-ts}
 \end{center}
@@ -608,8 +610,9 @@ Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/priors-gomp-base.pdf}
 
-\caption{ Probability density of the Bayesian priors for the Gompertz models.
-  From left to right and then top to bottom: (1) per capita growth rate at
+\caption[Probability density of the Bayesian priors for the Gompertz models.]{
+  Probability density of the Bayesian priors for the Gompertz models. From
+  left to right and then top to bottom: (1) per capita growth rate at
   $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale
   parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen
     Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu
@@ -634,14 +637,15 @@ Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/gomp-comparison.pdf}
 
-\caption{Estimates of $\nu$ from alternative models plotted against the base
-  Gompertz model estimates of $\nu$. Shown are medians of the posterior (dots)
-  and 50\% credible intervals (segments). The diagonal line indicates a
-  one-to-one relationship. Different colours indicate various taxonomic
-  classes. The grey-shaded regions indicate regions of disagreement if $\nu =
-  10$ is taken as a threshold of heavy-tailed dynamics. The Gompertz
-  observation error model assumes a fixed standard deviation of observation
-  error of $0.2$ on a log scale.}
+\caption[Estimates of $\nu$ from alternative models plotted against the base
+Gompertz model estimates of $\nu$.]{Estimates of $\nu$ from alternative models
+  plotted against the base Gompertz model estimates of $\nu$. Shown are
+  medians of the posterior (dots) and 50\% credible intervals (segments). The
+  diagonal line indicates a one-to-one relationship. Different colours
+  indicate various taxonomic classes. The grey-shaded regions indicate regions
+  of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed
+  dynamics. The Gompertz observation error model assumes a fixed standard
+  deviation of observation error of $0.2$ on a log scale.}
 
 \label{fig:alt}
 \end{center}
@@ -653,7 +657,8 @@ Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
 \begin{center}
 \includegraphics[width=\textwidth]{../analysis/gomp-prior-comparison.pdf}
 
-\caption{Estimates of $\nu$ from Gompertz models with alternative priors on
+\caption[Estimates of $\nu$ from Gompertz models with alternative priors on
+$\nu$.]{Estimates of $\nu$ from Gompertz models with alternative priors on
   $\nu$. Shown are medians of the posterior (dots) and 50\% credible intervals
   (segments). The diagonal line indicates a one-to-one relationship. Different
   colours indicate various taxonomic classes. The grey-shaded regions indicate
@@ -675,14 +680,16 @@ Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
 \includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
 \includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
 
-\caption{Testing the ability to estimate $\nu$ (top panels) and the scale
-  parameter of the process deviations (bottom panels) for a given number of
-  samples (columns) drawn from a distribution with a given true $\nu$ value
-  (rows). The red lines indicate the true population value. When a small
-  number of samples are drawn there may not be samples sufficiently far into
-  the tails to recapture the true $\nu$ value; however, heavy tails are still
-  distinguished from normal tails in most cases, even with only 25 or 50
-  samples.}
+\caption[Testing the ability to estimate $\nu$  and the scale parameter of the
+process deviations for a given number of samples drawn from a distribution
+with a given true $\nu$ value.]{Testing the ability to estimate $\nu$ (top
+  panels) and the scale parameter of the process deviations (bottom panels)
+  for a given number of samples (columns) drawn from a distribution with a
+  given true $\nu$ value (rows). The red lines indicate the true population
+  value. When a small number of samples are drawn there may not be samples
+  sufficiently far into the tails to recapture the true $\nu$ value; however,
+  heavy tails are still distinguished from normal tails in most cases, even
+  with only 25 or 50 samples.}
 
 \label{fig:sim-nu}
 \end{center}
@@ -695,21 +702,25 @@ Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz-median-dist.pdf}
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz-p10.pdf}
 
-\caption{ Simulation testing the Gompertz estimation model when the process
-  deviation draws were chosen so that $\nu$ could be estimated close to the
-  true value outside the full population model (``effective $\nu$'' within a
-  CV of 0.2 of specified $\nu$). Upper panels show the distribution of median
-  $\widehat{\nu}$ across 20 simulation runs. Lower panels show the
-  distribution of Pr($\nu < 10$) across 20 simulation runs. We ran the
-  simulations across three population (``true'') $\nu$ values (3, 5, and
-  $1\cdot 10^9$, i.e.\ approximately normal) and four scenarios: (1) 100 time
-  steps and no observation error, (2) 50 time steps and no observation error,
-  (3) 50 time steps and observation error drawn from $\mathrm{Normal} (0,
+\caption[Simulation testing the Gompertz estimation model when the process
+deviation draws were chosen so that $\nu$ could be estimated close to the true
+value outside the full population model (``effective $\nu$'' within a CV of
+0.2 of specified $\nu$).]{Simulation testing the Gompertz estimation model
+  when the process deviation draws were chosen so that $\nu$ could be
+  estimated close to the true value outside the full population model
+  (``effective $\nu$'' within a CV of 0.2 of specified $\nu$). Upper panels
+  show the distribution of median $\widehat{\nu}$ across 20 simulation runs.
+  Lower panels show the distribution of Pr($\nu < 10$) across 20 simulation
+  runs. We ran the simulations across three population (``true'') $\nu$ values
+  (3, 5, and $1\cdot 10^9$, i.e.\ approximately normal) and four scenarios:
+  (1) 100 time steps and no observation error, (2) 50 time steps and no
+  observation error, (3) 50 time steps and observation error drawn from
+  $\mathrm{Normal} (0,
   0.2^2)$ but ignored, and (4) 50 time steps with observation error in which
-  the quantity of observation error was assumed known. Within each scenario
-  the dots represent stochastic draws from the true population distributions
-  combined with model fits. Underlayed boxplots show the median, interquartile
-  range, and $1.5$ times the interquartile range. }
+    the quantity of observation error was assumed known. Within each scenario
+    the dots represent stochastic draws from the true population distributions
+    combined with model fits. Underlayed boxplots show the median,
+    interquartile range, and $1.5$ times the interquartile range. }
 
 \label{fig:sim-prob}
 \end{center}
