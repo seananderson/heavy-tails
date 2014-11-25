@@ -25,3 +25,6 @@ extractbib: text
 
 clean:
 	latexmk -c
+
+continuous:
+	latexmk -pvc $(TEXT)
