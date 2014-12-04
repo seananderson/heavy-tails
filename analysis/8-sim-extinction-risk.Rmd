@@ -12,8 +12,8 @@ perc_downs <- function(df, gamma) {
   # hist(proc_error)
   l <- qnorm(0.0001, 0, sd = 1)
   u <- qnorm(0.9999, 0, sd = 1)
-  downs <- sum(proc_error < l) / N
-  ups <- sum(proc_error > u) / N
+  downs <- sum(proc_error < l)
+  ups <- sum(proc_error > u)
   downs / (downs + ups)
 }
 perc_downs(df = 2, gamma = 0.75)
