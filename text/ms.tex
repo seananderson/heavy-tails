@@ -431,10 +431,14 @@ The GPDD IDs used in our analysis\\
 All code and data to recreate our analysis are available at:\\
 \url{https://github.com/seananderson/heavy-tails}
 
+\renewcommand{\baselinestretch}{\tighttextstretch}
+\normalsize
 \bibliographystyle{apalike}
 \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
 
 \clearpage
+\renewcommand{\baselinestretch}{\textstretch}
+\normalsize
 
 \section{Tables}
 
@@ -477,7 +481,7 @@ shading behind panels f--h illustrates the region of heavy tails.
 \caption[Estimates of population dynamics heavy-tailedness for \nuCoefPopN\
   populations of birds, mammals, insects, and fishes.]{Estimates of population dynamics heavy-tailedness for \nuCoefPopN\
   populations of birds, mammals, insects, and fishes. Small values of $\nu$
-  ($\lesssim 10$) suggest heavy-tailed black-swan dynamics; larger values of
+  approximately ($< 10$) suggest heavy-tailed black-swan dynamics; larger values of
   $\nu$ suggest approximately normal-tailed dynamics. Vertical points and line
   segments represent posterior medians and 50\% / 90\% credible intervals for
   individual populations. Inset plots show probability that $\nu < 10$

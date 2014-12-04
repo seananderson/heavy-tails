@@ -494,7 +494,7 @@ sources (metadata obtained with the help of the rphylopic R package,
 \url{https://github.com/sckott/rphylopic}):
 
 \LTcapwidth=\textwidth
-\singlespacing
+%\singlespacing
 \begin{footnotesize}
 \begin{longtable}{>{\RaggedRight}m{3.2cm}>{\RaggedRight}p{6.5cm}>{\RaggedRight}p{5.0cm}}
 %\caption{Phylopic credits}\\
@@ -503,11 +503,15 @@ sources (metadata obtained with the help of the rphylopic R package,
 \label{tab:phylopic}
 \end{longtable}
 \end{footnotesize}
-\onehalfspacing
+%\onehalfspacing
 
 
+\renewcommand{\baselinestretch}{\tighttextstretch}
+\normalsize
 \bibliographystyle{apalike}
 \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
+\renewcommand{\baselinestretch}{\textstretch}
+\normalsize
 
 % ------------------------------
 % Supplemental Tables
@@ -541,7 +545,7 @@ sources (metadata obtained with the help of the rphylopic R package,
 \LTcapwidth=\textwidth
 \bibpunct{}{}{;}{a}{}{;}
 
-\singlespacing
+%\singlespacing
 \begin{footnotesize}
 \begin{longtable}{>{\RaggedRight}m{1.5cm}>{\RaggedRight}p{4.3cm}>{\RaggedRight}p{0.8cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.0cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.7cm}>{\RaggedRight}p{1.3cm}}
 
@@ -565,7 +569,7 @@ sources (metadata obtained with the help of the rphylopic R package,
 \label{tab:causes-supp}
 \end{longtable}
 \end{footnotesize}
-\onehalfspacing
+%\onehalfspacing
 
 % ------------------------------
 % Supplemental Figures
@@ -734,7 +738,7 @@ residuals and a specified level of observation error. The specific code for
 used for the various models in our analysis is available at
 \url{https://github.com/seananderson/heavy-tails}.
 
-\begin{spacing}{1.15}
+%\begin{spacing}{1.15}
 \begin{footnotesize}
 \begin{verbatim}
 data {
@@ -789,10 +793,14 @@ Stan code for the multilevel beta regression:
 \noindent
 The GPDD IDs used in our analysis.
 
+\renewcommand{\baselinestretch}{\tighttextstretch}
+\normalsize
 \begin{footnotesize}
 \noindent
 {\tt
 \input{../analysis/mainids}
 }
 \end{footnotesize}
-\end{spacing}
+\renewcommand{\baselinestretch}{\textstretch}
+\normalsize
+%\end{spacing}
