@@ -25,9 +25,10 @@ heavy <- mutate(heavy,
   mutate(nu_95 = sprintf("%.0f", round(nu_95, 0))) %>%
   mutate(spark = paste0("\\includegraphics[width=1.7cm]{../analysis/sparks/", main_id, ".pdf}")) %>%
   mutate(nu_hat = paste0(nu_50, " (", nu_5, "--", nu_95, ")")) %>%
-  select(spark, population, main_id, citation, data_correct, reasons, p10, nu_hat) %>%
-  rename("Time series" = spark, "Population" = population, "ID" = main_id, "Verified" = data_correct,
-    "Description" = reasons, "Pr($\\nu < 10$" = p10, "$\\widehat{\\nu}$" = nu_hat)
+  select(spark, population, main_id, citation, reasons, p10, nu_hat) %>%
+  rename("Time series" = spark, "Population" = population, "ID" = main_id,
+    "Citation" = citation,
+    "Description" = reasons, "Pr($\\nu < 10$)" = p10, "$\\widehat{\\nu}$" = nu_hat)
 
 print.xtable(xtable(heavy,
     caption = ""),
