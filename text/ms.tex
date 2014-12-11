@@ -6,13 +6,13 @@ Black swans are statistically improbable events that nonetheless occur---often
 with profound consequences. While extremes in the physical environment, such
 as monsoons and heat waves, are widely studied and increasing in magnitude and
 frequency, it remains unclear the extent to which ecological populations
-buffer or suffer from such extremes. Here, estimate the degree of
+buffer or suffer from such extremes. Here, we estimate the degree of
 heavy-tailedness (presence of black swans) in ecological process noise by
 applying a probability model to \NPops~time series from around the world
 across \NOrders~taxonomic orders and seven classes. We find strong evidence of
 black swans, but they are rare, occurring in
 \overallMinPerc--\overallMaxPerc\% of populations: most frequently for birds
-(\AvesRangePerc\%) followed by mammals (\MammaliaRangePerc\%), and insects
+(\AvesRangePerc\%) followed by mammals (\MammaliaRangePerc\%) and insects
 (\InsectaRangePerc\%). Black swans were predominantly (\percBSDown \%)
 downward events and were not explained by any life-history covariates, but
 tended to be driven by external perturbations such as climate, severe winters,
@@ -250,16 +250,16 @@ events---especially given the length of the time series in the GPDD
 (Figs~\ref{fig:sim-nu}, \ref{fig:sim-prob}).
 
 Across populations, the probability of observing black-swan dynamics was
-positively related to time-series length and negatively related to magnitude of
-process noise ($\sigma$) but not clearly related to population growth rate
+positively related to time-series length and negatively related to magnitude
+of process noise ($\sigma$) but not clearly related to population growth rate
 ($\lambda$), density dependence ($b$), or maximum lifespan
-(Figs~\ref{fig:correlates}, \ref{fig:posteriors}b). Longer time-series length
-was the strongest covariate of observing black-swan dynamics. For instance, we
-were about \pIncHeavyNThirtyNSixty~times as likely to observe heavy tails in a
-population with 60 time steps compared to one with 30 time steps. However, the
-absolute change in probability with increased time series length was small
-($\pHeavyNSixty$ vs.\ $\pHeavyNThirty$ in the previous example,
-Fig.~\ref{fig:correlates}).
+(Figs~\ref{fig:posteriors}b, \ref{fig:correlates}). Longer time-series length
+was the strongest covariate of observing black-swan dynamics. For instance,
+the expected probability density below $\nu = 10$ was about \pIncHeavyNThirtyNSixty~times
+greater for a population with 60 time steps compared
+to one with 30 time steps. However, the absolute change in probability with
+increased time series length was small ($\pHeavyNSixty$ vs.\ $\pHeavyNThirty$
+in the previous example, Fig.~\ref{fig:correlates}).
 
 We examined all time series with published explanations of why the black-swan
 events occurred (Tables~\ref{tab:sparks} and \ref{tab:causes-supp}). The
@@ -335,7 +335,7 @@ from (or competition with) other species experiencing black swans, or sharp
 changes in human pressure such hunting, fishing, or habitat destruction might
 cause black swans. Alternatively, the synchrony of multiple ``normal''
 extrinsic forces could give rise to black-swan ecological dynamics. This could
-occur if with a synergistic interaction \citep[e.g.][]{kirby2009} or even if
+occur with a synergistic interaction \citep[e.g.][]{kirby2009} or even if
 non-synergistic forces experience a rare alignment \citep{denny2009}.
 
 There are a number of caveats when considering the generality of our results.
@@ -401,7 +401,7 @@ ecology has moved toward focussing on aspects of variance in addition to mean
 responses \citep[e.g.][]{loreau2010a, thompson2013}. Our results suggest that
 an added focus on ecological extremes represents the next frontier,
 particularly in the face of increased climate extremes \citep{meehl2004,
-  thompson2013, ipcc2012}. Financial analysts are concerned with the shape of
+  ipcc2012, thompson2013}. Financial analysts are concerned with the shape of
 the downward tails of financial returns because these directly impact
 estimates of risk---the probability of a specific magnitude of undesired event
 occurring \citep{rachev2008}. A comparable focus in ecology would increase our
@@ -410,8 +410,8 @@ by downward black-swan events.
 
 \section{Acknowledgements}
 
-We thank J.D. Yeakel and other members of the Earth to Ocean research
-group for helpful discussions and comments. We are grateful to the
+We thank J.W. Moore, J.D. Yeakel, and other members of the Earth to Ocean
+research group for helpful discussions and comments. We are grateful to the
 contributors and maintainers of the Global Population Dynamics Database and to
 Compute Canada's WestGrid high-performance computing resources. Silhouette
 images were obtained from \texttt{phylopic.org} under Creative Commons
