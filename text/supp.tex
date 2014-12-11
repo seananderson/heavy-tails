@@ -5,7 +5,7 @@
 Supporting Information\\[1.0em]
 \end{centering}
 
-\section{Data selection}
+\subsection{Data selection}
 
 We applied the following data selection and quality-control rules to the
 Global Population Dynamics Database (GPDD):
@@ -94,7 +94,7 @@ black-swan detections, since black swans involve extreme increases or
 decreases. Table~\ref{tab:stats} shows the final taxonomic breakdown and the
 number of populations with interpolated values.
 
-\section{Details on the heavy-tailed Gompertz probability model}
+\subsection{Details on the heavy-tailed Gompertz probability model}
 
 For the Gompertz model, our weakly-informative priors (Fig.~\ref{fig:priors})
 were:
@@ -152,7 +152,7 @@ JAGS, but the No-U-Turn Hamiltonian Markov chain Monte Carlo Sampler in Stan
 generally requires far fewer iterations to obtain equivalent effective sample
 sizes \citep{stan-manual2014}.
 
-\section{Alternative priors}
+\subsection{Alternative priors}
 
 To test if the prior on $\nu$ influenced our estimate of black-swan dynamics,
 we refit our models with weaker and stronger priors. Our base model used a
@@ -175,7 +175,7 @@ can pull the estimate of $\nu$ towards larger or smaller values
 < 10)$ in the base prior were not altered qualitatively by this range of prior
 strength.
 
-\section{Alternative population models}
+\subsection{Alternative population models}
 
 We fit four alternative population models to the time-series data to check how
 they would influence our conclusions. Our alternative models allowed for
@@ -185,7 +185,7 @@ percentages of black swans by taxonomic class cited in the abstract and
 results are based on lower and upper limits across our main Gompertz model and
 these four alternative models.
 
-\subsection{Autocorrelated residuals}
+\subsubsection{Autocorrelated residuals}
 
 We considered a version of the Gompertz model in which an autoregressive
 parameter was fit to the process noise residuals:
@@ -209,7 +209,7 @@ $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1,
   < 10$) $> 0.5$ categorized them as heavy in the main Gompertz model. We did
   not include these models in Fig.~\ref{fig:alt}.
 
-\subsection{Assumed density independence}\label{assumed-density-independence}
+\subsubsection{Assumed density independence}\label{assumed-density-independence}
 
 We fit a simplified version of the Gompertz model in which the density
 dependence parameter $b$ was fixed at $1$ (density independent). This is
@@ -227,7 +227,7 @@ dependence was systematically affecting our perception of heavy tails, (3) it
 matches how some previous authors have modelled heavy tails without accounting
 for density dependence \citep{segura2013}.
 
-\subsection{Assumed observation error}
+\subsubsection{Assumed observation error}
 
 Observation error can bias parameter estimates \citep[e.g.][]{knape2012} and
 is known to affect the ability to detect extreme events \citep{ward2007}. In
@@ -255,7 +255,7 @@ $\sigma_\mathrm{proc}$ represent the process noise scale parameter. We set
 $\sigma_\mathrm{obs}$ to $0.2$, which represents the upper limit of values
 often used in simulation analyses \citep[e.g.][]{valpine2002, thorson2014b}.
 
-\subsection{Ricker-logistic}
+\subsubsection{Ricker-logistic}
 
 We also fit a Ricker-logistic model:
 \begin{align*}
@@ -277,7 +277,7 @@ between zero and maximum observed, which is more informative). We set the
 prior on $r_\mathrm{max}$ as uniform between 0 and 20 as in \citet{clark2010}.
 We used the same priors on $\nu$ and $\sigma$ as in the Gompertz model.
 
-\section{Simulation testing the model}
+\subsection{Simulation testing the model}
 
 We performed two types of simulation testing. First, we tested how easily the
 Student-t distribution $\nu$ parameter could be recovered given different true
@@ -296,7 +296,7 @@ tested the latter. In general, our simulations show that, if anything, our
 model under predicts the magnitude and probability of heavy tailed
 events---especially given the length of the time series in the GPDD.
 
-\subsection{Estimating $\nu$ from a stationary t distribution}
+\subsubsection{Estimating $\nu$ from a stationary t distribution}
 
 First, we tested the ability to estimate $\nu$ given different true values of
 $\nu$ and different sample sizes. We took stochastic draws from t
@@ -314,7 +314,7 @@ tended to underestimate how heavy the tails were. At the same time, at smaller
 sample sizes, the model tended to overestimate how large the scale parameter
 was (Fig.~\ref{fig:sim-nu} lower panels).
 
-\subsection{Heavy-tailed Gompertz model simulations}
+\subsubsection{Heavy-tailed Gompertz model simulations}
 
 In the second part of our simulation testing, we tested the ability of the
 heavy-tailed Gompertz model to obtain unbiased parameter estimates when the
@@ -401,7 +401,7 @@ the detection of heavy tails. Therefore, we chose to focus on the simpler
 model without observation error in the main text, particularly given that the
 true magnitude of observation error was unknown in the empirical data.
 
-\section{Modelling covariates of heavy-tailed dynamics}
+\subsection{Modelling covariates of heavy-tailed dynamics}
 
 We fit a multilevel beta regression model to the predicted probability of
 heavy tails, Pr($\nu < 10$), to investigate potential covariates of
@@ -480,7 +480,7 @@ order-level estimates of the probability of heavy tails at mean log
 time-series length by adding the posteriors for $\alpha$,
 $\alpha^\mathrm{class}_j$, and $\alpha^\mathrm{order}_k$.
 
-\section{Additional acknowledgements}
+\subsection{Additional acknowledgements}
 
 Many of the silhouette images used in Figs~\ref{fig:nu-coefs},
 \ref{fig:correlates} and \ref{fig:posteriors} were obtained from
@@ -506,13 +506,13 @@ sources (metadata obtained with the help of the rphylopic R package,
 %\onehalfspacing
 
 
-\renewcommand{\baselinestretch}{\tighttextstretch}
-\normalsize
-\bibliographystyle{apalike}
-\bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
-\renewcommand{\baselinestretch}{\textstretch}
-\normalsize
-
+% \renewcommand{\baselinestretch}{\tighttextstretch}
+% \normalsize
+% \bibliographystyle{apalike}
+% \bibliography{/Users/seananderson/Dropbox/tex/jshort,/Users/seananderson/Dropbox/tex/ref3}
+% \renewcommand{\baselinestretch}{\textstretch}
+% \normalsize
+%
 % ------------------------------
 % Supplemental Tables
 % ------------------------------
@@ -792,14 +792,13 @@ Stan code for the multilevel beta regression:
 \noindent
 The GPDD IDs used in our analysis.
 
-\renewcommand{\baselinestretch}{\tighttextstretch}
-\normalsize
-\begin{footnotesize}
+\begin{scriptsize}
+%\renewcommand{\baselinestretch}{1.11}
 \noindent
 {\tt
 \input{../analysis/mainids}
 }
-\end{footnotesize}
-\renewcommand{\baselinestretch}{\textstretch}
+%\renewcommand{\baselinestretch}{\textstretch}
+\end{scriptsize}
 \normalsize
 %\end{spacing}
