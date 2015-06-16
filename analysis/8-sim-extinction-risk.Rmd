@@ -1,8 +1,36 @@
-This file looks at quasi-extinction probability with heavy vs. normal tails
+This file looks at quasi-extinction probability with heavy vs. normal tails.
+
+**I'm currently adapting this script to bring in the parameter values from the model fitting.**
+
+Bring in the fitted data:
+
+```{r}
+source("5-shape-data.R")
+```
+
+Now write a function that crawls through `gomp_hat_base` row by row and repeatedly draws all needed parameter values stochastically and feeds these into a forward projection of the Gompertz model.
 
 Do downwards heavy tails really matter for extinction risk?
 
-First, we'll figure out approximately what skewness values to use to get ballpark 85% downward deviations. This is to approximately match the skewness we see in the GPDD:
+Two ways to go about this: repeatedly bootstrap from the observed process deviations or draw the deviations from a t distribution with given sigma and nu. The problem with the later is that the deviations won't be appropriately downwardly skewed. But the problem with the former is that I'm not sure this gets what we want out of the exercise. The assumed normal distributions might not in fact be normal. The model might just have fit poorly. Therefore, I'm going to start with the first option.
+
+<!--
+I'll get those deviations the same way I do for the spark line plots. The idea is this: for a given population, draw lambda and draw b stochastically. Now, find what the residuals would have been for those
+
+```{r}
+get_gomp_res <- function(id) {
+  p <- subset(gomp_hat_base, main_id == id)
+  pop <- subset(gpdd, main_id == id_show)$population_untransformed
+  res <- rep(NA, length(pop))
+  for(i in 2:length(pop)) {
+    res[i] <- log(pop)[i] - (p$lambda_50 + p$b_50 * log(pop[i-1]))
+  }
+  return(list(res = res, l = l, u = u))
+}
+```
+
+
+First, we'll figure out approximately what skewness values to use to get ballpark 85% downward deviations. This is to approximately match the skewness we see in the GPDD: (TODO come back to this skewness issue)
 
 ```{r}
 library("skewt")
@@ -21,8 +49,9 @@ perc_downs(df = 3, gamma = 0.75)
 ```
 
 So, 0.75 gets us in the ballpark of 85% percent downs.
+-->
 
-Now, we'll write a little C++ function to simulate from a Gompertz model. We'll do this in C++ just to make everything fast after this.
+We'll write a little C++ function to simulate from a Gompertz model. We'll do this in C++ just to make everything fast after this.
 
 ```{r}
 library("Rcpp")
@@ -38,21 +67,24 @@ cppFunction("
 }")
 ```
 
-And we'll write a function to simulate a time series, check how many generations go below some threshold, and return the data in a form we can use. I've picked parameter values to be approximately at the mean values in the GPDD (I'll check these more precisely). I'm running the simulation, by default, for 200 generations and discarding the first 50 as burn in.
+And we'll write a function to simulate a time series, check how many generations go below some threshold, and return the data in a form we can use. 
+
+For each, we'll be drawing all parameter values from the posterior and starting at the state the time series ended. Then we'll continue on for some given number of generations.
+
+<!--
+I've picked parameter values to be approximately at the mean values in the GPDD (I'll check these more precisely). I'm running the simulation, by default, for 200 generations and discarding the first 50 as burn in.
+-->
 
 ```{r}
-sim_gomp_extinction <- function(lambda = 1, phi = 0.3, b = 0.5, N = 200,
-  gamma = 0.75, df = 3, thresh = 3, make_plot = FALSE, sigma = 0.2, burnin = 50,
+library("skewt")
+sim_gomp_extinction <- function(abundance_ts, lambda = 1, b = 0.5, N = 200,
+  gamma = 0.75, df = 3, thresh = 3, make_plot = FALSE, sigma = 0.2,
   return_dat = FALSE, id = 1) {
-  y1 <- lambda / b
-  proc_error_raw <- rskt(N, df = df, gamma = gamma) / (1 / sigma)
-  proc_error <- vector(mode = "numeric", length = N)
-  proc_error[1] <- proc_error_raw[1]
-  for (i in 2:N) {
-    proc_error[i] <- proc_error_raw[i] + phi * proc_error[i - 1]
-  }
+
+  y1 <- log(abundance_ts[length(abundance_ts)])
+
+  proc_error <- rskt(N, df = df, gamma = gamma) / (1 / sigma)
   y <- gompertz(N, lambda, b, proc_error, y1)
-  y <- y[(burnin + 1):N]
   if(make_plot) {
     par(mfrow = c(2, 1))
     plot(y, type = "o")
@@ -61,19 +93,82 @@ sim_gomp_extinction <- function(lambda = 1, phi = 0.3, b = 0.5, N = 200,
     plot(exp(y), type = "o")
     abline(h = thresh, col = "green", lwd = 2)
   }
-  if(return_dat) {
-    y_return <- y
-    generation <- seq_along(y)
-  } else {
-    y_return <- NA
-    generation <- NA
-  }
-    data.frame(phi = phi, b = b, N = N, N_burned = N - burnin, gamma = gamma,
+    y_return <- c(log(abundance_ts), y)
+    generation <- c(seq(-length(abundance_ts) + 1, 0), seq_along(y))
+    data.frame(b = b, N = N, gamma = gamma,
       df = df, sigma = sigma, thresh = thresh, lambda = lambda,
       n_ext = sum(exp(y) < thresh), mean_log_abund = mean(y),
-      dat = y_return, generation = generation, id = id)
+      dat = y_return, generation = generation, main_id = id)
 }
 ```
+
+OK, let's try applying this to some sample populations:
+
+```{r}
+ids <- c(6528, 10127, 10007, 20579)
+out_ids <- lapply(ids, function(id_i) {
+samples <- 80L
+posterior_length <- 2000L
+posterior_ids <- round(seq(1, posterior_length, length.out = samples))
+out <- lapply(posterior_ids, function(i) {
+library("rstan")
+id <- id_i
+x <- readRDS(paste0("../scratch/base/sm-", id, ".rds"))
+x <- rstan::extract(x)
+gpdd <- readRDS("gpdd-clean.rds") # to get the last abundance
+this_dat <- filter(gpdd, main_id == id)
+
+out_gomp <- sim_gomp_extinction(abundance_ts = this_dat$population_untransformed, 
+  lambda = x$lambda[i], 
+  b = x$b[i], 
+  N = 100,
+  gamma = 0.75, 
+  df = x$nu[i], 
+  thresh = 3, 
+  make_plot = FALSE, 
+  sigma = x$sigma[i], 
+  return_dat = FALSE, 
+  id = id)
+out_gomp$posterior_sample <- i
+out_gomp
+ })
+out_df <- do.call("rbind", out)
+out_df
+})
+out_df2 <- do.call("rbind", out_ids)
+
+out_df2 <- mutate(out_df2, projection = ifelse(generation > 0, TRUE, FALSE))
+p <- ggplot(out_df2, 
+  aes(generation, exp(dat), colour = projection, group = posterior_sample)) + 
+  geom_line(alpha = 0.2) + 
+  geom_vline(xintercept = 0, lty = 2) + 
+  theme_bw() + ylab("Abundance") + xlab("Year") + 
+  scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+                labels = scales::trans_format("log10", scales::math_format(10^.x))) + 
+  annotation_logticks(sides = "l") + 
+  guides(colour = guide_legend(override.aes= list(alpha = 1))) +
+  facet_wrap(~main_id, scales = "free_y") 
+print(p)
+
+```
+
+<!--#############################-->
+
+
+<!--
+```{r}
+gpdd <- readRDS("gpdd-clean.rds") # to get the last abundance
+dat <- readRDS("gomp-base-mean-sd.rds") # means and sds instead of medians
+x <- gomp_hat_base[1,]
+y1 <- filter(gpdd, main_id == x$main_id) %>% 
+  filter(sample_year == max(sample_year))
+y1 <- y1$population_untransformed
+sim_gomp_extinction(
+  y1 = y1,
+  lambda = 
+```
+-->
+
 
 Let's figure out what a good threshold for 10% of longterm mean is with our parameter values. We'll run a really long time series and get the mean abundance at nu = 3:
 
