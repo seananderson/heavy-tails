@@ -29,6 +29,49 @@ model {
 stan_gomp <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp, file = "stan-gomp.rds")
 
+# same base model but with skewed heavy-tailed process noise:
+
+stan_model <-
+'
+functions {
+  real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
+  real lp;
+  if (skew <= 0)
+    reject("Skew has to be positive. Found skew=", skew);
+  if (sigma <= 0)
+    reject("Scale has to be positive.  Found sigma=", sigma);
+  lp <- log(skew) - log1p(square(skew));
+  if (y < mu)
+    return lp + student_t_log(y * skew, nu, mu * skew, sigma);
+  else
+    return lp + student_t_log(y / skew, nu, mu / skew, sigma);
+  }
+}
+data {
+  int<lower=0> N; // rows of data
+  vector[N] y; // vector to hold observations
+  real<lower=0> nu_rate; // rate parameter for nu exponential prior
+  real b_lower;
+  real b_upper;
+}
+parameters {
+  real lambda;
+  real<lower=b_lower, upper=b_upper> b;
+  real<lower=0> sigma_proc;
+  real<lower=2> nu;
+  real<lower=0,upper=20> skew;
+}
+model {
+  nu ~ exponential(nu_rate);
+  lambda ~ normal(0, 10);
+  sigma_proc ~ cauchy(0, 2.5);
+  for (i in 2:N) {
+    y[i] ~ skew_student_t(nu, lambda + b * y[i-1], sigma_proc, skew);
+  }
+}
+'
+stan_gomp_skew <- stan_model(model_code = stan_model)
+saveRDS(stan_gomp_skew, file = "stan-gomp-skew.rds")
 # with fixed observation error (and no autocorrelation):
 
 stan_model <-
