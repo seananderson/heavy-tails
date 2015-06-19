@@ -72,6 +72,31 @@ model {
 '
 stan_gomp_skew <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp_skew, file = "stan-gomp-skew.rds")
+# the base model but with normal process noise:
+
+stan_model <-
+'data {
+int<lower=0> N; // rows of data
+vector[N] y; // vector to hold observations
+real b_lower;
+real b_upper;
+}
+parameters {
+real lambda;
+real<lower=b_lower, upper=b_upper> b;
+real<lower=0> sigma_proc;
+}
+model {
+lambda ~ normal(0, 10);
+sigma_proc ~ cauchy(0, 2.5);
+for (i in 2:N) {
+y[i] ~ normal(lambda + b * y[i-1], sigma_proc);
+}
+}
+'
+stan_gomp_normal <- stan_model(model_code = stan_model)
+saveRDS(stan_gomp_normal, file = "stan-gomp-normal.rds")
+
 # with fixed observation error (and no autocorrelation):
 
 stan_model <-
