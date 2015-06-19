@@ -1,4 +1,4 @@
-# This file runs the Gompertz models with an AR1 coefficient on the residuals
+# This file runs the base Gompertz models
 
 source("1.5-compile-fit-function.R")
 source("1.6-extract-function.R")
