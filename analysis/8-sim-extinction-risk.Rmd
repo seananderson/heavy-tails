@@ -76,26 +76,33 @@ I've picked parameter values to be approximately at the mean values in the GPDD 
 -->
 
 ```{r}
-library("skewt")
-sim_gomp_extinction <- function(abundance_ts, lambda = 1, b = 0.5, N = 200,
-  gamma = 0.75, df = 3, thresh = 3, make_plot = FALSE, sigma = 0.2,
-  return_dat = FALSE, id = 1) {
-
-  y1 <- log(abundance_ts[length(abundance_ts)])
-
-  proc_error <- rskt(N, df = df, gamma = gamma) / (1 / sigma)
-  y <- gompertz(N, lambda, b, proc_error, y1)
-  if(make_plot) {
-    par(mfrow = c(2, 1))
-    plot(y, type = "o")
-    abline(h = lambda / b, col = "red")
-    abline(h = mean(y), col = "blue")
-    plot(exp(y), type = "o")
-    abline(h = thresh, col = "green", lwd = 2)
+# library("skewt")
+sim_gomp_extinction <- function(abundance_ts, lambda = 1, b = 0.5, N = 100L,
+  df = 3, thresh = 3, sigma = 0.2, id = 1, bootstrap_residuals = FALSE, 
+  model = "heavy") {
+  
+  if (is.null(df)) df <- NA
+  
+  log_abundance_ts <- log(abundance_ts)
+  y1 <- log_abundance_ts[length(abundance_ts)]
+  
+  if (bootstrap_residuals) {
+    res <- log_abundance_ts[-1] - (lambda + b * log_abundance_ts[-length(abundance_ts)])
+    proc_error <- sample(res, size = N, replace = TRUE) # bootstrap the process residuals
+  } else {
+    if (model == "heavy") {
+      # proc_error <- rskt(N, df = df, gamma = gamma) / (1 / sigma)
+      proc_error <- rt(N, df = df) * sigma
+    } else {
+      proc_error <- rnorm(N, sd = sigma)
+    }
   }
-    y_return <- c(log(abundance_ts), y)
+  
+  y <- gompertz(N, lambda, b, proc_error, y1)
+  
+    y_return <- c(log_abundance_ts, y)
     generation <- c(seq(-length(abundance_ts) + 1, 0), seq_along(y))
-    data.frame(b = b, N = N, gamma = gamma,
+    data.frame(b = b, N = N,
       df = df, sigma = sigma, thresh = thresh, lambda = lambda,
       n_ext = sum(exp(y) < thresh), mean_log_abund = mean(y),
       dat = y_return, generation = generation, main_id = id)
@@ -105,50 +112,74 @@ sim_gomp_extinction <- function(abundance_ts, lambda = 1, b = 0.5, N = 200,
 OK, let's try applying this to some sample populations:
 
 ```{r}
-ids <- c(6528, 10127, 10007, 20579)
-out_ids <- lapply(ids, function(id_i) {
-samples <- 80L
+ids <- c(6528, 10127, 20579)
+library("rstan")
+gpdd <- readRDS("gpdd-clean.rds") # to get the last abundance
+samples <- 2000L
 posterior_length <- 2000L
 posterior_ids <- round(seq(1, posterior_length, length.out = samples))
-out <- lapply(posterior_ids, function(i) {
-library("rstan")
-id <- id_i
-x <- readRDS(paste0("../scratch/base/sm-", id, ".rds"))
-x <- rstan::extract(x)
-gpdd <- readRDS("gpdd-clean.rds") # to get the last abundance
-this_dat <- filter(gpdd, main_id == id)
+    
+out_ids <- lapply(ids, function(id_i) {
+  this_dat <- dplyr::filter(gpdd, main_id == id_i)
+  message(paste("main_id:", id_i))
+  # x <- readRDS(paste0("gomp-base-normal/sm-", id_i, ".rds"))
+  x <- readRDS(paste0("../scratch/gomp-base/sm-", id_i, ".rds"))
+  x <- rstan::extract(x)
 
-out_gomp <- sim_gomp_extinction(abundance_ts = this_dat$population_untransformed, 
-  lambda = x$lambda[i], 
-  b = x$b[i], 
-  N = 100,
-  gamma = 0.75, 
-  df = x$nu[i], 
-  thresh = 3, 
-  make_plot = FALSE, 
-  sigma = x$sigma[i], 
-  return_dat = FALSE, 
-  id = id)
-out_gomp$posterior_sample <- i
-out_gomp
- })
-out_df <- do.call("rbind", out)
-out_df
+  out <- lapply(posterior_ids, function(i) {
+    out_gomp <- sim_gomp_extinction(abundance_ts = this_dat$population_untransformed, 
+      lambda = x$lambda[i], b = x$b[i], N = 10L, df = x$nu[i], 
+      thresh = 3, sigma = x$sigma[i], id = id_i, bootstrap_residuals = FALSE, model = "heavy")
+    out_gomp$posterior_sample <- i
+    out_gomp
+  })
+  out_df <- do.call("rbind", out)
+  out_df
 })
 out_df2 <- do.call("rbind", out_ids)
-
 out_df2 <- mutate(out_df2, projection = ifelse(generation > 0, TRUE, FALSE))
-p <- ggplot(out_df2, 
-  aes(generation, exp(dat), colour = projection, group = posterior_sample)) + 
-  geom_line(alpha = 0.2) + 
+
+ # out_df2 <- filter(out_df2, exp(dat) < 10e5)
+library(ggplot2)
+# p <- ggplot(out_df2, 
+#   aes(generation, exp(dat), colour = projection, group = posterior_sample)) + 
+#   geom_line(alpha = 0.2) + 
+#   xlim(-30, 10) +
+#   geom_vline(xintercept = 0, lty = 2) + 
+#   geom_hline(yintercept = 10, lty = 2) + 
+#   theme_bw() + ylab("Abundance") + xlab("Year") + 
+#   scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+#     labels = scales::trans_format("log10", scales::math_format(10^.x)),
+#     limits = c(1, 1e5)) + 
+#   annotation_logticks(sides = "l") + 
+#   guides(colour = guide_legend(override.aes= list(alpha = 1))) +
+#   facet_wrap(~main_id) 
+# print(p)
+# ggsave("heavy-tailed-projections.png", width = 10, height = 6)
+cvar <- function(x) mean(x[x<=quantile(x, probs = 0.01)])
+group_by(out_df2, main_id) %>% summarise(cvar_ = cvar(exp(dat)))
+
+out_df3 <- out_df2 %>% group_by(main_id, generation, projection) %>%
+  summarise(
+    min_dat = min(dat, na.rm = TRUE),
+    q99 = quantile(dat, probs = 0.01, na.rm = TRUE)
+    )
+
+p <- ggplot(out_df3, 
+  aes(generation, exp(min_dat), colour = projection)) + 
+  geom_line() + 
+  geom_line(aes(y = exp(q99)), lty = 2) + 
   geom_vline(xintercept = 0, lty = 2) + 
+  geom_hline(yintercept = 10, lty = 2) + 
+  xlim(-30, 10) +
   theme_bw() + ylab("Abundance") + xlab("Year") + 
   scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
-                labels = scales::trans_format("log10", scales::math_format(10^.x))) + 
+    labels = scales::trans_format("log10", scales::math_format(10^.x)),
+    limits = c(1, 1e4)) + 
   annotation_logticks(sides = "l") + 
   guides(colour = guide_legend(override.aes= list(alpha = 1))) +
-  facet_wrap(~main_id, scales = "free_y") 
-print(p)
+  facet_wrap(~main_id) 
+p
 
 ```
 
