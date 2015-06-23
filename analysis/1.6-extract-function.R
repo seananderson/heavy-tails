@@ -1,7 +1,8 @@
 extract_model <- function(id, get_phi = TRUE,
   root_folder = "/global/scratch/anderson/heavy", sub_folder = "base",
   file_prefix = "sm",
-  type = c("gompertz", "logistic", "rate")) {
+  type = c("gompertz", "logistic", "rate"),
+  get_skew = FALSE) {
 
   library("rstan")
 
@@ -42,6 +43,9 @@ extract_model <- function(id, get_phi = TRUE,
   if(get_phi) {
     phi <- get_q("phi")
   }
+  if(get_skew) {
+    skew <- get_q("log_skew")
+  }
 
   nu_samples <- samp$nu
   p10 <- length(nu_samples[nu_samples < 10]) / length(nu_samples)
@@ -57,6 +61,9 @@ extract_model <- function(id, get_phi = TRUE,
 
   if(get_phi) {
     out <- data.frame(out, phi)
+  }
+  if(get_skew) {
+    out <- data.frame(out, skew)
   }
 
   out <- data.frame(out, p10 = p10, p20 = p20, max_rhat = max_rhat,
