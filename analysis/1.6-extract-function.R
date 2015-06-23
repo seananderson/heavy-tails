@@ -23,19 +23,19 @@ extract_model <- function(id, get_phi = TRUE,
   if(type[1] == "rate") {
     lambda <- get_q("lambda")
     sigma_proc <- get_q("sigma_proc")
-    out <- data.frame(lambda, nu, sigma_proc)
+    out <- data.frame(lambda, sigma_proc)
   }
   if(type[1] == "gompertz") {
     lambda <- get_q("lambda")
     b <- get_q("b")
     sigma_proc <- get_q("sigma_proc")
-    out <- data.frame(lambda, nu, b, sigma_proc)
+    out <- data.frame(lambda, b, sigma_proc)
   }
   if(type[1] == "logistic") {
     r <- get_q("r")
     K <- get_q("K")
     sigma_proc <- get_q("sigma_proc")
-    out <- data.frame(r, nu, K, sigma_proc)
+    out <- data.frame(r, K, sigma_proc)
   }
 
   sm_summ <- summary(sm)$summary
@@ -69,6 +69,9 @@ extract_model <- function(id, get_phi = TRUE,
   }
   if(get_skew) {
     out <- data.frame(out, skew)
+  }
+  if(get_nu) {
+    out <- data.frame(out, nu)
   }
 
   out <- data.frame(out, p10 = p10, p20 = p20, max_rhat = max_rhat,
