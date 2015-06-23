@@ -6,7 +6,7 @@
 # - I'm not running it here because I haven't put the appropriate binary in R's
 #   path
 
-library(dplyr)
+library("dplyr")
 
 # GPDD:
 setwd("gpdd")
@@ -302,16 +302,16 @@ names(stat_table) <- c("Taxonomic class", "Populations", "Orders", "Species",
 # Fix a spelling mistake in the GPDD:
 stat_table$`Taxonomic class`[stat_table$`Taxonomic class` == "Chondrichtyhes"] <-
     "Chondrichthyes"
-library(xtable)
+library("xtable")
 print.xtable(xtable(stat_table,
-    caption = "Summary statistics for the filtered Global Population Dynamics Database time series arranged by taxonomic class. Columns are: number of populations, number of taxonomic orders, numbers of species, median time series length, total number of interpolated time steps, total number of substituted zeros, and total number of time steps."),
+    caption = ""),
   include.rownames = FALSE, file = "stat-table.tex",
-  booktabs = TRUE,  caption.placement = "top", size = "footnotesize")
-
+  booktabs = TRUE,  caption.placement = "top", size = "footnotesize",
+  only.contents = TRUE, timestamp = NULL)
 saveRDS(gpdd, file = "gpdd-clean.rds")
 
 # massive ts plot:
-library(ggplot2)
+library("ggplot2")
 
 make_big_ts_plot <- function(dat_, id, width, height) {
   p <- ggplot(dat_, aes(series_step, log10(population_untransformed))) +

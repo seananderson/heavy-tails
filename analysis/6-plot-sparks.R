@@ -23,6 +23,12 @@ get_gomp_res <- function(id_show) {
   return(list(res = res, l = l, u = u))
 }
 
+heavy_res <- plyr::ddply(heavy, "main_id", function(x) {
+  qq <- get_gomp_res(x$main_id[1])
+  with(qq, data.frame(res, l, u))
+})
+saveRDS(heavy_res, file = "heavy_residuals.rds")
+
 make_spark <- function(x) {
   res <- get_gomp_res(x$main_id[1])
   bsw_l <- as.numeric(na.omit(seq_along(res$res)[res$res<res$l]))
@@ -32,6 +38,10 @@ make_spark <- function(x) {
   par(xpd = NA)
   with(x, plot(seq_along(population_untransformed), population_untransformed, type = "l", axes = FALSE,
       xlab = "", ylab = "", yaxs = "i", xaxs = "i", log = "y"))
+
+# check for interpolation and blacks swan association:
+# with(x, points(seq_along(population_untransformed), population_untransformed,
+# cex = ifelse(interpolated | zero_sub, 5, 1)))
   if(length(bsw_l) > 0)
     points(bsw_l, x$population_untransformed[bsw_l], col = "red", pch = 20, cex = 3)
   if(length(bsw_u) > 0)

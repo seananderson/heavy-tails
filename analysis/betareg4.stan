@@ -1,7 +1,6 @@
 // Beta regression with group-level intercepts for
 // taxonomic class, order, and species
 // Uncertainty specified around the predictors x1, x2, x3
-// Parameters and predictors are written out in full for clarity
 data {
   int<lower=0> N; // rows of data
   int<lower=0> n_class; // number of classes

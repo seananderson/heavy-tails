@@ -7,11 +7,11 @@ fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
   iteration_increment = 2, warmup = 1000, chains = 4, overwrite = FALSE,
   .parallel = FALSE, refresh = -1, cores = 2) {
 
-  library(rstan)
+  library("rstan")
 
   if(.parallel) {
-    library(doParallel)
-    library(foreach)
+    library("doParallel")
+    library("foreach")
     registerDoParallel(cores = cores)
   }
 

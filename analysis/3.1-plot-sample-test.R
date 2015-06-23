@@ -2,9 +2,9 @@
 
 sample_t <- readRDS("sample-t-sim-check.rds")
 
-library(ggplot2)
+library("ggplot2")
 theme_set(theme_bw())
-library(dplyr)
+library("dplyr")
 
 sample_t <- filter(sample_t, nu_true > 1)
 p <- ggplot(sample_t, aes(iter, 1/med_nu)) + geom_pointrange(aes(ymin = 1/l_nu, ymax = 1/u_nu)) +

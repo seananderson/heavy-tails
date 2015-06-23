@@ -3,6 +3,7 @@
 
 library("rstan")
 library("ggplot2")
+library("dplyr")
 
 if(!file.exists("betareg5.rds")) {
   stan_beta5 <- stan_model("betareg5.stan")
@@ -11,6 +12,18 @@ if(!file.exists("betareg5.rds")) {
   stan_beta5 <- readRDS("betareg5.rds")
 }
 d <- readRDS("beta-modelling-dat.rds")
+
+# Test with glmmADMB:
+# d$order_id_factor <- as.factor(d$order_id)
+# d$class_id_factor <- as.factor(d$class_id)
+# d$sp_id_factor <- as.factor(d$sp_id)
+# m <- glmmADMB::glmmadmb(
+#   d$p10 ~ d$log_dataset_length_scaled, family = "beta", link = "logit",
+#   random = ~ (1 | order_id_factor) + (1 | class_id_factor) + (1 | sp_id_factor),
+#   data = d)
+# summary(m)
+# glmmADMB::ranef(m)
+# plogis(coef(m))
 
 if(!file.exists("beta-stan-samples-n-only.rds")) {
   m.stan.beta5 <- sampling(stan_beta5,

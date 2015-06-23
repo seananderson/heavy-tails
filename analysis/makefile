@@ -3,7 +3,7 @@ CACHE = ~/Dropbox/heavy-tails/cache
 all: analysis
 
 analysis:
-	R CMD BATCH --no-save make.R
+	Rscript --vanilla make.R
 
 # Warning: this will take a *long* time to rebuild after:
 clean:
@@ -20,3 +20,5 @@ sendCacheToDropbox:
 	cp gomp-base-weaker-hat.rds $(CACHE)
 	cp gomp-base-stronger-hat.rds $(CACHE)
 	cp gomp-base-mean-sd.rds $(CACHE)
+	cp beta-stan-samples.rds $(CACHE)
+	cp beta-stan-samples-n-only.rds $(CACHE)

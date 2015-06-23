@@ -1,7 +1,6 @@
-# this file produces some values for inclusion of the text of the associated
-# paper
-#
-library(dplyr)
+# this file produces some values for inclusion of the text of the associated paper
+
+library("dplyr")
 source("5-shape-data.R")
 p_inc <- readRDS("prob_inc_heavy_with_n.rds")
 
@@ -9,16 +8,16 @@ write_tex <- function(x, macro, ...) {
   out <- paste0("\\newcommand{\\", macro, "}{", x, "}")
   cat(out, file = zz)
   cat("\n", file = zz)
-  #writeLines(out, con = "values.tex", ...)
 }
 zz <- file("values.tex", "w") # open .tex file to write to throughout
 
 # # what's the median and mean nu in the exponential prior?
-# x <- rexp(2e7, 0.01)
-# x <- x[x > 2]
-# median(x)
-# mean(x)
-# length(x[x < 10])/length(x)
+set.seed(1)
+x <- rexp(3e6, 0.01)
+x <- x[x > 2]
+write_tex(round(mean(x), 0) , "basePriorMean")
+write_tex(round(median(x), 0) , "basePriorMedian")
+write_tex(round(100*length(x[x < 10])/length(x), 1) , "basePriorProbHeavy")
 
 # how much was imputed?
 gpdd <- readRDS("gpdd-clean.rds")
@@ -66,11 +65,6 @@ pheavy_type <- gtemp %>% filter(max_rhat < 1.05) %>%
 pheavy_overall <- gtemp %>%
   group_by(type) %>%
   summarise(n = n(), h = length(which(p10 > 0.5)), p = round(100 * h / n))
-
-#temp <- gpdd %>% group_by(main_id) %>%
-  #summarise(assume_log10 = assumed_log10[1]) %>%
-  #summarise(total_assumed_log10 = sum(assume_log10))
-#total_assumed_log10 <- temp$total_assumed_log10
 
 ## To obtain:
 ## Methods:
@@ -150,12 +144,12 @@ write_tex(baseNuFiveObsTenSwitch, "baseNuFiveObsTenSwitch")
 
 ## - how much more probable were heavy tails with 60 time steps. vs. 30 time
 ##   steps? (percentage and absolute)
-pHeavyN30 <- round(100 * p_inc[p_inc$N == 30, "p"])
-pHeavyN60 <- round(100 * p_inc[p_inc$N == 60, "p"])
+pHeavyN30 <- p_inc[p_inc$N == 30, "p"]
+pHeavyN60 <- p_inc[p_inc$N == 60, "p"]
 pIncHeavyN30N60 <- pHeavyN60 / pHeavyN30
-write_tex(pHeavyN30, "pHeavyNThirty")
-write_tex(pHeavyN60, "pHeavyNSixty")
-write_tex(pIncHeavyN30N60, "pIncHeavyNThirtyNSixty")
+write_tex(sprintf("%.2f", round(pHeavyN30, 2)), "pHeavyNThirty")
+write_tex(sprintf("%.2f", round(pHeavyN60, 2)), "pHeavyNSixty")
+write_tex(sprintf("%.1f", round(pIncHeavyN30N60, 1)), "pIncHeavyNThirtyNSixty")
 
 ## Discussion:
 ## - Ricker / gompertz range of pops with black swans as percent
@@ -205,4 +199,21 @@ write_tex(max(pheavy_overall$p), "overallMaxPerc")
 write_tex(NPops, "NPops")
 write_tex(NOrders, "NOrders")
 write_tex(NClasses, "NClasses")
+
+stat_table <- read.csv("stat_table.csv", stringsAsFactors = FALSE)
+
+interpPointsPerc <- round((sum(stat_table$n_zero_sub) + sum(stat_table$n_interpolated)) / sum(stat_table$n_points) * 100, 0)
+
+write_tex(interpPointsPerc, "interpPointsPerc")
+
+# count ups and downs:
+heavy_res <- readRDS("heavy_residuals.rds")
+heavy_res <- heavy_res %>% mutate(bs_l = res < l, bs_u = res > u)
+n_bs_up <- sum(heavy_res$bs_u, na.rm = TRUE)
+n_bs_down <- sum(heavy_res$bs_l, na.rm = TRUE)
+write_tex(n_bs_up, "nBSUp")
+write_tex(n_bs_down, "nBSDown")
+write_tex(sprintf("%.1f", round(n_bs_down/n_bs_up, 1)), "ratioBSDownToUp")
+write_tex(round(n_bs_down / (sum(n_bs_down, n_bs_up))*100), "percBSDown")
+
 close(zz)

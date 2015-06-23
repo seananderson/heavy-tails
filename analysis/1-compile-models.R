@@ -29,39 +29,25 @@ model {
 stan_gomp <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp, file = "stan-gomp.rds")
 
-# Same model but with a uniform prior on 1/nu as in Gelman et al. BDA
+# same base model but with skewed heavy-tailed process noise:
+
 stan_model <-
-  'data {
-  int<lower=0> N; // rows of data
-  vector[N] y; // vector to hold observations
-  real b_lower;
-  real b_upper;
-}
-parameters {
-  real lambda;
-  real<lower=b_lower, upper=b_upper> b;
-  real<lower=0> sigma_proc;
-  real<lower=0, upper=0.5> inv_nu;
-}
-transformed parameters {
-  real nu;
-  nu <- 1/inv_nu;
-}
-model {
-  lambda ~ normal(0, 10);
-  sigma_proc ~ cauchy(0, 2.5);
-  for (i in 2:N) {
-    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
+'
+functions {
+  real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
+  real lp;
+  if (skew <= 0)
+    reject("Skew has to be positive. Found skew=", skew);
+  if (sigma <= 0)
+    reject("Scale has to be positive.  Found sigma=", sigma);
+  lp <- log(skew) - log1p(square(skew));
+  if (y < mu)
+    return lp + student_t_log(y * skew, nu, mu * skew, sigma);
+  else
+    return lp + student_t_log(y / skew, nu, mu / skew, sigma);
   }
 }
-'
-stan_gomp_bda <- stan_model(model_code = stan_model)
-saveRDS(stan_gomp_bda, file = "stan-gomp-bda.rds")
-
-# with autocorrelation:
-
-stan_model <-
-  'data {
+data {
   int<lower=0> N; // rows of data
   vector[N] y; // vector to hold observations
   real<lower=0> nu_rate; // rate parameter for nu exponential prior
@@ -73,22 +59,43 @@ parameters {
   real<lower=b_lower, upper=b_upper> b;
   real<lower=0> sigma_proc;
   real<lower=2> nu;
-  real<lower=-1, upper=1> phi;
+  real<lower=0,upper=20> skew;
 }
 model {
   nu ~ exponential(nu_rate);
   lambda ~ normal(0, 10);
   sigma_proc ~ cauchy(0, 2.5);
-  phi ~ normal(0, 1);
-  for (i in 3:N) {
-    y[i] ~ student_t(nu,
-            (lambda + b * y[i-1]) + phi * (y[i-1] - (lambda + b * y[i-2])),
-            sigma_proc);
+  for (i in 2:N) {
+    y[i] ~ skew_student_t(nu, lambda + b * y[i-1], sigma_proc, skew);
   }
 }
 '
-stan_gomp_ar1 <- stan_model(model_code = stan_model)
-saveRDS(stan_gomp_ar1, file = "stan-gomp-ar1.rds")
+stan_gomp_skew <- stan_model(model_code = stan_model)
+saveRDS(stan_gomp_skew, file = "stan-gomp-skew.rds")
+# the base model but with normal process noise:
+
+stan_model <-
+'data {
+int<lower=0> N; // rows of data
+vector[N] y; // vector to hold observations
+real b_lower;
+real b_upper;
+}
+parameters {
+real lambda;
+real<lower=b_lower, upper=b_upper> b;
+real<lower=0> sigma_proc;
+}
+model {
+lambda ~ normal(0, 10);
+sigma_proc ~ cauchy(0, 2.5);
+for (i in 2:N) {
+y[i] ~ normal(lambda + b * y[i-1], sigma_proc);
+}
+}
+'
+stan_gomp_normal <- stan_model(model_code = stan_model)
+saveRDS(stan_gomp_normal, file = "stan-gomp-normal.rds")
 
 # with fixed observation error (and no autocorrelation):
 
@@ -237,31 +244,3 @@ model {
 
 stan_rate <- stan_model(model_code = stan_model)
 saveRDS(stan_rate, file = "stan-rate.rds")
-
-# uniform prior on sigma:
-
-stan_model <-
-  'data {
-  int<lower=0> N; // rows of data
-  vector[N] y; // vector to hold observations
-  real<lower=0> nu_rate; // rate parameter for nu exponential prior
-  real b_lower;
-  real b_upper;
-}
-parameters {
-  real lambda;
-  real<lower=b_lower, upper=b_upper> b;
-  real<lower=0, upper=20> sigma_proc;
-  real<lower=2> nu;
-}
-model {
-  nu ~ exponential(nu_rate);
-  lambda ~ normal(0, 10);
-  for (i in 2:N) {
-    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
-  }
-}
-'
-
-stan_gomp_uniform <- stan_model(model_code = stan_model)
-saveRDS(stan_gomp_uniform, file = "stan-gomp-uniform.rds")

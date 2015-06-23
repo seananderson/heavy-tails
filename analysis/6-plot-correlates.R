@@ -103,7 +103,7 @@ add_sil <- function(x, y, file, tax_class, width_mult = 1, height_mult = 1) {
   #x <- x+5
   y <- y + 0.1
   bg <- subset(cols_df, taxonomic_class == tax_class)$col
-  library(grImport)
+  library("grImport")
   par(xpd = NA)
   p <- readPicture(paste0("silhouettes/", file, ".eps.xml"))
   p@paths$path@rgb <- "grey37"

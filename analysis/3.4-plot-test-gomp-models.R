@@ -1,5 +1,7 @@
 # plot the simulation output from 3.3-test-gomp-models.R
 
+library("dplyr")
+
 check_nu <- readRDS("check_nu.rds")
 
 load("nu_effective_seeds.rda")
@@ -55,31 +57,21 @@ check_nu_long <- mutate(check_nu_long, scenario = paste(N, sigma_obs_true, sigma
 scenario_df <- data.frame(scenario = c("50-0.001-0.001", "100-0.001-0.001",
   "50-0.2-0.001", "50-0.2-0.2"), scen_short = c(2, 1, 3, 4),
   Scenario = c("2. N50, no obs. error", "1. N100, no obs. error",
-    "3. N50, obs. error", "4. N50, obs. error modelled"), stringsAsFactor = FALSE)
+    "3. N50, obs. error ignored", "4. N50, obs. error modelled"),
+  stringsAsFactor = FALSE)
 check_nu_long <- plyr::join(check_nu_long, scenario_df)
 
-library(ggplot2)
-theme_set(theme_bw())
+# and bring in p_0.1 for plotting:
+measure.vars <- c("p_0.1")
+check_nu_p10_long <- reshape2::melt(check_nu, id.vars = id.vars,
+  measure.vars = measure.vars)
+check_nu_p10_long <- plyr::rename(check_nu_p10_long, c("value" = "p10"))
+check_nu_p10_long$variable <- NULL
 
-# make_panel <- function(dat, title) {`
-#   ggplot(dat, aes(id, est, colour = variable)) + geom_pointrange(aes(ymin = l, ymax = u)) + geom_hline(aes(yintercept = true_value), col = "black", lty = 2, lwd = 1) + facet_grid(variable~nu_true, scales = "free_y") + xlab("Iteration") + theme_bw() + ylab("Parameter estimate")  + ggtitle(title) + theme(panel.grid.major = element_blank(),
-#     panel.grid.minor = element_blank(), panel.background = element_blank()) + geom_hline(aes(yintercept = c(ylim_l, ylim_u)), col = "white", lwd = 0) + scale_colour_brewer(type = "qual", palette= "Set1", guide = FALSE)
-# }
-#
-#
-# p1 <- make_panel(filter(check_nu_long, N == 100), title = "N = 100, sigma_obs = 0.001, sigma_obs ignored")
-# p2 <- make_panel(filter(check_nu_long, N == 50, sigma_obs_true == 0.001),
-#   title = "N = 50, sigma_obs = 0.001, sigma_obs ignored")
-# p3 <- make_panel(filter(check_nu_long, N == 50, sigma_obs_true == 0.3,
-#     sigma_obs_assumed == 0.001), title = "N = 50, sigma_obs = 0.2; sigma_obs ignored")
-# p4 <- make_panel(filter(check_nu_long, N == 50, sigma_obs_true == 0.3,
-#     sigma_obs_assumed == 0.3), title = "N = 50, sigma_obs = 0.2; sigma_obs assumed")
-#
-# pdf("sim-check.pdf", width = 14, height = 11)
-# gridExtra::grid.arrange(p1, p2, p3, p4)
-# dev.off()
-#
-# p1 <- ggplot(check_nu_long, aes(, p_0.1, group = nu_true)) + geom_boxplot() + geom_point(position = position_jitter(width = 0.01), alpha = 0.3) + ylab("Probability nu < 10") + ylim(0, 1)
+check_nu_long <- plyr::join(check_nu_long, check_nu_p10_long)
+
+library("ggplot2")
+theme_set(theme_bw())
 
 make_boxpanel <- function(dat, title) {
   ggplot(dat, aes(inverse_nu_true, p_0.1, group = inverse_nu_true)) + geom_point(position = position_jitter(width = 0.01), alpha = 0.6, colour = "black") + ylab("Probability nu < 10") + ylim(0, 1.01) + ggtitle(title) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank())+scale_x_continuous(breaks = c(0, 0.1, 0.2, 0.333, 0.5), labels = c("Infinity", "10", "5", "3", "2")) + xlab("nu true")
@@ -93,48 +85,62 @@ pdf("check-sim-box.pdf", width = 11, height = 6)
 gridExtra::grid.arrange(p1, p2, p3, p4)
 dev.off()
 
-
 p <- ggplot(check_nu_long, aes(scen_short, est, group = id, colour = Scenario)) + geom_pointrange(aes(ymin = l, ymax = u), lwd = 0.1, position = position_dodge(width = 0.7)) + geom_hline(aes(yintercept = true_value), col = "black", lty = 2, lwd = 1) + facet_grid(variable~nu_true, scales = "free_y") + xlab("Scenario") + ylab("Parameter estimate")
 ggsave("sim-gompertz.pdf", width = 11, height = 6)
 
 p <- ggplot(check_nu_long, aes(scen_short, est, colour = Scenario)) + geom_boxplot() +  facet_grid(variable~nu_true, scales = "free_y") + xlab("Scenario") + ylab("Parameter estimate") + geom_hline(aes(yintercept = true_value), col = "black", lty = 2, lwd = 1)
 ggsave("sim-gompertz-boxplots.pdf", width = 10, height = 6)
 
+p <- filter(check_nu_long, variable == "inverse_nu") %>%
+  ggplot(aes(scen_short, est, colour = Scenario, group = Scenario)) +
+  geom_boxplot(alpha = 0.5, outlier.size = 0, colour = "grey50") +
+  #geom_point(colour = "grey50") +
+  geom_point(position = position_jitter(width = 0.15), alpha = 0.7) +
+  ggtitle(expression(nu~true)) +
+  facet_grid(~nu_true) +
+  xlab("Scenario") + ylab(expression(Median~widehat(nu))) +
+  scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.333, 0.5),
+    labels = c("Infinity", "10", "5", "3", "2"))  +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank()) +
+  geom_hline(aes(yintercept = true_value), col = "black", lty = 2, lwd = 1)
+ggsave("sim-gompertz-median-dist.pdf", width = 9, height = 3)
 
+p <- filter(check_nu_long, variable == "inverse_nu") %>%
+  ggplot(aes(1/nu_true, p10, group = nu_true)) +
+  geom_point(position = position_jitter(width = 0.01),
+    alpha = 0.6, colour = "black") +
+  facet_grid(~Scenario) +
+  ylab("Probability nu < 10") +
+  xlab(expression(nu~true)) +
+  ylim(0, 1.01) +
+  ggtitle("") +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank()) +
+  scale_x_continuous(breaks = c(0, 0.1, 0.2, 0.333, 0.5),
+    labels = c("Infinity", "10", "5", "3", "2"))
 
-# + theme_bw() + ylab("Parameter estimate")
+p <- filter(check_nu_long, variable == "inverse_nu") %>%
+  ggplot(aes(scen_short, p10, group = Scenario, colour = Scenario)) +
+  geom_boxplot(alpha = 0.5, outlier.size = 0, colour = "grey50") +
+  geom_point(position = position_jitter(width = 0.15),
+    alpha = 0.7) +
+  facet_grid(~nu_true) +
+  ylab(expression(Pr(nu < 10))) +
+  xlab("Scenario") +
+  ylim(0, 1.01) +
+  ggtitle(expression(nu~true)) +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank())
+  #scale_x_continuous(breaks = c(0, 0.1, 0.2, 0.333, 0.5),
+    #labels = c("Infinity", "10", "5", "3", "2"))
 
-# + theme(panel.grid.major = element_blank()
-
-#   panel.grid.minor = element_blank(), panel.background = element_blank()) + geom_hline(aes(yintercept = c(ylim_l, ylim_u)), col = "white", lwd = 0) + scale_colour_brewer(type = "qual", palette= "Set1", guide = FALSE)
-
-
-## need to adapt these plots for the extra parameters now:
-# library(ggplot2)
-# p1 <- ggplot(check_nu, aes(id, 1/nu)) + geom_pointrange(aes(ymin = 1/nu_l, ymax = 1/nu_u)) + geom_hline(aes(yintercept = 1/nu_true), col = "red") + ylim(0, 0.5) + facet_grid(~nu_true) + xlab("Iteration")
-#
-# p2 <- ggplot(check_nu, aes(id, sigma_proc)) + geom_pointrange(aes(ymin = sigma_proc_l, ymax = sigma_proc_u)) + geom_hline(yintercept = 0.5, col = "red") + facet_grid(~nu_true)+ xlab("Iteration")
-#
-# p3 <- ggplot(check_nu, aes(id, b)) + geom_pointrange(aes(ymin = b_l, ymax = b_u)) + geom_hline(yintercept = 0.75, col = "red") + facet_grid(~nu_true)+ xlab("Iteration")
-#
-# p4 <- ggplot(check_nu, aes(id, lambda)) + geom_pointrange(aes(ymin = lambda_l, ymax = lambda_u)) + geom_hline(yintercept = 0.75, col = "red") + facet_grid(~nu_true)+ xlab("Iteration")
-#
-# p5 <- ggplot(check_nu, aes(id, phi)) + geom_pointrange(aes(ymin = phi_l, ymax = phi_u)) + geom_hline(yintercept = 0.1, col = "red") + facet_grid(~nu_true)+ xlab("Iteration")
-#
-# pdf("check-sim.pdf", width = 12, height = 7)
-# gridExtra::grid.arrange(p1, p2, p3, p4, p5)
-# dev.off()
-#
-# p1 <- ggplot(check_nu, aes(1/nu_true, p_0.1, group = nu_true)) + geom_boxplot() + geom_point(position = position_jitter(width = 0.01), alpha = 0.3) + ylab("Probability nu < 10") + ylim(0, 1)
-#
-# p2 <- ggplot(check_nu, aes(1/nu_true, p_0.2, group = nu_true)) + geom_boxplot() + geom_point(position = position_jitter(width = 0.01), alpha = 0.3) + ylab("Probability nu < 20") + ylim(0, 1)
-#
-# pdf("check-sim-p-nu.pdf", width = 6, height = 7)
-# gridExtra::grid.arrange(p1, p2)
-# dev.off()
-
-
-# take a basic t- dist
-# and try and re-capture it with our prior at different nu values
-# use a ton of data (2000 points, 500 points, 100 points, 50 points)
-# show how probability of noticing goes down
+ggsave("sim-gompertz-p10.pdf", width = 9, height = 3)
