@@ -152,6 +152,68 @@ JAGS, but the No-U-Turn Hamiltonian Markov chain Monte Carlo Sampler in Stan
 generally requires far fewer iterations to obtain equivalent effective sample
 sizes \citep{stan-manual2014}.
 
+\subsection{The skewed Student's t distribution}
+
+We fit Gompertz models with skewed Student's t distributed process noise based
+on the probability density for the skewed t distribution described in
+\citet{fernandez1998}. Their definition equates to the following probability density as implemented in \citet{king2012}:
+
+\[
+  \mathrm{Skewed\,Student\mhyphen t}(x) =
+\begin{dcases}
+\frac{2}{(\gamma + 1/\gamma)}
+         \mathrm{Student\mhyphen t}(x \cdot \gamma, \mu \cdot \gamma, \nu, \sigma),& \text{for } x < 0\\
+       \frac{2}{(\gamma + 1/\gamma)}
+         \mathrm{Student\mhyphen t}(x / \gamma, \mu / \gamma, \nu, \sigma),& \text{for } x \ge 0
+\end{dcases}
+\]
+
+\smallskip
+\noindent
+Where $\gamma$ represents the skewness parameter. The distribution is
+symmetrical if $\gamma = 1$, left skewed (skewed downwards in abundance) if
+$0 < \gamma < 1$, and right skewed (skewed upwards in abundance) if $1 <
+\gamma < \infty$. This translates to the log probability:
+
+\[
+\mathrm{Skewed\,Student\mhyphen t}(x) =
+\begin{dcases}
+  \log (2 \gamma) - \log(\gamma^2 + 1) +
+  \log \mathrm{Student\mhyphen t}(x \cdot \gamma, \mu \cdot \gamma, \nu, \sigma),& \text{for } x < 0\\
+  \log (2 \gamma) - \log(\gamma^2 + 1) +
+  \log \mathrm{Student\mhyphen t}(x / \gamma, \mu / \gamma, \nu, \sigma),& \text{for } x \ge 0
+\end{dcases}
+\]
+
+\smallskip
+\noindent
+Since Stan only needs the probability density up to an additive constant, we
+can replace $\log(2 \gamma)$ in the above for $\log(\gamma)$. The final log
+probability density for the skewed Student's t distribution implemented in
+Stan\footnote{See the Stan users mailing list: \url{https://groups.google.com/d/msg/stan-users/jeZQnQRUsDs/BeqhicWm1GEJ}} looks like the following:
+
+\begin{verbatim}
+real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
+  real lp;
+  lp <- log(skew) - log1p(square(skew));
+  if (y < mu)
+    return lp + student_t_log(y * skew, nu, mu * skew, sigma);
+  else
+    return lp + student_t_log(y / skew, nu, mu / skew, sigma);
+}
+\end{verbatim}
+
+% \[
+%   \log p(x) =
+% \begin{dcases}
+%   \log(2 \gamma) - log(\gamma^2 + 1) +
+%     \log \mathrm{dt}(x \gamma, \nu) ,& \text{for } x < 0\\
+%   \log(2 \gamma) - log(\gamma^2 + 1) +
+%     \log \mathrm{dt}(x / \gamma, \nu) ,& \text{for } x \ge 0
+% \end{dcases}
+% \]
+
+
 \subsection{Alternative priors}
 
 To test if the prior on $\nu$ influenced our estimate of black-swan dynamics,
