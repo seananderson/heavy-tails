@@ -1,7 +1,9 @@
 extract_model <- function(id, get_phi = TRUE,
   root_folder = "/global/scratch/anderson/heavy", sub_folder = "base",
   file_prefix = "sm",
-  type = c("gompertz", "logistic", "rate")) {
+  type = c("gompertz", "logistic", "rate"),
+  get_skew = FALSE,
+  get_nu = TRUE) {
 
   library("rstan")
 
@@ -20,43 +22,53 @@ extract_model <- function(id, get_phi = TRUE,
 
   if(type[1] == "rate") {
     lambda <- get_q("lambda")
-    nu <- get_q("nu")
     sigma_proc <- get_q("sigma_proc")
     out <- data.frame(lambda, nu, sigma_proc)
   }
   if(type[1] == "gompertz") {
     lambda <- get_q("lambda")
-    nu <- get_q("nu")
     b <- get_q("b")
     sigma_proc <- get_q("sigma_proc")
     out <- data.frame(lambda, nu, b, sigma_proc)
   }
   if(type[1] == "logistic") {
     r <- get_q("r")
-    nu <- get_q("nu")
     K <- get_q("K")
     sigma_proc <- get_q("sigma_proc")
     out <- data.frame(r, nu, K, sigma_proc)
   }
 
-  if(get_phi) {
-    phi <- get_q("phi")
-  }
-
-  nu_samples <- samp$nu
-  p10 <- length(nu_samples[nu_samples < 10]) / length(nu_samples)
-  p20 <- length(nu_samples[nu_samples < 20]) / length(nu_samples)
-
   sm_summ <- summary(sm)$summary
   max_rhat <- max(sm_summ[, "Rhat"])
   min_neff <- min(sm_summ[, "n_eff"])
-  nu_rhat <- sm_summ["nu", "Rhat"]
-  nu_neff <- sm_summ["nu", "n_eff"]
+
+  if(get_phi) {
+    phi <- get_q("phi")
+  }
+  if(get_skew) {
+    skew <- get_q("log_skew")
+  }
+  if(get_nu) {
+    nu <- get_q("nu")
+    nu_samples <- samp$nu
+    p10 <- length(nu_samples[nu_samples < 10]) / length(nu_samples)
+    p20 <- length(nu_samples[nu_samples < 20]) / length(nu_samples)
+    nu_rhat <- sm_summ["nu", "Rhat"]
+    nu_neff <- sm_summ["nu", "n_eff"]
+  } else {
+    p10 <- NA
+    p20 <- NA
+    nu_rhat <- NA
+    nu_neff <- NA
+  }
 
   iter <- sm@stan_args[[1]]$iter
 
   if(get_phi) {
     out <- data.frame(out, phi)
+  }
+  if(get_skew) {
+    out <- data.frame(out, skew)
   }
 
   out <- data.frame(out, p10 = p10, p20 = p20, max_rhat = max_rhat,
