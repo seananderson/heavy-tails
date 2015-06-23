@@ -59,14 +59,15 @@ parameters {
   real<lower=b_lower, upper=b_upper> b;
   real<lower=0> sigma_proc;
   real<lower=2> nu;
-  real<lower=0,upper=20> skew;
+  real log_skew;
 }
 model {
   nu ~ exponential(nu_rate);
   lambda ~ normal(0, 10);
   sigma_proc ~ cauchy(0, 2.5);
+  log_skew ~ cauchy(0, 2.5);
   for (i in 2:N) {
-    y[i] ~ skew_student_t(nu, lambda + b * y[i-1], sigma_proc, skew);
+    y[i] ~ skew_student_t(nu, lambda + b * y[i-1], sigma_proc, exp(log_skew));
   }
 }
 '
