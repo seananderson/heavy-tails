@@ -2,6 +2,8 @@
 
 library(rstan)
 
+# the main heavy-tailed model:
+
 stan_model <-
 'data {
   int<lower=0> N; // rows of data
@@ -73,6 +75,49 @@ model {
 '
 stan_gomp_skew <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp_skew, file = "stan-gomp-skew.rds")
+
+# same base model but with skewed heavy-tailed process noise:
+# (skew t as in Azzalini and Arellano-Valle and the sn R package)
+# (quite inefficient to sample from)
+stan_model <-
+'
+functions {
+  real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
+   real z; real zc;
+   if (sigma <= 0)
+     reject("Scale has to be positive. Found sigma=", sigma);
+   z <- (y - mu) / sigma;
+   zc <- skew * z * sqrt((nu+1) / (nu + square(z)));
+   return -log(sigma) + student_t_log(z, nu, 0, 1) + student_t_cdf_log(zc, nu + 1, 0, 1);
+  }
+}
+data {
+  int<lower=0> N; // rows of data
+  vector[N] y; // vector to hold observations
+  real<lower=0> nu_rate; // rate parameter for nu exponential prior
+  real b_lower;
+  real b_upper;
+}
+parameters {
+  real lambda;
+  real<lower=b_lower, upper=b_upper> b;
+  real<lower=0> sigma_proc;
+  real<lower=2> nu;
+  real skew;
+}
+model {
+  nu ~ exponential(nu_rate);
+  lambda ~ normal(0, 10);
+  sigma_proc ~ cauchy(0, 2.5);
+  skew ~ cauchy(0, 5);
+  for (i in 2:N) {
+    y[i] ~ skew_student_t(nu, lambda + b * y[i-1], sigma_proc, skew);
+  }
+}
+'
+# stan_gomp_skew2 <- stan_model(model_code = stan_model)
+# saveRDS(stan_gomp_skew2, file = "stan-gomp-skew2.rds")
+
 # the base model but with normal process noise:
 
 stan_model <-
