@@ -6,6 +6,7 @@ library("dplyr")
 
 gpdd <- readRDS("gpdd-clean.rds")
 
+gomp_hat_skew <- readRDS("gomp-base-skew-hat.rds")
 gomp_hat_base <- readRDS("gomp-base-hat.rds")
 gomp_hat_logistic <- readRDS("logistic-hat.rds")
 gomp_hat_ar1 <- readRDS("gomp-ar1-hat.rds")
@@ -18,6 +19,7 @@ gomp_hat_stronger <- readRDS("gomp-base-stronger-hat.rds")
 # but, some of these have already been run in my locally cached files
 # therefore, I will remove all GPDD main_ids not in `gpdd`:
 clean_main_ids <- unique(gpdd$main_id)
+gomp_hat_skew <- filter(gomp_hat_skew, main_id %in% clean_main_ids)
 gomp_hat_base <- filter(gomp_hat_base, main_id %in% clean_main_ids)
 gomp_hat_logistic <- filter(gomp_hat_logistic, main_id %in% clean_main_ids)
 gomp_hat_ar1 <- filter(gomp_hat_ar1, main_id %in% clean_main_ids)
@@ -57,6 +59,7 @@ gomp_hat_logistic <- inner_join(gomp_hat_logistic, lookup, by = "main_id")
 gomp_hat_weaker <- inner_join(gomp_hat_weaker, lookup, by = "main_id")
 gomp_hat_stronger <- inner_join(gomp_hat_stronger, lookup, by = "main_id")
 ar1_vs_base <- inner_join(ar1_vs_base, lookup, by = "main_id")
+gomp_hat_skew <- inner_join(gomp_hat_skew, lookup, by = "main_id")
 
 # for the paper:
 # (max_rhat <- max(gomp_hat_base$max_rhat))
