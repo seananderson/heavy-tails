@@ -1,6 +1,6 @@
 sample_posterior <- function(path = ".", N = 1000L) {
   f <- list.files(path, pattern = "*.rds")
-  samples <- plyr::ldply(f[1:3], function(x) {
+  samples <- plyr::ldply(f, function(x) {
 
     message(x)
     e <- rstan::extract(readRDS(paste0(path, x)))

@@ -71,15 +71,11 @@ And we'll write a function to simulate a time series, check how many generations
 
 For each, we'll be drawing all parameter values from the posterior and starting at the state the time series ended. Then we'll continue on for some given number of generations.
 
-<!--
-I've picked parameter values to be approximately at the mean values in the GPDD (I'll check these more precisely). I'm running the simulation, by default, for 200 generations and discarding the first 50 as burn in.
--->
-
 ```{r}
 # library("skewt")
 sim_gomp_extinction <- function(abundance_ts, lambda = 1, b = 0.5, N = 100L,
-  df = 3, thresh = 3, sigma = 0.2, id = 1, bootstrap_residuals = FALSE, 
-  model = "heavy") {
+  nu = 3, log_skew = 1, sigma_proc = 0.2, id = 1, 
+  bootstrap_residuals = FALSE, model = "heavy") {
   
   if (is.null(df)) df <- NA
   
@@ -91,10 +87,9 @@ sim_gomp_extinction <- function(abundance_ts, lambda = 1, b = 0.5, N = 100L,
     proc_error <- sample(res, size = N, replace = TRUE) # bootstrap the process residuals
   } else {
     if (model == "heavy") {
-      # proc_error <- rskt(N, df = df, gamma = gamma) / (1 / sigma)
-      proc_error <- rt(N, df = df) * sigma
+      proc_error <- rskt(N, df = nu, gamma = exp(log_skew)) * sigma_proc
     } else {
-      proc_error <- rnorm(N, sd = sigma)
+      proc_error <- rnorm(N, sd = sigma_proc)
     }
   }
   
@@ -103,9 +98,9 @@ sim_gomp_extinction <- function(abundance_ts, lambda = 1, b = 0.5, N = 100L,
     y_return <- c(log_abundance_ts, y)
     generation <- c(seq(-length(abundance_ts) + 1, 0), seq_along(y))
     data.frame(b = b, N = N,
-      df = df, sigma = sigma, thresh = thresh, lambda = lambda,
-      n_ext = sum(exp(y) < thresh), mean_log_abund = mean(y),
-      dat = y_return, generation = generation, main_id = id)
+      nu = nu, sigma = sigma_proc, thresh = thresh, lambda = lambda,
+      skew = exp(log_skew), dat = y_return, generation = generation, 
+      main_id = id)
 }
 ```
 
@@ -115,9 +110,6 @@ OK, let's try applying this to some sample populations:
 ids <- c(6528, 10127, 20579)
 library("rstan")
 gpdd <- readRDS("gpdd-clean.rds") # to get the last abundance
-samples <- 2000L
-posterior_length <- 2000L
-posterior_ids <- round(seq(1, posterior_length, length.out = samples))
     
 out_ids <- lapply(ids, function(id_i) {
   this_dat <- dplyr::filter(gpdd, main_id == id_i)
