@@ -18,12 +18,14 @@ sample_posterior <- function(path = ".", N = 1000L) {
       n_samples  = rep(n_samples, N))
 
     if ("nu" %in% coefs) {
-      data.frame(out,
-        log_skew = e$log_skew[s_ids],
-        nu       = e$nu[s_ids])
-    } else {
-      out
+      out <- data.frame(out, nu = e$nu[s_ids])
     }
+
+    if ("log_skew" %in% coefs) {
+      out <- data.frame(out, log_skew = e$log_skew[s_ids])
+    }
+
+    out
   })
 
   samples
