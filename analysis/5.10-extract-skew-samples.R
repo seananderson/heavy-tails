@@ -1,32 +1,36 @@
-library(dplyr)
-f <- list.files("~/scratch/heavy/gomp-base-skew/", pattern = "*.rds")
-set.seed(123456789)
-skew_samples <- plyr::ldply(f, function(x) {
-  N <- 1000L
-  message(x)
-  e <- readRDS(paste0("~/scratch/heavy/gomp-base-skew/", x)) %>% rstan::extract()
+sample_posterior <- function(path = ".", N = 1000L) {
+  f <- list.files(path, pattern = "*.rds")
+  samples <- plyr::ldply(f, function(x) {
 
-  n_samples_skew <- length(e$log_skew)
-  if (n_samples_skew >= N) {
-    s_skew <- base::sample(e$log_skew, size = N, replace = FALSE)
-  } else {
-    s_skew <- base::sample(e$log_skew, size = N, replace = TRUE)
-  }
+    message(x)
+    e <- rstan::extract(eadRDS(paste0("~/scratch/heavy/gomp-base-skew/", x)))
+    n_samples <- length(e$b) # check length of an arbitrary coefficient
+    id <- as.numeric(gsub("sm-([0-9]+)\\.rds", "\\1", x))
+    coefs <- names(e)
+    s_ids <- sample(seq_len(n_samples), size = N, replace = FALSE)
 
-  n_samples_nu <- length(e$nu)
-  if (n_samples_nu >= N) {
-    s_nu <- base::sample(e$nu, size = N, replace = FALSE)
-  } else {
-    s_nu <- base::sample(e$nu, size = N, replace = TRUE)
-  }
+    out <- data.frame(
+      main_id    = rep(id, N),
+      sample_ids = s_ids,
+      sigma_proc = e$sigma_proc[s_ids],
+      b          = e$b[s_ids],
+      lambda     = e$lambda[s_ids],
+      n_samples  = rep(n_samples, N))
 
-  id <- gsub("sm-([0-9]+)\\.rds", "\\1", x) %>% as.numeric
+    if ("nu" %in% coefs) {
+      data.frame(out,
+        log_skew = e$log_skew[s_ids, ],
+        nu       = e$nu[s_ids])
+    } else {
+      out
+    }
+  })
 
-  data.frame(
-    main_id        = rep(id, N),
-    log_skew       = s_skew,
-    nu             = s_nu,
-    n_samples_skew = rep(n_samples_skew, N),
-    n_samples_nu   = rep(n_samples_nu, N))
-})
-saveRDS(skew_samples, file = "skew_samples.rds")
+  samples
+}
+
+set.seed(123)
+skew_samples   <- sample_posterior("~/scratch/heavy/gomp-base-skew/")
+normal_samples <- sample_posterior("~/scratch/heavy/gomp-normal/")
+saveRDS(skew_samples,   file = "skew_samples.rds")
+saveRDS(normal_samples, file = "normal_samples.rds")
