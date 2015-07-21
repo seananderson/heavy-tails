@@ -6,6 +6,7 @@ library("dplyr")
 
 gpdd <- readRDS("gpdd-clean.rds")
 
+gomp_hat_normal <- readRDS("gomp-base-normal-hat.rds")
 gomp_hat_skew <- readRDS("gomp-base-skew-hat.rds")
 gomp_hat_base <- readRDS("gomp-base-hat.rds")
 gomp_hat_logistic <- readRDS("logistic-hat.rds")
@@ -19,6 +20,7 @@ gomp_hat_stronger <- readRDS("gomp-base-stronger-hat.rds")
 # but, some of these have already been run in my locally cached files
 # therefore, I will remove all GPDD main_ids not in `gpdd`:
 clean_main_ids <- unique(gpdd$main_id)
+gomp_hat_normal <- filter(gomp_hat_normal, main_id %in% clean_main_ids)
 gomp_hat_skew <- filter(gomp_hat_skew, main_id %in% clean_main_ids)
 gomp_hat_base <- filter(gomp_hat_base, main_id %in% clean_main_ids)
 gomp_hat_logistic <- filter(gomp_hat_logistic, main_id %in% clean_main_ids)
@@ -52,6 +54,7 @@ lookup <- gpdd[,c("main_id", "common_name", "taxonomic_class",
   "taxon_name", "taxonomic_order", "taxonomic_family", "dataset_length")]
 lookup <- lookup[!duplicated(lookup), ]
 
+gomp_hat_normal <- inner_join(gomp_hat_normal, lookup, by = "main_id")
 gomp_hat_base <- inner_join(gomp_hat_base, lookup, by = "main_id")
 gomp_hat_ar1 <- inner_join(gomp_hat_ar1, lookup, by = "main_id")
 gomp_hat_obs_0.2 <- inner_join(gomp_hat_obs_0.2, lookup, by = "main_id")

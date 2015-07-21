@@ -10,7 +10,7 @@ id <- "gomp-base-skew"
 stan_pars <- c("lambda", "sigma_proc", "nu", "b", "log_skew")
 
 fit_gpdd_model(gpdd_dat = gpdd, model = model, sub_folder = id,
-  pars = stan_pars)
+  pars = stan_pars, iterations = 20000, max_iterations = 20000, warmup = 10000)
 
 out <- plyr::ldply(unique(gpdd$main_id), extract_model,
   sub_folder = id, get_phi = FALSE, type = "gompertz",

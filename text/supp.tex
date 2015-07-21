@@ -1,11 +1,118 @@
-%!TEX root = anderson-etal-blackswan-timeseries.tex
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{verbose, letterpaper, tmargin = 2.54cm, bmargin = 2.54cm,
+  lmargin = 2.54cm, rmargin = 2.54cm}
+\geometry{letterpaper}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{ragged2e}
+\usepackage{verbatim}
+\usepackage[sectionbib]{chapterbib}
+\usepackage{amsmath}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabu} % for spacing between rows in longtable
+\usepackage{titlesec}
+\usepackage{url}
+\usepackage{mathtools}
+\usepackage{cite}
+\usepackage{citesupernumber}
 
-\begin{centering}
-\LARGE
-Supporting Information\\[1.0em]
-\end{centering}
+\usepackage{lineno}
+\usepackage{xcolor}
+\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+\modulolinenumbers[2]
 
-\subsection{Data selection}
+% Linux Libertine:
+\usepackage{textcomp}
+\usepackage[sb]{libertine}
+\usepackage[varqu,varl]{inconsolata}% sans serif typewriter
+\usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
+\usepackage[cal=boondoxo]{mathalfa} % mathcal
+\useosf % osf for text, not math
+\usepackage[supstfm=libertinesups,%
+  supscaled=1.2,%
+  raised=-.13em]{superiors}
+
+\mathchardef\mhyphen="2D % math hyphen
+
+\textheight 22.0cm
+
+\usepackage[round,sectionbib]{natbib}
+\bibpunct{(}{)}{;}{a}{}{;}
+
+\setlength\parskip{0.10in}
+\setlength\parindent{0in}
+
+% Fix line numbering and align environment
+% http://phaseportrait.blogspot.ca/2007/08/lineno-and-amsmath-compatibility.html
+\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+  \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+  \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+  \renewenvironment{#1}%
+     {\linenomath\csname old#1\endcsname}%
+     {\csname oldend#1\endcsname\endlinenomath}}%
+\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+  \patchAmsMathEnvironmentForLineno{#1}%
+  \patchAmsMathEnvironmentForLineno{#1*}}%
+\AtBeginDocument{%
+\patchBothAmsMathEnvironmentsForLineno{equation}%
+\patchBothAmsMathEnvironmentsForLineno{align}%
+\patchBothAmsMathEnvironmentsForLineno{flalign}%
+\patchBothAmsMathEnvironmentsForLineno{alignat}%
+\patchBothAmsMathEnvironmentsForLineno{gather}%
+\patchBothAmsMathEnvironmentsForLineno{multline}%
+}
+
+% remove numbers in front of sections:
+\makeatletter
+\renewcommand\@seccntformat[1]{}
+\makeatother
+
+
+\title{Supporting Information:\\Evidence for black-swan events in animal
+  populations}
+
+\author{
+Sean C. Anderson$^{1,2}$ \and
+Trevor A. Branch$^2$ \and
+Andrew B. Cooper$^3$ \and
+Nicholas K. Dulvy$^1$
+}
+\date{}
+
+\begin{document}
+
+
+\input{../analysis/values} % R output
+
+\maketitle
+
+\textsuperscript{1}Earth to Ocean Research Group, Department of Biological
+Sciences, Simon Fraser University, Burnaby BC, V5A 1S6, Canada
+
+\textsuperscript{2}School of Resource and Environmental Management, Simon
+Fraser University, Burnaby, BC, V5A 1S6, Canada
+
+\textsuperscript{3}School of Aquatic and Fishery Sciences, University of
+Washington, Box 355020, Seattle, WA 98195, USA
+
+\linenumbers
+\onehalfspacing
+
+
+%\begin{centering}
+%\LARGE
+%Supporting Information\\[1.0em]
+%\end{centering}
+
+
+\section{Data selection}
 
 We applied the following data selection and quality-control rules to the
 Global Population Dynamics Database (GPDD):
@@ -94,160 +201,14 @@ black-swan detections, since black swans involve extreme increases or
 decreases. Table~\ref{tab:stats} shows the final taxonomic breakdown and the
 number of populations with interpolated values.
 
-\subsection{Details on the heavy-tailed Gompertz probability model}
-
-For the Gompertz model, our weakly-informative priors (Fig.~\ref{fig:priors})
-were:
-\begin{align*}
-b &\sim \mathrm{Uniform}(-1, 2)\\ \lambda &\sim \mathrm{Normal}(0, 10^2)\\
-\sigma &\sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)\\ \nu &\sim
-\mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2).
-\end{align*}
-Our prior on $b$ was uninformative between values of $-1$ and $2$. We would
-not expect values of $b$ with levels of density dependence as low as $-1$
-(very strong inverse density dependence), nor would we generally expect values
-above $1$. We allowed values of $b$ above $1$ to allow for non-stationary time
-series of growth rates. The estimates of $b$ were well within these bounds.
-Our prior on $\lambda$ was very weakly informative within the range of
-expected values for population growth and is similar to the default priors
-suggested by \citet{gelman2008d} for intercepts of regression models. Our
-Half-Cauchy prior on $\sigma$ follows \citet{gelman2006c} and
-\citet{gelman2008d} and the specific scale parameter of $2.5$ is based on our
-expected range of the value in nature from previous studies
-\citep[e.g.][]{connors2014}. In our testing of a subsample of populations, our
-parameter estimates were not qualitatively changed by switching to an
-uninformative uniform prior on $\sigma$, but the weakly informative
-Half-Cauchy prior substantially sped up chain convergence.
-
-Our prior on $\nu$ was based on \citet{fernandez1998}. They chose an
-exponential rate parameter of $0.1$. We chose a less informative rate
-parameter of $0.01$ and truncated the distribution at $2$, since at $\nu < 2$
-the variance of the t distribution is undefined. This prior gives only a
-$7.7$\% probability that $\nu < 10$ but constrains the sampling sufficiently
-to avoid wandering off towards infinity---above approximately $\nu = 20$ the t
-distribution is so similar to the normal distribution
-(Fig.~\ref{fig:didactic}) that time series of the length considered here are
-unlikely to be informative about the precise value of $\nu$. In the scenario
-where the data are uninformative about heavy tails
-(e.g.~Fig.~\ref{fig:didactic}e,~h), the posterior will approximately match the
-prior (prior median $= 71$, mean $= 102$) and the metrics used in our paper
-(e.g.~Pr$(\nu < 10) > 0.5$) are unlikely to flag the population as heavy
-tailed.
-
-We fit our models with Stan 2.4.0 \citep{stan-manual2014}, and R 3.1.1
-\citep{r2014}. We began with four chains and $2000$ iterations, discarding the
-first $1000$ as warm up (i.e.~4000 total samples). If $\hat{R}$ (the potential
-scale reduction factor---a measure of chain convergence) was greater than
-$1.05$ for any parameter or the minimum effective sample size,
-$n_\mathrm{eff}$, (a measure of the effective number of uncorrelated samples)
-for any parameter was less than $200$, we doubled both the total iterations
-and warm up period and sampled from the model again. These thresholds are in
-excess of the minimums recommended by \citet{gelman2006a} of $\hat{R} < 1.1$
-and effective sample size $> 100$ for reliable point estimates and confidence
-intervals. In the majority of cases our minimum thresholds were greatly
-exceeded. We continued this procedure up to $8000$ iterations ($16000$ total
-samples) by which all chains were deemed to have sufficiently converged. These
-chain lengths may seem low to those familiar with software such as WinBUGS or
-JAGS, but the No-U-Turn Hamiltonian Markov chain Monte Carlo Sampler in Stan
-generally requires far fewer iterations to obtain equivalent effective sample
-sizes \citep{stan-manual2014}.
-
-\subsection{The skewed Student's t distribution}
-
-We fit Gompertz models with skewed Student's t distributed process noise based
-on the probability density for the skewed t distribution described in
-\citet{fernandez1998}. Their definition equates to the following probability density as implemented in \citet{king2012}:
-
-\[
-  \mathrm{Skewed\,Student\mhyphen t}(x) =
-\begin{dcases}
-\frac{2}{(\gamma + 1/\gamma)}
-         \mathrm{Student\mhyphen t}(x \cdot \gamma, \mu \cdot \gamma, \nu, \sigma),& \text{for } x < 0\\
-       \frac{2}{(\gamma + 1/\gamma)}
-         \mathrm{Student\mhyphen t}(x / \gamma, \mu / \gamma, \nu, \sigma),& \text{for } x \ge 0
-\end{dcases}
-\]
-
-\smallskip
-\noindent
-Where $\gamma$ represents the skewness parameter. The distribution is
-symmetrical if $\gamma = 1$, left skewed (skewed downwards in abundance) if
-$0 < \gamma < 1$, and right skewed (skewed upwards in abundance) if $1 <
-\gamma < \infty$. This translates to the log probability:
-
-\[
-\mathrm{Skewed\,Student\mhyphen t}(x) =
-\begin{dcases}
-  \log (2 \gamma) - \log(\gamma^2 + 1) +
-  \log \mathrm{Student\mhyphen t}(x \cdot \gamma, \mu \cdot \gamma, \nu, \sigma),& \text{for } x < 0\\
-  \log (2 \gamma) - \log(\gamma^2 + 1) +
-  \log \mathrm{Student\mhyphen t}(x / \gamma, \mu / \gamma, \nu, \sigma),& \text{for } x \ge 0
-\end{dcases}
-\]
-
-\smallskip
-\noindent
-Since Stan only needs the probability density up to an additive constant, we
-can replace $\log(2 \gamma)$ in the above for $\log(\gamma)$. The final log
-probability density for the skewed Student's t distribution implemented in
-Stan\footnote{See the Stan users mailing list: \url{https://groups.google.com/d/msg/stan-users/jeZQnQRUsDs/BeqhicWm1GEJ}} looks like the following:
-
-\begin{verbatim}
-real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
-  real lp;
-  lp <- log(skew) - log1p(square(skew));
-  if (y < mu)
-    return lp + student_t_log(y * skew, nu, mu * skew, sigma);
-  else
-    return lp + student_t_log(y / skew, nu, mu / skew, sigma);
-}
-\end{verbatim}
-
-% \[
-%   \log p(x) =
-% \begin{dcases}
-%   \log(2 \gamma) - log(\gamma^2 + 1) +
-%     \log \mathrm{dt}(x \gamma, \nu) ,& \text{for } x < 0\\
-%   \log(2 \gamma) - log(\gamma^2 + 1) +
-%     \log \mathrm{dt}(x / \gamma, \nu) ,& \text{for } x \ge 0
-% \end{dcases}
-% \]
-
-
-\subsection{Alternative priors}
-
-To test if the prior on $\nu$ influenced our estimate of black-swan dynamics,
-we refit our models with weaker and stronger priors. Our base model used a
-prior on $\nu$ of Truncated-Exponential(0.02, min.\ = 2). For a weaker prior
-we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
-used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}). Note that
-the base and weaker priors are relatively flat within the region of $\nu <
-20$, which is the region we are mostly concerned about when categorizing populations
-as heavy- or thin-tailed.
-
-Our results show that these weaker and stronger priors would have little
-influence on our conclusions about heavy-tailed dynamics
-(Fig.~\ref{fig:alt-priors}). When the data are informative about tail
-behaviour (i.e.\ when there is strong evidence of low $\nu$ values,
-upper-right of Fig.~\ref{fig:alt-priors}), the prior has little impact on the
-estimate of $\nu$. When the data are less informative about $\nu$ (i.e.\ when
-there are no or few tail events and time series are short or noisy), the prior
-can pull the estimate of $\nu$ towards larger or smaller values
-(Fig.~\ref{fig:alt-priors}). The vast majority of the populations with Pr$(\nu
-< 10)$ in the base prior were not altered qualitatively by this range of prior
-strength.
-
-\subsection{Alternative population models}
+\section{Alternative population models}
 
 We fit four alternative population models to the time-series data to check how
 they would influence our conclusions. Our alternative models allowed for
 autocorrelation in the residuals, assumed no density dependence, allowed for
-observation error, or assumed a Ricker-logistic functional form. The range of
-percentages of black swans by taxonomic class cited in the abstract and
-results are based on lower and upper limits across our main Gompertz model and
-these four alternative models.
+observation error, or assumed a Ricker-logistic functional form.
 
-\subsubsection{Autocorrelated residuals}
+\subsection{Autocorrelated residuals}
 
 We considered a version of the Gompertz model in which an autoregressive
 parameter was fit to the process noise residuals:
@@ -271,7 +232,7 @@ $\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 1, \mathrm{min.} = -1,
   < 10$) $> 0.5$ categorized them as heavy in the main Gompertz model. We did
   not include these models in Fig.~\ref{fig:alt}.
 
-\subsubsection{Assumed density independence}\label{assumed-density-independence}
+\subsection{Assumed density independence}\label{assumed-density-independence}
 
 We fit a simplified version of the Gompertz model in which the density
 dependence parameter $b$ was fixed at $1$ (density independent). This is
@@ -289,7 +250,7 @@ dependence was systematically affecting our perception of heavy tails, (3) it
 matches how some previous authors have modelled heavy tails without accounting
 for density dependence \citep{segura2013}.
 
-\subsubsection{Assumed observation error}
+\subsection{Assumed observation error}
 
 Observation error can bias parameter estimates \citep[e.g.][]{knape2012} and
 is known to affect the ability to detect extreme events \citep{ward2007}. In
@@ -317,7 +278,7 @@ $\sigma_\mathrm{proc}$ represent the process noise scale parameter. We set
 $\sigma_\mathrm{obs}$ to $0.2$, which represents the upper limit of values
 often used in simulation analyses \citep[e.g.][]{valpine2002, thorson2014b}.
 
-\subsubsection{Ricker-logistic}
+\subsection{Ricker-logistic}
 
 We also fit a Ricker-logistic model:
 \begin{align*}
@@ -339,7 +300,40 @@ between zero and maximum observed, which is more informative). We set the
 prior on $r_\mathrm{max}$ as uniform between 0 and 20 as in \citet{clark2010}.
 We used the same priors on $\nu$ and $\sigma$ as in the Gompertz model.
 
-\subsection{Simulation testing the model}
+\section{Implementation of skewed Student t distribution in Stan}
+
+The probability density for the skewed Student t distribution described in the
+methods section translates to the log probability:
+
+\[
+\mathrm{Skewed\,Student\mhyphen t}(x) =
+\begin{dcases}
+  \log (2 \gamma) - \log(\gamma^2 + 1) +
+  \log \mathrm{Student\mhyphen t}(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
+  \log (2 \gamma) - \log(\gamma^2 + 1) +
+  \log \mathrm{Student\mhyphen t}(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
+\end{dcases}
+\]
+
+Since Stan only needs the probability density up to an additive constant, we
+can replace $\log(2 \gamma)$ in the above for $\log(\gamma)$. The final log
+probability density for the skewed Student's t distribution implemented in
+Stan\footnote{See the Stan users mailing list:
+\url{https://groups.google.com/d/msg/stan-users/jeZQnQRUsDs/BeqhicWm1GEJ}}
+looks like the following:
+
+\begin{verbatim}
+real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
+  real lp;
+  lp <- log(skew) - log1p(square(skew));
+  if (y < mu)
+    return lp + student_t_log(y * skew, nu, mu * skew, sigma);
+  else
+    return lp + student_t_log(y / skew, nu, mu / skew, sigma);
+}
+\end{verbatim}
+
+\section{Simulation testing the model}
 
 We performed two types of simulation testing. First, we tested how easily the
 Student-t distribution $\nu$ parameter could be recovered given different true
@@ -358,7 +352,7 @@ tested the latter. In general, our simulations show that, if anything, our
 model under predicts the magnitude and probability of heavy tailed
 events---especially given the length of the time series in the GPDD.
 
-\subsubsection{Estimating $\nu$ from a stationary t distribution}
+\subsection{Estimating $\nu$ from a stationary t distribution}
 
 First, we tested the ability to estimate $\nu$ given different true values of
 $\nu$ and different sample sizes. We took stochastic draws from t
@@ -368,15 +362,26 @@ parameters of $1$. We started with $1600$ stochastic draws and then fit the
 models again at the first $800, 400, 200, 100, 50,$ and $25$ draws. Each time
 we recorded the posterior samples of $\nu$.
 
+In the following image, the red lines indicate the true population value. Dots
+represent the median estimate the lines represent the 80\% credible interval.
+When a small number of samples are drawn there may not be samples sufficiently
+far into the tails to recapture the true $\nu$ value; however, heavy tails are
+still distinguished from normal tails in most cases, even with only 25 or 50
+samples:
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
+\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
+\end{center}
+
 We found that we could consistently and precisely recover median posterior
 estimates of $\nu$ near the true value of $\nu$ with large samples ($\ge 200$)
-(Fig.~\ref{fig:sim-nu} upper panels). At smaller samples we could still
-usually qualitatively distinguish heavy from not-heavy tails, but the model
-tended to underestimate how heavy the tails were. At the same time, at smaller
-sample sizes, the model tended to overestimate how large the scale parameter
-was (Fig.~\ref{fig:sim-nu} lower panels).
+(upper panels). At smaller samples we could still usually qualitatively
+distinguish heavy from not-heavy tails, but the model tended to underestimate
+how heavy the tails were. At the same time, at smaller sample sizes, the model
+tended to overestimate how large the scale parameter was (lower panels).
 
-\subsubsection{Heavy-tailed Gompertz model simulations}
+\subsection{Heavy-tailed Gompertz model simulations}
 
 In the second part of our simulation testing, we tested the ability of the
 heavy-tailed Gompertz model to obtain unbiased parameter estimates when the
@@ -433,18 +438,6 @@ underestimate the degree of heavy-tailedness. Fitting a model with correctly
 specified observation error did not make substantial improvements to model
 bias (Fig.~\ref{fig:sim-prob}).
 
-%(Figs~\ref{fig:sim-gompertz} and \ref{fig:sim-gompertz-boxplots}, red and
-%green symbols in the top rows). Likewise, the other Gompertz parameters were
-%estimated without any systematic bias (Figs~\ref{fig:sim-gompertz} and
-%\ref{fig:sim-gompertz-boxplots}, red and green symbols). , overestimate the
-%magnitude of process noise, somewhat overestimate $\lambda$, and overestimate
-%density dependence (blue symbols in Figs~\ref{fig:sim-gompertz} and
-%\ref{fig:sim-gompertz-boxplots}). The overestimation of density dependence
-%with observation error is a known phenomenon \citep{knape2012}. Fitting a
-%model with correctly specified observation error made marginal improvements
-%to model bias (purple symbols in Figs~\ref{fig:sim-gompertz} and
-%\ref{fig:sim-gompertz-boxplots}).
-
 When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the
 models distinguished heavy and not-heavy tails reasonably well
 (Fig.~\ref{fig:sim-prob} lower panels). Without observation error, and using a
@@ -463,96 +456,38 @@ the detection of heavy tails. Therefore, we chose to focus on the simpler
 model without observation error in the main text, particularly given that the
 true magnitude of observation error was unknown in the empirical data.
 
-\subsection{Modelling covariates of heavy-tailed dynamics}
+In the following image, upper panels show the distribution of median
+$\widehat{\nu}$ across 20 simulation runs. Lower panels show the distribution
+of Pr($\nu < 10$) across 20 simulation runs. We ran the simulations across
+three population (``true'') $\nu$ values (3, 5, and $1\cdot 10^9$, i.e.\
+approximately normal) and four scenarios: (1) 100 time steps and no
+observation error, (2) 50 time steps and no observation error, (3) 50 time
+steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but
+ignored, and (4) 50 time steps with observation error in which the quantity of
+observation error was assumed known. Within each scenario the dots represent
+stochastic draws from the true population distributions combined with model
+fits. Underlayed boxplots show the median, interquartile range, and $1.5$
+times the interquartile range:
 
-We fit a multilevel beta regression model to the predicted probability of
-heavy tails, Pr($\nu < 10$), to investigate potential covariates of
-heavy-tailed dynamics. The beta distribution is useful when response data
-range on a continuous scale between zero and one \citep{ferrari2004}. We used
-a logit link function as is typically used in logistic regression. The model
-was as follows:
+%\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{../analysis/sim-gompertz-median-dist.pdf}
+\includegraphics[width=\textwidth]{../analysis/sim-gompertz-p10.pdf}
+%\label{fig:sim-prob}
+\end{center}
+%\end{figure}
 
-\begin{align*}
-\mathrm{Pr}(\nu_i < 10) &\sim \mathrm{Beta}(A_i, B_i)\\
-\mu_i &= \mathrm{logit}^{-1}(\alpha
-  + \alpha^\mathrm{class}_{j[i]}
-  + \alpha^\mathrm{order}_{k[i]}
-  + \alpha^\mathrm{species}_{l[i]}
-  + X_i \beta),
-  \: \text{for } i = 1, \dots, 617\\
-A_i &= \phi_\mathrm{disp} \mu_i\\
-B_i &= \phi_\mathrm{disp} (1 - \mu_i)\\
-\alpha^\mathrm{class}_j &\sim
-  \mathrm{Normal}(0, \sigma^2_{\alpha \; \mathrm{class}}),
-  \: \text{for } j = 1, \dots, 6\\
-\alpha^\mathrm{order}_k &\sim
-  \mathrm{Normal}(0, \sigma^2_{\alpha \; \mathrm{order}}),
-  \: \text{for } k = 1, \dots, 38\\
-\alpha^\mathrm{species}_l &\sim
-  \mathrm{Normal}(0, \sigma^2_{\alpha \; \mathrm{species}}),
-  \: \text{for } l = 1, \dots, 301,
-\end{align*}
-where $A$ and $B$ represent the beta distribution shape parameters; $\mu_i$
-represents the predicted value for population $i$, class $j$, order $k$, and
-species $l$; $\phi_\mathrm{disp}$ represents the dispersion parameter; and
-$X_i$ represents a vector of predictors (such as lifespan) for population $i$
-with associated $\beta$ coefficients. The intercepts are allowed to vary from
-the overall intercept $\alpha$ by taxonomic class ($\alpha^\mathrm{class}_j$),
-taxonomic order ($\alpha^\mathrm{order}_k$), and species
-($\alpha^\mathrm{species}_l$) with standard deviations $\sigma_{\alpha \;
-  \mathrm{class}}$, $\sigma_{\alpha \; \mathrm{order}}$, and $\sigma_{\alpha
-  \; \mathrm{species}}$. Where possible, we also allowed for error
-distributions around the predictors by incorporating the standard deviation of
-the posterior samples for the Gompertz parameters $\lambda$, $b$, and $\log
-\sigma$ around the mean point value as normal distributions (not shown in the
-above equation).
 
-We log transformed $\sigma$, time-series length, and lifespan to match the way
-they are visually represented in Fig.~\ref{fig:correlates} and to make the
-relationship approximately linear on the logit-transformed response scale. All
-input variables were standardized by subtracting their mean and dividing by
-two standard deviations to make their coefficients comparable in magnitude
-\citep{gelman2008c}. We excluded body length as a covariate because it was
-highly correlated with lifespan, and lifespan exhibited more overlap across
-taxonomy than body length. Lifespan is also more directly related to time and
-potential mechanisms driving black-swan dynamics.
+\section{Additional acknowledgements}
 
-We incorporated weakly informative priors into our model: $\mathrm{Cauchy}(0,
-10)$ on the global intercept $\alpha$, $\mathrm{Half\mhyphen Cauchy}(0, 2.5)$
-on all standard deviation parameters, $\mathrm{Half\mhyphen Cauchy}(0, 10)$ on
-the dispersion parameter $\phi_\mathrm{disp}$, and $\mathrm{Cauchy}(0, 2.5)$
-on all other parameters \citep{gelman2006c, gelman2008d}. Compared to normal
-priors, the Cauchy priors concentrate more probability density around expected
-parameter values while allowing for a higher probability density far into the
-tails, thereby allowing the data to dominate the posterior more strongly if it
-disagrees with the prior. Our conclusions were not qualitatively changed by
-using uniform priors. We fit our models with 5000 total iterations per chain,
-2500 warm-up iterations, four chains, and discarding every second sample to
-save memory. We checked for chain convergence visually and with the same
-criteria as before ($\widehat{R} < 1.05$ and $n_\mathrm{eff} >200$ for all
-parameters).
-
-To derive taxonomic-order-level estimates of the probability of heavy tails
-accounting for time-series length (Fig.~\ref{fig:posteriors}a), we fit a
-separate multilevel model with the same structure but with only $\log$
-time-series length as a predictor. (In this case, we did not want to control
-for intrinsic population characteristics such as density dependence.) Since
-our predictors were centered by subtracting their mean value, we obtained
-order-level estimates of the probability of heavy tails at mean log
-time-series length by adding the posteriors for $\alpha$,
-$\alpha^\mathrm{class}_j$, and $\alpha^\mathrm{order}_k$.
-
-\subsection{Additional acknowledgements}
-
-Many of the silhouette images used in Figs~\ref{fig:nu-coefs},
-\ref{fig:correlates} and \ref{fig:posteriors} were obtained from
+Many of the silhouette images used in Figs 2, and 3 were obtained from
 \texttt{phylopic.org} under Creative Commons licenses. We vectorized the
-salmon in Fig.~\ref{fig:nu-coefs} and Fig.~\ref{fig:correlates} ourselves. The
-bird in these figures was obtained from \texttt{phylopic.org} under a Creative
-Commons Attribution 3.0 Unported license with credit to Jean-Raphaël
-Guillaumin {[}photography{]} and T. Michael Keesey {[}vectorization{]}). The
-silhouettes in Fig.~\ref{fig:posteriors} were obtained from the following
-sources (metadata obtained with the help of the rphylopic R package,
+salmon in Fig.~2. The bird in these figures was obtained
+from \texttt{phylopic.org} under a Creative Commons Attribution 3.0 Unported
+license with credit to Jean-Raphaël Guillaumin {[}photography{]} and T.
+Michael Keesey {[}vectorization{]}). The silhouettes in
+Fig.~3 were obtained from the following sources (metadata
+obtained with the help of the rphylopic R package,
 \url{https://github.com/sckott/rphylopic}):
 
 \LTcapwidth=\textwidth
@@ -575,225 +510,55 @@ sources (metadata obtained with the help of the rphylopic R package,
 % Supplemental Tables
 % ------------------------------
 
-\clearpage
-\renewcommand{\thetable}{S\arabic{table}}
-\setcounter{table}{0}
-
-\begin{table}
-\begin{footnotesize}
-
-\caption[Summary statistics for the filtered Global Population Dynamics
-  Database time series arranged by taxonomic class.]{Summary statistics for the filtered Global Population Dynamics
-  Database time series arranged by taxonomic class. Columns are: number of
-  populations, number of taxonomic orders, numbers of species, median time
-  series length, total number of interpolated time steps, total number of
-  substituted zeros, and total number of time steps.}
-
-\smallskip
-\begin{tabular}{lrrrrrrrr}
-\toprule
-\input{../analysis/stat-table.tex}
-\label{tab:stats}
-\end{tabular}
-\end{footnotesize}
-\end{table}
-
-\clearpage
-
-\LTcapwidth=\textwidth
-\bibpunct{}{}{;}{a}{}{;}
-
-%\singlespacing
-\begin{footnotesize}
-\begin{longtable}{>{\RaggedRight}m{1.4cm}>{\RaggedRight}p{3.3cm}>{\RaggedRight}p{0.7cm}>{\RaggedRight}p{1.5cm}>{\RaggedRight}p{3.0cm}>{\RaggedRight}p{1.4cm}>{\RaggedRight}p{1.25cm}}
-
-\caption[All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed
-  Gompertz population dynamics model.]{All populations with Pr$(\nu < 10) > 0.5$ in the base heavy-tailed
-  Gompertz population dynamics model. Shown are the log abundance time series,
-  population descriptions, Global Population Dynamics Database Main IDs,
-  citation for the data source or separate verification literature, a
-  description of the cause of the black swan events (if known), the
-  probability of heavy tails as calculated by our model, and median estimate
-  of $\nu$ from our model with 90\% quantile credible intervals indicated in
-  parentheses. Red dots on the time series indicate downward black-swan events
-  and blue values indicate upward black-swan events that have a $10^{-4}$ probability or less of occurring if the population dynamics were
-  explained by a Gompertz model with normally distributed process noise with a
-  standard deviation equal to the scale parameter in the fitted t
-  distribution.}\\
-
-\toprule
-\input{../analysis/cause-table.tex}
-\label{tab:causes-supp}
-\end{longtable}
-\end{footnotesize}
-%\onehalfspacing
+%\clearpage
+%\renewcommand{\thetable}{S\arabic{table}}
+%\setcounter{table}{0}
 
 % ------------------------------
 % Supplemental Figures
 % ------------------------------
 
-\renewcommand{\thefigure}{S\arabic{figure}}
-\setcounter{figure}{0}
+%\renewcommand{\thefigure}{S\arabic{figure}}
+%\setcounter{figure}{0}
 
-\begin{centering}
-\clearpage
-\includegraphics[width=\textwidth]{../analysis/all-clean-ts-mammals.pdf}\\
-Figure~\ref{fig:all-ts} (mammals) continued on next page \ldots
+% \begin{centering}
+% \clearpage
+% \includegraphics[width=\textwidth]{../analysis/all-clean-ts-mammals.pdf}\\
+% Figure~\ref{fig:all-ts} (mammals) continued on next page \ldots
+%
+% \clearpage
+% \includegraphics[width=\textwidth]{../analysis/all-clean-ts-birds.pdf}\\
+% Figure~\ref{fig:all-ts} (birds) continued on next page \ldots
+%
+% \clearpage
+% \includegraphics[width=\textwidth]{../analysis/all-clean-ts-insects.pdf}\\
+% Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
+%
+% \end{centering}
 
-\clearpage
-\includegraphics[width=\textwidth]{../analysis/all-clean-ts-birds.pdf}\\
-Figure~\ref{fig:all-ts} (birds) continued on next page \ldots
+% \begin{figure}[htbp]
+% \begin{center}
+% \includegraphics[width=\textwidth]{../analysis/all-clean-ts-fishes-others.pdf}
+%
+% \caption[All filtered time series used in our analysis.]{(fishes, crustaceans,
+%   gastropods, sharks). All filtered time series used in our analysis. The
+%   abundances are shown on a log10 vertical axis. Throughout this figure, red
+%   dots indicate values that were interpolated and blue dots indicate values
+%   that were recorded as zero but were set to the next lowest observed
+%   abundance. Numbers before each species name are the GPDD Main ID numbers.}
+%
+% \label{fig:all-ts}
+% \end{center}
+% \end{figure}
 
-\clearpage
-\includegraphics[width=\textwidth]{../analysis/all-clean-ts-insects.pdf}\\
-Figure~\ref{fig:all-ts} (insects) continued on next page \ldots
-
-\end{centering}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/all-clean-ts-fishes-others.pdf}
-
-\caption[All filtered time series used in our analysis.]{(fishes, crustaceans,
-  gastropods, sharks). All filtered time series used in our analysis. The
-  abundances are shown on a log10 vertical axis. Throughout this figure, red
-  dots indicate values that were interpolated and blue dots indicate values
-  that were recorded as zero but were set to the next lowest observed
-  abundance. Numbers before each species name are the GPDD Main ID numbers.}
-
-\label{fig:all-ts}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{../analysis/priors-gomp-base.pdf}
-
-\caption[Probability density of the Bayesian priors for the Gompertz models.]{
-  Probability density of the Bayesian priors for the Gompertz models. From
-  left to right and then top to bottom: (1) per capita growth rate at
-  $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$; (2) scale
-  parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen
-    Cauchy} (0, 2.5)$; (3) t-distribution degrees of freedom parameter: $\nu
-  \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$; (4)
-  AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated
-    \mhyphen Normal}(0, 1, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown
-  is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$.
-  The $\nu$ panel also shows two alternative priors: a weaker prior $\nu \sim
-  \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a
-  stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02,
-  \mathrm{min.} = 2)$. The inset panel shows the same data but with a
-  log-transformed x axis. Note that the base and weaker priors are relatively
-  flat within the region of $\nu < 20$ that we are concerned with. }
-
-\label{fig:priors}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/gomp-comparison.pdf}
-
-\caption[Estimates of $\nu$ from alternative models plotted against the base
-Gompertz model estimates of $\nu$.]{Estimates of $\nu$ from alternative models
-  plotted against the base Gompertz model estimates of $\nu$. Shown are
-  medians of the posterior (dots) and 50\% credible intervals (segments). The
-  diagonal line indicates a one-to-one relationship. Different colours
-  indicate various taxonomic classes. The grey-shaded regions indicate regions
-  of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed
-  dynamics. The Gompertz observation error model assumes a fixed standard
-  deviation of observation error of $0.2$ on a log scale.}
-
-\label{fig:alt}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/gomp-prior-comparison.pdf}
-
-\caption[Estimates of $\nu$ from Gompertz models with alternative priors on
-$\nu$.]{Estimates of $\nu$ from Gompertz models with alternative priors on
-  $\nu$. Shown are medians of the posterior (dots) and 50\% credible intervals
-  (segments). The diagonal line indicates a one-to-one relationship. Different
-  colours indicate various taxonomic classes. The grey-shaded regions indicate
-  regions of disagreement if $\nu = 10$ is taken as a threshold of
-  heavy-tailed dynamics. The base, weaker, and stronger priors on $\nu$ are
-  illustrated in Fig.~\ref{fig:priors}. In general, the estimates are nearly
-  identical in cases where the data are informative about low values of $\nu$.
-  When the data are less informative about low values of $\nu$, the prior can
-  slightly pull the estimates of $\nu$ towards higher or lower values.}
-
-\label{fig:alt-priors}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
-\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
-
-\caption[Testing the ability to estimate $\nu$  and the scale parameter of the
-process deviations for a given number of samples drawn from a distribution
-with a given true $\nu$ value.]{Testing the ability to estimate $\nu$ (top
-  panels) and the scale parameter of the process deviations (bottom panels)
-  for a given number of samples (columns) drawn from a distribution with a
-  given true $\nu$ value (rows). The red lines indicate the true population
-  value. Dots represent the median estimate the lines represent the 80\%
-  creidble interval. When a small number of samples are drawn there may not be samples
-  sufficiently far into the tails to recapture the true $\nu$ value; however,
-  heavy tails are still distinguished from normal tails in most cases, even
-  with only 25 or 50 samples.}
-
-\label{fig:sim-nu}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/sim-gompertz-median-dist.pdf}
-\includegraphics[width=\textwidth]{../analysis/sim-gompertz-p10.pdf}
-
-\caption[Simulation testing the Gompertz estimation model when the process
-deviation draws were chosen so that $\nu$ could be estimated close to the true
-value outside the full population model (``effective $\nu$'' within a CV of
-0.2 of specified $\nu$).]{Simulation testing the Gompertz estimation model
-  when the process deviation draws were chosen so that $\nu$ could be
-  estimated close to the true value outside the full population model
-  (``effective $\nu$'' within a CV of 0.2 of specified $\nu$). Upper panels
-  show the distribution of median $\widehat{\nu}$ across 20 simulation runs.
-  Lower panels show the distribution of Pr($\nu < 10$) across 20 simulation
-  runs. We ran the simulations across three population (``true'') $\nu$ values
-  (3, 5, and $1\cdot 10^9$, i.e.\ approximately normal) and four scenarios:
-  (1) 100 time steps and no observation error, (2) 50 time steps and no
-  observation error, (3) 50 time steps and observation error drawn from
-  $\mathrm{Normal} (0,
-  0.2^2)$ but ignored, and (4) 50 time steps with observation error in which
-    the quantity of observation error was assumed known. Within each scenario
-    the dots represent stochastic draws from the true population distributions
-    combined with model fits. Underlayed boxplots show the median,
-    interquartile range, and $1.5$ times the interquartile range. }
-
-\label{fig:sim-prob}
-\end{center}
-\end{figure}
+%\clearpage
 
 \clearpage
 
 \noindent
 Example Stan code for a heavy-tailed Gompertz model with AR1 correlated
 residuals and a specified level of observation error. The specific code for
-used for the various models in our analysis is available at
+the various models in our analysis is available at
 \url{https://github.com/seananderson/heavy-tails}.
 
 %\begin{spacing}{1.15}
@@ -861,3 +626,5 @@ The GPDD IDs used in our analysis.
 \end{footnotesize}
 \normalsize
 %\end{spacing}
+
+\end{document}

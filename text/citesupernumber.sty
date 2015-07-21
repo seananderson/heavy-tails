@@ -1,0 +1,68 @@
+% version = 1.02 of citesupernumber.sty 1998 May 3
+% origin 1989 January 20
+% originally named citsupernumber.tex, but citesupernumber.sty works
+%
+% call in LaTeX2e:
+% \usepackage{citesupernumber}
+%
+% This file makes citations be superscripted.  They come out as numbers.
+% For example, by putting the following code in your LaTeX file,
+%
+%     text text text\cite{Darwin1859,Clark2001} text ...
+%     \input citesupernumber
+%     moretext moretext moretext\cite{Darwin1859,Clark2001} moretext ...
+%
+% you will get:
+% 
+%     text text text[1,2] text ...
+%
+%                              1,2
+%     moretext moretext moretext   moretext ...
+
+% NOTE:  By making this a package, the above switch does not work!!
+% But then, would one really want to switch like that?
+
+%
+% This code was originally made by 
+% Michael DeCorte // (315)265-2439 // P.O. Box 652, Potsdam, NY 13676
+% Internet: mrd@sun.soe.clarkson.edu  // Bitnet:   mrd@clutx.bitnet        
+% 
+% It was modified by Tom Schneider toms@ncifcrf.gov
+
+% DeCorte's original code was:
+% \def\@cite#1#2{$^{#1\if@tempswa , #2\fi}$}
+% I have added the \scriptsize so that the numbers are appropriately smaller
+% and the mbox to make scriptsize work under the mathmode that is
+% used to make the superscripting.
+%
+
+\makeatletter
+\def\@cite#1#2{$^{\mbox{\scriptsize #1\if@tempswa , #2\fi}}$}
+\makeatother
+
+% ---------------------------------------------------
+% If the following line:
+% \def\cite#1{$^{#1}$}
+% is also used, the output would be:
+%                               Darwin1859,Clark2001
+%     moretext moretext moretext                    moretext ...
+%
+% ---------------------------------------------------
+% The next improvement of this would be to make it more like a
+% switch, so one would say \citesupernumber or \citesuperkey
+% or \citebracket or \citeparenthesis to get different forms.
+% Better yet would be \citationform{place}{kind}{edge}
+% where
+%       place is 'inline' or 'superscript'
+%       kind is 'citationkey' or 'number'
+%       edge is 'bracket' or 'parenthesis' or 'none'
+% Do you know how to make this happen?
+% 
+% While we are into wishing, it would be useful for some journals
+% to have the following citation forms built, not from the key,
+% but from the year and author list:
+% One author:   (Smith, 1982)
+% Two authors:  (Smith and Jones 1892)
+% More than two authors:  (Smith {\em et al}, 1982)
+% with ';' as separators between the citations.
+% (For use in Journal of Molecular Biology.)

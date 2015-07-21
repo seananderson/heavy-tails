@@ -6,7 +6,22 @@ VERSION = 4.1
 all: text
 
 text:
+	pandoc -S --no-wrap --bibliography=$(REFS).bib --natbib -fmarkdown-all_symbols_escapable ms.md -o ms.tex
+	perl -p -i -e "s/\\\citep/\\\cite/g" ms.tex
+	perl -p -i -e "s/\\\citet/\\\cite/g" ms.tex
+	perl -p -i -e "s/Figure /Figure~/g" ms.tex
+	perl -p -i -e "s/Fig\. /Fig.~/g" ms.tex
+	perl -p -i -e "s/vs\. /vs.~/g" ms.tex
+	perl -p -i -e "s/Table /Table~/g" ms.tex
+	perl -p -i -e "s/Figs\. /Figs.~/g" ms.tex
+	perl -p -i -e "s/\\\citep/\\\cite/g" ../analysis/cause-table.tex
+	perl -p -i -e "s/\\\citet/\\\cite/g" ../analysis/cause-table.tex
 	latexmk $(TEXT)
+	#pdflatex $(TEXT)
+	latexmk $(SOM)
+
+supp:
+	latexmk $(SOM)
 
 quick:
 	pdflatex $(TEXT)
