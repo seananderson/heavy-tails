@@ -9,7 +9,7 @@ heavy_refs <- read.csv("heavy-filled.csv", stringsAsFactors = FALSE,
 
 source("5-shape-data.R")
 
-heavy <- filter(gomp_hat_base, p10 > .5) %>%
+heavy <- filter(gomp_hat_base, p10 > .6) %>%
   select(main_id, common_name, p10, nu_50, nu_5, nu_95, taxon_name)
 
 heavy <- inner_join(select(heavy, -taxon_name, -common_name), heavy_refs)
@@ -25,10 +25,10 @@ heavy <- mutate(heavy,
   mutate(nu_95 = sprintf("%.0f", round(nu_95, 0))) %>%
   mutate(spark = paste0("\\includegraphics[width=1.7cm]{../analysis/sparks/", main_id, ".pdf}")) %>%
   mutate(nu_hat = paste0(nu_50, " (", nu_5, "--", nu_95, ")")) %>%
-  select(spark, population, main_id, citation, reasons, p10, nu_hat) %>%
+  select(spark, population, main_id, citation, reasons, p10) %>%
   rename("Time series" = spark, "Population" = population, "ID" = main_id,
-    "Citation" = citation,
-    "Description" = reasons, "Pr($\\nu < 10$)" = p10, "$\\widehat{\\nu}$" = nu_hat)
+    "Ref" = citation,
+    "Description" = reasons, "Pr($\\nu < 10$)" = p10)#, "$\\widehat{\\nu}$" = nu_hat)
 
 print.xtable(xtable(heavy,
     caption = ""),

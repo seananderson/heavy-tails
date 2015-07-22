@@ -33,8 +33,8 @@ make_spark <- function(x) {
   res <- get_gomp_res(x$main_id[1])
   bsw_l <- as.numeric(na.omit(seq_along(res$res)[res$res<res$l]))
   bsw_u <- as.numeric(na.omit(seq_along(res$res)[res$res>res$u]))
-  pdf(paste0("sparks/", x$main_id[1], ".pdf"), width = 2.5, height = 1.9)
-  par(mar = c(0.5,0.2,0.5,0.2), oma = c(0,0,6,0), cex = 0.8)
+  pdf(paste0("sparks/", x$main_id[1], ".pdf"), width = 2.5, height = 1.2)
+  par(mar = c(0.5,0.2,0.5,0.2), oma = c(0,0,0.1,0), cex = 0.8)
   par(xpd = NA)
   with(x, plot(seq_along(population_untransformed), population_untransformed, type = "l", axes = FALSE,
       xlab = "", ylab = "", yaxs = "i", xaxs = "i", log = "y"))
