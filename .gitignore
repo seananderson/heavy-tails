@@ -17,7 +17,6 @@ sub-*\.sh
 *.gz
 scratch.R
 .Rproj.user
-ms.md
 supp.md
 *.dvi
 *.gz(busy)
