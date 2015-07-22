@@ -15,6 +15,8 @@ text:
 	perl -p -i -e "s/Table /Table~/g" ms.tex
 	perl -p -i -e "s/Figs\. /Figs.~/g" ms.tex
 	perl -p -i -e "s/\\\citep/\\\cite/g" ../analysis/cause-table.tex
+	perl -0777p -i -e "s/\n\\\begin{align}/\\\begin{align}/gm" ms.tex
+	perl -0777p -i -e "s/\\\end{align}\n/\\\end{align}/gm" ms.tex
 	perl -p -i -e "s/\\\citet/\\\cite/g" ../analysis/cause-table.tex
 	latexmk $(TEXT)
 	#pdflatex $(TEXT)
@@ -41,5 +43,8 @@ extractbib: text
 clean:
 	latexmk -c
 
+#continuous:
+	#latexmk -pvc $(TEXT)
+
 continuous:
-	latexmk -pvc $(TEXT)
+	while true; do make --silent; sleep 1; done
