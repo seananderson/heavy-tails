@@ -1,7 +1,7 @@
 TEXT = anderson-etal-blackswan-timeseries
 MS = ms
 SOM = supp
-VERSION = 4.1
+VERSION = 5.4
 
 all: text
 
@@ -31,10 +31,11 @@ quick:
 dropbox: text rtf
 	cp $(TEXT).pdf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).pdf
 	mv $(TEXT).rtf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).rtf
+	cp $(SOM).pdf ~/Dropbox/heavy-tails/$(SOM)-v$(VERSION).pdf
 	open ~/Dropbox/heavy-tails/
 
 rtf: text
-	latex2rtf -E0 $(TEXT).tex
+	latex2rtf -M4 -t2 -E0 $(TEXT).tex
 
 extractbib: text
 	bibtool -x $(MS).aux -o $(MS).bib -- 'expand.macros = ON'
