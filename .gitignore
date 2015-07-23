@@ -21,6 +21,7 @@ supp.md
 *.dvi
 *.gz(busy)
 *.rtf
+text/ms.tex
 ids1.R
 ids2.R
 ids3.R
