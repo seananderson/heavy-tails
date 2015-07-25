@@ -202,10 +202,21 @@ decreases.
 
 \section{Implementation of the skewed Student-t distribution in Stan}
 
-The probability density for the skewed Student t distribution described in the
-Methods section translates to the log probability:
+The probability density for the skewed Student-t distribution \citep{fernandez1998} equates to the following probability density as implemented in \citet{king2012}:
 
-\[
+\begin{equation}
+  \mathrm{Skewed\,Student\mhyphen t}(x) =
+\begin{dcases}
+\frac{2}{(\gamma + 1/\gamma)}
+         \mathrm{Student\mhyphen t}(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
+       \frac{2}{(\gamma + 1/\gamma)}
+         \mathrm{Student\mhyphen t}(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
+\end{dcases}
+\end{equation}
+
+Here $\gamma$ represents the skewness parameter. The Student-t($\cdot$) portion represents in order: the data point of interest, the heavy-tailedness parameter, the location parameter, and the scale parameter as passed to the standard Student-t probability density. This translates to the log probability density:
+
+\begin{equation}
 \mathrm{Skewed\,Student\mhyphen t}(x) =
 \begin{dcases}
   \log (2 \gamma) - \log(\gamma^2 + 1) +
@@ -213,7 +224,7 @@ Methods section translates to the log probability:
   \log (2 \gamma) - \log(\gamma^2 + 1) +
   \log \mathrm{Student\mhyphen t}(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
 \end{dcases}
-\]
+\end{equation}
 
 Since Stan only needs the probability density up to an additive
 constant \citep{stan-manual2014}, we
