@@ -58,21 +58,21 @@ normal <- filter(sk, h1 == "3 normal")$log_skew %>% sort
 moderate <- filter(sk, h1 == "2 moderate")$log_skew %>% sort
 heavy <- filter(sk, h1 == "1 heavy")$log_skew %>% sort
 
-ticks <- c(0.2, 0.5, 1, 2, 5)
+ticks <- c(0.1, 0.2, 0.5, 1, 2, 5)
 # pdf("skewness-densities-base.pdf", width = 5, height = 4)
 # par(yaxs = "i")
-# pal <- c(RColorBrewer::brewer.pal(6, "YlOrRd")[c(5,4)], "#4D4D4D")
-# dn <- density(normal, from = min(sk$log_skew), to = max(sk$log_skew))
-# dm <- density(moderate, from = min(sk$log_skew), to = max(sk$log_skew))
-# dh <- density(heavy, from = min(sk$log_skew), to = max(sk$log_skew))
+pal <- c(RColorBrewer::brewer.pal(6, "YlOrRd")[c(5,4)], "#4D4D4D")
+dn <- density(normal, from = min(sk$log_skew), to = max(sk$log_skew))
+dm <- density(moderate, from = min(sk$log_skew), to = max(sk$log_skew))
+dh <- density(heavy, from = min(sk$log_skew), to = max(sk$log_skew))
 # plot(1, 1, xlim = c(-2, 2), ylim = c(0, 1.0), type = "n", axes = FALSE, ylab = "", xlab = "")
-# pfunc <- function(x, y, col, alpha = 50, fill = TRUE) {
-#   if (fill) {
-#     polygon(c(x, rev(x)), c(y, rep(0, length(y))), border = NA,
-#       col = paste0(col, alpha))
-#   }
-#   lines(x, y, col = col, lwd = 1.8)
-# }
+pfunc <- function(x, y, col, alpha = 50, fill = TRUE) {
+  if (fill) {
+    polygon(c(x, rev(x)), c(y, rep(0, length(y))), border = NA,
+      col = paste0(col, alpha))
+  }
+  lines(x, y, col = col, lwd = 1.8)
+}
 # pfunc(dn$x, dn$y, col = pal[3], alpha = "15")
 # pfunc(dm$x, dm$y, col = pal[2], alpha = "15")
 # pfunc(dh$x, dh$y, col = pal[1], alpha = "15")
@@ -149,15 +149,15 @@ layout(l)
 
 # illustrations of skew-nu vs. normal:
 pfunc2(nu = 5, skew = 0.65, col = pal[1], label1 = expression(nu == 5), label2 = expression(gamma == 0.65))
-add_label(label = "a", cex = 1.8, font = 2, yfrac = -0.2)
-add_label(label = "Process deviation shape", cex = 1.5, font = 1,
-  xfrac = 0.2, col = "grey20", yfrac = -0.2)
+add_label(label = "a", cex = 1.8, font = 2, yfrac = -0.64)
+add_label(label = "Process deviation shape", cex = 1.4, font = 1,
+  xfrac = 0.2, col = "grey20", yfrac = -0.64)
 pfunc2(nu = 20, skew = 0.75, col = pal[2], label1 = expression(nu == 20), label2 = expression(gamma == 0.75))
 pfunc2(nu = 1e6, skew = 0.85, col = pal[3], label1 = expression(nu == infinity), label2 = expression(gamma == 0.85))
 
 # posteriors of skewness:
 par(mar = c(0, 0, 5, .5))
-plot(1, 1, xlim = c(-2, 2), ylim = c(0, 1.0), type = "n",
+plot(1, 1, xlim = c(-2.5, 2), ylim = c(0, 1.0), type = "n",
   axes = FALSE, ylab = "", xlab = "", yaxs = "i")
 #abline(v = 0, lty = 1, col = "#00000070")
 segments(0, 0, 0, 0.75, lty = 1, col = "#00000070")
@@ -167,7 +167,7 @@ pfunc(dh$x, dh$y, col = pal[1], alpha = "15")
 par(mgp = c(2, 0.5, 0))
 par(tck = -0.02)
 axis(1, at = log(ticks), ticks, cex.axis = 1.1, col.axis = "grey40", col = "grey40")
-mtext(expression(Skewness~parameter~(gamma)), side = 1, col = "grey20", line = 2.5)
+mtext(expression(Skewness~parameter~(gamma)), side = 1, col = "grey20", line = 2.5, cex = 0.9)
 #mtext("Skewed", side = 1, col = "grey40", line = -6.7, adj = 0.05)
 #mtext("down", side = 1, col = "grey40", line = -5.3, adj = 0.05)
 
@@ -175,13 +175,13 @@ mtext(expression(Skewness~parameter~(gamma)), side = 1, col = "grey20", line = 2
 # mtext("up", side = 1, col = "grey40", line = -5.3, adj = 0.87)
 
 add_label(label = "b", cex = 1.8, font = 2, yfrac = -0.05)
-add_label(label = "Skewness parameter posteriors", cex = 1.5, font = 1,
+add_label(label = "Skewness parameter posteriors", cex = 1.4, font = 1,
   yfrac = -0.05, xfrac = 0.05, col = "grey20")
 
 par(xpd = NA)
-text(log(1.2), 0.63, "Normal tails", col = pal[3], pos = 4, cex = 1.2)
-text(log(1), 0.73, "Slightly heavy tails", col = pal[2], pos = 4, cex = 1.2)
-text(log(0.79), 0.83, "Heavy-tailed populations", col = pal[1], pos = 4, cex = 1.2)
+text(log(1.2), 0.63, "Normal tails", col = pal[3], pos = 4, cex = 1.1)
+text(log(1), 0.73, "Slightly heavy tails", col = pal[2], pos = 4, cex = 1.1)
+text(log(0.79), 0.83, "Heavy-tailed populations", col = pal[1], pos = 4, cex = 1.1)
 par(xpd = FALSE)
 
 # spark lines with projections:
@@ -268,9 +268,9 @@ for (i in ids) {
   this_dat <- filter(plot_dat2, main_id == i)
   spark(this_dat)
   if (ii == 1) {
-    add_label(label = "c", cex = 1.8, font = 2, yfrac = -0.42, xfrac = -0.2)
-    add_label(label = "Example time series", cex = 1.5, font = 1,
-      xfrac = -0.08, col = "grey20", yfrac = -0.42)
+    add_label(label = "c", cex = 1.8, font = 2, yfrac = -0.5, xfrac = -0.16)
+    add_label(label = "Example time series", cex = 1.4, font = 1,
+      xfrac = -0.08, col = "grey20", yfrac = -0.5)
   }
   meta <- filter(gomp_hat_skew, main_id == unique(this_dat$main_id))
   sk_param <- sprintf("%.1f", round(exp(meta$log_skew_50), 1))
@@ -286,7 +286,7 @@ par(mgp = c(2, 0.35, 0))
   if (ii == 4)
     axis(1, col = "grey40", col.axis = "grey40", cex.axis = 1.1)
 
-mtext("Years", side = 1, line = 2.2, col = "grey20")
+mtext("Years", side = 1, line = 2.2, col = "grey20", cex = 0.9)
 
 dev.off()
 
