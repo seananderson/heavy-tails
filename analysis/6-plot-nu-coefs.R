@@ -17,9 +17,9 @@ add_label <- function(xfrac = -0.02, yfrac = -0.04, label = "", pos = 4, ...) {
 }
 
 set.seed(1) # for jittering
-pdf("nu-coefs-2.pdf", width = 3.8, height = 9.5)
+pdf("nu-coefs-2.pdf", width = 3.8, height = 9.2)
 
-par(mfrow = c(4, 1), mar = c(1.5,0,0,0), oma = c(2.2, 3.5, 1, .8), tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
+par(mfrow = c(4, 1), mar = c(1.5,0,0,0), oma = c(1.8, 3.5, 1, .8), tck = -0.02, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
 par(cex = 0.9)
 
 for(i in 1:length(classes)) {
@@ -33,7 +33,8 @@ for(i in 1:length(classes)) {
   plot(1, 1, type = "n", xlim = c(-0.2, 100.2), ylim = c(0, 0.5), xlab = "", ylab = "", yaxt = "n", xaxs = "i", yaxs = "i", xaxt = xaxt, las = 1)
   #axis(2, at = seq(0, 100, 50), las = 1)
   par(xpd = NA)
-  add_label(label = paste0("(", letters[i], ") ", classes[i]))
+  add_label(label = letters[i], font = 2, cex = 1.2)
+  add_label(label = classes[i], xfrac = 0.03)
   if(i == 1) {
     mtext("Heavy", side = 2, line = 2.5, adj = 0.90, col = "grey55")
     mtext("tails", side = 2, line = 1.5, adj = 0.85, col = "grey55")
@@ -50,7 +51,7 @@ for(i in 1:length(classes)) {
 
   segments(x$sort_id_perc, 1/x$nu_5, x$sort_id_perc, 1/x$nu_95, lwd = 1.1, col = "grey60")
   segments(x$sort_id_perc, 1/x$nu_25, x$sort_id_perc, 1/x$nu_75, lwd = 1.3, col = "grey30")
-  points(x$sort_id_perc, 1/x$nu_50, pch = 21, col = "grey10", lwd = 0.5, bg = x$coef_col, cex = 0.7)
+  points(x$sort_id_perc, 1/x$nu_50, pch = 21, col = "grey10", lwd = 0.5, bg = x$coef_col, cex = 0.85)
 
   par(xpd = NA)
   p <- readPicture(pics[i])
@@ -93,7 +94,7 @@ for(i in 1:length(classes)) {
       cex = 0.8, cex.axis= 0.8, lwd = 0, col.axis = "grey30", line = -0.36)
     axis(1, at = c(0, 0.5, 1), col = "grey30", lwd = 0.7, tck = -0.04,
       mgp = c(2, 0.25, 0), col.axis = "grey30", cex.axis = 0.8)
-    mtext(expression(p(nu<10)), side = 1, line = 1.4, cex = 0.8, col = "grey30")
+    mtext(expression(Pr(nu<10)), side = 1, line = 1.4, cex = 0.8, col = "grey30")
     abline(h = as.numeric(as.factor(x$taxonomic_order)), col = "grey93", lwd = 0.7, lty = 1)
     par(xpd = NA)
     points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = x$p_col,
@@ -106,7 +107,7 @@ for(i in 1:length(classes)) {
 
 par(xpd = NA)
 mtext(quote(t~distribution~degrees~of~freedom~(widehat(nu))), outer = TRUE, side = 2, line = 2.2)
-mtext("Percentage of populations", outer = TRUE, side = 1, line = 1)
+mtext("Percentage of populations", outer = TRUE, side = 1, line = 0.4)
 par(xpd = FALSE)
 
 dev.off()
