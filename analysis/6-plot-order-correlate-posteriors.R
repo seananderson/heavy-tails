@@ -126,11 +126,10 @@ for(i in seq_along(op)) {
 axis(2, at = seq_along(op),
   labels = as.character(unlist(lapply(op, function(x) x$taxonomic_order))),
   las = 1, lwd = 0, line = -0.6)
-axis(1, at = seq(0, 0.3, 0.1))
-mtext(quote(Pr(nu<10)), side = 1, line = 2, cex = 0.8)
-mtext("Probability of black swans", side = 1, line = 3, cex = 0.8,
-  col = subtext_col)
-mtext("(a)", side = 3, line = 0, cex = 0.8, adj = -0.7)
+axis(1, at = seq(0, 0.3, 0.1), mgp = c(2, 0.3, 0))
+mtext("Probability of black swans", side = 1, line = 1.8, cex = 0.8)
+mtext(quote(Pr(nu<10)), side = 1, line = 3, cex = 0.8, col = subtext_col)
+mtext("a", side = 3, line = 0, cex = 1.2, adj = -0.6, font = 2)
 
 ################
 # the main coefficients:
@@ -168,7 +167,7 @@ for(i in ord) {
     j + x_med_dens_height/scaling_factor,
     col = "grey50", lwd = 1)
 }
-axis(1)
+axis(1, mgp = c(2, 0.3, 0), tck = -0.045)
 axis(2, at = 1:5, labels = coefs[ord], las = 1, lwd = 0, line = -0.6)
 
 # axis(2, at = seq_along(op),
@@ -180,7 +179,7 @@ mtext("Coefficient value", side = 1, line = 1.55,
   cex = 0.8, outer = FALSE)
 mtext("(per 2 SDs of predictor)", side = 1, line = 2.6,
   cex = 0.8, outer = FALSE, col = subtext_col)
-mtext("(b)", side = 3, line = 0.5, cex = 0.8, adj = -0.7)
+mtext("b", side = 3, line = 0.5, cex = 1.2, adj = -0.6, font = 2)
 
 
 dev.off()
