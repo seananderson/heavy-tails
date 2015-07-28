@@ -59,26 +59,26 @@ moderate <- filter(sk, h1 == "2 moderate")$log_skew %>% sort
 heavy <- filter(sk, h1 == "1 heavy")$log_skew %>% sort
 
 ticks <- c(0.2, 0.5, 1, 2, 5)
-pdf("skewness-densities-base.pdf", width = 5, height = 4)
-par(yaxs = "i")
-pal <- c(RColorBrewer::brewer.pal(6, "YlOrRd")[c(5,4)], "#4D4D4D")
-dn <- density(normal, from = min(sk$log_skew), to = max(sk$log_skew))
-dm <- density(moderate, from = min(sk$log_skew), to = max(sk$log_skew))
-dh <- density(heavy, from = min(sk$log_skew), to = max(sk$log_skew))
-plot(1, 1, xlim = c(-2, 2), ylim = c(0, 1.0), type = "n", axes = FALSE, ylab = "", xlab = "")
-pfunc <- function(x, y, col, alpha = 50, fill = TRUE) {
-  if (fill) {
-    polygon(c(x, rev(x)), c(y, rep(0, length(y))), border = NA,
-      col = paste0(col, alpha))
-  }
-  lines(x, y, col = col, lwd = 1.8)
-}
-pfunc(dn$x, dn$y, col = pal[3], alpha = "15")
-pfunc(dm$x, dm$y, col = pal[2], alpha = "15")
-pfunc(dh$x, dh$y, col = pal[1], alpha = "15")
-axis(1, at = log(ticks), ticks)
-abline(v = 0, lty = 2)
-dev.off()
+# pdf("skewness-densities-base.pdf", width = 5, height = 4)
+# par(yaxs = "i")
+# pal <- c(RColorBrewer::brewer.pal(6, "YlOrRd")[c(5,4)], "#4D4D4D")
+# dn <- density(normal, from = min(sk$log_skew), to = max(sk$log_skew))
+# dm <- density(moderate, from = min(sk$log_skew), to = max(sk$log_skew))
+# dh <- density(heavy, from = min(sk$log_skew), to = max(sk$log_skew))
+# plot(1, 1, xlim = c(-2, 2), ylim = c(0, 1.0), type = "n", axes = FALSE, ylab = "", xlab = "")
+# pfunc <- function(x, y, col, alpha = 50, fill = TRUE) {
+#   if (fill) {
+#     polygon(c(x, rev(x)), c(y, rep(0, length(y))), border = NA,
+#       col = paste0(col, alpha))
+#   }
+#   lines(x, y, col = col, lwd = 1.8)
+# }
+# pfunc(dn$x, dn$y, col = pal[3], alpha = "15")
+# pfunc(dm$x, dm$y, col = pal[2], alpha = "15")
+# pfunc(dh$x, dh$y, col = pal[1], alpha = "15")
+# axis(1, at = log(ticks), ticks)
+# abline(v = 0, lty = 2)
+# dev.off()
 
 group_by(sk, h1) %>%
   summarise(p_lt0 = sum((log_skew < 0))/n(),
@@ -100,8 +100,8 @@ pfunc2 <- function(nu, skew, col, label1 = "", label2 = "") {
     axes = FALSE, ylab = "", xlab = "")
   lines(on$x, on$dens, col = paste0(pal[3], 40), lwd = 1.8, lty = 1)
   lines(p$x, p$dens, col = col, lwd = 1.8)
-  mtext(label1, side = 1, col = "grey40", line = 0.1)
-  mtext(label2, side = 1, col = "grey40", line = 1.6)
+  mtext(label1, side = 1, col = "grey40", line = 0.1, cex = 0.85)
+  mtext(label2, side = 1, col = "grey40", line = 1.6, cex = 0.85)
 }
 
 add_label <- function(xfrac = -0.02, yfrac = -0.1, label = "", pos = 4, ...) {
@@ -114,6 +114,26 @@ add_label <- function(xfrac = -0.02, yfrac = -0.1, label = "", pos = 4, ...) {
 }
 
 #dev.off()
+
+# 1. I would make all the axes numbers smaller
+# 2. Add some more white space between a and b, between the left and the
+# right, and below each of the sparkline plots.
+# 3. Need at least three numbers on each y-axis for the sparklines since
+# in log-scale, but they could be much smaller in size.
+# 4. Red grouse looks weird, why does the red lower dashed line end up
+# *above* the black dashed lower line in the last year? It might be that
+# you need to run the MCMC for a much longer run and retain a much
+# higher number of samples (100,000) to get an accurate estimate of the
+# lower 99.5-ile. Or might just be the true behavior given the higher
+# red median projected.
+# 5. The text needs to mention the numbers that are the ratio of red
+# dashed to black dashed after five years for at least these five cases.
+# It's hard to infer from the log-scale of the plot but looks
+# potentially substantial.
+# 6. in a the nu is listed first, in c the globulin (my default name
+# when I don't know the greek letter name) is listed first and nu
+# second.
+
 l <- rbind(
   c(1, 2, 3, 5, 5, 5),
   c(4, 4, 4, 6, 6, 6),
@@ -121,7 +141,7 @@ l <- rbind(
   c(4, 4, 4, 8, 8, 8)
   )
 pdf("skew-fig.pdf", width = 5, height = 4)
-par(mar = c(.5,0,0,0), oma = c(3.7, 1.5, 2.5, .5), cex = 0.6)
+par(mar = c(1,0,2.5,1), oma = c(3.7, 1.5, .5, 0), cex = 0.6)
 par(tck = -0.02)
 par(mgp = c(2, 0.8, 0))
 layout(l)
@@ -136,7 +156,7 @@ pfunc2(nu = 20, skew = 0.75, col = pal[2], label1 = expression(nu == 20), label2
 pfunc2(nu = 1e6, skew = 0.85, col = pal[3], label1 = expression(nu == infinity), label2 = expression(gamma == 0.85))
 
 # posteriors of skewness:
-par(mar = c(0, 0, 4.5, 0))
+par(mar = c(0, 0, 5, .5))
 plot(1, 1, xlim = c(-2, 2), ylim = c(0, 1.0), type = "n",
   axes = FALSE, ylab = "", xlab = "", yaxs = "i")
 #abline(v = 0, lty = 1, col = "#00000070")
@@ -204,9 +224,13 @@ before_and_projections <- readRDS("before_and_projections.rds")
 plot_dat <- before_and_projections %>% arrange(main_id, year) %>%
   filter(main_id %in% ids)
 
+# ratios of projections:
+# qqq <- before_and_projections %>% group_by(model, main_id) %>% summarise(lower = q_low3[year == 5]) %>% as.data.frame %>% group_by(main_id) %>% summarise(ratio = lower[model == "heavy-skew"] / lower[model == "normal"]);ggplot(qqq, aes(log(ratio))) + geom_density() + xlim(-2.5, 2.5)
+# round(100 - exp(quantile(qqq$ratio, probs = c(0.25, 0.5, 0.75))) * 100, 0)
+
 plot_dat2 <- inner_join(plot_dat, heavy_res)
 
-par(mar = c(0, 3.3, 1, 0))
+par(mar = c(0, 4.5, 2.5, 0))
 par(mgp = c(2, 0.35, 0))
 
 spark <- function(dat) {
