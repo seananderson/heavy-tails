@@ -1,7 +1,7 @@
 TEXT = anderson-etal-blackswan-timeseries
 MS = ms
 SOM = supp
-VERSION = 5.4
+VERSION = 5.5
 
 all: text
 
