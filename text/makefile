@@ -32,7 +32,7 @@ dropbox: text rtf
 	cp $(TEXT).pdf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).pdf
 	mv $(TEXT).rtf ~/Dropbox/heavy-tails/$(TEXT)-v$(VERSION).rtf
 	cp $(SOM).pdf ~/Dropbox/heavy-tails/$(SOM)-v$(VERSION).pdf
-	open ~/Dropbox/heavy-tails/
+	#open ~/Dropbox/heavy-tails/
 
 rtf: text
 	latex2rtf -M4 -t2 -E0 $(TEXT).tex
