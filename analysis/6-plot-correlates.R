@@ -67,7 +67,7 @@ make_panel <- function(x, xl = NULL, xu = NULL, log = "", yaxis = FALSE,
   }
   box()
   par(xpd = NA)
-  lab <- letters[i]
+  lab <- LETTERS[i]
 # legend("topleft", legend = substitute(paste("(", lab, ") ", label)),
   legend("topleft", legend = lab,
     bty = "n", inset = c(-0.1, -0.03), cex = 1, text.font = 2)

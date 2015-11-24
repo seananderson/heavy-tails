@@ -33,7 +33,7 @@ for(i in 1:length(classes)) {
   plot(1, 1, type = "n", xlim = c(-0.2, 100.2), ylim = c(0, 0.5), xlab = "", ylab = "", yaxt = "n", xaxs = "i", yaxs = "i", xaxt = xaxt, las = 1)
   #axis(2, at = seq(0, 100, 50), las = 1)
   par(xpd = NA)
-  add_label(label = letters[i], font = 2, cex = 1.2)
+  add_label(label = LETTERS[i], font = 2, cex = 1.2)
   add_label(label = classes[i], xfrac = 0.03)
   if(i == 1) {
     mtext("Heavy", side = 2, line = 2.5, adj = 0.90, col = "grey55")
