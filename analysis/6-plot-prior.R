@@ -63,7 +63,7 @@ TeachingDemos::subplot({
   y = c(0.01, 0.02))
 
 x <- seq(-1.1, 1.1, length.out = 200)
-plot_prior(x, dtrunc(x, "norm", a = -1, b = 1, mean = 0, sd = 1),
+plot_prior(x, dtrunc(x, "norm", a = -1, b = 1, mean = 0, sd = 0.5),
   expression(phi), xlim = c(-1.1, 1.1), label = "d")
 mtext("Probability density", side = 2, outer = TRUE, line = 1, las = 0, cex = 0.9)
 dev.off()

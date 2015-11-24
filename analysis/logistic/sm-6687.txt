@@ -1,0 +1,15 @@
+Inference for Stan model: a664c0f7495a303a05f605da827b94b9.
+4 chains, each with iter=2000; warmup=1000; thin=1; 
+post-warmup draws per chain=1000, total post-warmup draws=4000.
+
+             mean se_mean    sd  2.5%   25%   50%    75%  97.5% n_eff Rhat
+r            0.32    0.01  0.19  0.02  0.18  0.31   0.45   0.74   654 1.01
+K           89.35    2.67 52.88 34.47 60.94 72.38  93.05 264.43   391 1.01
+nu         109.36    2.52 97.44  7.98 39.46 79.91 149.06 367.15  1491 1.00
+sigma_proc   0.40    0.00  0.07  0.28  0.35  0.39   0.44   0.57   947 1.00
+lp__         6.58    0.08  1.82  2.39  5.51  6.92   8.01   9.02   474 1.01
+
+Samples were drawn using NUTS(diag_e) at Fri Sep  4 17:48:29 2015.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).

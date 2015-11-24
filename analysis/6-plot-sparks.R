@@ -13,6 +13,7 @@ heavy <- plyr::join(heavy, as.data.frame(gpdd)) %>%
 get_gomp_res <- function(id_show) {
   p <- subset(gomp_hat_base, main_id == id_show)
   pop <- subset(gpdd, main_id == id_show)$population_untransformed
+  yr <- subset(gpdd, main_id == id_show)$sample_year
   res <- rep(NA, length(pop))
   for(i in 2:length(pop)) {
     res[i] <- log(pop)[i] - (p$lambda_50 + p$b_50 * log(pop[i-1]))
@@ -20,12 +21,12 @@ get_gomp_res <- function(id_show) {
   }
   l <- qnorm(0.0001, 0, sd = p$sigma_proc_50)
   u <- qnorm(0.9999, 0, sd = p$sigma_proc_50)
-  return(list(res = res, l = l, u = u))
+  return(list(res = res, l = l, u = u, yr = yr))
 }
 
 heavy_res <- plyr::ddply(heavy, "main_id", function(x) {
   qq <- get_gomp_res(x$main_id[1])
-  with(qq, data.frame(res, l, u))
+  with(qq, data.frame(res, l, u, yr))
 })
 saveRDS(heavy_res, file = "heavy_residuals.rds")
 
@@ -59,3 +60,17 @@ h <- h[,c("main_id", "p10", "common_name", "taxon_name", "exact_name", "ref", "n
 
 
 write.csv(h, file = "heavy.csv")
+
+heavy_res$bs <- ifelse(heavy_res$res < heavy_res$l | heavy_res$res > heavy_res$u,
+  TRUE, FALSE)
+b <- filter(heavy_res, bs == TRUE, yr > 0)
+b <- b %>% filter(res < l) %>% mutate(bs_frac = res / l)
+ggplot(b, aes(yr, bs_frac)) + geom_point()
+
+yrs <- gpdd %>% group_by(sample_year) %>% summarise(n = n()) %>%
+  filter(sample_year > 0)
+b_yrs <- b %>% group_by(yr) %>% summarise(nbs = n()) %>%
+  rename(sample_year = yr) %>% inner_join(yrs) %>%
+  mutate(perc_bs = nbs / n)
+ggplot(b_yrs, aes(sample_year, perc_bs)) + geom_point()
+

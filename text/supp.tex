@@ -75,13 +75,13 @@
 \makeatother
 
 
-\title{Supporting Information:\\Evidence for black-swan events in animal
+\title{Supplementary Information:\\Evidence for black-swan events in animal
   populations}
 
 \author{
 Sean C. Anderson$^{1,2}$ \and
-Trevor A. Branch$^2$ \and
-Andrew B. Cooper$^3$ \and
+Trevor A. Branch$^3$ \and
+Andrew B. Cooper$^2$ \and
 Nicholas K. Dulvy$^1$
 }
 \date{}
@@ -247,6 +247,33 @@ real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
 
 \section{Heavy-tailed Gompertz model simulations}
 
+We separated our simulation into these two components to avoid confounding two
+issues. (1) With smaller sample sizes, there may not be a stochastic draw from
+the tails of a distribution. In that case, no model, no matter how perfect,
+will be able to detect the shape of the tails. (2) Complex models may return
+biased parameter estimates if there are conceptual, computational, or coding
+errors. Our first simulation tested the first issue and our second simulation
+tested the latter. In general, our simulations show that, if anything, our
+model under predicts the magnitude and probability of heavy tailed
+events---especially given the length of the time series in the GPDD.
+
+First, we tested the ability to estimate $\nu$ given different true values of
+$\nu$ and different sample sizes. We took stochastic draws from t
+distributions with different $\nu$ values ($\nu = 3, 5, 10,$ and $10^6$
+[$\approx$ normal]), with central tendency parameters of $0$, and scale
+parameters of $1$. We started with $1600$ stochastic draws and then fit the
+models again at the first $800, 400, 200, 100, 50,$ and $25$ draws. Each time
+we recorded the posterior samples of $\nu$.
+
+Second, we tested the ability of the heavy-tailed Gompertz model to obtain
+unbiased parameter estimates when the process noise was chosen so that
+appropriate tail events were present. To generate these process deviations for
+the $\nu = 3$ and $\nu = 5$ scenarios, we repeatedly drew proposed candidate
+process deviations and estimated the central tendency, scale, and $\nu$ values
+each time. We recorded when $\hat{\nu}$ (median of the posterior) was within
+$0.2$ CVs (coefficient of variations) of the true $\nu$ value and used this
+set of random seed values in our Gompertz simulation.
+
 The following pseudo R code illustrates the procedure to generate process
 noise with effective $\nu$ values within a CV of 0.2 of the specified value
 (the actual code is available at
@@ -281,6 +308,37 @@ nu_3_seeds_N50 <- get_effective_nu_seeds(nu_true = 3)
 nu_5_seeds_N50 <- get_effective_nu_seeds(nu_true = 5)
 \end{verbatim}
 \end{footnotesize}
+
+We then fit our Gompertz models to the simulated datasets with all parameters
+(except $\nu$) set near the median values estimated in the GPDD. We repeated
+this with $50$ and $100$ samples without observation error, $50$ samples with
+observation error ($\sigma_\mathrm{obs} = 0.2$), and $50$ samples with the
+same observation error and a Gompertz model that allowed for correctly
+specified observation error magnitude. Our results indicate that the Gompertz
+model can recapture the true value of $\nu$ when the process noise was chosen
+so that appropriate tail events were present (Extended Data Fig.
+5 upper panels). The addition of observation error caused the
+model to tend to underestimate the degree of heavy-tailedness. Fitting a model
+with correctly specified observation error did not make substantial
+improvements to model bias (Extended Data Fig. 5).
+
+When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the
+models distinguished heavy and not-heavy tails reasonably well (Extended Data
+Fig. 5 lower panels). Without observation error, and using a
+probability of $0.5$ as a threshold, the model correctly classified all
+simulated systems with normally distributed process noise as not heavy tailed.
+The model would have miscategorized only one of $40$ simulations at $\nu = 5$
+across simulated populations with $50$ or $100$ time steps (Extended Data Fig.
+5, scenarios 1 and 2 in lower row, second panel from left).
+The model would have correctly categorized all cases where the process noise
+was not heavy tailed (Extended Data Fig. 5 bottom-right
+panel) and all cases where $\nu = 3$ and there was not observation error. With
+$0.2$ standard deviations of observation error, the model still categorized
+\obsErrorNuFivePerc\% of cases as heavy tailed when $\nu = 5$ and all but one
+case when $\nu = 3$. Allowing for observation error made little improvement to
+the detection of heavy tails. Therefore, we chose to focus on the simpler
+model without observation error in the main text, particularly given that the
+true magnitude of observation error was unknown in the empirical data.
 
 %\clearpage
 \section{Additional acknowledgements}
@@ -361,17 +419,59 @@ obtained with the help of the rphylopic R package,
 \clearpage
 
 \noindent
-Example Stan code for a heavy-tailed Gompertz model with AR1 correlated
-residuals and a specified level of observation error. The specific code for
+Example Stan code for a heavy-tailed Gompertz model. The specific code for
 the various models in our analysis is available at
-\url{https://github.com/seananderson/heavy-tails}.
+\url{https://github.com/seananderson/heavy-tails} (currently private).
 
 %\begin{spacing}{1.15}
+%% \begin{footnotesize}
+%% \begin{verbatim}
+%% data {
+%%   int<lower=3> N;              // number of observations
+%%   vector[N] y;                 // vector to hold ln abundance observations
+%%   real<lower=0> nu_rate;       // rate parameter for nu exponential prior
+%% }
+%% parameters {
+%%   real lambda;                 // Gompertz growth rate parameter
+%%   real<lower=-1, upper=2> b;   // Gompertz density dependence parameter
+%%   real<lower=0> sigma_proc;    // process noise scale parameter
+%%   real<lower=2> nu;            // t-distribution degrees of freedom
+%%   real<lower=-1, upper=1> phi; // AR1 parameter
+%%   vector[N] U;                 // unobserved states
+%%   real<lower=0> sigma_obs;     // specified observation error SD
+%% }
+%% transformed parameters {
+%%   vector[N] epsilon;           // error terms
+%%   epsilon[1] <- 0;
+%%   for (i in 2:N) {
+%%     epsilon[i] <- U[i] - (lambda + b * U[i - 1])
+%%                        - (phi * epsilon[i - 1]);
+%%   }
+%% }
+%% model {
+%%   // priors:
+%%   nu ~ exponential(nu_rate);
+%%   lambda ~ normal(0, 10);
+%%   sigma_proc ~ cauchy(0, 2.5);
+%%   phi ~ normal(0, 1);
+%%   // data model:
+%%   for (i in 2:N) {
+%%     U[i] ~ student_t(nu,
+%%                      lambda + b * U[i - 1]
+%%                      + phi * epsilon[i - 1],
+%%                      sigma_proc);
+%%   }
+%%   y ~ normal(U, sigma_obs);
+%% }
+%% \end{verbatim}
+%% \end{footnotesize}
+%%
+
 \begin{footnotesize}
 \begin{verbatim}
 data {
-  int<lower=3> N;              // number of observations
-  vector[N] y;                 // vector to hold ln abundance observations
+  int<lower=1> N;              // number of observations
+  vector[N] y;                 // vector to hold log abundance observations
   real<lower=0> nu_rate;       // rate parameter for nu exponential prior
 }
 parameters {
@@ -379,35 +479,18 @@ parameters {
   real<lower=-1, upper=2> b;   // Gompertz density dependence parameter
   real<lower=0> sigma_proc;    // process noise scale parameter
   real<lower=2> nu;            // t-distribution degrees of freedom
-  real<lower=-1, upper=1> phi; // AR1 parameter
-  vector[N] U;                 // unobserved states
-  real<lower=0> sigma_obs;     // specified observation error SD
-}
-transformed parameters {
-  vector[N] epsilon;           // error terms
-  epsilon[1] <- 0;
-  for (i in 2:N) {
-    epsilon[i] <- U[i] - (lambda + b * U[i - 1])
-                       - (phi * epsilon[i - 1]);
-  }
 }
 model {
-  // priors:
   nu ~ exponential(nu_rate);
   lambda ~ normal(0, 10);
   sigma_proc ~ cauchy(0, 2.5);
-  phi ~ normal(0, 1);
-  // data model:
   for (i in 2:N) {
-    U[i] ~ student_t(nu,
-                     lambda + b * U[i - 1]
-                     + phi * epsilon[i - 1],
-                     sigma_proc);
+    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
   }
-  y ~ normal(U, sigma_obs);
 }
 \end{verbatim}
 \end{footnotesize}
+
 
 \clearpage
 \noindent

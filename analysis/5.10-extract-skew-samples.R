@@ -1,5 +1,9 @@
-sample_posterior <- function(path = ".", N = 1000L) {
-  f <- list.files(path, pattern = "*.rds")
+sample_posterior <- function(path = ".", N = 5000L, files = NULL) {
+  if (is.null(files)) {
+    f <- list.files(path, pattern = "*.rds")
+  } else {
+    f <- files
+  }
   samples <- plyr::ldply(f, function(x) {
 
     message(x)
@@ -32,7 +36,22 @@ sample_posterior <- function(path = ".", N = 1000L) {
 }
 
 set.seed(123)
-skew_samples   <- sample_posterior("~/scratch/heavy/gomp-base-skew/")
-normal_samples <- sample_posterior("~/scratch/heavy/gomp-base-normal/")
+skew_samples   <- sample_posterior("~/scratch/heavy/gomp-base-skew/", N = 5000L)
+normal_samples <- sample_posterior("~/scratch/heavy/gomp-base-normal/", N = 5000L)
 saveRDS(skew_samples,   file = "skew_samples.rds")
 saveRDS(normal_samples, file = "normal_samples.rds")
+
+source("5-shape-data.R")
+h1 <- dplyr::filter(gomp_hat_skew, nu_50 < 30)
+h2 <- dplyr::filter(gomp_hat_base, p10 >= 0.5)
+heavy_ids <- union(h1$main_id, h2$main_id)
+write.csv(heavy_ids, file = "heavy_ids.csv", row.names = FALSE)
+
+heavy_ids <- read.csv("heavy_ids.csv")$x
+set.seed(123)
+skew_samples   <- sample_posterior("~/scratch/heavy/gomp-base-skew/", N = 40000L,
+  files = paste0("sm-", heavy_ids, ".rds"))
+normal_samples <- sample_posterior("~/scratch/heavy/gomp-base-normal/", N = 40000L,
+  files = paste0("sm-", heavy_ids, ".rds"))
+saveRDS(skew_samples,   file = "skew_samples_heavy40000.rds")
+saveRDS(normal_samples, file = "normal_samples_heavy40000.rds")

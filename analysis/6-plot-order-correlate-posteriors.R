@@ -86,10 +86,10 @@ x <- rexp(2e6, 0.01)
 x <- x[x > 2]
 prior_p10 <- length(x[x < 10])/length(x)
 
-pdf("order-posteriors-covariates.pdf", width = 3, height = 5.65)
+pdf("order-posteriors-covariates.pdf", width = 3.1, height = 5.65)
 #layout(mat =c(rep(1, 4), rep(2, 9)))
 layout(mat =c(rep(1, 9), rep(2, 4)))
-par(mar = c(4.1,2,1.4,0), oma = c(0.2, 5.2, 0, 0.8),
+par(mar = c(4.1,2,1.4,0), oma = c(0.2, 5.9, 0, 0.8),
   tck = -0.04, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
 par(cex = 0.8)
 
@@ -138,14 +138,15 @@ m <- readRDS("beta-stan-samples.rds") # or reload this
 means <- plyr::laply(extract(m), mean)[1:5]
 ord <- order(means)
 
-coefs <- c(expression(lambda), expression(b), expression(log(sigma)),
-  expression(log(Time~steps)), expression(log(Lifespan)))
+coefs <- c(expression(Productivity~(lambda)), expression(Density~dep.~(b)),
+  expression(Process~noise~ln(sigma)),
+  expression(ln(Time~steps)), expression(ln(Lifespan)))
 
 plot(1, 1, xlim = c(-1, 1), ylim = c(0.5, 5.5), main = "", axes = FALSE, yaxs = "i",
   type = "n", yaxs = "i", yaxt = "n", xlab = "", ylab = "")
 scaling_factor <- 8
 
-abline(v = 0, lty = 1, col = "grey60")
+abline(v = 0, lty = 2, col = "grey60")
 j <- 0
 for(i in ord) {
   j <- j + 1

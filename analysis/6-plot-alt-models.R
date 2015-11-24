@@ -4,6 +4,19 @@ gomp_hat_base <- arrange(gomp_hat_base, main_id)
 gomp_hat_obs_0.2 <- arrange(gomp_hat_obs_0.2, main_id)
 gomp_hat_logistic <- arrange(gomp_hat_logistic, main_id)
 gomp_hat_rate <- arrange(gomp_hat_rate, main_id)
+gomp_hat_ar1 <- arrange(gomp_hat_ar1, main_id)
+
+heavy_ids <- filter(gomp_hat_base, p10 >= 0.50)$main_id
+
+check_nc_heavy <- function(dat, heavy_ids) {
+  nc <- filter(dat, max_rhat > 1.05 | min_neff < 200)$main_id
+  x <- nc[nc %in% heavy_ids]
+  if (length(x) > 0) warning(paste(x, collapse = ", "))
+}
+check_nc_heavy(gomp_hat_obs_0.2, heavy_ids)
+check_nc_heavy(gomp_hat_logistic, heavy_ids)
+check_nc_heavy(gomp_hat_rate, heavy_ids)
+check_nc_heavy(gomp_hat_ar1, heavy_ids)
 
 cols_df <- data.frame(col =
     c(RColorBrewer::brewer.pal(4, "Set3")[c(3, 4, 1, 2)],
@@ -15,6 +28,10 @@ cols_df <- data.frame(col =
 comp_panel <- function(xdat, ydat, xlab, ylab, label = "") {
 
   not_converged <- which(ydat$max_rhat > 1.05)
+  if (length(not_converged) > 0) {
+    message(paste(paste(not_converged, collapse = ", "),
+      "didn't converge and will not be plotted"))
+  }
   if(length(not_converged) > 0) {
     xdat <- xdat[-not_converged, ]
     ydat <- ydat[-not_converged, ]

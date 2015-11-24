@@ -41,7 +41,6 @@ sim_gomp_extinction <- function(y1, abundance_ts = NULL, lambda = 1, b = 0.5, N 
   model = c("heavy-skewd", "normal")) {
 
   y1 <- log(y1)
-
   if (bootstrap_residuals) {
     log_abundance_ts <- log(abundance_ts)
     res <- log_abundance_ts[-1] - (lambda + b * log_abundance_ts[-length(abundance_ts)])
@@ -65,9 +64,13 @@ sim_gomp_extinction <- function(y1, abundance_ts = NULL, lambda = 1, b = 0.5, N 
 # some heavy tail IDs to look at:
 # ids <- c(6528, 10127, 20579)
 
+source("5-shape-data.R")
+# heavy_pops <- dplyr::filter(gomp_hat_skew, log_skew_50 < 0.7, nu_50 < 30)
+heavy_pops <- dplyr::filter(gomp_hat_base, p10 >= 0.5)
+
 gpdd <- readRDS("gpdd-clean.rds") # to get the last abundance
-skew_samples <- readRDS("skew_samples.rds")
-normal_samples <- readRDS("normal_samples.rds")
+skew_samples <- readRDS("skew_samples_heavy40000.rds")
+normal_samples <- readRDS("normal_samples_heavy40000.rds")
 
 library("doParallel")
 registerDoParallel(cores = 4)
@@ -78,33 +81,38 @@ last_abund <- group_by(gpdd, main_id) %>%
 skew_samples <- inner_join(skew_samples, last_abund, by = "main_id")
 normal_samples <- inner_join(normal_samples, last_abund, by = "main_id")
 
-ww <- skew_samples %>% group_by(main_id) %>% mutate(heavyness = ifelse(median(nu) < 10, "heavy", ifelse(median(nu) < 70, "moderate", "normal"))) %>% group_by(main_id, heavyness) %>% summarise(ci_low_skew = quantile(log_skew, probs = 0.025), ci_up_skew = quantile(log_skew, probs = 0.975)) %>% mutate(skew_ci_contains_zero = ifelse(ci_low_skew < 0 & ci_up_skew > 0, TRUE, FALSE)) %>% as.data.frame()
+ww <- skew_samples %>% group_by(main_id) %>%
+  mutate(heavyness = ifelse(median(nu) < 10, "heavy",
+    ifelse(median(nu) < 70, "moderate", "normal"))) %>%
+  group_by(main_id, heavyness) %>%
+  summarise(ci_low_skew = quantile(log_skew, probs = 0.025),
+    ci_up_skew = quantile(log_skew, probs = 0.975)) %>%
+  mutate(skew_ci_contains_zero =
+      ifelse(ci_low_skew < 0 & ci_up_skew > 0, TRUE, FALSE)) %>%
+  as.data.frame()
 ww <- select(ww, heavyness, skew_ci_contains_zero) %>% table
 ww
 ww / rowSums(ww) * 100
 
-source("5-shape-data.R")
-heavy_pops <- dplyr::filter(gomp_hat_skew, log_skew_50 < 0.7, nu_50 < 30)
-
 skew_samples_heavy <- filter(skew_samples, main_id %in% heavy_pops$main_id)
 normal_samples_heavy <- filter(normal_samples, main_id %in% heavy_pops$main_id)
 
-out_skew <- plyr::ldply(seq_len(20L), function(i) {
+out_skew <- plyr::ldply(seq_len(1L), function(i) {
   temp <- plyr::ddply(skew_samples_heavy, c("main_id", "sample_ids"), function(x) {
       sim_gomp_extinction(y1 = x$last_abundance, lambda = x$lambda, b = x$b,
-        N = 5L, nu = x$nu, sigma_proc = x$sigma_proc, log_skew = x$log_skew,
-        model = "heavy-skewed")})
+        N = 6L, nu = x$nu, sigma_proc = x$sigma_proc, log_skew = x$log_skew,
+        model = "heavy-skewed")}, .parallel = FALSE, .progress = "text")
   temp$iteration_id <- i
-  temp}, .parallel = TRUE)
+  temp}, .parallel = FALSE)
 saveRDS(out_skew, file = "project-skew-heavy.rds")
 
-out_normal <- plyr::ldply(seq_len(20L), function(i) {
+out_normal <- plyr::ldply(seq_len(1L), function(i) {
   temp <- plyr::ddply(normal_samples_heavy, c("main_id", "sample_ids"), function(x) {
       sim_gomp_extinction(y1 = x$last_abundance, lambda = x$lambda, b = x$b,
-        N = 5L, nu = NULL, sigma_proc = x$sigma_proc, log_skew = NULL,
-        model = "normal")})
+        N = 6L, nu = NULL, sigma_proc = x$sigma_proc, log_skew = NULL,
+        model = "normal")}, .parallel = FALSE, .progress = "text")
   temp$iteration_id <- i
-  temp}, .parallel = TRUE)
+  temp}, .parallel = FALSE)
 saveRDS(out_normal, file = "project-normal.rds")
 
 out_skew$model <- "heavy-skew"
@@ -144,5 +152,22 @@ plain_theme <- theme_bw() + theme(
   panel.grid.minor = element_blank(),
   panel.background = element_blank(),
   strip.background = element_blank())
-p <- ggplot(before_and_projections, aes(year, med, colour = model, fill = model)) + geom_line() + facet_wrap(~main_id, scales = "free") + geom_line(aes(y = q_low2), lty = 2) +  scale_y_log10() + plain_theme + ylab("Abundance")
+p <- ggplot(before_and_projections, aes(year, med, colour = model, fill = model)) +
+  geom_line() + facet_wrap(~main_id, scales = "free") +
+  geom_line(aes(y = q_low3), lty = 2) +
+  scale_y_log10() + plain_theme + ylab("Abundance")
 ggsave("heavy-skew-projections-ggplot.pdf", width = 16, height = 10)
+
+# heavy_skewed_pops <- dplyr::filter(gomp_hat_skew, log_skew_50 < 0.7, nu_50 < 30)
+
+qq <- before_and_projections %>% group_by(main_id, year) %>%
+  summarise(r = q_low3[model == "heavy-skew"]/q_low3[model == "normal"]) %>%
+  filter(year == 6)
+  # filter(main_id %in% heavy_skewed_pops$main_id)
+plot(qq$r, log = "y", ylim = c(0.2, 5))
+abline(h = 1)
+median(1/qq$r)
+plot(density(log(qq$r)), xlim = c(-2.5, 2.5))
+quantile(1/qq$r, probs = c(0, 0.25, 0.5, 0.75, 1)) %>%
+  round(1)
+saveRDS(qq, file = "skew-understimates.rds")

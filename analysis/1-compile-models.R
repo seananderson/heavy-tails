@@ -225,6 +225,45 @@ model {
 stan_logistic <- stan_model(model_code = stan_model)
 saveRDS(stan_logistic, file = "stan-logistic.rds")
 
+# Logistic-ricker model, alternative parameterization
+stan_model <-
+'data {
+  int<lower=0> N; // rows of data
+  vector[N] y; // log(numbers) at time t
+  real<lower=0> K_upper;
+  real<lower=0> r_upper;
+  real<lower=0> nu_rate; // rate parameter for nu exponential prior
+}
+parameters {
+  real<lower=0, upper=K_upper> K;
+  real<lower=0, upper=r_upper> r;
+  real<lower=0> sigma_proc;
+  real<lower=2> nu;
+}
+model {
+  sigma_proc ~ cauchy(0, 2.5);
+  nu ~ exponential(nu_rate);
+  for (i in 2:N) {
+    y[i] ~ student_t(nu, y[i-1] + r * (1 - exp(y[i-1]) / K), sigma_proc);
+  }
+}
+'
+stan_logistic2 <- stan_model(model_code = stan_model)
+saveRDS(stan_logistic2, file = "stan-logistic2.rds")
+
+## test
+# x <- vector(length = 40)
+# x[1] <- 2
+# r <- 0.6
+# K <- 20
+# for (i in 2:40) {
+#   x[i] <- x[i-1] + r * (1 - exp(x[i-1]) / K) + rnorm(1, 0, 0.2)
+# }
+# model <- readRDS("stan-logistic2.rds")
+# sm <- sampling(model, data = list(N = length(x), y = x, K_upper = exp(max(x)) * 2,
+#   r_upper = 10, nu_rate = 0.01))
+##
+
 # AR1 Gompertz that has been extensively tested
 # coded similarly to the Stan 2.4.0 manual
 stan_model <-
@@ -234,6 +273,7 @@ stan_model <-
   real<lower=0> nu_rate; // rate parameter for nu exponential prior
   real b_lower;
   real b_upper;
+  real phi_sd;
 }
 parameters {
   real lambda;
@@ -254,7 +294,7 @@ model {
   nu ~ exponential(nu_rate);
   lambda ~ normal(0, 10);
   sigma_proc ~ cauchy(0, 2.5);
-  phi ~ normal(0, 1);
+  phi ~ normal(0, phi_sd);
   for (i in 2:N) {
     y[i] ~ student_t(nu,
                      lambda + b * y[i - 1]

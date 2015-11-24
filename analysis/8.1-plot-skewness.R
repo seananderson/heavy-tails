@@ -21,7 +21,7 @@ plain_theme <- theme_bw() + theme(
 p <- ggplot(o, aes(x, V1, colour = nu_label)) + geom_line() +
   facet_wrap(~skew_label, nrow = 1) + ylab("Probability density") +
   xlab("x") + plain_theme + labs(colour=expression(nu))
-  print(p)
+  # print(p)
 ggsave("skew-t-illustration.pdf", width = 9, height = 2)
 
 source("5-shape-data.R")
@@ -191,8 +191,8 @@ par(xpd = FALSE)
 # 7099 hare - but re-run with - nu 27, skew 0.5
 # red grouse - 10039 parasites and predators
 
-ids <- c(10113, 7099, 10039, 20579)
-n_project <- 5L - 1L
+ids <- c(10113, 7099, 1235, 20579)
+n_project <- 6L - 1L
 
 get_gomp_res <- function(pop, sigma_proc, lambda, b) {
   res <- rep(NA, length(pop))
@@ -235,10 +235,10 @@ par(mgp = c(2, 0.35, 0))
 
 spark <- function(dat) {
   ylim <- log(range(na.omit(c(dat$q_low3, dat$med))))
-  plot(1, 1, xlim = c(-54, 5), ylim = ylim,
+  plot(1, 1, xlim = c(-54, 6), ylim = ylim,
     type = "n", xlab = "", ylab = "", axes = FALSE)
 
-  rect(1, min(ylim), 5, max(ylim), col = "grey90", border = NA)
+  rect(1, min(ylim), 6, max(ylim), col = "grey90", border = NA)
 
   dat_d <- filter(dat, year <= 1, model == "normal")
   dat_pr_n <- filter(dat, year >= 1, model == "normal")
