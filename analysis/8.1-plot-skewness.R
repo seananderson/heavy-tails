@@ -104,7 +104,7 @@ pfunc2 <- function(nu, skew, col, label1 = "", label2 = "") {
   mtext(label2, side = 1, col = "grey40", line = 1.6, cex = 0.85)
 }
 
-add_label <- function(xfrac = -0.02, yfrac = -0.1, label = "", pos = 4, ...) {
+add_label <- function(xfrac = -0.03, yfrac = -0.1, label = "", pos = 4, ...) {
   par(xpd = NA)
   u <- par("usr")
   x <- u[1] + xfrac * (u[2] - u[1])
@@ -149,7 +149,7 @@ layout(l)
 
 # illustrations of skew-nu vs. normal:
 pfunc2(nu = 5, skew = 0.65, col = pal[1], label1 = expression(nu == 5), label2 = expression(gamma == 0.65))
-add_label(label = "A", cex = 1.8, font = 2, yfrac = -0.64)
+add_label(label = "A", cex = 1.8, font = 2, yfrac = -0.64, xfrac = -0.075)
 add_label(label = "Process deviation shape", cex = 1.4, font = 1,
   xfrac = 0.2, col = "grey20", yfrac = -0.64)
 pfunc2(nu = 20, skew = 0.75, col = pal[2], label1 = expression(nu == 20), label2 = expression(gamma == 0.75))
@@ -268,7 +268,7 @@ for (i in ids) {
   this_dat <- filter(plot_dat2, main_id == i)
   spark(this_dat)
   if (ii == 1) {
-    add_label(label = "C", cex = 1.8, font = 2, yfrac = -0.5, xfrac = -0.16)
+    add_label(label = "C", cex = 1.8, font = 2, yfrac = -0.5, xfrac = -0.19)
     add_label(label = "Example time series", cex = 1.4, font = 1,
       xfrac = -0.08, col = "grey20", yfrac = -0.5)
   }
