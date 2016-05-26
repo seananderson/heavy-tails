@@ -2,6 +2,7 @@
 
 - [ ] check the word count 
 - [ ] adjust title page 
+- [ ] adjust letter format in figure panels 
 - [ ] check abstract < [150]
 - [ ] check about moving methods into main document 
 - [ ] check double spacing of legends 
