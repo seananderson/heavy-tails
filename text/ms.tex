@@ -575,72 +575,60 @@ synchrony of multiple extrinsic forces could give rise to black-swan dynamics
 through synergistic interactions \citep{kirby2009} or a rare alignment of
 non-synergistic forces \citep{denny2009}.
 
-Given the multitude of reasons why a population modeler might expect heavy tail process noise, what should a population modeler do?
+There are a number of caveats when considering the generality of our results.
+The GPDD data represent a taxonomically and geographically biased sample of
+populations---the longer time series we focus on are dominated by commercially
+and recreationally important species and a disproportionate number of
+populations are located in the United Kingdom. Although we would expect to find
+qualitatively similar evidence for black swans in other large taxonomic or
+geographic samples of populations, the common forces driving those black swans
+would likely differ. Additionally, some apparent black-swan events could be
+recording mistakes, or conversely, some extreme observations may have been
+discarded or altered if they were erroneously suspected of being recording
+mistakes. Indeed, we discarded three of the populations that our method
+initially identified as heavy tailed because they turned out to be data-entry
+errors. Finally, the temporal scales of observation and population dynamics
+vary considerably across populations in the GPDD and these likely influence the
+detection of heavy tails. For example, if we make frequent observations
+relative to generation time (e.g.~for many large-bodied mammals) we will
+average across generations and perhaps miss black-swan events. Conversely, if
+we census populations infrequently relative to generation time (e.g.~many
+insects in the GPDD) the recorded data may average across extreme and
+less-extreme events and also dampen black-swan dynamics.
 
-Essentially any reason for why a population modeler has incorrectly specified
-the exact process generating the abundance times there is under question could
-generate have detailed process noise.
-
-We think modelers should routinely consider substituting a heavy tailed
-distribution, such as the student t-distribution, to represent the process
-noise in population dynamic modeling. Especially when making forecasts to make
-predictions about risk of specified bad events.
-
-But what heavy tailed distribution to pick?
-
-This is an open research question. However, we think the student t-distribution
-represents a simple solution in that it can be easily substituted for the
-normal distribution and if the degrees of freedom are fixed at a moderately
-heavy level it doesn't require the estimation of any extra parameters over the
-normal distribution.
-
-And if we use a student t-distribution than what degrees of freedom parameter should be you assume?
-
-The exact shape of the tails has been shown to be important in the field of
-dispersal biology -- has a big effect on dynamic \citep{kot1996}
-\citep{clark1999}
-\citep{kot1996}
-
-The degrees of
-freedom could be estimated from meta-analysis but even here using one of the
-best large data sets of animal abundance timeseries the timeseries are
-relatively short and the taxonomy is a biased sample of species of interest to humans  economic
-interest ...
-
-for example the majority of the blocks one offense that we observed were
-population crashes This could be due to basic biology --- animal birthrates are
-constrained whereas every animal can die --- on the other hand it could be due
-to the biased sample of species in the data set which represent species of
-concern to humans and we don't have much data for highly reproductive species
-that are not threatened or of economic interest
-
-If there is any reason for a model are to expect that external forces could act
-or that there is a mixture of distributions through spatial heterogeneity we
-think it is prudent to err on the side of caution and allow for heavy tailed
-process noise in forecasts
-
-The barring a better estimate we might suggest using a degrees of freedom parameter around 5
-
-this allows for a catastrophic event of an x fold decline of abundance that
-happens every Y years compared to a normal distribution allowing only for this
-event to happen every Z years.
-
-But what was once considered a one in X million event then becomes a one in Y
-million event
-
-A t-distribution compared to a normal distribution on the process error he
-essentially lets us be right most of the time while allowing are models to be
-very wrong occasionally this better matches our current intuition that
-ecological surprises can and do occur
-
-Our hypothesis is that our first priority is to allow for tails that are
-heavier than the normal distribution and approximately in line with those
-discovered in this paper and our second priority is to determine exactly how
-heavy a default distribution we should assume.
-
-Answers might come from simulation analyses exploring the implications of
-different tail shapes and also from fitting population models to known time
-series of mass mortality events \citep[e.g.][]{fey2015}
+We think modelers should routinely consider representing population dynamic
+process noise with a (possibly downward-skewed)
+heavy-tailed distribution,
+especially when making forecasts to evaluate risk.
+But what heavy-tailed distribution should one pick
+and how heavy tailed should it be?
+% nearly any reason for why a population modeler has incorrectly specified the exact and full process generating the abundance times could generate a heavy tailed process noise.
+This is an open research question.
+The exact shape of the tails has proven important
+in the field of dispersal biology \citep{kot1996, clark1999}.
+Answers for the field of population dynamics
+might come from simulation analyses exploring
+the implications of different tail shapes and
+from comparing the relative fit of heavy-tailed
+population models to timeseries
+with suspected mass mortality events
+\citep[e.g.~the t distribution compared to a mixture
+of two normal distributions;][]{ward2007}.
+In the meantime, we think the t distribution
+represents a simple solution.
+It can be easily substituted for the normal distribution
+and if the degrees of freedom parameter, $\nu$,
+is fixed
+it requires estimating no more parameters
+then the normal distribution.
+Barring a better estimate, we suggest $\nu = 4$ or $5$ and possibly a skewness parameter ($\gamma$) of $\sim 0.7$ (Fig.~4a).
+Above $\nu  =  10$ the t distribution closely resembles
+the normal distribution,
+and $\nu  = 4$ or $5$ allows for an event
+three standard deviations below the mean to happen
+once every 50--65 years instead of once every $\sim$ 740 years.
+Adopting heavy-tailed process noise follows the intuition
+that our models are usually reasonable but occasionally very wrong.
 
 In light of our findings, we suggest that ecological resource management can
 learn from disciplines that focus on heavy tails. For example, earthquake
