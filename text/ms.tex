@@ -153,6 +153,18 @@ compared to once every 32,000 years with a normal distribution
 As \(\nu\) approaches infinity, the t
 distribution approaches the normal distribution (Fig.~1).
 
+We picked the t distribution mainly for pragmatic reasons:
+it requires the estimation of only one additional
+parameter over the normal distribution and reverts to the normal distribution
+if strong evidence of heavy-tailed process deviations are not present.
+In addition, the t distribution has some mechanistic justification.
+The t distribution can be formed by a mixture of normal distributions
+with the same mean and different variances \citep{gelman2014}.
+This could represent the effect of unmodeled spatial heterogeneity,
+a nonstationary environmental process, or
+varying responses to temperature among individuals,
+for example.
+
 \subsection{Data}
 
 We selected abundance time series from the Global Population Dynamics
@@ -558,7 +570,14 @@ Fig.~S\ref{fig:skew-projections}).
 
 \section{Discussion}
 
-There are a number of possible causes of black-swan events, including
+We systematically evaluated the presence of black-swan events in hundreds of
+animal populations. We find strong evidence for their occurrence. Black-swan
+population crashes are substantially more frequent than black-swan population
+increases and are usually driven by external events such as weather and
+disease. Therefore, ignoring the presence of black-swan events, and the
+predominance of crashes over increases, may underestimate extinction risk.
+
+There are many possible causes of black-swan events, including
 unmodelled intrinsic properties of populations or extrinsic forces acting on
 populations. For example, we could observe black-swan dynamics if we miss an
 underlying mixture of processes, since a mixture of normal distributions with
@@ -596,9 +615,23 @@ we census populations infrequently relative to generation time (e.g.~many
 insects in the GPDD) the recorded data may average across extreme and
 less-extreme events and also dampen black-swan dynamics.
 
-We think modelers should routinely consider representing population dynamic
-process noise with a (possibly downward-skewed)
-heavy-tailed distribution,
+% The models we fit may have misspecified
+% the dynamics of the populations,
+% but this is precisely the point of our paper.
+% Black swans represent extreme deviations from our expectations
+% and our expectations are represented by the models we fit.
+% However, rarely, if ever, are our models perfect representations
+% of the underlying truth.
+% We might misunderstand the breeding biology of a species,
+% the weather can suddenly change,
+% disease can suddenly spread,
+% and species can unexpectedly interact.
+
+% todo the strongest correlates of finding blocks one events was the timeseries length
+% ...implications
+
+Given our results, we think modelers should routinely consider representing population dynamic
+process noise with a heavy-tailed and downward-skewed distribution,
 especially when making forecasts to evaluate risk.
 But what heavy-tailed distribution should one pick
 and how heavy tailed should it be?
@@ -614,7 +647,7 @@ population models to timeseries
 with suspected mass mortality events
 \citep[e.g.~the t distribution compared to a mixture
 of two normal distributions;][]{ward2007}.
-In the meantime, we think the t distribution
+In the meantime, we think the t (or the skew-t) distribution
 represents a simple solution.
 It can be easily substituted for the normal distribution
 and if the degrees of freedom parameter, $\nu$,
