@@ -140,12 +140,12 @@ We fit population dynamics models in which the process noise is
 drawn from a Student-t distribution. By estimating the degrees of freedom
 parameter, \(\nu\), we can estimate the degree to which the process deviations
 have heavy tails and are therefore diagnostic of black-swan events (Fig.~1,
-fig.~S\ref{fig:priors}). Lower values of \(\nu\) result in heavy-tailed
+Fig.~S\ref{fig:priors}). Lower values of \(\nu\) result in heavy-tailed
 distributions.
 % For example, at \(\nu = 2\), an event
 % more than 4 standard deviations below the mean is expected
 For example, an event four standard deviations below the mean
-is expected to happen once every 35 years with a t distribution with \(\nu = 2\)
+is expected to happen once every 35 years with a t distribution at \(\nu = 2\)
 compared to once every 32,000 years with a normal distribution
 % more than four standard deviations below the mean is almost 70,000 times higher
 % than the probability of drawing such a value from a normal distribution
@@ -172,8 +172,7 @@ Database \citep{gpdd2010} (GPDD), which contains nearly 5,000 time series of
 abundance from \(\sim\) 1,000 species and \(\sim\) 100 taxonomic orders. We
 filtered the data (Supporting Information) to remove populations from less
 reliable data sources, and those without sufficient data for our models, and
-then interpolated some missing values (sensu Brook \textit{et
-al.} \citep{brook2006a}). Our interpolation affected only \(\sim\)
+then interpolated some missing values (sensu \citet{brook2006a}). Our interpolation affected only \(\sim\)
 \interpPointsPerc \% of the final data points (Table~S1) and none of the data
 points that were later considered black-swan events. Our final dataset
 contained \NPops\ populations across \NOrders\ taxonomic orders and seven
@@ -209,18 +208,18 @@ values above \(1\). We allowed values of \(b\) above \(1\) to allow for
 non-stationary time series of growth rates. The estimates of \(b\) were well
 within these bounds. Our prior on \(\lambda\) was weakly informative within the
 range of expected values for population growth and is similar to the default
-priors suggested by Gelman \emph{et al.} \citep{gelman2008d} for intercepts of
-regression models. Our Half-Cauchy prior on \(\sigma\) follows Gelman \emph{et
-al.} \citep{gelman2006c} and Gelman \emph{et al.} \citep{gelman2008d} and the
-specific scale parameter of \(2.5\) is based on our expected range of the value
-in nature from previous studies \citep{connors2014}. In our testing of a
-subsample of populations, our parameter estimates were not qualitatively
-changed by switching to a uniform prior on \(\sigma\), but the weakly
-informative Half-Cauchy prior sped up chain convergence.
+priors suggested by \citet{gelman2008d} for intercepts of
+regression models. Our Half-Cauchy prior on \(\sigma\) follows
+\citet{gelman2006c} and \citet{gelman2008d} and the specific scale parameter of
+\(2.5\) is based on our expected range of the value in nature from previous
+studies \citep{connors2014}. In our testing of a subsample of populations, our
+parameter estimates were not qualitatively changed by switching to a uniform
+prior on \(\sigma\), but the weakly informative Half-Cauchy prior sped up chain
+convergence.
 
 We chose a weakly informative exponential prior on \(\nu\) with rate parameter
 of \(0.01\) truncated at values above two---a slightly less informative prior
-than suggested by Fernandez and Steel \citep{fernandez1998}. We truncated the
+than suggested by \citet{fernandez1998}. We truncated the
 distribution at \(2\), since at \(\nu < 2\) the variance of the t distribution
 is undefined. This prior gives only a \(7.7\)\% probability that \(\nu < 10\)
 but constrains the sampling sufficiently to avoid drifting towards infinity. In
@@ -242,7 +241,7 @@ than \(1.05\) for any parameter, or if the minimum effective sample size,
 \(n_\mathrm{eff}\) (a measure of the effective number of uncorrelated samples),
 for any parameter was less than \(200\), we doubled both the total iterations
 and warm up period and sampled from the model again. These thresholds are in
-excess of the minimums recommended by Gelman \emph{et al.} \citep{gelman2006a} of
+excess of the minimums recommended by \citet{gelman2006a} of
 \(\hat{R} < 1.1\) and \(n_\mathrm{eff} > 100\) for reliable point estimates and
 confidence intervals. In the majority of cases our minimum thresholds were
 greatly exceeded. We continued this procedure up to 8,000 iterations (16,000
@@ -250,17 +249,6 @@ total samples) by which all chains were deemed to have sufficiently converged.
 The No-U-Turn Hamiltonian Markov chain Monte Carlo sampler in Stan generally
 requires fewer iterations to obtain equivalent effective sample sizes than the
 Gibbs or Metropolis--Hastings algorithms \citep{stan-manual2015}.
-
-Specifically, we fit population dynamics models in which the process noise is
-drawn from a Student-t distribution. By estimating the degrees of freedom
-parameter, \(\nu\), we can estimate the degree to which the process deviations
-have heavy tails and are therefore diagnostic of black-swan events (Fig.~1,
-Fig.~S\ref{fig:priors}). Lower values of \(\nu\) result in heavy-tailed
-distributions. For example, at \(\nu = 2\), the probability of drawing a value
-more than five standard deviations below the mean is almost 70,000 times higher
-than the probability of drawing such a value from a normal distribution
-(\(0.02\) vs.\ \(2.9\cdot10^{-7}\)). As \(\nu\) approaches infinity, the
-distribution approaches the normal distribution (Fig.~1).
 
 \subsection{Alternative priors}
 
@@ -272,7 +260,7 @@ used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}c). Note that
 the base and weaker priors are relatively flat within the region of \(\nu <
 20\), which is the region we are mostly concerned about when categorizing
 populations as heavy tailed. We furthermore considered a Uniform(\(0, 1\))
-prior on \(1/\nu\) as used in Gelman \emph{et al.} \citep{gelman2014}, but this
+prior on \(1/\nu\) as used in \citet{gelman2014}, but this
 prior puts considerably more weight on lower (heavy-tailed) values of \(\nu\)
 than the truncated exponential priors considered here (not shown).
 
@@ -582,7 +570,7 @@ unmodelled intrinsic properties of populations or extrinsic forces acting on
 populations. For example, we could observe black-swan dynamics if we miss an
 underlying mixture of processes, since a mixture of normal distributions with
 different variances can generate a t distribution with heavy
-tails \citep{allen2001}. In ecology, these processes could arise through an
+tails \citep{gelman2014}. In ecology, these processes could arise through an
 aggregation of populations across space, population
 diversity \citep{schindler2010}, or an intrinsic change in population variability
 through time \citep{carpenter2006}. Extrinsic ecological forces could also cause
