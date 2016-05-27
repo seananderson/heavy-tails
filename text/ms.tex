@@ -136,6 +136,23 @@ abundance time series.
 
 \section{Methods}
 
+We fit population dynamics models in which the process noise is
+drawn from a Student-t distribution. By estimating the degrees of freedom
+parameter, \(\nu\), we can estimate the degree to which the process deviations
+have heavy tails and are therefore diagnostic of black-swan events (Fig.~1,
+fig.~S\ref{fig:priors}). Lower values of \(\nu\) result in heavy-tailed
+distributions.
+% For example, at \(\nu = 2\), an event
+% more than 4 standard deviations below the mean is expected
+For example, an event four standard deviations below the mean
+is expected to happen once every 35 years with a t distribution with \(\nu = 2\)
+compared to once every 32,000 years with a normal distribution
+% more than four standard deviations below the mean is almost 70,000 times higher
+% than the probability of drawing such a value from a normal distribution
+% (\(0.02\) vs.\ \(2.9\cdot10^{-7}\)).
+As \(\nu\) approaches infinity, the t
+distribution approaches the normal distribution (Fig.~1).
+
 \subsection{Data}
 
 We selected abundance time series from the Global Population Dynamics
