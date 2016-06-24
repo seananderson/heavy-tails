@@ -80,9 +80,9 @@
   populations}
 
 \author{
-Sean C. Anderson$^{1,2*}$ \and
-Trevor A. Branch$^3$ \and
-Andrew B. Cooper$^2$ \and
+Sean C. Anderson$^{1*}$ \and
+Trevor A. Branch$^2$ \and
+Andrew B. Cooper$^3$ \and
 Nicholas K. Dulvy$^1$
 }
 \date{}
@@ -127,11 +127,11 @@ Nicholas K. Dulvy$^1$
 \textsuperscript{1}Earth to Ocean Research Group, Department of Biological
 Sciences, Simon Fraser University, Burnaby BC, V5A 1S6, Canada
 
-\textsuperscript{2}School of Resource and Environmental Management, Simon
-Fraser University, Burnaby, BC, V5A 1S6, Canada
-
-\textsuperscript{3}School of Aquatic and Fishery Sciences, University of
+\textsuperscript{2}School of Aquatic and Fishery Sciences, University of
 Washington, Box 355020, Seattle, WA 98195, USA
+
+\textsuperscript{3}School of Resource and Environmental Management, Simon
+Fraser University, Burnaby, BC, V5A 1S6, Canada
 
 \textsuperscript{*}Corresponding author: Sean C. Anderson; E-mail: sandrsn@uw.edu; Present address: School of Aquatic and Fishery Sciences, Box 355020, University of Washington, Seattle, WA 98195, USA
 
@@ -331,42 +331,42 @@ without observation error in the main text, particularly given that the true
 magnitude of observation error was unknown in the empirical data.
 
 
-\section{Implementation of the skewed Student-t distribution in Stan}
+\section{Implementation of the skewed Student-$t$ distribution in Stan}
 
-The probability density for the skewed Student-t distribution
+The probability density for the skewed Student-$t$ distribution
 \citep{fernandez1998} equates to the following probability density as
 implemented in \citet{king2012}:
 
 \begin{equation}
-  \mathrm{Skewed\,Student\mhyphen t}(x) =
+  \mathrm{Skewed\,Student}\mhyphen t(x) =
 \begin{dcases}
 \frac{2}{(\gamma + 1/\gamma)}
-         \mathrm{Student\mhyphen t}(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
+         \mathrm{Student}\mhyphen t(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
        \frac{2}{(\gamma + 1/\gamma)}
-         \mathrm{Student\mhyphen t}(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
+         \mathrm{Student}\mhyphen t(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
 \end{dcases}
 \end{equation}
 
-Here $\gamma$ represents the skewness parameter. The Student-t($\cdot$) portion
+Here $\gamma$ represents the skewness parameter. The Student-$t$($\cdot$) portion
 represents in order: the data point of interest, the heavy-tailedness
 parameter, the location parameter, and the scale parameter as passed to the
-standard Student-t probability density. This translates to the log probability
+standard Student-$t$ probability density. This translates to the log probability
 density:
 
 \begin{equation}
-\mathrm{Skewed\,Student\mhyphen t}(x) =
+\mathrm{Skewed\,Student}\mhyphen t(x) =
 \begin{dcases}
   \log (2 \gamma) - \log(\gamma^2 + 1) +
-  \log \mathrm{Student\mhyphen t}(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
+  \log \mathrm{Student}\mhyphen t(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
   \log (2 \gamma) - \log(\gamma^2 + 1) +
-  \log \mathrm{Student\mhyphen t}(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
+  \log \mathrm{Student}\mhyphen t(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
 \end{dcases}
 \end{equation}
 
 Since Stan only needs the probability density up to an additive
 constant \citep{stan-manual2014}, we
 can replace $\log(2 \gamma)$ in the above for $\log(\gamma)$. The final log
-probability density for the skewed Student-t distribution implemented in
+probability density for the skewed Student-$t$ distribution implemented in
 Stan\footnote{Credit to Stan developer Bob Carpenter:
 \url{https://groups.google.com/d/msg/stan-users/jeZQnQRUsDs/BeqhicWm1GEJ}}
 looks like the following:
@@ -421,8 +421,8 @@ private).
 
 \singlespacing
 
-\textbf{Table~S1: Summary statistics for the filtered Global Population
-Dynamics Database time series arranged by taxonomic class.} Columns are number
+Table~S1: Summary statistics for the filtered Global Population
+Dynamics Database time series arranged by taxonomic class. Columns are number
 of populations, number of taxonomic orders, numbers of species, median time
 series length, total number of interpolated time steps, total number of
 substituted zeros, and total number of time steps.
@@ -458,7 +458,7 @@ substituted zeros, and total number of time steps.
 \singlespacing
 \begin{scriptsize}
 \begin{longtable}{>{\RaggedRight}m{1.4cm}>{\RaggedRight}p{6.2cm}>{\RaggedRight}p{0.7cm}>{\RaggedRight}p{0.4cm}>{\RaggedRight}p{4.4cm}>{\RaggedRight}p{1.4cm}}
-\caption{\textbf{Populations with a high probability of heavy-tailed dynamics in the base heavy-tailed Gompertz population dynamics model.} Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black-swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events that have a $10^{-4}$ probability or less of occurring if the population dynamics were explained by a Gompertz model with normally distributed process noise with a standard deviation equal to the scale parameter in the fitted t distribution.}\\
+\caption{Populations with a high probability of heavy-tailed dynamics in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black-swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events that have a $10^{-4}$ probability or less of occurring if the population dynamics were explained by a Gompertz model with normally distributed process noise with a standard deviation equal to the scale parameter in the fitted $t$ distribution.}\\
 
 \toprule
 \input{../analysis/cause-table.tex}
@@ -477,7 +477,7 @@ substituted zeros, and total number of time steps.
 \begin{center}
 \includegraphics[width=0.6\textwidth]{../analysis/priors-gomp-base.pdf}
 
-\caption{\textbf{Probability density of the Bayesian priors for the Gompertz models.} (\textbf{A}) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$. (\textbf{B}) scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$ (\textbf{C}) Student-t distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$. (\textbf{D}) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 0.5, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. Panel \textbf{C} also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis. Note that the base and weaker priors are relatively flat within the region of $\nu < 20$ with which we are concerned.}
+\caption{Probability density of the Bayesian priors for the Gompertz models. (\textbf{A}) per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$. (\textbf{B}) scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$ (\textbf{C}) Student-$t$ distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$. (\textbf{D}) AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 0.5, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. Panel \textbf{C} also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis. Note that the base and weaker priors are relatively flat within the region of $\nu < 20$ with which we are concerned.}
 
 \label{fig:priors}
 \end{center}
@@ -489,8 +489,8 @@ substituted zeros, and total number of time steps.
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/gomp-comparison.pdf}
 
-\caption{\textbf{Estimates of $\nu$ from alternative models plotted against the
-    base Gompertz model estimates of $\nu$.} Alternative models are (\textbf{A})
+\caption{Estimates of $\nu$ from alternative models plotted against the
+    base Gompertz model estimates of $\nu$. Alternative models are (\textbf{A})
     Ricker-logistic; (\textbf{B}) a Gompertz model with AR1 residual correlation;
     (\textbf{C}) modelling population growth rate with no density dependence; and
     (\textbf{D}) a Gompertz model with fixed magnitude of observation error. Shown
@@ -512,7 +512,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/gomp-prior-comparison.pdf}
 
-\caption{\textbf{Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$.} \textbf{A} shows a weaker prior on $\nu$, \textbf{B} shows a stronger prior on $\nu$, as illustrated in Fig.~1. Shown are medians of the posterior (dots) and 50\% credible intervals (segments). The diagonal line indicates a one-to-one relationship. Different colours indicate various taxonomic classes. The grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics. In general, the estimates are nearly identical in cases where the data are informative about low values of $\nu$. When the data are less informative about low values of $\nu$, the prior can slightly pull the estimates of $\nu$ towards higher or lower values.}
+\caption{Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. \textbf{A} shows a weaker prior on $\nu$, \textbf{B} shows a stronger prior on $\nu$, as illustrated in Fig.~1. Shown are medians of the posterior (dots) and 50\% credible intervals (segments). The diagonal line indicates a one-to-one relationship. Different colours indicate various taxonomic classes. The grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics. In general, the estimates are nearly identical in cases where the data are informative about low values of $\nu$. When the data are less informative about low values of $\nu$, the prior can slightly pull the estimates of $\nu$ towards higher or lower values.}
 
 \label{fig:alt-priors}
 \end{center}
@@ -525,7 +525,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
 \includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
 
-\caption{\textbf{Testing the ability to estimate $\nu$ (top panels) and the scale parameter of the process deviations (bottom panels) for a given number of samples (columns) drawn from a distribution with a given true $\nu$ value (rows).} The red lines indicate the true population value. When a small number of samples are drawn there may not be samples sufficiently far into the tails to recapture the true $\nu$ value; however, heavy tails are still distinguished from normal tails in most cases, even with only 25 or 50 samples.}
+\caption{Testing the ability to estimate $\nu$ (top panels) and the scale parameter of the process deviations (bottom panels) for a given number of samples (columns) drawn from a distribution with a given true $\nu$ value (rows). The red lines indicate the true population value. When a small number of samples are drawn there may not be samples sufficiently far into the tails to recapture the true $\nu$ value; however, heavy tails are still distinguished from normal tails in most cases, even with only 25 or 50 samples.}
 
 \label{fig:sim-nu}
 \end{center}
@@ -538,7 +538,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz-median-dist.pdf}
 \includegraphics[width=\textwidth]{../analysis/sim-gompertz-p10.pdf}
 
-\caption{\textbf{Simulation testing the Gompertz estimation model when the process deviation draws were chosen so that $\nu$ could be estimated close to the true value outside the full population model} (``effective $\nu$'' within a CV of 0.2 of specified $\nu$). Upper panels show the distribution of median $\widehat{\nu}$ across 20 simulation runs. Lower panels show the distribution of Pr($\nu < 10$) across 20 simulation runs. We ran the simulations across three population (``true'') $\nu$ values (3, 5, and $1\cdot 10^9$, i.e.\ approximately normal) and four scenarios: (1) 100 time steps and no observation error, (2) 50 time steps and no observation error, (3) 50 time steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but ignored, and (4) 50 time steps with observation error in which the quantity of observation error was assumed known. Within each scenario the dots represent stochastic draws from the true population distributions combined with model fits. Underlayed boxplots show the median, interquartile range, and $1.5$ times the interquartile range.}
+\caption{Simulation testing the Gompertz estimation model when the process deviation draws were chosen so that $\nu$ could be estimated close to the true value outside the full population model (``effective $\nu$'' within a CV of 0.2 of specified $\nu$). Upper panels show the distribution of median $\widehat{\nu}$ across 20 simulation runs. Lower panels show the distribution of Pr($\nu < 10$) across 20 simulation runs. We ran the simulations across three population (``true'') $\nu$ values (3, 5, and $1\cdot 10^9$, i.e.\ approximately normal) and four scenarios: (1) 100 time steps and no observation error, (2) 50 time steps and no observation error, (3) 50 time steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but ignored, and (4) 50 time steps with observation error in which the quantity of observation error was assumed known. Within each scenario the dots represent stochastic draws from the true population distributions combined with model fits. Underlayed boxplots show the median, interquartile range, and $1.5$ times the interquartile range.}
 
 \label{fig:sim-prob}
 \end{center}
@@ -548,7 +548,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/correlates-p10.pdf}
 
-\caption{\textbf{Potential covariates of heavy-tailed population dynamics (indicated by a high probability that $\nu < 10$).} Shown are (\textbf{A} to \textbf{C}) parameters from the Gompertz heavy-tailed population model ($\sigma$, $\lambda$, $b$), (\textbf{D}) number of time steps, (\textbf{E}) body length, and (\textbf{F}) lifespan. For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-t process-noise distribution, $\lambda$ refers to the expected log abundance at the next time step at an abundance of one, $b$ refers to the density dependence parameter. Circles representing a few sharks, crustaceans, and gastropods are filled in white. Median and 90\% credible interval posterior predictions of a beta regression hierarchical model are shown in panels \textbf{A} and \textbf{D} where there was a high probability the slope coefficient was different from zero (Fig.~3B).}
+\caption{Potential covariates of heavy-tailed population dynamics (indicated by a high probability that $\nu < 10$). Shown are (\textbf{A} to \textbf{C}) parameters from the Gompertz heavy-tailed population model ($\sigma$, $\lambda$, $b$), (\textbf{D}) number of time steps, (\textbf{E}) body length, and (\textbf{F}) lifespan. For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-$t$ process-noise distribution, $\lambda$ refers to the expected log abundance at the next time step at an abundance of one, $b$ refers to the density dependence parameter. Circles representing a few sharks, crustaceans, and gastropods are filled in white. Median and 90\% credible interval posterior predictions of a beta regression hierarchical model are shown in panels \textbf{A} and \textbf{D} where there was a high probability the slope coefficient was different from zero (Fig.~3B).}
 
 \label{fig:correlates}
 \end{center}
@@ -561,7 +561,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \includegraphics[width=6in]{../analysis/skew-t-illustration}
 \includegraphics[width=4in]{../analysis/skewness-vs-nu}
 
-\caption{\textbf{Skewness and heavy-tailed parameter posteriors.} Top panel shows the shape of the skew-t distribution at different combinations of skewness ($\gamma$) and heavy-tailedness ($\nu$). Lower panel shows the posterior medians and 50\% credible intervals for the two parameters. The horizontal red line indicates the median ln(skewness) parameter across all populations.}
+\caption{Skewness and heavy-tailed parameter posteriors. Top panel shows the shape of the skew-$t$ distribution at different combinations of skewness ($\gamma$) and heavy-tailedness ($\nu$). Lower panel shows the posterior medians and 50\% credible intervals for the two parameters. The horizontal red line indicates the median ln(skewness) parameter across all populations.}
 
 \label{fig:skew-nu}
 \end{center}
@@ -570,9 +570,9 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=1.1\textwidth]{../analysis/heavy-skew-projections-ggplot}
-\caption{\textbf{Projections of population abundance under skew-t (red) and
+\caption{Projections of population abundance under skew-$t$ (red) and
 normally distributed process error models (blue) for populations with
-Pr($\nu<10$) $>0.5$.} Numbers above panels indicate GPDD population IDs as
+Pr($\nu<10$) $>0.5$. Numbers above panels indicate GPDD population IDs as
 shown in table~S2. Horizontal axes indicates year before last
 recorded abundance and a projection five years into the future. For the
 projected region, solid lines represents the median projection and

@@ -38,11 +38,11 @@ population dynamics,
 risk,
 Student-$t$ distribution
 
-Words in abstract: 142
+Words in abstract: 145
 
 Words in main text: 4820
 
-Number of references: todo
+Number of references: 55
 
 Number of figures/tables: 4/0
 
@@ -71,11 +71,10 @@ and tend to be driven by extrinsic perturbations
 such as climate, severe winters, or disease.
 Thus, ignoring black-swan events will
 underestimate extinction risk.
-% Ignoring black-swan events leads to a \crashUnderMedian-fold (50\% interval \crashUnderRange) underestimate in the magnitude of population crashes.
 Our results demonstrate the importance of both
 modeling heavy-tailed downward events in populations, and developing
 conservation strategies that are robust to ecological surprises.
-
+% Ignoring black-swan events leads to a \crashUnderMedian-fold (50\% interval \crashUnderRange) underestimate in the magnitude of population crashes.
 
 % \textbf{One Sentence Summary}: Black swans---statistically improbable events
 % with profound consequences---occur in animal populations and understanding
@@ -111,14 +110,14 @@ probability of extreme events occurring \citep{taleb2007}.
 
 Whereas there are many reports of black-swan events,
 only a flexible comparative approach consistently applied 
-to a large number of timeseries can yield insights into the frequency, strength,
+to a large number of time series can yield insights into the frequency, strength,
 and correlates of black-swan events. 
 We are unaware of such a comparative analysis.
 Previous comparative analyses fitting
 heavy-tailed distributions
 (distributions with higher probabilities of extreme events
 than the normal distribution)
-to timeseries
+to time series
 have not accounted for an underlying population dynamics model
 \citep{keitt1998, allen2001, halley2002, segura2013}.
 Alternatively, most examples of population die offs come from identifying
@@ -127,15 +126,6 @@ sudden changes in abundance that exceed a threshold of decline
 But this approach gives no indication of relative event frequency
 and again does not distinguish events from
 expected dynamics.
-Methodologically, the generalized extreme value (GEV) distribution represents
-the limit distribution of a series of maxima or minima.
-Although the GEV is well-suited for physical ecological variables
-\citep[e.g.\ sedimentation rates or wind speeds;][]{gaines1993, denny2009},
-the GEV requires maxima per time block
-or peaks beyond a chosen threshold,
-and hence requires longer timeseries then typically available
-for wild populations.
-Furthermore, the GEV approach cannot be easily integrated into population dynamics models.
 
 Here, we develop a new approach to estimate the frequency and magnitude of
 black-swan dynamics across time series of 609 populations from a wide array of
@@ -161,7 +151,7 @@ Lower values of \(\nu\) result in heavy-tailed distributions.
 % more than 4 standard deviations below the mean is expected
 For example, an event four standard deviations below the mean
 is expected to happen once every 35 years with a $t$ distribution at \(\nu = 2\)
-compared to once every 32,000 years with a normal distribution
+compared to once every 32,000 years with a normal distribution.
 % more than four standard deviations below the mean is almost 70,000 times higher
 % than the probability of drawing such a value from a normal distribution
 % (\(0.02\) vs.\ \(2.9\cdot10^{-7}\)).
@@ -190,14 +180,24 @@ range of population time series to provide a
 comparative overview of the prevalence 
 of black-swan events. 
 
-This could represent the effect of unmodeled spatial heterogeneity,
-nonstationary environmental processes, or
-varying responses to temperature among individuals, for example.
+One alternative, the generalized extreme value (GEV) distribution,
+represents the limit distribution of a series of maxima or minima.
+Although the GEV is well-suited for physical ecological variables
+\citep[e.g.\ sedimentation rates or wind speeds;][]{gaines1993, denny2009},
+the GEV requires maxima per time block
+or peaks beyond a chosen threshold.
+Therefore, the GEV requires longer time series then typically available
+for wild populations.
+Furthermore, the GEV approach cannot be easily integrated into population dynamics models.
+
+% This could represent the effect of unmodeled spatial heterogeneity,
+% nonstationary environmental processes, or
+% varying responses to temperature among individuals, for example.
 
 \subsection{Data}
 
 We selected abundance time series from the Global Population Dynamics
-Database \citep{gpdd2010} (GPDD), which contains nearly 5,000 time series of
+Database \citep[GPDD,][]{gpdd2010}, which contains nearly 5,000 time series of
 abundance from \(\sim\) 1,000 species and \(\sim\) 100 taxonomic orders. We
 filtered the data (Supporting Information) to remove populations from less
 reliable data sources, and those without sufficient data for our models, and
@@ -319,7 +319,7 @@ Gompertz model in which the density dependence parameter \(b\) was fixed at
 from a stationary distribution. The model was as follows:
 \begin{align}
 x_t &= \lambda + x_{t-1} + \epsilon_t\\
-\epsilon &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma).
+\epsilon &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma).
 \end{align}
 We fit this model for three reasons: (1) it is computationally simpler and so
 provides a check that our more complicated full Gompertz model was obtaining
@@ -346,7 +346,7 @@ model that allowed for a fixed level of observation error:
 \begin{align}
 U_t &= \lambda + b U_{t-1} + \epsilon_t\\
 x_t &\sim \mathrm{Normal}(U_t, \sigma_\mathrm{obs}^2)\\
-\epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma_\mathrm{proc}),
+\epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma_\mathrm{proc}),
 \end{align}
 where \(U\) represents the served state vector, \(\sigma_\mathrm{obs}\)
 represents the standard deviation of observation error (on a log scale), and
@@ -357,7 +357,7 @@ simulation analyses \citep[e.g.][]{valpine2002, thorson2014b}.
 \subsubsection{Ricker-logistic} We also fit a Ricker-logistic model:
 \begin{align}
 x_t &= x_{t-1} + r_{\mathrm{max}}\left(1 - \frac{N_{t-1}}{K}\right) + \epsilon_t\\
-\epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma),
+\epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma),
 \end{align}
 where \(r_\mathrm{max}\) represents the theoretical maximum population growth
 rate that is obtained when \(N_t = 0\). The parameter \(K\) represents the
@@ -382,7 +382,6 @@ unbiased parameter estimates of \(\nu\) given that a set of process deviations
 was provided in which the effective \(\nu\) value was close to the true \(\nu\)
 value.
 
-\textit{TODO: Should the following 2 paragraphs go in the results?}
 We found that we could consistently and precisely recover median posterior
 estimates of \(\nu\) near the true value of \(\nu\) with large samples (\(\ge
 200\)) (Fig.~S\ref{fig:sim-nu} upper panels). At smaller samples we could
@@ -475,8 +474,8 @@ probability of heavy tails at mean log time-series length by adding the
 posteriors for \(\alpha\), \(\alpha^\mathrm{class}_j\), and
 \(\alpha^\mathrm{order}_k\).
 
-\subsection{Skewed Student-t forecasts} To evaluate the apparent skewness
-of heavy-tailed process noise we fit Gompertz models with skewed Student-t
+\subsection{Skewed Student-$t$ forecasts} To evaluate the apparent skewness
+of heavy-tailed process noise we fit Gompertz models with skewed Student-$t$
 distributed process noise \citep{fernandez1998}. This distribution adds one
 parameter to the Student-$t$ distribution, \(\gamma\), which controls the
 skewness. The distribution is symmetrical if \(\gamma = 1\), left skewed if \(0
@@ -673,7 +672,7 @@ Answers for the field of population dynamics
 might come from simulation analyses exploring
 the implications of different tail shapes and
 from comparing the relative fit of heavy-tailed
-population models to timeseries
+population models to time series
 with suspected mass mortality events
 \citep[e.g.~the $t$ distribution compared to a mixture
 of two normal distributions;][]{ward2007}.
@@ -760,19 +759,19 @@ Research Council of Canada (N.K.D., A.B.C.), the Canada Research Chairs Program
 \includegraphics[width=\textwidth]{../analysis/t-nu-eg2.pdf}
 \end{center}
 
-Fig.~1: Illustration of population dynamic models that allow for heavy
-tails. (a to b) Probability density for the Student-t
-distribution with scale parameter of 1 and different values of \(\nu\). Small
+\textbf{Figure~1} Illustration of population dynamic models that allow for heavy
+tails. (a to b) Probability density for the Student-$t$
+distribution with scale parameter of $1$ and different values of \(\nu\). Small
 values of \(\nu\) create heavy tails while as \(\nu\) approaches infinity the
 distribution approaches the normal distribution. (c to e)
 Simulated population dynamics from a Gompertz model with process noise drawn
 from Student-$t$ distributions with three values of \(\nu\). Coloured dots in
 panels c and d represent jumps with less than a 1 in 1000
 chance of occurring in a normal distribution. (f to h)
-Estimates of \(\nu\) from models fit to the times series in c to
+Estimates of \(\nu\) from models fit to the times series in panels c to
 e. Shown are posterior samples (histograms), median and interquartile
 range of the posterior (IQR, dots and line segments), and the exponential prior
-on \(\nu\) (dashed lines). Colour shading behind f to h
+on \(\nu\) (dashed lines). Colour shading behind panels f to h
 illustrates the approximate region of heavy tails.
 
 \clearpage
@@ -781,7 +780,7 @@ illustrates the approximate region of heavy tails.
 \includegraphics[width=0.36\textwidth]{../analysis/nu-coefs-2.pdf}
 \end{center}
 
-Fig.~2: Estimates of population dynamic heavy-tailedness for
+\textbf{Figure~2} Estimates of population dynamic heavy-tailedness for
 populations of birds, mammals, insects, and fishes. (a to d)
 Small values of \(\nu\) suggest heavy-tailed black-swan dynamics. Vertical
 points and line segments represent posterior medians and 50\% / 90\% credible
@@ -797,7 +796,7 @@ with a high to moderately high probability of heavy-tailed dynamics.
 \includegraphics[width=0.35\textwidth]{../analysis/order-posteriors-covariates.pdf}
 \end{center}
 
-Fig.~3: Standardized probabilities and covariates of heavy-tailed
+\textbf{Figure~3} Standardized probabilities and covariates of heavy-tailed
 dynamics. (a) Taxonomic-order-level posterior densities of Pr(\(\nu
 < 10\)) after accounting for time-series length in a hierarchical model. Dotted
 vertical line in a indicates the median expected Pr(\(\nu < 10\)) from the
@@ -815,8 +814,8 @@ medians.
 \includegraphics[width=0.65\textwidth]{../analysis/skew-fig.pdf}
 \end{center}
 
-Fig.~4: Heavy-tailed process noise tends to be downward skewed and
-ignoring this can underestimate risk. (a) Illustrations of Student-t
+\textbf{Figure~4} Heavy-tailed process noise tends to be downward skewed and
+ignoring this can underestimate risk. (a) Illustrations of Student-$t$
 distributions with 3 levels of skewness (\(\gamma\)) and heavy-tails (\(\nu\)).
 (b) Posterior density of the skewness parameters aggregated across
 populations grouped into heavy-tailed (\(\hat{\nu} < 10\)), slightly
