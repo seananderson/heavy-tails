@@ -55,12 +55,13 @@ for(i in 1:length(classes)) {
 
   par(xpd = NA)
   p <- readPicture(pics[i])
-  if(i != 4)
+  if(i != 4) {
     p@paths$path@rgb <- "grey37"
-  else
+  } else {
     p@paths[[2]]@rgb <- "grey37"  # different vector structure
   grImport::picture(p, 12, 0.37, 12 + pic_width[i], 0.37 + pic_height[i])
   par(xpd = FALSE)
+  }
 
   if(unique(x$taxonomic_class) == "Aves") {
     cutoff <- 4
