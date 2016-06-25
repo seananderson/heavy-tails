@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+  <head>
+    <title>scratch</title>
+    <expansionState>0,10</expansionState>
+  </head>
+  <body>
+    <outline text="Introduction">
+      <outline text="Such die-offs may be the most important element affecting population persistence"/>
+      <outline text="And their importance is likely to increase given projected increases in the frequency and magnitude of climate related extremes"/>
+      <outline text="when identified by percent decline in abundance beyond an arbitrary threshold, there are a multitude of published die-off or mass mortality events"/>
+      <outline text="but this does not distinguish whether events could be part of expected population dynamics (but see Ward 2007)"/>
+      <outline text="extreme value theory generalized extreme value distribution not possible"/>
+      <outline text="what is lacking is a comparative analysis across a large data set with commonly applied population models"/>
+      <outline text="and a method that can be applied to new timeseries that fit population dynamics and measures or allows for extreme events"/>
+      <outline text="Despite this anecdotal evidence for ecological black swans, systematic searches of large numbers of timeseries have&#10;yet to reveal black-swan events \citep{keitt1998, allen2001, halley2002}. "/>
+      <outline text="However, the overwhelming majority of model fitting and risk forecasting assumes that deviations from model predictions can be represented by a normal distribution \citep[e.g.][]{brook2006a, knape2012}. If black swans occur, though, a normal distribution would under-estimate the probability of extreme events occurring."/>
+    </outline>
+    <outline text="Discussion">
+      <outline text="Given the multitude of reasons why a population modeler might expect heavy tail process noise, what should a population modeler do?Essentially any reason for why a population modeler has incorrectly specified the exact process generating the abundance times there is under question could generate have detailed process noise."/>
+      <outline text="We think modelers should routinely consider substituting a heavy tailed distribution, such as the student t-distribution, to represent the process noise in population dynamic modeling. Especially when making forecasts to make predictions about risk of specified bad events."/>
+      <outline text="But what heavy tailed distribution to pick?"/>
+      <outline text="This is an open research question. However, we think the student t-distribution represents a simple solution in that it can be easily substituted for the normal distribution and if the degrees of freedom are fixed at a moderately&#10;heavy level it doesn't require the estimation of any extra parameters over the normal distribution."/>
+      <outline text="And if we use a student t-distribution than what degrees of freedom parameter should be you assume?"/>
+      <outline text="The exact shape of the tails has been shown to be important in the field of dispersal biology -- has a big effect on dynamic \citep{kot1996} \citep{clark1999}"/>
+      <outline text="The degrees of freedom could be estimated from meta-analysis but even here using one of the best large data sets of animal abundance timeseries the timeseries are relatively short and the taxonomy is a biased sample of species of interest to humans  economic interest ..."/>
+      <outline text="for example the majority of the blocks one offense that we observed were population crashes This could be due to basic biology --- animal birthrates are constrained whereas every animal can die --- on the other hand it could be due to the biased sample of species in the data set which represent species of concern to humans and we don't have much data for highly reproductive species that are not threatened or of economic interest"/>
+      <outline text="If there is any reason for a model are to expect that external forces could act or that there is a mixture of distributions through spatial heterogeneity we think it is prudent to err on the side of caution and allow for heavy tailed process noise in forecasts"/>
+      <outline text="The barring a better estimate we might suggest using a degrees of freedom parameter around 5"/>
+      <outline text="this allows for a catastrophic event of an x fold decline of abundance that happens every Y years compared to a normal distribution allowing only for this event to happen every Z years."/>
+      <outline text="But what was once considered a one in X million event then becomes a one in Y million event"/>
+      <outline text="A t-distribution compared to a normal distribution on the process error he essentially lets us be right most of the time while allowing are models to be very wrong occasionally this better matches our current intuition that ecological surprises can and do occur"/>
+      <outline text="Our hypothesis is that our first priority is to allow for tails that are heavier than the normal distribution and approximately in line with those discovered in this paper and our second priority is to determine exactly how heavy a default distribution we should assume."/>
+      <outline text="Answers might come from simulation analyses exploring the implications of different tail shapes and also from fitting population models to known time series of mass mortality events \citep[e.g.][]{fey2015}"/>
+    </outline>
+  </body>
+</opml>

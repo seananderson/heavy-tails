@@ -33,8 +33,8 @@ for(i in 1:length(classes)) {
   plot(1, 1, type = "n", xlim = c(-0.2, 100.2), ylim = c(0, 0.5), xlab = "", ylab = "", yaxt = "n", xaxs = "i", yaxs = "i", xaxt = xaxt, las = 1)
   #axis(2, at = seq(0, 100, 50), las = 1)
   par(xpd = NA)
-  add_label(label = LETTERS[i], font = 2, cex = 1.2)
-  add_label(label = classes[i], xfrac = 0.03)
+  add_label(label = paste0("(", letters[i], ")"), font = 2, cex = 1.2)
+  add_label(label = classes[i], xfrac = 0.07)
   if(i == 1) {
     mtext("Heavy", side = 2, line = 2.5, adj = 0.90, col = "grey55")
     mtext("tails", side = 2, line = 1.5, adj = 0.85, col = "grey55")
@@ -55,12 +55,13 @@ for(i in 1:length(classes)) {
 
   par(xpd = NA)
   p <- readPicture(pics[i])
-  if(i != 4)
+  if(i != 4) {
     p@paths$path@rgb <- "grey37"
-  else
+  } else {
     p@paths[[2]]@rgb <- "grey37"  # different vector structure
   grImport::picture(p, 12, 0.37, 12 + pic_width[i], 0.37 + pic_height[i])
   par(xpd = FALSE)
+  }
 
   if(unique(x$taxonomic_class) == "Aves") {
     cutoff <- 4
@@ -73,7 +74,7 @@ for(i in 1:length(classes)) {
 
   p <- x %>% group_by(taxonomic_order) %>% summarise(med_p10 = mean(p10)) %>%
     arrange(med_p10) %>% mutate(p10_order = 1:length(med_p10))
-  x <- plyr::join(x, p, by = "taxonomic_order")
+  x <- dplyr::inner_join(x, p, by = "taxonomic_order")
 
   # in the following, the first 5 are for the heavy points
   # and the last one is for the normal points
