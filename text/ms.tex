@@ -1,3 +1,5 @@
+% TODO 
+% change all ln in figures 
 \section{Black-swan events in animal populations}
 
 Sean C. Anderson\textsuperscript{1*}, Trevor A.
@@ -166,28 +168,30 @@ Furthermore, the $t$ distribution arises from a mixture of normal distributions
 with the same mean and different variances \citep{gelman2014},
 which mimics the underlying basis for black-swan events.
 There are a wide range of mechanistic processes 
-that could give rise to extreme events,
-such as spatial heterogeneity, nonstationary or heavy-tailed environmental processes, 
-or varying responses to temperature among individuals. 
+that could give rise to extreme events in population dynamics,
+such as extreme climate events
+\citep{meehl2004, katz2005, ipcc2012}
+or sudden changes in predation from other species.
 While evaluating these various hypotheses 
 would be important for diagnosing the underlying causes 
 of extreme events and to develop predictive models, 
 it would be impossible to tease out each of these 
-underlying causes from population trend data alone in a comparative manner. 
+underlying causes from population trend data alone. 
 Instead we seek a simple flexible phenomenological model 
 that can be applied across the widest possible 
 range of population time series to provide a 
 comparative overview of the prevalence 
 of black-swan events. 
 
-One alternative, the generalized extreme value (GEV) distribution,
-represents the limit distribution of a series of maxima or minima.
+One alternative approach would involve fitting 
+the generalized extreme value (GEV) distribution,
+which represents the limit distribution of a series of maxima or minima.
 Although the GEV is well-suited for physical ecological variables
 \citep[e.g.\ sedimentation rates or wind speeds;][]{gaines1993, denny2009},
 the GEV requires maxima per time block
 or peaks beyond a chosen threshold.
 Therefore, the GEV requires longer time series then typically available
-for wild populations.
+for wild animal population abundance.
 Furthermore, the GEV approach cannot be easily integrated into population dynamics models.
 
 % This could represent the effect of unmodeled spatial heterogeneity,
@@ -211,10 +215,14 @@ taxonomic classes, with a median of \medianTimeSteps\ time steps (range
 
 \subsection{Modeling framework}
 
-We fit heavy-tailed Gompertz population dynamics models to data from the GPDD. The Gompertz model represents population growth as a linear function in log space. If \(x_{t}\) represents the ln abundance (\(N\)) at time \emph{t} then
+We fit heavy-tailed Gompertz population dynamics models to data from the GPDD.
+The Gompertz model represents population growth as a linear function in 
+log space (here and throughout we use log 
+to refer to the natural logarithm log).
+If \(x_{t}\) represents the log abundance (\(N\)) at time \emph{t} then
 \begin{align}
 x_t &= \lambda + bx_{t - 1} + \epsilon_t\\
-\epsilon_t &\sim \mathrm{Student\mhyphen t}(\nu, 0, \sigma)
+\epsilon_t &\sim \mathrm{Studen}t\mhyphen t(\nu, 0, \sigma)
 \end{align}
 The parameter \(\lambda\) represents the expected growth rate if \(N_{t}
 = 1\). The model is density independent if \(b = 1\), maximally density
@@ -228,8 +236,8 @@ black-swan events (Fig.~1A, B).
 For the Gompertz model, our weakly-informative priors (Fig.~S\ref{fig:priors}) were:
 \begin{align}
 b &\sim \mathrm{Uniform}(-1, 2)\\ \lambda &\sim \mathrm{Normal}(0, 10^2)\\
-\sigma &\sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)\\ \nu &\sim
-\mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2).
+\sigma &\sim \mathrm{half\mhyphen Cauchy} (0, 2.5)\\ \nu &\sim
+\mathrm{truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2).
 \end{align}
 Our prior on \(b\) was uninformative between values of \(-1\) and \(2\). We
 would not expect values of \(b\) with levels of density dependence as low as
@@ -284,13 +292,13 @@ Gibbs or Metropolis--Hastings algorithms \citep{stan-manual2015}.
 
 To test if the prior on \(\nu\) influenced our estimate of black-swan dynamics,
 we refit our models with weaker and stronger priors. Our base model used a
-prior on \(\nu\) of Truncated-Exponential(0.01, min.\ = 2). For a weaker prior
-we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
-used Truncated-Exponential(0.02, min.\ = 2) (Fig.~S\ref{fig:priors}c). Note that
+prior on \(\nu\) of truncated-Exponential(0.01, min.\ = 2). For a weaker prior
+we used truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
+used truncated-Exponential(0.02, min.\ = 2) (Fig.~S\ref{fig:priors}c). Note that
 the base and weaker priors are relatively flat within the region of \(\nu <
-20\), which is the region we are mostly concerned about when categorizing
+20\), which is the region we are concerned about when categorizing
 populations as heavy tailed. We also considered using a Uniform(\(0, 1\))
-prior on \(1/\nu\) as used in \citet{gelman2014}, but this
+prior on \(1/\nu\) as used in \citet[][p.~443]{gelman2014}, but this
 prior puts considerably more weight on lower (heavy-tailed) values of \(\nu\)
 than the truncated exponential priors considered here,
 and the results are therefore not shown.
@@ -300,8 +308,11 @@ test if four key phenomena systematically changed our conclusions.
 
 \subsubsection{Autocorrelated residuals} We considered a version of the Gompertz
 model in which an autoregressive parameter was fit to the process-noise
-residuals: \begin{align} x_t &= \lambda + b x_{t-1} + \epsilon_t\\ \epsilon_t
-&\sim \mathrm{Student\mhyphen t}(\nu, \phi \epsilon_{t-1}, \sigma). \end{align}
+residuals: 
+\begin{align} 
+x_t &= \lambda + b x_{t-1} + \epsilon_t\\ 
+\epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, \phi \epsilon_{t-1}, \sigma).
+\end{align}
 In addition to the parameters in the original Gompertz model, this model
 estimates an additional parameter \(\phi\), which represents the correlation of
 subsequent residuals. Based on the results of previous analyses with the
@@ -309,13 +320,13 @@ GPDD \citep{connors2014} and the chosen prior in previous
 analyses \citep{thorson2014a}, we placed a moderately informative prior on
 \(\phi\) that assumed the greatest probability density near zero with the
 reduced possibility of \(\phi\) being near \(-1\) or \(1\). Specifically, we
-chose \(\phi \sim \mathrm{Truncated\mhyphen Normal}(0, 0.5, \mathrm{min.} = -1,
+chose \(\phi \sim \mathrm{truncated\mhyphen Normal}(0, 0.5, \mathrm{min.} = -1,
 \mathrm{max.} = 1)\).
 
 \subsubsection{Density independence} We fit a simplified version of the
 Gompertz model in which the density dependence parameter \(b\) was fixed at
 \(1\) (density independent). This is equivalent to fitting a random walk model
-(with drift) to the \(\ln\) abundances or assuming the growth rates are drawn
+(with drift) to the \(\log\) abundances or assuming the growth rates are drawn
 from a stationary distribution. The model was as follows:
 \begin{align}
 x_t &= \lambda + x_{t-1} + \epsilon_t\\
@@ -361,11 +372,11 @@ x_t &= x_{t-1} + r_{\mathrm{max}}\left(1 - \frac{N_{t-1}}{K}\right) + \epsilon_t
 \end{align}
 where \(r_\mathrm{max}\) represents the theoretical maximum population growth
 rate that is obtained when \(N_t = 0\). The parameter \(K\) represents the
-carrying capacity and, as before, \(x_t\) represents the \(\ln\) transformed
+carrying capacity and, as before, \(x_t\) represents the \(\log\) transformed
 abundance at time \(t\). The Ricker-logistic model assumes a linear decrease in
 population growth rate with increases in abundance. In contrast, the Gompertz
 model assumes a linear decrease in population growth rate with increases in
-\textit{ln} abundance.
+\textit{log} abundance.
 
 To fit the Ricker-logistic models, we chose a prior on \(K\) uniform between
 zero and twice the maximum observed abundance (similar and less informative
@@ -401,8 +412,8 @@ did not substantially reduce model bias (Fig.~S\ref{fig:sim-prob}).
 regression model to the predicted probability of heavy tails, Pr(\(\nu < 10\)),
 to investigate potential covariates of heavy-tailed dynamics. We obtained
 maximum lifespan and body-size data from \citet{brook2006a}.
-The beta distribution is useful when response data are on a continuous scale
-between zero and one \citep{ferrari2004}. The model was as follows:
+Beta regression is useful when response data are on a continuous scale
+between zero and one \citep[e.g.][]{ferrari2004}. The model was as follows:
 \begin{align}
 \mathrm{Pr}(\nu_i < 10) &\sim \mathrm{Beta}(A_i, B_i)\\
 \mu_i &= \mathrm{logit}^{-1}(\alpha
@@ -449,8 +460,8 @@ taxonomy than body length. Lifespan is also more directly related to time and
 potential mechanisms driving black-swan dynamics.
 
 We incorporated weakly informative priors into our model: \(\mathrm{Cauchy}(0,
-10)\) on the global intercept \(\alpha\), \(\mathrm{Half\mhyphen Cauchy}(0,
-2.5)\) on all standard deviation parameters, \(\mathrm{Half\mhyphen Cauchy}(0,
+10)\) on the global intercept \(\alpha\), \(\mathrm{half\mhyphen Cauchy}(0,
+2.5)\) on all standard deviation parameters, \(\mathrm{half\mhyphen Cauchy}(0,
 10)\) on the dispersion parameter \(\phi_\mathrm{disp}\), and
 \(\mathrm{Cauchy}(0, 2.5)\) on all other parameters \citep{gelman2006c,
 gelman2008d}. Compared to normal priors, the Cauchy priors concentrate more
@@ -460,7 +471,7 @@ dominate the posterior more strongly if it disagrees with the prior. We fit our
 models with 5,000 total iterations per chain, 2500 warm-up iterations, four
 chains, and discarding every second sample. We checked for chain convergence
 visually and with the same criteria as before (\(\widehat{R} < 1.05\) and
-\(n_\mathrm{eff} >199\) for all parameters). Furthermore, we checked our model
+\(n_\mathrm{eff} >200\) for all parameters). Furthermore, we checked our model
 against a similar model with the glmmADMB \textsf{R} package \citep{glmmadmb}
 without uncertainty around the predictors.
 
@@ -678,9 +689,9 @@ with suspected mass mortality events
 of two normal distributions;][]{ward2007}.
 Nevertheless, our proposed $t$ (or the skew-$t$) distribution
 is a simple and elegant solution that
-can be easily substituted for the normal distribution
-Furthermore, if the degrees of freedom parameter, $\nu$,
-is fixed
+can be easily substituted for the normal distribution.
+Furthermore, if the degrees of freedom parameter ($\nu$)
+is fixed,
 it requires estimating no more parameters
 than the normal distribution.
 Barring a better estimate,
