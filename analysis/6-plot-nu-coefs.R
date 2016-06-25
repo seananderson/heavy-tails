@@ -73,7 +73,7 @@ for(i in 1:length(classes)) {
 
   p <- x %>% group_by(taxonomic_order) %>% summarise(med_p10 = mean(p10)) %>%
     arrange(med_p10) %>% mutate(p10_order = 1:length(med_p10))
-  x <- plyr::join(x, p, by = "taxonomic_order")
+  x <- dplyr::inner_join(x, p, by = "taxonomic_order")
 
   # in the following, the first 5 are for the heavy points
   # and the last one is for the normal points
