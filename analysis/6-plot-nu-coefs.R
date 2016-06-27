@@ -96,6 +96,7 @@ for(i in 1:length(classes)) {
     axis(1, at = c(0, 0.5, 1), col = "grey30", lwd = 0.7, tck = -0.04,
       mgp = c(2, 0.25, 0), col.axis = "grey30", cex.axis = 0.8)
     mtext(expression(Pr(nu<10)), side = 1, line = 1.4, cex = 0.8, col = "grey30")
+    par(xpd = FALSE)
     abline(h = as.numeric(as.factor(x$taxonomic_order)), col = "grey93", lwd = 0.7, lty = 1)
     par(xpd = NA)
     points(x$p10, jitter(x$p10_order, amount = 0.25), pch = 21, bg = x$p_col,
