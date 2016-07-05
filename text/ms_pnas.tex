@@ -33,8 +33,7 @@
 \author[a]{Nicholas K. Dulvy}
 
 \affil[a]{Earth to Ocean Research Group, Department of Biological
-Sciences, Simon Fraser University, Burnaby BC, V5A 1S6, Canada, e-mail:
-sandrsn@uw.edu}
+Sciences, Simon Fraser University, Burnaby BC, V5A 1S6, Canada}
 \affil[b]{School of Aquatic and Fishery Sciences, Box 355020,
 University of Washington, Seattle, WA 98195, USA}
 \affil[c]{School of Resource and Environmental Management, Simon
@@ -50,7 +49,7 @@ more often than expected in financial, social, and natural systems. Our work
 demonstrates the rare but systematic presence of black-swan events in animal populations
 around the world (mostly birds, mammals, insects, and fishes). These events are
 predominantly downward, implying that unexpected population crashes occur more
-frequently than increases. Black-swan events are not driven by life history (e.g. lifespan),
+frequently than increases. Black-swan events are not driven by life history (e.g.\ lifespan),
 but by external causes such as extreme winters and disease. Ignoring the presence of
 downward black swans may severely underestimate extinction risk in animal populations,
 particularly under a changing climate where such extreme events are expected to increase
@@ -61,7 +60,7 @@ in frequency and magnitude.}
 S.C.A., T.A.B., A.B.C., and N.K.D. designed the study; S.C.A. analyzed the
 data and wrote the paper with input from all authors.}
 \authordeclaration{Please declare any conflict of interest here.}
-\correspondingauthor{\textsuperscript{2}To whom correspondence should be addressed. E-mail: sandrsn\@uw.edu}
+\correspondingauthor{\textsuperscript{2}To whom correspondence should be addressed. E-mail: sandrsn@uw.edu}
 
 % Keywords are not mandatory, but authors are strongly encouraged to provide them. If provided, please include two to five keywords, separated by the pipe symbol, e.g:
 \keywords{
@@ -79,20 +78,34 @@ Student-$t$ distribution
 
 \begin{abstract}
 Black swans are improbable events that nonetheless
-occur---often with profound consequences. While physical extremes, such as
-monsoons and heat waves, are widely studied and increasing in magnitude and
-frequency, it remains unclear the extent to which ecological population numbers
-buffer or suffer from such extremes. Here we estimate the frequency and
-direction of black-swan events in \NPops\ animal populations, finding strong
-evidence for their occurrence in \(\sim\)\overallBasePerc \% of populations.
-Black-swan events occur most frequently for birds (\birdPH \%), mammals
+occur---often with profound consequences. 
+% While physical extremes, such as
+% monsoons and heat waves, are widely studied and increasing in magnitude and frequency, 
+Such events drive important transitions in social systems (e.g.\ banking
+collapses) and physical systems (e.g.\ earthquakes)
+yet it remains unclear the extent to which ecological population numbers
+buffer or suffer from such extremes. 
+Here we estimate the prevalence and
+direction of black-swan events (heavy-tailed process noise)
+in \NPops\ animal populations
+after accounting for population dynamics (productivity, 
+density dependence, and typical stochasticity).
+We find strong evidence for 
+black-swan events in \(\sim\)\overallBasePerc \% of populations.
+These events occur most frequently for birds (\birdPH \%), mammals
 (\mammalsPH \%), and insects (\insectsPH \%),
-manifest primarily as
+and are not explained by any life-history covariates, but
+tend to be driven by external perturbations such as climate, severe winters,
+predators, parasites, or the combined effects of multiple factors.
+Black-swan events manifest primarily as
 population die-offs and crashes (\percBSDown \%) rather than unexpected increases,
-and tend to be driven by extrinsic perturbations
-such as climate, severe winters, or disease.
-Thus, ignoring black-swan events will
-underestimate extinction risk.
+and ignoring heavy-tailed process noise leads to 
+% a \crashUnderMedian-fold (50\% interval \crashUnderRange) 
+an underestimate in the magnitude of population crashes.
+We suggest modelers consider heavy-tailed downward-skewed 
+probability distributions, 
+such as the skewed Student-$t$ used here, 
+when making forecasts of population abundance.
 Our results demonstrate the importance of both
 modeling heavy-tailed downward events in populations, and developing
 conservation strategies that are robust to ecological surprises.
@@ -157,6 +170,28 @@ expected dynamics.
 For instance, the range of natural variability
 can differ dramatically across taxa.
 
+\begin{figure*}[htb]
+\centering
+\includegraphics[width=0.65\textwidth]{../analysis/t-nu-eg2.pdf}
+\caption{ Illustration of population dynamic models that allow for heavy
+tails. (a, b) Probability density for the Student-$t$
+distribution with scale parameter of $1$ and different values of \(\nu\). Small
+values of \(\nu\) create heavy tails while as \(\nu\) approaches infinity the
+distribution approaches the normal distribution. (c to e)
+Simulated population dynamics from a Gompertz model with process noise drawn
+from Student-$t$ distributions with three values of \(\nu\). Coloured dots in
+panels c and d represent jumps with less than a 1 in 1000
+chance of occurring in a normal distribution. (f to h)
+Estimates of \(\nu\) from models fit to the times series in panels c to
+e. Shown are posterior samples (histograms), median and interquartile
+range of the posterior (IQR, dots and line segments), and the exponential prior
+on \(\nu\) (dashed lines). Colour shading behind panels f to h
+illustrates the approximate region of heavy tails.}
+\label{fig:1}
+\end{figure*}
+
+
+
 Here, we develop a new approach to estimate the frequency and magnitude of
 black-swan dynamics across time series of 609 populations from a wide array of
 taxonomic groups---including many  birds, mammals, insects, and fishes
@@ -181,31 +216,9 @@ compared to once every 32,000 years with a normal distribution.
 As \(\nu\) approaches infinity, the t
 distribution approaches the normal distribution (Fig.~1).
 
-
-\begin{figure*}[htb]
-\centering
-\includegraphics[width=0.65\textwidth]{../analysis/t-nu-eg2.pdf}
-\caption{ Illustration of population dynamic models that allow for heavy
-tails. (a, b) Probability density for the Student-$t$
-distribution with scale parameter of $1$ and different values of \(\nu\). Small
-values of \(\nu\) create heavy tails while as \(\nu\) approaches infinity the
-distribution approaches the normal distribution. (c to e)
-Simulated population dynamics from a Gompertz model with process noise drawn
-from Student-$t$ distributions with three values of \(\nu\). Coloured dots in
-panels c and d represent jumps with less than a 1 in 1000
-chance of occurring in a normal distribution. (f to h)
-Estimates of \(\nu\) from models fit to the times series in panels c to
-e. Shown are posterior samples (histograms), median and interquartile
-range of the posterior (IQR, dots and line segments), and the exponential prior
-on \(\nu\) (dashed lines). Colour shading behind panels f to h
-illustrates the approximate region of heavy tails.}
-\label{fig:1}
-\end{figure*}
-
-
 \section*{Results}
 
-We found evidence that black-swan dynamics are infrequent but highly
+We found that black-swan dynamics are infrequent but highly
 influential: in our dataset they were detected most
 frequently for birds (7\%), mammals (5\%), and
 insects (3\%) but almost never in fishes (Fig.~2). Black-swan
@@ -270,7 +283,7 @@ event in populations with 60 time steps than in one with 30 time steps
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.3\textwidth]{../analysis/order-posteriors-covariates.pdf}
+\includegraphics[width=0.26\textwidth]{../analysis/order-posteriors-covariates.pdf}
 \caption{Standardized probabilities and covariates of heavy-tailed
 dynamics. (a) Taxonomic-order-level posterior densities of Pr(\(\nu
 < 10\)) after accounting for time-series length in a hierarchical model. Dotted
@@ -328,7 +341,7 @@ from Gompertz models with lognormal and skew-$t$ process noise, respectively.
 \end{figure}
 
 Given the prevalence of downwards events, we refit our heavy-tailed models to
-measure the degree of skewness \(\gamma\) of the process noise using a skew-t
+measure the degree of skewness \(\gamma\) of the process noise using a skew-$t$
 distribution (Fig.~4a), and used these models to make near-term risk forecasts.
 Aggregated across populations with strong evidence of heavy tails (median \(\nu
 < 10\)), 85\% of the \(\gamma\) probability density was below 1, indicating
@@ -444,15 +457,16 @@ is fixed,
 it requires estimating no more parameters
 than the normal distribution.
 Barring a better estimate,
-we suggest using $\nu = 4$; and
+we suggest using $\nu = 5$; and
 a skewness parameter ($\gamma$) of $\sim 0.7$ (Fig.~4a)
 if a modeler wishes to allow for downward heavy-tailed events.
 These are midrange values from the populations identified as heavy tailed here.
 Above $\nu  =  10$ the $t$ distribution closely resembles
 the normal distribution,
-and $\nu  = 4$ allows for an event
+and $\nu  = 5$ allows for an event
 three standard deviations below the mean to happen
-once every 50 years instead of once every 740 years.
+% 1/(1-pt(3, 5))
+once every 66 years instead of once every 740 years.
 Adopting heavy-tailed process noise by default follows the intuition
 that our models are usually reasonable but occasionally very wrong.
 
@@ -520,7 +534,7 @@ to refer to the natural logarithm).
 If \(x_{t}\) represents the log abundance (\(N\)) at time \emph{t} then
 \begin{align}
 x_t &= \lambda + bx_{t - 1} + \epsilon_t\\
-\epsilon_t &\sim \mathrm{Studen}t\mhyphen t(\nu, 0, \sigma)
+  \epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma).
 \end{align}
 The parameter \(\lambda\) represents the expected growth rate if \(N_{t}
 = 1\). The model is density independent if \(b = 1\), maximally density
@@ -534,7 +548,7 @@ black-swan events (Fig.~1A, B).
 We chose the $t$ distribution for a number of reasons.
 Pragmatically, the $t$ distribution requires the estimation of only one additional
 parameter over the normal distribution and reverts to the normal distribution
-if strong evidence of heavy-tailed process deviations is not present.
+if strong evidence of heavy-tailed process deviations is absent.
 Furthermore, the $t$ distribution arises from a mixture of normal distributions
 with the same mean and different variances \cite{gelman2014},
 which mimics the underlying basis for black-swan events.
@@ -565,30 +579,12 @@ Therefore, the GEV requires longer time series then typically available
 for wild animal population abundance.
 Furthermore, the GEV approach cannot be easily integrated into population dynamics models.
 
-For the Gompertz model, our weakly-informative priors (Fig.~S\figpriors) were:
-\begin{align}
-b &\sim \mathrm{Uniform}(-1, 2)\\
-\lambda &\sim \mathrm{Normal}(0, 10^2)\\
-\sigma &\sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)\\
-\nu &\sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2).
-\end{align}
-Our prior on \(b\) was uninformative between values of \(-1\) and \(2\). We
-would not expect values of \(b\) with levels of density dependence as low as
-\(-1\) (very strong inverse density dependence), nor would we generally expect
-values above \(1\). We allowed values of \(b\) above \(1\) to allow for
-non-stationary time series of growth rates. The estimates of \(b\) were well
-within these bounds. Our prior on \(\lambda\) was weakly informative within the
-range of expected values for population growth and is similar to the default
-priors suggested by Ref.~\cite{gelman2008d} for intercepts of
-regression models. Our half-Cauchy prior on \(\sigma\) follows
-Ref.~\cite{gelman2006c} and Ref.~\cite{gelman2008d} and the specific scale parameter of
-\(2.5\) is based on our expected range of the value in nature from previous
-studies \cite{connors2014}. In our testing of a subsample of populations, our
-parameter estimates were not qualitatively changed by switching to a uniform
-prior on \(\sigma\), but the weakly informative half-Cauchy prior sped up chain
-convergence.
-
-We chose a weakly informative exponential prior on \(\nu\) with rate parameter
+For the Gompertz model,
+we chose weakly informative priors for 
+all parameters (Fig.~S\figpriors, Supporting Information).
+For the degrees of freedom parameter $\nu$, 
+we chose an exponential prior 
+with a rate parameter
 of \(0.01\) truncated at values above two---a slightly less informative prior
 than suggested by Ref.~\cite{fernandez1998}. We truncated the
 distribution at \(2\), since at \(\nu < 2\) the variance of the $t$ distribution
@@ -611,10 +607,12 @@ potential scale reduction factor---a measure of chain convergence) was greater
 than \(1.05\) for any parameter, or if the minimum effective sample size,
 \(n_\mathrm{eff}\) (a measure of the effective number of uncorrelated samples),
 for any parameter was less than \(200\), we doubled both the total iterations
-and warm up period and sampled from the model again. These thresholds are in
-excess of the minimums recommended by Ref.~\cite{gelman2006a} of
-\(\hat{R} < 1.1\) and \(n_\mathrm{eff} > 100\) for reliable point estimates and
-confidence intervals. In the majority of cases our minimum thresholds were
+and warm up period and sampled from the model again. 
+% These thresholds are in
+% excess of the minimums recommended by Ref.~\cite{gelman2006a} of
+% \(\hat{R} < 1.1\) and \(n_\mathrm{eff} > 100\) for reliable point estimates and
+% confidence intervals.
+In the majority of cases our minimum thresholds were
 greatly exceeded. We continued this procedure up to 8,000 iterations (16,000
 total samples) by which all chains had sufficiently converged.
 The No-U-Turn Hamiltonian Markov chain Monte Carlo sampler in Stan generally
@@ -636,11 +634,11 @@ where we allowed for a fixed quantity of observation error ($0.2$ standard
 deviations on a log scale). Finally, the Gompertz model assumes that
 population growth rate declines linearly with log abundance. Therefore, we
 also fit an alternative model, the Ricker-logistic model, which assumes that
-population growth rate declines linearly with abundance itself (Supporting Information).
+population growth rate declines linearly with abundance (Supporting Information).
 
-In addition to alternative population models, we investigated the sensitivity
+We investigated the sensitivity
 of our results to weaker and stronger priors (exponential rate parameter $=
-0.005, 0.02$; Fig.~S\figpriors, Supporting Information). We used
+0.005, 0.02$; Fig.~S\figpriors, Supporting Information). Furthermore, we used
 simulated data to test how easily we could detect $\nu$ given different sample
 sizes and to ensure we could recover unbiased parameter estimates from the
 Gompertz model (Supporting Information).
@@ -651,14 +649,15 @@ to investigate potential covariates of heavy-tailed dynamics. We obtained
 maximum lifespan and body-size data from Ref.~\cite{brook2006a}.
 Beta regression is useful when response data are on a continuous scale
 between zero and one \cite{ferrari2004}. The model was as follows:
-\begin{align}
+\begin{align*}
 \mathrm{Pr}(\nu_i < 10) &\sim \mathrm{Beta}(A_i, B_i)\\
 \mu_i &= \mathrm{logit}^{-1}(\alpha
   + \alpha^\mathrm{class}_{j[i]}
   + \alpha^\mathrm{order}_{k[i]}
   + \alpha^\mathrm{species}_{l[i]}
   + \bm{X_i} \bm{\beta}),
-  \: \text{for } i = 1, \dots, 609\\
+  \: \\
+  &\quad \, \text{for } i = 1, \dots, 609\\
 A_i &= \phi_\mathrm{disp} \mu_i\\
 B_i &= \phi_\mathrm{disp} (1 - \mu_i)\\
 \alpha^\mathrm{class}_j &\sim
@@ -670,7 +669,7 @@ B_i &= \phi_\mathrm{disp} (1 - \mu_i)\\
 \alpha^\mathrm{species}_l &\sim
   \mathrm{Normal}(0, \sigma^2_{\alpha \; \mathrm{species}}),
   \: \text{for } l = 1, \dots, 301,
-\end{align}
+\end{align*}
 where \(A\) and \(B\) represent the beta distribution shape parameters;
 \(\mu_i\) represents the predicted value for population \(i\), class \(j\),
 order \(k\), and species \(l\); \(\phi_\mathrm{disp}\) represents the
@@ -686,10 +685,12 @@ the standard deviation of the posterior samples for the Gompertz parameters
 \(\lambda\), \(b\), and \(\log \sigma\) around the mean point value as normal
 distributions (not shown in the above equation).
 
-We log transformed \(\sigma\), time-series length, and lifespan to match the
-way they are visually represented in Fig.~S\figcorrelates\ and to make the
-relationship approximately linear on the logit-transformed response scale. All
-input variables were standardized by subtracting their mean and dividing by two
+We log transformed \(\sigma\), time-series length, and lifespan to 
+to make the
+relationship approximately linear on the logit-transformed response scale;
+this matches the way the predictors are visually presented in 
+Fig.~S\figcorrelates. 
+All input variables were standardized by subtracting their mean and dividing by two
 standard deviations to make their coefficients comparable in
 magnitude \cite{gelman2008c}. We excluded body length as a covariate because it
 was highly correlated with lifespan, and lifespan exhibited more overlap across
@@ -701,10 +702,12 @@ We incorporated weakly informative priors into our model: \(\mathrm{Cauchy}(0,
 2.5)\) on all standard deviation parameters, \(\mathrm{half\mhyphen Cauchy}(0,
 10)\) on the dispersion parameter \(\phi_\mathrm{disp}\), and
 \(\mathrm{Cauchy}(0, 2.5)\) on all other parameters \cite{gelman2006c,
-gelman2008d}. Compared to normal priors, the Cauchy priors concentrate more
-probability density around expected parameter values while allowing for a
-higher probability density far into the tails, thereby allowing the data to
-dominate the posterior more strongly if it disagrees with the prior. We fit our
+gelman2008d}. 
+% Compared to normal priors, the Cauchy priors concentrate more
+% probability density around expected parameter values while allowing for a
+% higher probability density far into the tails, thereby allowing the data to
+% dominate the posterior more strongly if it disagrees with the prior. 
+We fit our
 models with 5,000 total iterations per chain, 2500 warm-up iterations, four
 chains, and discarding every second sample. We checked for chain convergence
 visually and with the same criteria as before (\(\widehat{R} < 1.05\) and
