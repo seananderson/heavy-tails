@@ -46,3 +46,7 @@ scratch/
 analysis/gomp-ar1/*
 analysis/logistic/*
 analysis/logistic-WRONG/*
+
+*.xwm
+
+*.out
