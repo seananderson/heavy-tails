@@ -233,7 +233,47 @@ We note that interpolation is highly unlikely to lead to
 black-swan detections, since black swans involve extreme increases or
 decreases.
 
-\subsubsection{Autocorrelated residuals} We considered a version of the Gompertz
+\section{Prior distributions for Gompertz models}
+
+For the Gompertz model, our weakly informative priors (Fig.~\ref{fig:priors}) were:
+\begin{align}
+b &\sim \mathrm{Uniform}(-1, 2)\\
+\lambda &\sim \mathrm{Normal}(0, 10^2)\\
+\sigma &\sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)\\
+\nu &\sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2).
+\end{align}
+Our prior on \(b\) was uninformative between values of \(-1\) and \(2\). We
+would not expect values of \(b\) with levels of density dependence as low as
+\(-1\) (very strong inverse density dependence), nor would we generally expect
+values above \(1\). We allowed values of \(b\) above \(1\) to allow for
+non-stationary time series of growth rates. The estimates of \(b\) were well
+within these bounds. Our prior on \(\lambda\) was weakly informative within the
+range of expected values for population growth and is similar to the default
+priors suggested by \citet{gelman2008d} for intercepts of
+regression models. Our half-Cauchy prior on \(\sigma\) follows
+\citet{gelman2006c} and \citet{gelman2008d} and the specific scale parameter of
+\(2.5\) is based on our expected range of the value in nature from previous
+studies \citep{connors2014}. In our testing of a subsample of populations, our
+parameter estimates were not qualitatively changed by switching to a uniform
+prior on \(\sigma\), but the weakly informative half-Cauchy prior sped up chain
+convergence.
+
+To test if the prior on \(\nu\) influenced our estimate of black-swan dynamics,
+we refit our models with weaker and stronger priors. Our base model used a
+prior on \(\nu\) of Truncated-Exponential(0.01, min.\ = 2). For a weaker prior
+we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
+used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}c). Note that
+the base and weaker priors are relatively flat within the region of \(\nu <
+20\), which is the region we are concerned about when categorizing
+populations as heavy tailed. We also considered using a Uniform(\(0, 1\))
+prior on \(1/\nu\) as used in \citet{gelman2014}, but this
+prior puts considerably more weight on lower (heavy-tailed) values of \(\nu\)
+than the truncated exponential priors considered here,
+and the results are therefore not shown.
+
+\section{Alternative population models}
+
+\subsection{Autocorrelated residuals} We considered a version of the Gompertz
 model in which an autoregressive parameter was fit to the process-noise
 residuals:
 \begin{align}
@@ -243,14 +283,14 @@ x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 In addition to the parameters in the original Gompertz model, this model
 estimates an additional parameter \(\phi\), which represents the correlation of
 subsequent residuals. Based on the results of previous analyses with the
-GPDD \cite{connors2014} and the chosen prior in previous
-analyses \cite{thorson2014a}, we placed a moderately informative prior on
+GPDD \citep{connors2014} and the chosen prior in previous
+analyses \citep{thorson2014a}, we placed a moderately informative prior on
 \(\phi\) that assumed the greatest probability density near zero with the
 reduced possibility of \(\phi\) being near \(-1\) or \(1\). Specifically, we
 chose \(\phi \sim \mathrm{truncated\mhyphen Normal}(0, 0.5, \mathrm{min.} = -1,
 \mathrm{max.} = 1)\).
 
-\subsubsection{Density independence} We fit a simplified version of the
+\subsection{Density independence} We fit a simplified version of the
 Gompertz model in which the density dependence parameter \(b\) was fixed at
 \(1\) (density independent). This is equivalent to fitting a random walk model
 (with drift) to the \(\log\) abundances or assuming the growth rates are drawn
@@ -264,18 +304,18 @@ provides a check that our more complicated full Gompertz model was obtaining
 reasonable estimates of \(\nu\), (2) it provides a test of whether density
 dependence was affecting our perception of heavy tails, (3) it
 matches how some previous authors have modelled heavy tails without accounting
-for density dependence \cite{segura2013}.
+for density dependence \citep{segura2013}.
 
-\subsubsection{Observation error} Observation error can bias parameter
-estimates \cite{knape2012} and is known to affect the ability to detect extreme
-events \cite{ward2007}. In our main analysis, we fit a model that ignored
+\subsection{Observation error} Observation error can bias parameter
+estimates \citep{knape2012} and is known to affect the ability to detect extreme
+events \citep{ward2007}. In our main analysis, we fit a model that ignored
 observation error. One way to account for observation error would be to fit a
 full state-space model that simultaneously estimates the magnitude of process
 noise and observation error. However, simultaneously estimating observation and
 process noise is a challenging problem (e.g.\ because the observation and
 process noise parameters tend to negatively covary in model fitting) and is
 known to sometimes result in identifiability issues with the Gompertz
-population model \cite{knape2008}. Furthermore, our model was applied to
+population model \citep{knape2008}. Furthermore, our model was applied to
 hundreds of time series, often of short length (as few as \minTimeSteps\ time
 steps) and our model estimates an additional parameter---the shape of the
 process deviation tails---potentially making identifiability and computational
@@ -290,9 +330,9 @@ where \(U\) represents the served state vector, \(\sigma_\mathrm{obs}\)
 represents the standard deviation of observation error (on a log scale), and
 \(\sigma_\mathrm{proc}\) represent the process noise scale parameter. We set
 \(\sigma_\mathrm{obs}\) to \(0.2\), which represents a typical value used in
-simulation analyses \cite{valpine2002, thorson2014b}.
+simulation analyses \citep{valpine2002, thorson2014b}.
 
-\subsubsection{Ricker-logistic} We also fit a Ricker-logistic model:
+\subsection{Ricker-logistic} We also fit a Ricker-logistic model:
 \begin{align}
 x_t &= x_{t-1} + r_{\mathrm{max}}\left(1 - \frac{N_{t-1}}{K}\right) + \epsilon_t\\
 \epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma),
@@ -307,26 +347,14 @@ model assumes a linear decrease in population growth rate with increases in
 
 To fit the Ricker-logistic models, we chose a prior on \(K\) uniform between
 zero and twice the maximum observed abundance (similar and less informative
-than in Ref.~\cite{delean2013}). We set the prior on
-\(r_\mathrm{max}\) as uniform between 0 and 20 as in Ref.~\cite{delean2013}. We used the same priors on \(\nu\) and \(\sigma\) as in
+than in \citet{delean2013}). We set the prior on
+\(r_\mathrm{max}\) as uniform between 0 and 20 as in \citet{delean2013}. 
+We used the same priors on \(\nu\) and \(\sigma\) as in
 the Gompertz model.
 
-\subsection{Alternative priors}
 
-To test if the prior on \(\nu\) influenced our estimate of black-swan dynamics,
-we refit our models with weaker and stronger priors. Our base model used a
-prior on \(\nu\) of Truncated-Exponential(0.01, min.\ = 2). For a weaker prior
-we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
-used Truncated-Exponential(0.02, min.\ = 2) (Fig.~S\ref{fig:priors}c). Note that
-the base and weaker priors are relatively flat within the region of \(\nu <
-20\), which is the region we are concerned about when categorizing
-populations as heavy tailed. We also considered using a Uniform(\(0, 1\))
-prior on \(1/\nu\) as used in Ref.~\cite{gelman2014}, but this
-prior puts considerably more weight on lower (heavy-tailed) values of \(\nu\)
-than the truncated exponential priors considered here,
-and the results are therefore not shown.
+\section{Heavy-tailed Gompertz model simulations}
 
-\subsection{Simulation testing}
 We performed two types of simulation testing.
 First, we tested how easily the Student-$t$ distribution \(\nu\) parameter could
 be recovered given different true values of \(\nu\) and different sample sizes.
@@ -334,23 +362,6 @@ Second, we tested the ability of the heavy-tailed Gompertz model to obtain
 unbiased parameter estimates of \(\nu\) given that a set of process deviations
 was provided in which the effective \(\nu\) value was close to the true \(\nu\)
 value.
-
-We found that we could consistently and precisely recover median posterior
-estimates of \(\nu\) near the true value of \(\nu\) with large samples (\(\ge
-200\)) (Fig.~S\ref{fig:sim-nu} upper panels). At smaller samples we could
-usually qualitatively distinguish heavy from not-heavy tails, but the model
-tended to underestimate how heavy the tails were. At the same time, at smaller
-sample sizes, the model tended to overestimate how large the scale parameter
-was (Fig.~S\ref{fig:sim-nu} lower panels).
-
-Our simulation-testing results indicate that the Gompertz model can recapture
-the true value of \(\nu\) when the process noise was chosen so that appropriate
-tail events were present (Fig.~S\ref{fig:sim-prob} upper panels). The addition
-of observation error caused the model to tend to underestimate the degree of
-heavy-tailedness. Fitting a model with correctly specified observation error
-did not substantially reduce model bias (Fig.~S\ref{fig:sim-prob}).
-
-\section{Heavy-tailed Gompertz model simulations}
 
 We separated our simulation into these two components to avoid confounding two
 issues. (1) With smaller sample sizes, there may not be a stochastic draw from
@@ -363,12 +374,20 @@ model under predicts the magnitude and probability of heavy tailed
 events---especially given the length of the time series in the GPDD.
 
 First, we tested the ability to estimate $\nu$ given different true values of
-$\nu$ and different sample sizes. We took stochastic draws from t
+$\nu$ and different sample sizes. We took stochastic draws from $t$
 distributions with different $\nu$ values ($\nu = 3, 5, 10,$ and $10^6$
 [$\approx$ normal]), with central tendency parameters of $0$, and scale
 parameters of $1$. We started with $1600$ stochastic draws and then fit the
 models again at the first $800, 400, 200, 100, 50,$ and $25$ draws. Each time
 we recorded the posterior samples of $\nu$.
+
+We found that we could consistently and precisely recover median posterior
+estimates of \(\nu\) near the true value of \(\nu\) with large samples (\(\ge
+200\)) (Fig.~\ref{fig:sim-nu} upper panels). At smaller samples we could
+usually qualitatively distinguish heavy from not-heavy tails, but the model
+tended to underestimate how heavy the tails were. At the same time, at smaller
+sample sizes, the model tended to overestimate how large the scale parameter
+was (Fig.~\ref{fig:sim-nu} lower panels).
 
 Second, we tested the ability of the heavy-tailed Gompertz model to obtain
 unbiased parameter estimates when the process noise was chosen so that
@@ -429,6 +448,13 @@ model to tend to underestimate the degree of heavy-tailedness. Fitting a model
 with correctly specified observation error did not make substantial
 improvements to model bias (fig. \ref{fig:sim-prob}).
 
+We found that the Gompertz model can recapture
+the true value of \(\nu\) when the process noise was chosen so that appropriate
+tail events were present (Fig.~\ref{fig:sim-prob} upper panels). The addition
+of observation error caused the model to tend to underestimate the degree of
+heavy-tailedness. Fitting a model with correctly specified observation error
+did not substantially reduce model bias (Fig.~\ref{fig:sim-prob} upper panels).
+
 When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the
 models distinguished heavy and not-heavy tails reasonably well (fig.
 \ref{fig:sim-prob} lower panels). Without observation error, and using a
@@ -447,7 +473,6 @@ the detection of heavy tails. Therefore, we chose to focus on the simpler model
 without observation error in the main text, particularly given that the true
 magnitude of observation error was unknown in the empirical data.
 
-
 \section{Implementation of the skewed Student-$t$ distribution in Stan}
 
 The probability density for the skewed Student-$t$ distribution
@@ -460,7 +485,7 @@ implemented in \citet{king2012}:
 \frac{2}{(\gamma + 1/\gamma)}
          \mathrm{Student}\mhyphen t(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
        \frac{2}{(\gamma + 1/\gamma)}
-         \mathrm{Student}\mhyphen t(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
+         \mathrm{Student}\mhyphen t(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0.
 \end{dcases}
 \end{equation}
 
@@ -476,7 +501,7 @@ density:
   \log (2 \gamma) - \log(\gamma^2 + 1) +
   \log \mathrm{Student}\mhyphen t(x \cdot \gamma, \nu, \mu \cdot \gamma, \sigma),& \text{for } x < 0\\
   \log (2 \gamma) - \log(\gamma^2 + 1) +
-  \log \mathrm{Student}\mhyphen t(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0
+  \log \mathrm{Student}\mhyphen t(x / \gamma, \nu, \mu / \gamma, \sigma),& \text{for } x \ge 0.
 \end{dcases}
 \end{equation}
 
@@ -500,10 +525,10 @@ real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
 \end{verbatim}
 
 %\clearpage
-\section{Additional acknowledgements}
+\section{Silhouette image licenses}
 
 Many of the silhouette images used in Figs 2, and 3 were obtained from
-\texttt{phylopic.org} under Creative Commons licenses. We vectorized the
+\texttt{phylopic.org} under Creative Commons licenses. We drew the
 salmon in Fig.~2. The bird in these figures was obtained
 from \texttt{phylopic.org} under a Creative Commons Attribution 3.0 Unported
 license with credit to Jean-Raphaël Guillaumin {[}photography{]} and T.
@@ -692,7 +717,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \caption{Projections of population abundance under skew-$t$ (red) and
 normally distributed process error models (blue) for populations with
 Pr($\nu<10$) $>0.5$. Numbers above panels indicate GPDD population IDs as
-shown in table~S2. Horizontal axes indicates year before last
+shown in Table~S2. Horizontal axes indicates year before last
 recorded abundance and a projection five years into the future. For the
 projected region, solid lines represents the median projection and
 dashed lines represent lower 99\% credible intervals. Vertical axes are
