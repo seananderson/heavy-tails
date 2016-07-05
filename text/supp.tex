@@ -233,6 +233,123 @@ We note that interpolation is highly unlikely to lead to
 black-swan detections, since black swans involve extreme increases or
 decreases.
 
+\subsubsection{Autocorrelated residuals} We considered a version of the Gompertz
+model in which an autoregressive parameter was fit to the process-noise
+residuals:
+\begin{align}
+x_t &= \lambda + b x_{t-1} + \epsilon_t\\
+\epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, \phi \epsilon_{t-1}, \sigma).
+\end{align}
+In addition to the parameters in the original Gompertz model, this model
+estimates an additional parameter \(\phi\), which represents the correlation of
+subsequent residuals. Based on the results of previous analyses with the
+GPDD \cite{connors2014} and the chosen prior in previous
+analyses \cite{thorson2014a}, we placed a moderately informative prior on
+\(\phi\) that assumed the greatest probability density near zero with the
+reduced possibility of \(\phi\) being near \(-1\) or \(1\). Specifically, we
+chose \(\phi \sim \mathrm{truncated\mhyphen Normal}(0, 0.5, \mathrm{min.} = -1,
+\mathrm{max.} = 1)\).
+
+\subsubsection{Density independence} We fit a simplified version of the
+Gompertz model in which the density dependence parameter \(b\) was fixed at
+\(1\) (density independent). This is equivalent to fitting a random walk model
+(with drift) to the \(\log\) abundances or assuming the growth rates are drawn
+from a stationary distribution. The model was as follows:
+\begin{align}
+x_t &= \lambda + x_{t-1} + \epsilon_t\\
+\epsilon &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma).
+\end{align}
+We fit this model for three reasons: (1) it is computationally simpler and so
+provides a check that our more complicated full Gompertz model was obtaining
+reasonable estimates of \(\nu\), (2) it provides a test of whether density
+dependence was affecting our perception of heavy tails, (3) it
+matches how some previous authors have modelled heavy tails without accounting
+for density dependence \cite{segura2013}.
+
+\subsubsection{Observation error} Observation error can bias parameter
+estimates \cite{knape2012} and is known to affect the ability to detect extreme
+events \cite{ward2007}. In our main analysis, we fit a model that ignored
+observation error. One way to account for observation error would be to fit a
+full state-space model that simultaneously estimates the magnitude of process
+noise and observation error. However, simultaneously estimating observation and
+process noise is a challenging problem (e.g.\ because the observation and
+process noise parameters tend to negatively covary in model fitting) and is
+known to sometimes result in identifiability issues with the Gompertz
+population model \cite{knape2008}. Furthermore, our model was applied to
+hundreds of time series, often of short length (as few as \minTimeSteps\ time
+steps) and our model estimates an additional parameter---the shape of the
+process deviation tails---potentially making identifiability and computational
+issues even greater. Therefore, we considered a version of the base Gompertz
+model that allowed for a fixed level of observation error:
+\begin{align}
+U_t &= \lambda + b U_{t-1} + \epsilon_t\\
+x_t &\sim \mathrm{Normal}(U_t, \sigma_\mathrm{obs}^2)\\
+\epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma_\mathrm{proc}),
+\end{align}
+where \(U\) represents the served state vector, \(\sigma_\mathrm{obs}\)
+represents the standard deviation of observation error (on a log scale), and
+\(\sigma_\mathrm{proc}\) represent the process noise scale parameter. We set
+\(\sigma_\mathrm{obs}\) to \(0.2\), which represents a typical value used in
+simulation analyses \cite{valpine2002, thorson2014b}.
+
+\subsubsection{Ricker-logistic} We also fit a Ricker-logistic model:
+\begin{align}
+x_t &= x_{t-1} + r_{\mathrm{max}}\left(1 - \frac{N_{t-1}}{K}\right) + \epsilon_t\\
+\epsilon_t &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma),
+\end{align}
+where \(r_\mathrm{max}\) represents the theoretical maximum population growth
+rate that is obtained when \(N_t = 0\). The parameter \(K\) represents the
+carrying capacity and, as before, \(x_t\) represents the \(\log\) transformed
+abundance at time \(t\). The Ricker-logistic model assumes a linear decrease in
+population growth rate with increases in abundance. In contrast, the Gompertz
+model assumes a linear decrease in population growth rate with increases in
+\textit{log} abundance.
+
+To fit the Ricker-logistic models, we chose a prior on \(K\) uniform between
+zero and twice the maximum observed abundance (similar and less informative
+than in Ref.~\cite{delean2013}). We set the prior on
+\(r_\mathrm{max}\) as uniform between 0 and 20 as in Ref.~\cite{delean2013}. We used the same priors on \(\nu\) and \(\sigma\) as in
+the Gompertz model.
+
+\subsection{Alternative priors}
+
+To test if the prior on \(\nu\) influenced our estimate of black-swan dynamics,
+we refit our models with weaker and stronger priors. Our base model used a
+prior on \(\nu\) of Truncated-Exponential(0.01, min.\ = 2). For a weaker prior
+we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
+used Truncated-Exponential(0.02, min.\ = 2) (Fig.~S\ref{fig:priors}c). Note that
+the base and weaker priors are relatively flat within the region of \(\nu <
+20\), which is the region we are concerned about when categorizing
+populations as heavy tailed. We also considered using a Uniform(\(0, 1\))
+prior on \(1/\nu\) as used in Ref.~\cite{gelman2014}, but this
+prior puts considerably more weight on lower (heavy-tailed) values of \(\nu\)
+than the truncated exponential priors considered here,
+and the results are therefore not shown.
+
+\subsection{Simulation testing}
+We performed two types of simulation testing.
+First, we tested how easily the Student-$t$ distribution \(\nu\) parameter could
+be recovered given different true values of \(\nu\) and different sample sizes.
+Second, we tested the ability of the heavy-tailed Gompertz model to obtain
+unbiased parameter estimates of \(\nu\) given that a set of process deviations
+was provided in which the effective \(\nu\) value was close to the true \(\nu\)
+value.
+
+We found that we could consistently and precisely recover median posterior
+estimates of \(\nu\) near the true value of \(\nu\) with large samples (\(\ge
+200\)) (Fig.~S\ref{fig:sim-nu} upper panels). At smaller samples we could
+usually qualitatively distinguish heavy from not-heavy tails, but the model
+tended to underestimate how heavy the tails were. At the same time, at smaller
+sample sizes, the model tended to overestimate how large the scale parameter
+was (Fig.~S\ref{fig:sim-nu} lower panels).
+
+Our simulation-testing results indicate that the Gompertz model can recapture
+the true value of \(\nu\) when the process noise was chosen so that appropriate
+tail events were present (Fig.~S\ref{fig:sim-prob} upper panels). The addition
+of observation error caused the model to tend to underestimate the degree of
+heavy-tailedness. Fitting a model with correctly specified observation error
+did not substantially reduce model bias (Fig.~S\ref{fig:sim-prob}).
+
 \section{Heavy-tailed Gompertz model simulations}
 
 We separated our simulation into these two components to avoid confounding two
