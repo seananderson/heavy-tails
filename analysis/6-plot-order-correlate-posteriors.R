@@ -139,8 +139,8 @@ means <- plyr::laply(extract(m), mean)[1:5]
 ord <- order(means)
 
 coefs <- c(expression(Productivity~(lambda)), expression(Density~dep.~(b)),
-  expression(Process~noise~ln(sigma)),
-  expression(ln(Time~steps)), expression(ln(Lifespan)))
+  expression(Process~noise~log(sigma)),
+  expression(log(Time~steps)), expression(log(Lifespan)))
 
 plot(1, 1, xlim = c(-1, 1), ylim = c(0.5, 5.5), main = "", axes = FALSE, yaxs = "i",
   type = "n", yaxs = "i", yaxt = "n", xlab = "", ylab = "")
