@@ -174,18 +174,18 @@ can differ dramatically across taxa.
 \centering
 \includegraphics[width=0.65\textwidth]{../analysis/t-nu-eg2.pdf}
 \caption{ Illustration of population dynamic models that allow for heavy
-tails. (a, b) Probability density for the Student-$t$
+tails. (A, B) Probability density for the Student-$t$
 distribution with scale parameter of $1$ and different values of \(\nu\). Small
 values of \(\nu\) create heavy tails while as \(\nu\) approaches infinity the
-distribution approaches the normal distribution. (c to e)
+distribution approaches the normal distribution. (C to E)
 Simulated population dynamics from a Gompertz model with process noise drawn
 from Student-$t$ distributions with three values of \(\nu\). Coloured dots in
-panels c and d represent jumps with less than a 1 in 1000
-chance of occurring in a normal distribution. (f to h)
-Estimates of \(\nu\) from models fit to the times series in panels c to
-e. Shown are posterior samples (histograms), median and interquartile
+panels C and D represent jumps with less than a 1 in 1000
+chance of occurring in a normal distribution. (F to H)
+Estimates of \(\nu\) from models fit to the times series in panels C to
+E. Shown are posterior samples (histograms), median and interquartile
 range of the posterior (IQR, dots and line segments), and the exponential prior
-on \(\nu\) (dashed lines). Colour shading behind panels f to h
+on \(\nu\) (dashed lines). Colour shading behind panels F to H
 illustrates the approximate region of heavy tails.}
 \label{fig:1}
 \end{figure*}
@@ -233,7 +233,7 @@ orders (Fig.~3a).
 \centering
 \includegraphics[width=0.3\textwidth]{../analysis/nu-coefs-2.pdf}
 \caption{Estimates of population dynamic heavy-tailedness for
-populations of birds, mammals, insects, and fishes. (a to d)
+populations of birds, mammals, insects, and fishes. (A to D)
 Small values of \(\nu\) suggest heavy-tailed black-swan dynamics. Vertical
 points and line segments represent posterior medians and 50\% / 90\% credible
 intervals for individual populations. Inset plots show probability that \(\nu
@@ -285,13 +285,13 @@ event in populations with 60 time steps than in one with 30 time steps
 \centering
 \includegraphics[width=0.26\textwidth]{../analysis/order-posteriors-covariates.pdf}
 \caption{Standardized probabilities and covariates of heavy-tailed
-dynamics. (a) Taxonomic-order-level posterior densities of Pr(\(\nu
+dynamics. (A) Taxonomic-order-level posterior densities of Pr(\(\nu
 < 10\)) after accounting for time-series length in a hierarchical model. Dotted
 vertical line in a indicates the median expected Pr(\(\nu < 10\)) from the
 prior distribution. Colour shading refers to taxonomic class (yellow: fishes,
 green: insects, purple: birds, and red: mammals). Estimates are standardized at
 the geometric mean of time series length across all the data (approximately 27
-time steps) and shown for orders with \(\ge 5\) populations. (b)
+time steps) and shown for orders with \(\ge 5\) populations. (B)
 Posterior densities for potential covariates of Pr(\(\nu < 10\)). In both
 panels, short vertical line segments within the density polygons indicate
 medians.
@@ -325,13 +325,13 @@ abundance \cite{potts1980}.
 \centering
 \includegraphics[width=0.45\textwidth]{../analysis/skew-fig.pdf}
 \caption{Heavy-tailed process noise tends to be downward skewed and
-ignoring this can underestimate risk. (a) Illustrations of Student-$t$
-distributions with 3 levels of skewness (\(\gamma\)) and heavy-tails (\(\nu\)).
-(b) Posterior density of the skewness parameters aggregated across
+ignoring this can underestimate risk. (A) Illustrations of Student-$t$
+distributions with three levels of skewness (\(\gamma\)) and heavy-tails (\(\nu\)).
+(B) Posterior density of the skewness parameters aggregated across
 populations grouped into heavy-tailed (\(\hat{\nu} < 10\)), slightly
 heavy-tailed (\(10 \leq \hat{\nu} \leq 70\)), and normal-tailed populations
-(\(\hat{\nu} > 70\)). Approximate mid-values from b are illustrated in
-panel a. (c) Example time series of heavy-tailed populations with
+(\(\hat{\nu} > 70\)). Approximate mid-values from B are illustrated in
+panel A. (C) Example time series of heavy-tailed populations with
 different levels of skewness. Red dots highlight likely heavy-tailed events.
 Forecasts (grey regions) show median (solid lines) and lower 99\% credible
 intervals (dotted lines) of abundance. Black and red lines indicate forecasts

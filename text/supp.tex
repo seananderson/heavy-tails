@@ -621,7 +621,7 @@ substituted zeros, and total number of time steps.
 \begin{center}
 \includegraphics[width=0.6\textwidth]{../analysis/priors-gomp-base.pdf}
 
-\caption{Probability density of the Bayesian priors for the Gompertz models. \textbf{(a)} Per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$. \textbf{(b)} Scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$ \textbf{(c)} Student-$t$ distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$. \textbf{(d)} AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 0.5, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. Panel \textbf{(c)} also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis. Note that the base and weaker priors are relatively flat within the region of $\nu < 20$ with which we are concerned.}
+\caption{Probability density of the Bayesian priors for the Gompertz models. \textbf{(A)} Per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$. \textbf{(B)} Scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$ \textbf{(C)} Student-$t$ distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$. \textbf{(D)} AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 0.5, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. Panel \textbf{(C)} also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis. Note that the base and weaker priors are relatively flat within the region of $\nu < 20$ with which we are concerned.}
 
 \label{fig:priors}
 \end{center}
@@ -658,17 +658,17 @@ substituted zeros, and total number of time steps.
 \includegraphics[width=0.8\textwidth]{../analysis/gomp-comparison.pdf}
 
 \caption{Estimates of $\nu$ from alternative models plotted against the
-    base Gompertz model estimates of $\nu$. Alternative models are \textbf{(a)}
-    Ricker-logistic; \textbf{(b)} a Gompertz model with AR1 residual correlation;
-    \textbf{(c)} modelling population growth rate with no density dependence; and
-    \textbf{(d)} a Gompertz model with fixed magnitude of observation error. Shown
+    base Gompertz model estimates of $\nu$. Alternative models are \textbf{(A)}
+    Ricker-logistic; \textbf{(B)} a Gompertz model with AR1 residual correlation;
+    \textbf{(C)} modelling population growth rate with no density dependence; and
+    \textbf{(D)} a Gompertz model with fixed magnitude of observation error. Shown
 are medians of the posterior (dots) and 50\% credible intervals (segments). The
 diagonal line indicates a one-to-one relationship. Different colours indicate
 various taxonomic classes. The grey-shaded regions indicate regions of
 disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics.
 The Gompertz observation error model assumes a fixed standard deviation of
-observation error of $0.2$ on a log scale. Models in \textbf{(b)} and \textbf{(d)}
-that had not met convergence thresholds were run for four chains, 256,000 iterations (128,000 warm up), and retaining every 10th sample, after which the MCMC chains for one population in \textbf{(b)} and four populations in \textbf{(d)} had still not met convergence thresholds. These populations are excluded from their respective panels, but all populations with Pr($\nu < 10$) $> 0.5$ in the base model had converged and are shown.}
+observation error of $0.2$ on a log scale. Models in \textbf{(B)} and \textbf{(D)}
+that had not met convergence thresholds were run for four chains, 256,000 iterations (128,000 warm up), and retaining every 10th sample, after which the MCMC chains for one population in \textbf{(B)} and four populations in \textbf{(D)} had still not met convergence thresholds. These populations are excluded from their respective panels, but all populations with Pr($\nu < 10$) $> 0.5$ in the base model had converged and are shown.}
 
 \label{fig:alt}
 \end{center}
@@ -680,7 +680,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/gomp-prior-comparison.pdf}
 
-\caption{Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. \textbf{(a)} A weaker prior on $\nu$; \textbf{(b)} a stronger prior on $\nu$, as illustrated in Fig.~1. Shown are medians of the posterior (dots) and 50\% credible intervals (segments). The diagonal line indicates a one-to-one relationship. Different colours indicate various taxonomic classes. The grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics. In general, the estimates are nearly identical in cases where the data are informative about low values of $\nu$. When the data are less informative about low values of $\nu$, the prior can slightly pull the estimates of $\nu$ towards higher or lower values.}
+\caption{Estimates of $\nu$ from Gompertz models with alternative priors on $\nu$. \textbf{(A)} A weaker prior on $\nu$; \textbf{(B)} a stronger prior on $\nu$, as illustrated in Fig.~1. Shown are medians of the posterior (dots) and 50\% credible intervals (segments). The diagonal line indicates a one-to-one relationship. Different colours indicate various taxonomic classes. The grey-shaded regions indicate regions of disagreement if $\nu = 10$ is taken as a threshold of heavy-tailed dynamics. In general, the estimates are nearly identical in cases where the data are informative about low values of $\nu$. When the data are less informative about low values of $\nu$, the prior can slightly pull the estimates of $\nu$ towards higher or lower values.}
 
 \label{fig:alt-priors}
 \end{center}
@@ -692,7 +692,7 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/correlates-p10.pdf}
 
-\caption{Potential covariates of heavy-tailed population dynamics (indicated by a high probability that $\nu < 10$). Shown are (\textbf{a} to \textbf{c}) parameters from the Gompertz heavy-tailed population model ($\sigma$, $\lambda$, $b$), \textbf{(d)} number of time steps, \textbf{(e)} body length, and \textbf{(f)} lifespan. For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-$t$ process-noise distribution, $\lambda$ refers to the expected log abundance at the next time step at an abundance of one, $b$ refers to the density dependence parameter. Circles representing a few sharks, crustaceans, and gastropods are filled in white. Median and 90\% credible interval posterior predictions of a beta regression hierarchical model are shown in panels \textbf{(a)} and \textbf{(d)} where there was a high probability the slope coefficient was different from zero (Fig.~3B).}
+\caption{Potential covariates of heavy-tailed population dynamics (indicated by a high probability that $\nu < 10$). Shown are (\textbf{A} to \textbf{C}) parameters from the Gompertz heavy-tailed population model ($\sigma$, $\lambda$, $b$), \textbf{(D)} number of time steps, \textbf{(E)} body length, and \textbf{(F)} lifespan. For the Gompertz parameters, $\sigma$ refers to the scale parameter of the Student-$t$ process-noise distribution, $\lambda$ refers to the expected log abundance at the next time step at an abundance of one, $b$ refers to the density dependence parameter. Circles representing a few sharks, crustaceans, and gastropods are filled in white. Median and 90\% credible interval posterior predictions of a beta regression hierarchical model are shown in panels \textbf{(A)} and \textbf{(D)} where there was a high probability the slope coefficient was different from zero (Fig.~3B).}
 
 \label{fig:correlates}
 \end{center}
