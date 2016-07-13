@@ -3,7 +3,10 @@ MS = ms
 SOM = supp
 VERSION = 6.0
 
-all: text
+all: pnas
+
+pnas: 
+	latexmk ms_pnas
 
 text:
 # 	pandoc -S --no-wrap --bibliography=$(REFS).bib --natbib -fmarkdown-all_symbols_escapable ms.md -o ms.tex
