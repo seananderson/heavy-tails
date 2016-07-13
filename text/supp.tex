@@ -262,7 +262,7 @@ To test if the prior on \(\nu\) influenced our estimate of black-swan dynamics,
 we refit our models with weaker and stronger priors. Our base model used a
 prior on \(\nu\) of Truncated-Exponential(0.01, min.\ = 2). For a weaker prior
 we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
-used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}c). Note that
+used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}C). Note that
 the base and weaker priors are relatively flat within the region of \(\nu <
 20\), which is the region we are concerned about when categorizing
 populations as heavy tailed. We also considered using a Uniform(\(0, 1\))
@@ -442,11 +442,11 @@ observation error ($\sigma_\mathrm{obs} = 0.2$), and $50$ samples with the
 same observation error and a Gompertz model that allowed for correctly
 specified observation error magnitude. Our results indicate that the Gompertz
 model can recapture the true value of $\nu$ when the process noise was chosen
-so that appropriate tail events were present (fig.
-\ref{fig:sim-prob} upper panels). The addition of observation error caused the
+so that appropriate tail events were present (Fig.~\ref{fig:sim-prob} upper panels).
+The addition of observation error caused the
 model to tend to underestimate the degree of heavy-tailedness. Fitting a model
 with correctly specified observation error did not make substantial
-improvements to model bias (fig. \ref{fig:sim-prob}).
+improvements to model bias (Fig.~\ref{fig:sim-prob}).
 
 We found that the Gompertz model can recapture
 the true value of \(\nu\) when the process noise was chosen so that appropriate
@@ -456,15 +456,15 @@ heavy-tailedness. Fitting a model with correctly specified observation error
 did not substantially reduce model bias (Fig.~\ref{fig:sim-prob} upper panels).
 
 When converting the posterior distributions of $\nu$ into Pr($\nu < 10$), the
-models distinguished heavy and not-heavy tails reasonably well (fig.
-\ref{fig:sim-prob} lower panels). Without observation error, and using a
+models distinguished heavy and not-heavy tails reasonably well (Fig.~\ref{fig:sim-prob} lower panels).
+Without observation error, and using a
 probability of $0.5$ as a threshold, the model correctly classified all
 simulated systems with normally distributed process noise as not heavy tailed.
 The model would have miscategorized only one of $40$ simulations at $\nu = 5$
-across simulated populations with $50$ or $100$ time steps (fig.
-\ref{fig:sim-prob}, scenarios 1 and 2 in lower row, second panel from left).
+across simulated populations with $50$ or $100$ time steps 
+(Fig.~\ref{fig:sim-prob}, scenarios 1 and 2 in lower row, second panel from left).
 The model would have correctly categorized all cases where the process noise
-was not heavy tailed (fig. \ref{fig:sim-prob} bottom-right panel) and all cases
+was not heavy tailed (Fig.~\ref{fig:sim-prob} bottom-right panel) and all cases
 where $\nu = 3$ and there was not observation error. With $0.2$ standard
 deviations of observation error, the model still categorized
 \obsErrorNuFivePerc\% of cases as heavy tailed when $\nu = 5$ and all but one
