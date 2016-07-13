@@ -619,42 +619,6 @@ substituted zeros, and total number of time steps.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.6\textwidth]{../analysis/priors-gomp-base.pdf}
-
-\caption{Probability density of the Bayesian priors for the Gompertz models. \textbf{(A)} Per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$. \textbf{(B)} Scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$ \textbf{(C)} Student-$t$ distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$. \textbf{(D)} AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 0.5, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. Panel \textbf{(C)} also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis. Note that the base and weaker priors are relatively flat within the region of $\nu < 20$ with which we are concerned.}
-
-\label{fig:priors}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
-\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
-
-\caption{Testing the ability to estimate $\nu$ (top panels) and the scale parameter of the process deviations (bottom panels) for a given number of samples (columns) drawn from a distribution with a given true $\nu$ value (rows). The red lines indicate the true population value. When a small number of samples are drawn there may not be samples sufficiently far into the tails to recapture the true $\nu$ value; however, heavy tails are still distinguished from normal tails in most cases, even with only 25 or 50 samples.}
-
-\label{fig:sim-nu}
-\end{center}
-\end{figure}
-
-\clearpage
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{../analysis/sim-gompertz-median-dist.pdf}
-\includegraphics[width=\textwidth]{../analysis/sim-gompertz-p10.pdf}
-
-\caption{Simulation testing the Gompertz estimation model when the process deviation draws were chosen so that $\nu$ could be estimated close to the true value outside the full population model (``effective $\nu$'' within a CV of 0.2 of specified $\nu$). Upper panels show the distribution of median $\widehat{\nu}$ across 20 simulation runs. Lower panels show the distribution of Pr($\nu < 10$) across 20 simulation runs. We ran the simulations across three population (``true'') $\nu$ values (3, 5, and $1\cdot 10^9$, i.e.\ approximately normal) and four scenarios: (1) 100 time steps and no observation error, (2) 50 time steps and no observation error, (3) 50 time steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but ignored, and (4) 50 time steps with observation error in which the quantity of observation error was assumed known. Within each scenario the dots represent stochastic draws from the true population distributions combined with model fits. Underlayed boxplots show the median, interquartile range, and $1.5$ times the interquartile range.}
-
-\label{fig:sim-prob}
-\end{center}
-\end{figure}
-
-\begin{figure}[htbp]
-\begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/gomp-comparison.pdf}
 
 \caption{Estimates of $\nu$ from alternative models plotted against the
@@ -688,6 +652,31 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 
 \clearpage
 
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-prior-exp0point01.pdf}
+\includegraphics[width=0.8\textwidth]{../analysis/t-dist-sampling-sim-sigma-prior-exp0point01.pdf}
+
+\caption{Testing the ability to estimate $\nu$ (top panels) and the scale parameter of the process deviations (bottom panels) for a given number of samples (columns) drawn from a distribution with a given true $\nu$ value (rows). The red lines indicate the true population value. When a small number of samples are drawn there may not be samples sufficiently far into the tails to recapture the true $\nu$ value; however, heavy tails are still distinguished from normal tails in most cases, even with only 25 or 50 samples.}
+
+\label{fig:sim-nu}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{../analysis/sim-gompertz-median-dist.pdf}
+\includegraphics[width=\textwidth]{../analysis/sim-gompertz-p10.pdf}
+
+\caption{Simulation testing the Gompertz estimation model when the process deviation draws were chosen so that $\nu$ could be estimated close to the true value outside the full population model (``effective $\nu$'' within a CV of 0.2 of specified $\nu$). Upper panels show the distribution of median $\widehat{\nu}$ across 20 simulation runs. Lower panels show the distribution of Pr($\nu < 10$) across 20 simulation runs. We ran the simulations across three population (``true'') $\nu$ values (3, 5, and $1\cdot 10^9$, i.e.\ approximately normal) and four scenarios: (1) 100 time steps and no observation error, (2) 50 time steps and no observation error, (3) 50 time steps and observation error drawn from $\mathrm{Normal} (0, 0.2^2)$ but ignored, and (4) 50 time steps with observation error in which the quantity of observation error was assumed known. Within each scenario the dots represent stochastic draws from the true population distributions combined with model fits. Underlayed boxplots show the median, interquartile range, and $1.5$ times the interquartile range.}
+
+\label{fig:sim-prob}
+\end{center}
+\end{figure}
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../analysis/correlates-p10.pdf}
@@ -699,6 +688,8 @@ that had not met convergence thresholds were run for four chains, 256,000 iterat
 \end{figure}
 
 \clearpage
+
+
 
 \begin{figure}[htbp]
 \begin{center}
@@ -727,6 +718,20 @@ low abundance if the process error is in fact heavy-tailed.}
 \label{fig:skew-projections}
 \end{center}
 \end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{../analysis/priors-gomp-base.pdf}
+
+\caption{Probability density of the Bayesian priors for the Gompertz models. \textbf{(A)} Per capita growth rate at $\log$(abundance) = $0$: $\lambda \sim \mathrm{Normal}(0, 10^2)$. \textbf{(B)} Scale parameter of t-distribution process noise: $\sigma \sim \mathrm{Half\mhyphen Cauchy} (0, 2.5)$ \textbf{(C)} Student-$t$ distribution degrees of freedom parameter: $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.01, \mathrm{min.} = 2)$. \textbf{(D)} AR1 correlation coefficient of residuals: $\phi \sim \mathrm{Truncated \mhyphen Normal}(0, 0.5, \mathrm{min.} = -1, \mathrm{max.} = 1)$. Not shown is $b$, the density dependence parameter: $b \sim \mathrm{Uniform}(-1, 2)$. Panel \textbf{(C)} also shows two alternative priors: a weaker prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.005, \mathrm{min.} = 2)$, and a stronger prior $\nu \sim \mathrm{Truncated\mhyphen Exponential}(0.02, \mathrm{min.} = 2)$. The inset panel shows the same data but with a log-transformed x axis. Note that the base and weaker priors are relatively flat within the region of $\nu < 20$ with which we are concerned.}
+
+\label{fig:priors}
+\end{center}
+\end{figure}
+
+
+
+
 
 %
 % ------------------------------
