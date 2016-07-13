@@ -129,7 +129,7 @@ axis(2, at = seq_along(op),
 axis(1, at = seq(0, 0.3, 0.1), mgp = c(2, 0.3, 0))
 mtext("Probability of black swans", side = 1, line = 1.8, cex = 0.8)
 mtext(quote(Pr(nu<10)), side = 1, line = 3, cex = 0.8, col = subtext_col)
-mtext("(a)", side = 3, line = 0, cex = 1.0, adj = -0.6, font = 2)
+mtext("A", side = 3, line = 0, cex = 1.2, adj = -0.6, font = 2)
 
 ################
 # the main coefficients:
@@ -139,8 +139,8 @@ means <- plyr::laply(extract(m), mean)[1:5]
 ord <- order(means)
 
 coefs <- c(expression(Productivity~(lambda)), expression(Density~dep.~(b)),
-  expression(Process~noise~log(sigma)),
-  expression(log(Time~steps)), expression(log(Lifespan)))
+  expression(Process~noise~ln(sigma)),
+  expression(ln(Time~steps)), expression(ln(Lifespan)))
 
 plot(1, 1, xlim = c(-1, 1), ylim = c(0.5, 5.5), main = "", axes = FALSE, yaxs = "i",
   type = "n", yaxs = "i", yaxt = "n", xlab = "", ylab = "")
@@ -180,7 +180,7 @@ mtext("Coefficient value", side = 1, line = 1.55,
   cex = 0.8, outer = FALSE)
 mtext("(per 2 SDs of predictor)", side = 1, line = 2.6,
   cex = 0.8, outer = FALSE, col = subtext_col)
-mtext("(b)", side = 3, line = 0.5, cex = 1.0, adj = -0.6, font = 2)
+mtext("B", side = 3, line = 0.5, cex = 1.2, adj = -0.6, font = 2)
 
 
 dev.off()

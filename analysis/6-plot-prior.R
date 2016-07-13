@@ -32,12 +32,12 @@ pdf("priors-gomp-base.pdf", width = 6, height = 5.2)
 par(mfrow = c(2, 2), mar = c(3,3,0,0), oma = c(.5, 3, .5, .5),
   tck = -0.02, mgp = c(1.5, 0.4, 0), col.axis = "grey25", col = "grey25", las = 1)
 x <- seq(-9, 9, length.out = 200)
-plot_prior(x, dnorm(x, 0, 10), expression(lambda), label = "(a)")
+plot_prior(x, dnorm(x, 0, 10), expression(lambda), label = "A")
 x <- seq(0, 6, length.out = 200)
-plot_prior(x, dcauchy(x, 0, 2.5), expression(sigma[proc]), ylim = c(0, 0.16), label = "(b)")
+plot_prior(x, dcauchy(x, 0, 2.5), expression(sigma[proc]), ylim = c(0, 0.16), label = "B")
 x <- seq(2, 500, length.out = 2000)
 plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.02), expression(nu),
-  col = "grey70", log = "", ylim = NULL, lty = "93", label = "(c)")
+  col = "grey70", log = "", ylim = NULL, lty = "93", label = "C")
 plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.01),
   expression(nu), add = TRUE, lty = 1, col = "black")
 plot_prior(x, dtrunc(x, "exp", a = 2, b = Inf, rate = 0.005),
@@ -64,6 +64,6 @@ TeachingDemos::subplot({
 
 x <- seq(-1.1, 1.1, length.out = 200)
 plot_prior(x, dtrunc(x, "norm", a = -1, b = 1, mean = 0, sd = 0.5),
-  expression(phi), xlim = c(-1.1, 1.1), label = "(d)")
+  expression(phi), xlim = c(-1.1, 1.1), label = "D")
 mtext("Probability density", side = 2, outer = TRUE, line = 1, las = 0, cex = 0.9)
 dev.off()
