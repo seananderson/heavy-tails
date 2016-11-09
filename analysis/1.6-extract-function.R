@@ -1,5 +1,5 @@
 extract_model <- function(id, get_phi = TRUE,
-  root_folder = "/global/scratch/anderson/heavy", sub_folder = "base",
+  root_folder = ".", sub_folder = "base",
   file_prefix = "sm",
   type = c("gompertz", "logistic", "rate"),
   get_skew = FALSE,

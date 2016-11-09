@@ -1,5 +1,5 @@
 fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
-  root_folder = "/global/scratch/anderson/heavy", file_prefix = "sm",
+  root_folder = ".", file_prefix = "sm",
   stan_dat = paste0("list(N = nrow(x), y = log(x$population_untransformed), ",
     "nu_rate = 0.01, b_lower = -1, b_upper = 2)"),
   pars = c("lambda", "sigma_proc", "nu", "b", "phi"), max_rhat_allowed = 1.05,
