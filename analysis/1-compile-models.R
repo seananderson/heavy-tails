@@ -31,6 +31,34 @@ model {
 stan_gomp <- stan_model(model_code = stan_model)
 saveRDS(stan_gomp, file = "stan-gomp.rds")
 
+# the main model but with the Gamma prior:
+
+stan_model <-
+'data {
+  int<lower=0> N; // rows of data
+  vector[N] y; // vector to hold observations
+  real b_lower;
+  real b_upper;
+}
+parameters {
+  real lambda;
+  real<lower=b_lower, upper=b_upper> b;
+  real<lower=0> sigma_proc;
+  real<lower=2> nu;
+}
+model {
+  nu ~ gamma(2,0.1); // prior from https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations
+  lambda ~ normal(0, 10);
+  sigma_proc ~ cauchy(0, 2.5);
+  for (i in 2:N) {
+    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
+  }
+}
+'
+
+stan_gomp_gamma <- stan_model(model_code = stan_model)
+saveRDS(stan_gomp_gamma, file = "stan-gomp-gamma.rds")
+
 # same base model but with skewed heavy-tailed process noise:
 
 stan_model <-
