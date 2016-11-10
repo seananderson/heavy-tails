@@ -126,15 +126,20 @@ conservation strategies that are robust to ecological surprises.
 
 % If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
 \dropcap{M}ajor surprises happen more often than expected in
-financial, social, and natural systems \cite{taleb2007, sornette2009, may2008}.
+financial, social, and natural systems
+\cite{sornette2002, albeverio2006, taleb2007, may2008, sornette2009}.
 Massive unpredictable market swings are responsible for the majority of
 financial gains and losses \cite{taleb2007}, fatalities from the largest wars
-dwarf those from all others  \cite{newman2005}, and the frequency of the most
+dwarf those from all others \cite{newman2005}, and the frequency of the most
 damaging earthquakes has exceeded past expectations \cite{sornette2009}. In
-ecological systems, background rates of global extinction are punctuated by
-mass extinction \cite{harnik2012}, viruses can mutate suddenly to infect new
-hosts, and billions of animals can die at once in mass mortality
-events \cite{fey2015}.
+ecological systems,
+billions of animals can die at once in mass mortality
+events \cite{fey2015},
+background rates of global extinction are punctuated by
+mass extinction \cite{harnik2012},
+and evolution is characterized by
+long periods of stasis punctuated by
+bursts of speciation \cite{gould1977}.
 
 Indeed, such die-offs may be the most important element
 affecting population persistence \cite{mangel1994} and their importance is
@@ -173,7 +178,7 @@ can differ dramatically across taxa.
 \begin{figure*}[htb]
 \centering
 \includegraphics[width=0.65\textwidth]{../analysis/t-nu-eg2.pdf}
-\caption{ Illustration of population dynamic models that allow for heavy
+\caption{Illustration of population dynamic models that allow for heavy
 tails. (A, B) Probability density for the Student-$t$
 distribution with scale parameter of $1$ and different values of \(\nu\). Small
 values of \(\nu\) create heavy tails while as \(\nu\) approaches infinity the
@@ -189,8 +194,6 @@ on \(\nu\) (dashed lines). Colour shading behind panels F to H
 illustrates the approximate region of heavy tails.}
 \label{fig:1}
 \end{figure*}
-
-
 
 Here, we develop a new approach to estimate the frequency and magnitude of
 black-swan dynamics across time series of 609 populations from a wide array of
@@ -213,7 +216,7 @@ Lower values of \(\nu\) result in heavy-tailed distributions.
 For example, an event four standard deviations below the mean
 is expected to happen once every 35 years with a $t$ distribution at \(\nu = 2\)
 compared to once every 32,000 years with a normal distribution.
-As \(\nu\) approaches infinity, the t
+As \(\nu\) approaches infinity, the $t$
 distribution approaches the normal distribution (Fig.~1).
 
 \section*{Results}
@@ -239,12 +242,11 @@ points and line segments represent posterior medians and 50\% / 90\% credible
 intervals for individual populations. Inset plots show probability that \(\nu
 < 10\) for populations arranged by taxonomic order and sorted by decreasing
 mean Pr(\(\nu < 10\)). Taxonomic orders with three or fewer populations in
-panel a are omitted for space. Red to yellow points highlight populations
+panel A are omitted for space. Red to yellow points highlight populations
 with a high to moderately high probability of heavy-tailed dynamics.
 }
 \label{fig:2}
 \end{figure}
-
 
 The majority of our heavy-tailed estimates were robust to alternative
 population models, observation error, and choice of Bayesian priors. Our
@@ -287,10 +289,10 @@ event in populations with 60 time steps than in one with 30 time steps
 \caption{Standardized probabilities and covariates of heavy-tailed
 dynamics. (A) Taxonomic-order-level posterior densities of Pr(\(\nu
 < 10\)) after accounting for time-series length in a hierarchical model. Dotted
-vertical line in a indicates the median expected Pr(\(\nu < 10\)) from the
+vertical line in A indicates the median expected Pr(\(\nu < 10\)) from the
 prior distribution. Colour shading refers to taxonomic class (yellow: fishes,
 green: insects, purple: birds, and red: mammals). Estimates are standardized at
-the geometric mean of time series length across all the data (approximately 27
+the geometric mean of time-series length across all the data (approximately 27
 time steps) and shown for orders with \(\ge 5\) populations. (B)
 Posterior densities for potential covariates of Pr(\(\nu < 10\)). In both
 panels, short vertical line segments within the density polygons indicate
@@ -298,7 +300,6 @@ medians.
 }
 \label{fig:3}
 \end{figure}
-
 
 The majority of black-swan events (\percBSDown \%) were downward (die-offs)
 rather than upward (unexpectedly rapid abundance increases). Of the black-swan
@@ -373,12 +374,6 @@ Next we consider
 (3) the consequences of our findings for making risk forecasts, and
 (4) for managing natural resources.
 
-% than black-swan population
-% increases and are usually driven by external events such as weather and
-% disease. Therefore, ignoring the presence of black-swan events, and the
-% predominance of crashes over increases, may underestimate extinction risk.
-% TODO: add numbers, add skew add projections add length and Sigma
-
 There are many possible causes of black-swan events, including
 unmodelled intrinsic properties of populations or extrinsic forces acting on
 populations. For example, we could observe black-swan dynamics if we miss an
@@ -388,7 +383,7 @@ tails \cite{gelman2014}. In ecology, these processes could arise through an
 aggregation of populations across space, population
 diversity \cite{schindler2010}, or an intrinsic change in population variability
 through time \cite{carpenter2006}. Extrinsic ecological forces could also cause
-black-swan dynamics \cite{nunez2012} including extreme climate
+black-swan dynamics \cite{nunez2012}, including extreme climate
 events \cite{meehl2004, katz2005, ipcc2012}, predation from (or competition
 with) other species experiencing black-swan events, or sharp changes in human
 pressures such as fishing or habitat destruction.
@@ -396,28 +391,29 @@ Alternatively, the
 synchrony of multiple extrinsic forces could give rise to black-swan dynamics
 through synergistic interactions \cite{kirby2009} or a rare alignment of
 non-synergistic forces \cite{denny2009}.
-We expect that it is extrinsic forces that lead to the
-prevalence of skew-$t$ distributed process noise:
+The prevalence of population die-offs rather than unexpected increases
+is likely due to biology:
 there is no limit to how fast a population can decline due to a catastrophe,
 but population increases are constrained
 by the maximum biological rate of increase
-possible for a given set of demographic traits
+for a given set of demographic traits
 (e.g. population birth rate, mortality, age at maturity).
 
 There are a number of caveats when considering the generality of our results.
-The Global Population Dynamics Database \cite[GPDD,][]{gpdd2010} we used
+First, the Global Population Dynamics Database \cite[GPDD,][]{gpdd2010} we used
 represents a taxonomically and geographically biased sample of
 populations---the longer time series we focused on are dominated by commercially
 and recreationally important species and a disproportionate number of
 populations are located in the United Kingdom. Although we would expect to find
 qualitatively similar evidence for black swans in other large taxonomic or
 geographic samples of populations, the common forces driving those black swans
-would likely differ. Additionally, some apparent black-swan events could be
+would likely differ. Second, some apparent black-swan events could be
 recording mistakes, although conversely, some extreme observations may have been
 discarded or altered if they were erroneously suspected of being recording
 mistakes. Indeed, we discarded three of the populations that our method
 initially identified as heavy tailed because they turned out to be data-entry
-errors. Finally, the temporal scales of observation and population dynamics
+errors (Supporting Information).
+Third, the temporal scales of observation and population dynamics
 vary considerably across populations in the GPDD and these likely influence the
 detection of heavy tails. For example, if we make frequent observations
 relative to generation time (e.g.~for many large-bodied mammals) we will
@@ -425,6 +421,12 @@ average across generations and perhaps miss black-swan events. Conversely, if
 we census populations infrequently relative to generation time (e.g.~many
 insects in the GPDD) the recorded data may average across extreme and
 less-extreme events and also dampen black-swan dynamics.
+Finally, our models assume that
+the fitted parameters (e.g. productivity and density dependence)
+do not vary over time.
+Allowing for time varying parameters
+could be an important development for
+understanding the dynamics of longer time series.
 
 % The models we fit may have misspecified
 % the dynamics of the populations,
@@ -437,9 +439,6 @@ less-extreme events and also dampen black-swan dynamics.
 % the weather can suddenly change,
 % disease can suddenly spread,
 % and species can unexpectedly interact.
-
-% todo the strongest correlates of finding blocks one events was the timeseries length
-% ...implications
 
 Given our results, we suggest modelers should routinely consider representing population dynamic
 process noise with a heavy-tailed, and possibly downward-skewed, distribution,
@@ -554,12 +553,10 @@ allow it to be drawn from a Student-$t$ distribution with scale parameter
 which the process deviations have heavy tails and are therefore evidence of
 black-swan events (Fig.~1A, B).
 
-TODO add assumptions here: assuming that productivity and density dependence are not time varying, this could be an important development for understanding the dynamics of longer time series
-
 We chose the $t$ distribution for a number of reasons.
 Pragmatically, the $t$ distribution requires the estimation of only one additional
 parameter over the normal distribution and reverts to the normal distribution
-if strong evidence of heavy-tailed process deviations is absent.
+if evidence of heavy-tailed process deviations is absent.
 Furthermore, the $t$ distribution arises from a mixture of normal distributions
 with the same mean and different variances \cite{gelman2014},
 which mimics the underlying basis for black-swan events.
@@ -611,18 +608,14 @@ are uninformative about heavy tails (e.g.~Fig.~1E, H), the posterior for
 102\)) and a metric of Pr\((\nu < 10) > 0.5\) will not flag the
 population as heavy tailed.
 
-We fit our models with Stan 2.6.0 \cite{stan-manual2015, hoffman2014}, and R
-3.2.0 \cite{r2015}. We began with four chains and 2,000 iterations, discarding
+We fit our models with Stan 2.12.1 \cite{hoffman2014, stan-manual2015, carpenter2016}, and R
+3.3.1 \cite{r2015}. We began with four chains and 2,000 iterations, discarding
 the first 1,000 as warm up (i.e.~4,000 final samples). If \(\hat{R}\) (the
 potential scale reduction factor---a measure of chain convergence) was greater
 than \(1.05\) for any parameter, or if the minimum effective sample size,
 \(n_\mathrm{eff}\) (a measure of the effective number of uncorrelated samples),
 for any parameter was less than \(200\), we doubled both the total iterations
 and warm up period and sampled from the model again.
-% These thresholds are in
-% excess of the minimums recommended by Ref.~\cite{gelman2006a} of
-% \(\hat{R} < 1.1\) and \(n_\mathrm{eff} > 100\) for reliable point estimates and
-% confidence intervals.
 In the majority of cases our minimum thresholds were
 greatly exceeded. We continued this procedure up to 8,000 iterations (16,000
 total samples) by which all chains had sufficiently converged.
@@ -645,10 +638,12 @@ that the timeseries is stationary.
 Third, observation error could bias parameter estimates \citep{knape2012} or mask our
 ability to detect heavy tails \citep{ward2007}; therefore, we fit a model
 where we allowed for a fixed quantity of observation error ($0.2$ standard
-deviations on a log scale). Finally, the Gompertz model assumes that
+deviations on a log scale). Fourth, the Gompertz model assumes that
 population growth rate declines linearly with log abundance. Therefore, we
 also fit an alternative model, the Ricker-logistic model, which assumes that
 population growth rate declines linearly with abundance (Supporting Information).
+% Our models also assume that their parameters
+% (e.g. parameters representing productivity and density dependence)
 
 We investigated the sensitivity
 of our results to weaker and stronger priors (exponential rate parameter $=
