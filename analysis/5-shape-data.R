@@ -16,6 +16,7 @@ gomp_hat_rate <- readRDS("rate-hat.rds")
 gomp_hat_rw <- readRDS("rw-hat.rds")
 gomp_hat_weaker <- readRDS("gomp-base-weaker-hat.rds")
 gomp_hat_stronger <- readRDS("gomp-base-stronger-hat.rds")
+gomp_hat_gamma <- readRDS("gomp-base-gamma-hat.rds")
 
 # in later work, I discovered that further populations should be removed
 # but, some of these have already been run in my locally cached files
@@ -31,6 +32,7 @@ gomp_hat_rate <- filter(gomp_hat_rate, main_id %in% clean_main_ids)
 gomp_hat_rw <- filter(gomp_hat_rw, main_id %in% clean_main_ids)
 gomp_hat_weaker <- filter(gomp_hat_weaker, main_id %in% clean_main_ids)
 gomp_hat_stronger <- filter(gomp_hat_stronger, main_id %in% clean_main_ids)
+gomp_hat_gamma <- filter(gomp_hat_gamma, main_id %in% clean_main_ids)
 
 brook <- read.csv("brook-etal.csv", stringsAsFactors = FALSE)
 
@@ -66,6 +68,7 @@ gomp_hat_stronger <- inner_join(gomp_hat_stronger, lookup, by = "main_id")
 ar1_vs_base <- inner_join(ar1_vs_base, lookup, by = "main_id")
 gomp_hat_skew <- inner_join(gomp_hat_skew, lookup, by = "main_id")
 gomp_hat_rw <- inner_join(gomp_hat_rw, lookup, by = "main_id")
+gomp_hat_gamma <- inner_join(gomp_hat_skew, lookup, by = "main_id")
 
 # for the paper:
 # (max_rhat <- max(gomp_hat_base$max_rhat))

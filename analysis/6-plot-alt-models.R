@@ -6,6 +6,7 @@ gomp_hat_logistic <- arrange(gomp_hat_logistic, main_id)
 gomp_hat_rate <- arrange(gomp_hat_rate, main_id)
 gomp_hat_rw <- arrange(gomp_hat_rw, main_id)
 gomp_hat_ar1 <- arrange(gomp_hat_ar1, main_id)
+gomp_hat_gamma <- arrange(gomp_hat_gamma, main_id)
 
 heavy_ids <- filter(gomp_hat_base, p10 >= 0.50)$main_id
 
@@ -92,9 +93,51 @@ par(mfrow = c(1, 2), mar = c(3,3,0,0), oma = c(.5, .5, 3.5, .5),
 par(cex = 0.9)
 comp_panel(gomp_hat_base, gomp_hat_weaker, quote(Gompertz~widehat(nu)~(base~model)), quote(Gompertz~widehat(nu)~(weaker~prior)), label = "A")
 comp_panel(gomp_hat_base, gomp_hat_stronger, quote(Gompertz~widehat(nu)~(base~model)), quote(Gompertz~widehat(nu)~(stronger~prior)), label = "B")
+# comp_panel(gomp_hat_base, gomp_hat_gamma, quote(Gompertz~widehat(nu)~(base~model)), quote(Gompertz~widehat(nu)~("Gamma"~prior)), label = "C")
 
 # legend(0.3, 0.63, legend = cols_df$taxonomic_class[1:4], fill = cols_df$col[1:4], bty = "n", ncol = 2)
 # comp_panel(gomp_hat_base, gomp_hat_ar1, quote(Gompertz~widehat(nu)), quote(Gompertz~AR1~widehat(nu)))
 # comp_panel(gomp_hat_base, gomp_hat_rate, quote(Gompertz~widehat(nu)), quote(Rate~only~widehat(nu)))
 # comp_panel(gomp_hat_base, gomp_hat_obs_0.2, quote(Gompertz~widehat(nu)), quote(Gompertz~obs.~error~widehat(nu)))
 dev.off()
+
+d <- inner_join(select(gomp_hat_base, main_id, p10),
+  select(gomp_hat_gamma, main_id, p10) %>% rename(p10_gamma = p10))
+
+ggplot(d, aes(p10, p10_gamma)) + geom_point() +
+  geom_abline(intercept = 0, slope = 1) +
+  geom_vline(xintercept = 0.5) +
+  geom_hline(yintercept = 0.5) +
+  geom_smooth(se = F)
+
+filter(d, p10 > 0.5, p10_gamma < 0.5)
+filter(d, p10 > 0.5, p10_gamma > 0.5)
+
+filter(d, p10 > 0.5, p10_gamma < 0.25)
+filter(d, p10 > 0.5, p10_gamma > 0.25)
+
+x <- seq(2.01, 100, length.out = 200)
+plot(x, dgamma(x, shape = 2, scale = 1/0.1), type = "l", col = "black", ylab = "")
+par(new = TRUE)
+plot(x, dexp(x, 0.01), type = "l")
+
+r <- rgamma(1e7, shape = 2, scale = 1/0.1)
+r <- r[r>2]
+round(sum(r<10)/length(r), 2) * 100
+round(median(r), 2)
+
+r <- rexp(1e7, 0.01)
+r <- r[r>2]
+round(sum(r<10)/length(r), 3) * 100
+round(median(r), 2)
+
+d2 <- inner_join(select(gomp_hat_base, main_id, nu_50),
+  select(gomp_hat_gamma, main_id, nu_50) %>% rename(nu_50_gamma = nu_50))
+
+ggplot(d2, aes(nu_50, nu_50_gamma)) + geom_point() +
+  geom_abline(intercept = 0, slope = 1) +
+  geom_vline(xintercept = 10) +
+  geom_hline(yintercept = 10) +
+  geom_smooth(se = F)
+
+cor(d$p10, d$p10_gamma, method = "spearman")

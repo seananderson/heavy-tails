@@ -265,11 +265,22 @@ we used Truncated-Exponential(0.005, min.\ = 2) and for a stronger prior we
 used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}C). Note that
 the base and weaker priors are relatively flat within the region of \(\nu <
 20\), which is the region we are concerned about when categorizing
-populations as heavy tailed. We also considered using a Uniform(\(0, 1\))
+populations as heavy tailed. We considered using a Uniform(\(0, 1\))
 prior on \(1/\nu\) as used in \citet{gelman2014}, but this
 prior puts considerably more weight on lower (heavy-tailed) values of \(\nu\)
 than the truncated exponential priors considered here,
 and the results are therefore not shown.
+Furthermore, we considered the prior suggested in \citet{juarez2010} of
+$\nu \sim \mathrm{Gamma}(2, 0.1)$, again limited to $\nu > 2$.
+Compared to our main truncated exponential prior,
+this prior places a higher probability density at $\nu < 10$ ($0.25$ vs.\ $0.08$)
+and has a mode at $\nu = 10$.
+This prior raised the estimated value of $\nu$
+for some of the populations identified as heavy-tailed
+with our default prior,
+but overall gave us similar inference
+with a Spearman correlation of 0.90 between Pr($\nu < 10$)
+for the two priors.
 
 \section{Alternative population models}
 
@@ -348,7 +359,7 @@ model assumes a linear decrease in population growth rate with increases in
 To fit the Ricker-logistic models, we chose a prior on \(K\) uniform between
 zero and twice the maximum observed abundance (similar and less informative
 than in \citet{delean2013}). We set the prior on
-\(r_\mathrm{max}\) as uniform between 0 and 20 as in \citet{delean2013}. 
+\(r_\mathrm{max}\) as uniform between 0 and 20 as in \citet{delean2013}.
 We used the same priors on \(\nu\) and \(\sigma\) as in
 the Gompertz model.
 
@@ -461,7 +472,7 @@ Without observation error, and using a
 probability of $0.5$ as a threshold, the model correctly classified all
 simulated systems with normally distributed process noise as not heavy tailed.
 The model would have miscategorized only one of $40$ simulations at $\nu = 5$
-across simulated populations with $50$ or $100$ time steps 
+across simulated populations with $50$ or $100$ time steps
 (Fig.~\ref{fig:sim-prob}, scenarios 1 and 2 in lower row, second panel from left).
 The model would have correctly categorized all cases where the process noise
 was not heavy tailed (Fig.~\ref{fig:sim-prob} bottom-right panel) and all cases
