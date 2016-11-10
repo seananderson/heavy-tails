@@ -51,7 +51,7 @@ analysis/gomp-base-normal/
 analysis/gomp-base-*
 analysis/gomp-base/*
 analysis/gomp-*
-
+sm-*.txt
 *.xwm
 
 *.out
