@@ -47,7 +47,6 @@ analysis/gomp-ar1/*
 analysis/logistic/*
 analysis/logistic-WRONG/*
 analysis/gomp-base*
-
+text/response.md
 *.xwm
-
 *.out
