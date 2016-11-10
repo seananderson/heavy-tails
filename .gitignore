@@ -46,6 +46,11 @@ scratch/
 analysis/gomp-ar1/*
 analysis/logistic/*
 analysis/logistic-WRONG/*
+analysis/gomp-base-gamma/
+analysis/gomp-base-normal/
+analysis/gomp-base-*
+analysis/gomp-base/*
+analysis/gomp-*
 
 *.xwm
 
