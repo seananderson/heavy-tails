@@ -4,6 +4,7 @@ gomp_hat_base <- arrange(gomp_hat_base, main_id)
 gomp_hat_obs_0.2 <- arrange(gomp_hat_obs_0.2, main_id)
 gomp_hat_logistic <- arrange(gomp_hat_logistic, main_id)
 gomp_hat_rate <- arrange(gomp_hat_rate, main_id)
+gomp_hat_rw <- arrange(gomp_hat_rw, main_id)
 gomp_hat_ar1 <- arrange(gomp_hat_ar1, main_id)
 
 heavy_ids <- filter(gomp_hat_base, p10 >= 0.50)$main_id
@@ -16,6 +17,7 @@ check_nc_heavy <- function(dat, heavy_ids) {
 check_nc_heavy(gomp_hat_obs_0.2, heavy_ids)
 check_nc_heavy(gomp_hat_logistic, heavy_ids)
 check_nc_heavy(gomp_hat_rate, heavy_ids)
+check_nc_heavy(gomp_hat_rw, heavy_ids)
 check_nc_heavy(gomp_hat_ar1, heavy_ids)
 
 cols_df <- data.frame(col =
@@ -79,6 +81,9 @@ comp_panel(gomp_hat_base, gomp_hat_ar1, quote(Gompertz~widehat(nu)), quote(Gompe
 comp_panel(gomp_hat_base, gomp_hat_rate, quote(Gompertz~widehat(nu)), quote(Rate~only~widehat(nu)), label = "C")
 comp_panel(gomp_hat_base, gomp_hat_obs_0.2, quote(Gompertz~widehat(nu)), quote(Gompertz~obs.~error~widehat(nu)), label = "D")
 dev.off()
+
+# check:
+# comp_panel(gomp_hat_base, gomp_hat_rw, quote(Gompertz~widehat(nu)), quote(Random~walk~widehat(nu)), label = "Z")
 
 # pdf("gomp-prior-comparison.pdf", width = 7, height = 6.8)
 pdf("gomp-prior-comparison.pdf", width = 7.2, height = 4)
