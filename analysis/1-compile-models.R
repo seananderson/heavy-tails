@@ -336,6 +336,7 @@ saveRDS(stan_gomp2_ar1, file = "stan-gomp2-ar1.rds")
 
 # and a basic model of just the growth rates
 # same as setting b = 1 in Gompertz
+# random walk with drift
 
 stan_model <-
 'data {
@@ -358,3 +359,25 @@ model {
 
 stan_rate <- stan_model(model_code = stan_model)
 saveRDS(stan_rate, file = "stan-rate.rds")
+
+# and a basic random walk model no drift
+
+stan_model <-
+  'data {
+  int<lower=0> N;
+  vector[N] r_obs;
+  real<lower=0> nu_rate;
+}
+parameters {
+  real<lower=0> sigma_proc;
+  real<lower=2> nu;
+}
+model {
+  nu ~ exponential(nu_rate);
+  sigma_proc ~ cauchy(0, 2.5);
+  r_obs ~ student_t(nu, 0, sigma_proc);
+}
+'
+
+stan_rw <- stan_model(model_code = stan_model)
+saveRDS(stan_rw, file = "stan-rw.rds")
