@@ -9,6 +9,9 @@ id <- "gomp-base-normal"
 
 stan_pars <- c("lambda", "sigma_proc", "b")
 
+library("rstan")
+options(mc.cores = 4L)
+
 fit_gpdd_model(gpdd_dat = gpdd, model = model, sub_folder = id,
   pars = stan_pars, iterations = 20000, max_iterations = 20000, warmup = 10000)
 

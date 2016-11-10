@@ -9,6 +9,8 @@ id <- "gomp-base-skew"
 
 stan_pars <- c("lambda", "sigma_proc", "nu", "b", "log_skew")
 
+library("rstan")
+options(mc.cores = 2L)
 fit_gpdd_model(gpdd_dat = gpdd, model = model, sub_folder = id,
   pars = stan_pars, iterations = 20000, max_iterations = 20000, warmup = 10000)
 

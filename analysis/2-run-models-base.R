@@ -1,4 +1,6 @@
 # This file runs the base Gompertz models
+library(rstan)
+options(mc.cores = 1L)
 
 source("1.5-compile-fit-function.R")
 source("1.6-extract-function.R")

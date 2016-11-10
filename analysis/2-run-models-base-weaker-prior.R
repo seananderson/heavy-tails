@@ -12,7 +12,7 @@ stan_pars <- c("lambda", "sigma_proc", "nu", "b")
 fit_gpdd_model(gpdd_dat = gpdd, model = model, sub_folder = id,
   pars = stan_pars,
   stan_dat = paste0("list(N = nrow(x), y = log(x$population_untransformed), ",
-    "nu_rate = 0.005, b_lower = -1, b_upper = 2)"), .parallel = FALSE, cores = 1)
+    "nu_rate = 0.005, b_lower = -1, b_upper = 2)"))
 
 out <- plyr::ldply(unique(gpdd$main_id), extract_model,
   sub_folder = id, get_phi = FALSE, type = "gompertz")
