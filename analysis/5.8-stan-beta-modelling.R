@@ -3,7 +3,6 @@
 # see 5.6-... for the intermediate work
 
 library("rstan")
-# library("stanhelpers") # for easy parallel Stan, from https://github.com/seananderson/stanhelpers
 source("5-shape-data.R")
 
 # scale by 2 standard deviations and subtract mean:
