@@ -1,5 +1,5 @@
 extract_model <- function(id, get_phi = TRUE,
-  root_folder = ".", sub_folder = "base",
+  root_folder = getwd(), sub_folder = "base",
   file_prefix = "sm",
   type = c("gompertz", "logistic", "rate"),
   get_skew = FALSE,
@@ -24,6 +24,10 @@ extract_model <- function(id, get_phi = TRUE,
     lambda <- get_q("lambda")
     sigma_proc <- get_q("sigma_proc")
     out <- data.frame(lambda, sigma_proc)
+  }
+  if(type[1] == "rw") {
+    sigma_proc <- get_q("sigma_proc")
+    out <- data.frame(sigma_proc)
   }
   if(type[1] == "gompertz") {
     lambda <- get_q("lambda")
