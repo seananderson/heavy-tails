@@ -307,6 +307,7 @@ Gompertz model in which the density dependence parameter \(b\) was fixed at
 (with drift) to the \(\log\) abundances or assuming the growth rates are drawn
 from a stationary distribution. The model was as follows:
 \begin{align}
+  \label{eq:rw-drift}
 x_t &= \lambda + x_{t-1} + \epsilon_t\\
 \epsilon &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma).
 \end{align}
@@ -316,6 +317,14 @@ reasonable estimates of \(\nu\), (2) it provides a test of whether density
 dependence was affecting our perception of heavy tails, (3) it
 matches how some previous authors have modelled heavy tails without accounting
 for density dependence \citep{segura2013}.
+
+We also considered a simpler model: a random walk on log abundance without drift,
+\begin{align}
+x_t &= x_{t-1} + \epsilon_t\\
+\epsilon &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma).
+\end{align}
+However, the estimates of $\nu$ were qualitatively similar to those from
+Equation \ref{eq:rw-drift} (Fig.~\ref{fig:alt}C) and are therefore not shown. 
 
 \subsection{Observation error} Observation error can bias parameter
 estimates \citep{knape2012} and is known to affect the ability to detect extreme
