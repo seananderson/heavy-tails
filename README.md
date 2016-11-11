@@ -10,18 +10,8 @@ To re-create the analysis, first you will need the following R
 packages installed:
 
 ```R
-install.packages(
-  "rstan",
-  "dplyr",
-  "plyr",
-  "reshape2",
-  "ggplot2",
-  "gridExtra",
-  "RColorBrewer",
-  "grImport",
-  "TeachingDemos",
-  "metRology",
-  "xtable")
+install.packages(c("rstan", "dplyr", "plyr", "reshape2", "ggplot2", "gridExtra", 
+  "RColorBrewer", "grImport", "TeachingDemos", "metRology", "xtable"))
 ```
 
 Then source the following file:
