@@ -30,9 +30,12 @@ Then source the following file:
 source("analysis/make.R")`
 ```
 
-Alternatively, you can work through the `.R` files in
-sequence (`0-...R`, `1-...R`, etc.) in an R console. Files that start with the
-same number can be sourced in any order.
+Alternatively, in Bash:
+
+```sh
+cd analysis
+make
+```
 
 ## Data
 
