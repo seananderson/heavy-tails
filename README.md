@@ -31,3 +31,22 @@ supplemental Excel spreadsheet in:
 Brook, B.W., Traill, L.W. & Bradshaw, C.J.A. (2006).
 Minimum viable population sizes and global extinction risk are unrelated.
 *Ecol. Lett.* 9, 375-382. <http://doi.org/10.1111/j.1461-0248.2006.00883.x>
+
+## R packages
+
+To run the analysis, you will need the following packages:
+
+```R
+install.packages(
+  "rstan",
+  "dplyr",
+  "plyr",
+  "reshape2",
+  "ggplot2",
+  "gridExtra",
+  "RColorBrewer",
+  "grImport",
+  "TeachingDemos",
+  "metRology",
+  "xtable")
+```
