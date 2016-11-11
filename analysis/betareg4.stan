@@ -75,7 +75,7 @@ model {
   x3 ~ normal(x3_true, x3_sigma);
   // priors:
   mu_a ~ cauchy(0, 10);
-  phi ~ cauchy(0, 10);
+  phi ~ cauchy(0, 25);
   b1 ~ cauchy(0, 2.5);
   b2 ~ cauchy(0, 2.5);
   b3 ~ cauchy(0, 2.5);
