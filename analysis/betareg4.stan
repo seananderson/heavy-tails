@@ -45,6 +45,11 @@ transformed parameters {
   vector<lower=0, upper=1>[N] mu; // transformed linear predictor
   vector<lower=0>[N] A; // beta dist. parameter
   vector<lower=0>[N] B; // beta dist. parameter
+
+  a_class = sigma_a_class * a_class_z;
+  a_order = sigma_a_order * a_order_z;
+  a_sp = sigma_a_sp * a_sp_z;
+
   for (i in 1:N) {
     Xbeta[i] = mu_a + a_class[class_id[i]]
                 + a_order[order_id[i]]
@@ -58,11 +63,6 @@ transformed parameters {
   }
   A = mu * phi;
   B = (1.0 - mu) * phi;
-
-  a_class = sigma_a_class * a_class_z;
-  a_order = sigma_a_order * a_order_z;
-  a_sp = sigma_a_sp * a_sp_z;
-
 }
 model {
   // group-level intercept distributions:
