@@ -6,7 +6,25 @@ population dynamics for animal populations. It accompanies the paper:
 Anderson, S.C., T.B. Branch, A.B. Cooper, N.K. Dulvy. Black-swan
 events in animal populations. In review.
 
-The analysis can be re-created by running the following command in R (version 3.3.1):
+To re-create the analysis, first you will need the following R
+packages installed:
+
+```R
+install.packages(
+  "rstan",
+  "dplyr",
+  "plyr",
+  "reshape2",
+  "ggplot2",
+  "gridExtra",
+  "RColorBrewer",
+  "grImport",
+  "TeachingDemos",
+  "metRology",
+  "xtable")
+```
+
+Then source the following file:
 
 ```R
 source("analysis/make.R")`
@@ -32,21 +50,3 @@ Brook, B.W., Traill, L.W. & Bradshaw, C.J.A. (2006).
 Minimum viable population sizes and global extinction risk are unrelated.
 *Ecol. Lett.* 9, 375-382. <http://doi.org/10.1111/j.1461-0248.2006.00883.x>
 
-## R packages
-
-To run the analysis, you will need the following packages:
-
-```R
-install.packages(
-  "rstan",
-  "dplyr",
-  "plyr",
-  "reshape2",
-  "ggplot2",
-  "gridExtra",
-  "RColorBrewer",
-  "grImport",
-  "TeachingDemos",
-  "metRology",
-  "xtable")
-```
