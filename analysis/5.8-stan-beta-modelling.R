@@ -75,7 +75,7 @@ if(!file.exists("beta-stan-samples.rds")) {
     pars = c("b1", "b2", "b3", "b4", "b5", "mu_a",
       "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
       "a_class", "a_order"),
-    iter = 8000, chains = 4, thin = 1, control = list(adapt_delta = 0.99))
+    iter = 2000, chains = 4, thin = 1, control = list(adapt_delta = 0.99))
   png("trace-beta.png", width = 700, height = 1000)
   rstan::traceplot(m.stan.beta4, pars = c("b1", "b2", "b3", "b4", "b5",
       "mu_a", "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi"),

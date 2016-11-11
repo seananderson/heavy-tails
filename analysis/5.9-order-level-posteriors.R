@@ -41,7 +41,7 @@ if(!file.exists("beta-stan-samples-n-only.rds")) {
     pars = c("b1", "mu_a",
       "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
       "a_class", "a_order"),
-    iter = 8000, chains = 4, thin = 1, control = list(adapt_delta = 0.99))
+    iter = 2000, chains = 4, thin = 1, control = list(adapt_delta = 0.99))
   saveRDS(m.stan.beta5, file = "beta-stan-samples-n-only.rds")
   sink("beta-stan-stamples-n-only.txt")
   print(m.stan.beta5)
