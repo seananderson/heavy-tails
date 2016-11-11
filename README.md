@@ -6,7 +6,7 @@ population dynamics for animal populations. It accompanies the paper:
 Anderson, S.C., T.B. Branch, A.B. Cooper, N.K. Dulvy. Black-swan
 events in animal populations. In review.
 
-To re-create the analysis, first you will need the following R
+To recreate the analysis, first you will need the following R
 packages installed:
 
 ```R
