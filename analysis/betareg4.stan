@@ -20,9 +20,9 @@ data {
   vector<lower=0>[N] x3_sigma; // sd around predictor
 }
 parameters {
-  vector[n_class] a_class; // class-level deviates
-  vector[n_order] a_order; // order-level deviates
-  vector[n_sp] a_sp; // species-level deviates
+  vector[n_class] a_class_z; // class-level deviates
+  vector[n_order] a_order_z; // order-level deviates
+  vector[n_sp] a_sp_z; // species-level deviates
   real b1; // coefficients
   real b2;
   real b3;
@@ -38,12 +38,15 @@ parameters {
   vector[N] x3_true;
 }
 transformed parameters {
+  vector[n_class] a_class; // class-level deviates
+  vector[n_order] a_order; // order-level deviates
+  vector[n_sp] a_sp; // species-level deviates
   vector[N] Xbeta; // linear predictor
   vector<lower=0, upper=1>[N] mu; // transformed linear predictor
   vector<lower=0>[N] A; // beta dist. parameter
   vector<lower=0>[N] B; // beta dist. parameter
   for (i in 1:N) {
-    Xbeta[i] <- mu_a + a_class[class_id[i]]
+    Xbeta[i] = mu_a + a_class[class_id[i]]
                 + a_order[order_id[i]]
                 + a_sp[sp_id[i]]
                 + b1 * x1_true[i]
@@ -51,16 +54,21 @@ transformed parameters {
                 + b3 * x3_true[i]
                 + b4 * x4[i]
                 + b5 * x5[i];
-    mu[i] <- inv_logit(Xbeta[i]);
+    mu[i] = inv_logit(Xbeta[i]);
   }
-  A <- mu * phi;
-  B <- (1.0 - mu) * phi;
+  A = mu * phi;
+  B = (1.0 - mu) * phi;
+
+  a_class = sigma_a_class * a_class_z;
+  a_order = sigma_a_order * a_order_z;
+  a_sp = sigma_a_sp * a_sp_z;
+
 }
 model {
   // group-level intercept distributions:
-  a_class ~ normal(0, sigma_a_class);
-  a_order ~ normal(0, sigma_a_order);
-  a_sp ~ normal(0, sigma_a_sp);
+  a_class_z ~ normal(0, 1);
+  a_order_z ~ normal(0, 1);
+  a_sp_z ~ normal(0, 1);
   // measurement error:
   x1 ~ normal(x1_true, x1_sigma);
   x2 ~ normal(x2_true, x2_sigma);
