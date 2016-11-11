@@ -74,16 +74,16 @@ model {
   x2 ~ normal(x2_true, x2_sigma);
   x3 ~ normal(x3_true, x3_sigma);
   // priors:
-  mu_a ~ cauchy(0, 10);
-  phi ~ cauchy(0, 25);
-  b1 ~ cauchy(0, 2.5);
-  b2 ~ cauchy(0, 2.5);
-  b3 ~ cauchy(0, 2.5);
-  b4 ~ cauchy(0, 2.5);
-  b5 ~ cauchy(0, 2.5);
-  sigma_a_class ~ cauchy(0, 2.5);
-  sigma_a_order ~ cauchy(0, 2.5);
-  sigma_a_sp ~ cauchy(0, 2.5);
+  mu_a ~ student_t(3, 0, 10);
+  phi ~ student_t(3, 0, 25);
+  b1 ~ student_t(3, 0, 2.5);
+  b2 ~ student_t(3, 0, 2.5);
+  b3 ~ student_t(3, 0, 2.5);
+  b4 ~ student_t(3, 0, 2.5);
+  b5 ~ student_t(3, 0, 2.5);
+  sigma_a_class ~ student_t(3, 0, 2.5);
+  sigma_a_order ~ student_t(3, 0, 2.5);
+  sigma_a_sp ~ student_t(3, 0, 2.5);
   // likelihood:
   y ~ beta(A, B);
 }
