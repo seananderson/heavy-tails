@@ -55,6 +55,7 @@ source("5-shape-data.R")
 source("5.8-stan-beta-modelling.R")
 # warning: takes a long time; caching implemented
 source("5.9-order-level-posteriors.R")
+source("5.10-extract-skew-samples.R")
 source("6-plot-alt-models.R")
 source("6-plot-correlates.R") # must run 5.8.. first
 source("6-plot-eg-ts-gpdd.R")
@@ -63,6 +64,9 @@ source("6-plot-order-correlate-posteriors.R") # must run 5.9... first
 source("6-plot-prior.R")
 source("6-plot-sparks.R")
 source("6-plot-t-nu-eg.R")
+source("6-causes-table.R")
+source("6-plot-skewness.R")
+source("8.1-plot-skewness.R")
 source("9-values-for-paper.R")
 
 # Created in Vim with :read !ls *.R
