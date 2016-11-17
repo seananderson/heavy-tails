@@ -602,11 +602,17 @@ any case, for \(\nu > 20\) the $t$ distribution is almost indistinguishable from
 the normal distribution (Fig.~1). Based on the shape of the $t$ distribution, we
 chose the probability that \(\nu < 10\), Pr(\(\nu < 10\)), to define the
 probability of heavy-tailed (black-swan) dynamics. When categorizing a population as heavy
-tailed, we applied a 0.5 probability threshold. In the scenario where the data
-are uninformative about heavy tails (e.g.~Fig.~1E, H), the posterior for
+tailed, we applied a 0.5 probability threshold.
+The data must therefore alter the posterior so that
+more than 50\% of the posterior probability has $\nu < 10$ for a
+population to be declared heavy tailed. 
+If the data
+are uninformative about heavy tails (e.g.~Fig.~1E, H), 
+and the population model is otherwise a reasonable representation of the dynamics, 
+the posterior for
 \(\nu\) will approximately match the prior (prior median \(= 71\), mean \(=
-102\)) and a metric of Pr\((\nu < 10) > 0.5\) will not flag the
-population as heavy tailed.
+102\)) and a metric of Pr\((\nu < 10) > 0.5\) will not flag any
+populations as heavy tailed.
 
 We fit our models with Stan 2.12.1 \cite{hoffman2014, stan-manual2015, carpenter2016}, and R
 3.3.1 \cite{r2015}. We began with four chains and 2,000 iterations, discarding
