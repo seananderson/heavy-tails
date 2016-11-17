@@ -53,7 +53,7 @@ if(!file.exists("betareg4.rds")) {
   stan_beta4 <- readRDS("betareg4.rds")
 }
 
-if(!file.exists("beta-stan-samples.rds")) {
+#if(!file.exists("beta-stan-samples.rds")) {
   m.stan.beta4 <- sampling(stan_beta4,
     data = list(
       N = nrow(d),
@@ -75,7 +75,7 @@ if(!file.exists("beta-stan-samples.rds")) {
     pars = c("b1", "b2", "b3", "b4", "b5", "mu_a",
       "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi",
       "a_class", "a_order"),
-    iter = 2000, chains = 4, thin = 1, control = list(adapt_delta = 0.99))
+    iter = 2000, chains = 4, thin = 1, control = list(adapt_delta = 0.999))
   png("trace-beta.png", width = 700, height = 1000)
   rstan::traceplot(m.stan.beta4, pars = c("b1", "b2", "b3", "b4", "b5",
       "mu_a", "sigma_a_class", "sigma_a_order", "sigma_a_sp", "phi"),
@@ -83,7 +83,7 @@ if(!file.exists("beta-stan-samples.rds")) {
     inc_warmup = FALSE)
   dev.off()
   saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
-}
+#}
 
 m <- readRDS("beta-stan-samples.rds") # or reload this
 sink("beta-stan-samples-2.txt")
