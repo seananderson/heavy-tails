@@ -63,6 +63,6 @@ source("6-plot-order-correlate-posteriors.R") # must run 5.9... first
 source("6-plot-prior.R")
 source("6-plot-sparks.R")
 source("6-plot-t-nu-eg.R")
-source("7-values-for-paper.R")
+source("9-values-for-paper.R")
 
 # Created in Vim with :read !ls *.R
