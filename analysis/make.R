@@ -40,7 +40,6 @@ if(!file.exists("rate-hat.rds"))
   source("2-run-models-rate.R")
 if(!file.exists("gomp-base-mean-sd.rds"))
   source("2.1-get-base-mean-sd.R")
-# TODO FINISH THIS
 # Simulation testing
 if(!file.exists("sample-t-sim-check.rds"))
   source("3.0-test-t-sampling.R") # warning: takes a long time
@@ -65,7 +64,8 @@ source("6-plot-prior.R")
 source("6-plot-sparks.R")
 source("6-plot-t-nu-eg.R")
 source("6-causes-table.R")
-source("6-plot-skewness.R")
+#source("6-plot-skewness.R")
+source("8-sim-extinction-risk.R")
 source("8.1-plot-skewness.R")
 source("9-values-for-paper.R")
 
