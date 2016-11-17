@@ -36,8 +36,8 @@ sample_posterior <- function(path = ".", N = 5000L, files = NULL) {
 }
 
 set.seed(123)
-skew_samples   <- sample_posterior("~/scratch/heavy/gomp-base-skew/", N = 5000L)
-normal_samples <- sample_posterior("~/scratch/heavy/gomp-base-normal/", N = 5000L)
+skew_samples   <- sample_posterior("gomp-base-skew/", N = 5000L)
+normal_samples <- sample_posterior("gomp-base-normal/", N = 5000L)
 saveRDS(skew_samples,   file = "skew_samples.rds")
 saveRDS(normal_samples, file = "normal_samples.rds")
 
@@ -49,9 +49,9 @@ write.csv(heavy_ids, file = "heavy_ids.csv", row.names = FALSE)
 
 heavy_ids <- read.csv("heavy_ids.csv")$x
 set.seed(123)
-skew_samples   <- sample_posterior("~/scratch/heavy/gomp-base-skew/", N = 40000L,
+skew_samples   <- sample_posterior("gomp-base-skew/", N = 40000L,
   files = paste0("sm-", heavy_ids, ".rds"))
-normal_samples <- sample_posterior("~/scratch/heavy/gomp-base-normal/", N = 40000L,
+normal_samples <- sample_posterior("gomp-base-normal/", N = 40000L,
   files = paste0("sm-", heavy_ids, ".rds"))
 saveRDS(skew_samples,   file = "skew_samples_heavy40000.rds")
 saveRDS(normal_samples, file = "normal_samples_heavy40000.rds")
