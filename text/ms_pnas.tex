@@ -616,18 +616,18 @@ populations as heavy tailed.
 
 We fit our models with Stan 2.12.1 \cite{hoffman2014, stan-manual2015, carpenter2016}, and R
 3.3.1 \cite{r2015}. We began with four chains and 2,000 iterations, discarding
-the first 1,000 as warm up (i.e.~4,000 final samples). If \(\hat{R}\) (the
+the first 1,000 as warm up. If \(\hat{R}\) (the
 potential scale reduction factor---a measure of chain convergence) was greater
 than \(1.05\) for any parameter, or if the minimum effective sample size,
 \(n_\mathrm{eff}\) (a measure of the effective number of uncorrelated samples),
 for any parameter was less than \(200\), we doubled both the total iterations
 and warm up period and sampled from the model again.
 In the majority of cases our minimum thresholds were
-greatly exceeded. We continued this procedure up to 8,000 iterations (16,000
-total samples) by which all chains had sufficiently converged.
-The No-U-Turn Hamiltonian Markov chain Monte Carlo sampler in Stan generally
-requires fewer iterations to obtain equivalent effective sample sizes than the
-Gibbs or Metropolis--Hastings algorithms \cite{stan-manual2015}.
+greatly exceeded. We continued this procedure up to 8,000 iterations 
+by which all chains had sufficiently converged.
+% The No-U-Turn Hamiltonian Markov chain Monte Carlo sampler in Stan generally
+% requires fewer iterations to obtain equivalent effective sample sizes than the
+% Gibbs or Metropolis--Hastings algorithms \cite{stan-manual2015}.
 
 \subsection{Alternative models and simulation testing}
 We fit alternative population models to test if four key phenomena
