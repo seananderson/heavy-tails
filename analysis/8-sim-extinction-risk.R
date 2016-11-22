@@ -73,7 +73,7 @@ skew_samples <- readRDS("skew_samples_heavy40000.rds")
 normal_samples <- readRDS("normal_samples_heavy40000.rds")
 
 library("doParallel")
-registerDoParallel(cores = 4)
+registerDoParallel(cores = parallel::detectCores())
 
 # join in the starting abundances first for speed:
 last_abund <- group_by(gpdd, main_id) %>%
@@ -97,7 +97,8 @@ ww / rowSums(ww) * 100
 skew_samples_heavy <- filter(skew_samples, main_id %in% heavy_pops$main_id)
 normal_samples_heavy <- filter(normal_samples, main_id %in% heavy_pops$main_id)
 
-out_skew <- plyr::ldply(seq_len(1L), function(i) {
+set.seed(1)
+out_skew <- plyr::ldply(seq_len(5L), function(i) {
   temp <- plyr::ddply(skew_samples_heavy, c("main_id", "sample_ids"), function(x) {
       sim_gomp_extinction(y1 = x$last_abundance, lambda = x$lambda, b = x$b,
         N = 6L, nu = x$nu, sigma_proc = x$sigma_proc, log_skew = x$log_skew,
@@ -106,7 +107,7 @@ out_skew <- plyr::ldply(seq_len(1L), function(i) {
   temp}, .parallel = FALSE)
 saveRDS(out_skew, file = "project-skew-heavy.rds")
 
-out_normal <- plyr::ldply(seq_len(1L), function(i) {
+out_normal <- plyr::ldply(seq_len(5L), function(i) {
   temp <- plyr::ddply(normal_samples_heavy, c("main_id", "sample_ids"), function(x) {
       sim_gomp_extinction(y1 = x$last_abundance, lambda = x$lambda, b = x$b,
         N = 6L, nu = NULL, sigma_proc = x$sigma_proc, log_skew = NULL,
@@ -167,7 +168,7 @@ qq <- before_and_projections %>% group_by(main_id, year) %>%
 plot(qq$r, log = "y", ylim = c(0.2, 5))
 abline(h = 1)
 median(1/qq$r)
-plot(density(log(qq$r)), xlim = c(-2.5, 2.5))
+plot(density(1/qq$r), xlim = c(-1, 4.5));abline(v = 1)
 quantile(1/qq$r, probs = c(0, 0.25, 0.5, 0.75, 1)) %>%
   round(1)
 saveRDS(qq, file = "skew-understimates.rds")
