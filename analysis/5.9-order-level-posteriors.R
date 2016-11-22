@@ -26,7 +26,7 @@ d <- readRDS("beta-modelling-dat.rds")
 # glmmADMB::ranef(m)
 # plogis(coef(m))
 
-#if(!file.exists("beta-stan-samples-n-only.rds")) {
+if(!file.exists("beta-stan-samples-n-only.rds")) {
   m.stan.beta5 <- sampling(stan_beta5,
     data = list(
       N = nrow(d),
@@ -46,7 +46,7 @@ d <- readRDS("beta-modelling-dat.rds")
   sink("beta-stan-stamples-n-only.txt")
   print(m.stan.beta5)
   sink()
-#}
+}
 m <- readRDS("beta-stan-samples-n-only.rds")
 
 lu <- d[,c("order_id", "class_id", "taxonomic_class", "taxonomic_order")]

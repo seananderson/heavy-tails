@@ -53,7 +53,7 @@ if(!file.exists("betareg4.rds")) {
   stan_beta4 <- readRDS("betareg4.rds")
 }
 
-#if(!file.exists("beta-stan-samples.rds")) {
+if(!file.exists("beta-stan-samples.rds")) {
   m.stan.beta4 <- sampling(stan_beta4,
     data = list(
       N = nrow(d),
@@ -83,7 +83,7 @@ if(!file.exists("betareg4.rds")) {
     inc_warmup = FALSE)
   dev.off()
   saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
-#}
+}
 
 m <- readRDS("beta-stan-samples.rds") # or reload this
 sink("beta-stan-samples-2.txt")
