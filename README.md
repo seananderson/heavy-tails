@@ -12,7 +12,7 @@ packages installed:
 ```R
 install.packages(c("rstan", "dplyr", "plyr", "reshape2", "ggplot2", "gridExtra", 
   "RColorBrewer", "grImport", "TeachingDemos", "metRology", "xtable", "devtools",
-  "skewt", "foreach", "Rcpp"))
+  "skewt", "foreach", "Rcpp", "png"), dependencies = TRUE)
 devtools::install_github("sckott/rphylopic")
 ```
 
