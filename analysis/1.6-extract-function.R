@@ -7,6 +7,7 @@ extract_model <- function(id, get_phi = TRUE,
 
   library("rstan")
 
+  message(id)
   sm <- readRDS(paste0(root_folder, "/", sub_folder, "/", file_prefix, "-",
     id, ".rds"))
 

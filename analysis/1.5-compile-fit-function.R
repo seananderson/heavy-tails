@@ -5,7 +5,7 @@ fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
   pars = c("lambda", "sigma_proc", "nu", "b", "phi"), max_rhat_allowed = 1.05,
   min_neff_allowed = 200, iterations = 2000, max_iterations = 8000,
   iteration_increment = 2, warmup = 1000, chains = 4, overwrite = FALSE,
-  .parallel = FALSE, refresh = -1, cores = 1L, thin = 1) {
+  .parallel = FALSE, refresh = -1, cores = 1L, thin = 1, ...) {
 
   library("rstan")
 
@@ -39,7 +39,7 @@ fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
         d <- eval(parse(text = stan_dat))
         # refresh = -1 supresses the running messages
         sm <- rstan::sampling(model, data = d, thin = thin,
-          pars = pars, iter = iterations, chains = chains, warmup = warmup)
+          pars = pars, iter = iterations, chains = chains, warmup = warmup, ...)
         max_rhat <- max(summary(sm)$summary[, "Rhat"])
         min_neff <- min(summary(sm)$summary[, "n_eff"])
         warmup <- warmup * iteration_increment
