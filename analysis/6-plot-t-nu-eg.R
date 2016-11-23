@@ -82,12 +82,13 @@ make_ts <- function(seed, nu, ylim = c(-6.5, 9), bs_col = "red") {
   return(list(y = y, nu = nu))
 }
 
-seed <- nu_5_seeds_N50$seeds[19]
+seed <- nu_5_seeds_N50$seeds[15] # good seed for illustration
 y1 <- make_ts(seed = seed, nu = 3, bs_col = bs_cols[2])
 text(1, 7.1, "C", pos = 4, font = 2, cex = 1.4)
 text(6, 7.1, quote(nu==3), pos = 4)
 mtext("Simulated population dynamics", side = 3, line = 0, cex = 0.9)
 text(13, -3.9, "Black swans", pos = 4)
+seed <- nu_5_seeds_N50$seeds[15]
 y2 <- make_ts(seed = seed, nu = 5, bs_col = bs_cols[3])
 mtext("ln Abundance", side = 2, line = 0.5, las = 0, cex = 0.9)
 #text(24, -2.5, "Gompertz\npopulation\nmodel", pos = 4)
