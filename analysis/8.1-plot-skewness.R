@@ -113,27 +113,6 @@ add_label <- function(xfrac = -0.03, yfrac = -0.1, label = "", pos = 4, ...) {
   par(xpd = FALSE)
 }
 
-#dev.off()
-
-# 1. I would make all the axes numbers smaller
-# 2. Add some more white space between a and b, between the left and the
-# right, and below each of the sparkline plots.
-# 3. Need at least three numbers on each y-axis for the sparklines since
-# in log-scale, but they could be much smaller in size.
-# 4. Red grouse looks weird, why does the red lower dashed line end up
-# *above* the black dashed lower line in the last year? It might be that
-# you need to run the MCMC for a much longer run and retain a much
-# higher number of samples (100,000) to get an accurate estimate of the
-# lower 99.5-ile. Or might just be the true behavior given the higher
-# red median projected.
-# 5. The text needs to mention the numbers that are the ratio of red
-# dashed to black dashed after five years for at least these five cases.
-# It's hard to infer from the log-scale of the plot but looks
-# potentially substantial.
-# 6. in a the nu is listed first, in c the globulin (my default name
-# when I don't know the greek letter name) is listed first and nu
-# second.
-
 l <- rbind(
   c(1, 2, 3, 5, 5, 5),
   c(4, 4, 4, 6, 6, 6),
@@ -289,65 +268,3 @@ par(mgp = c(2, 0.35, 0))
 mtext("Years", side = 1, line = 2.2, col = "grey20", cex = 0.9)
 
 dev.off()
-
-## #########################
-## # test other ways of getting residual black swans:
-## id <- 20579
-## id <- 10113
-## id <- 7099
-## id <- 12 # normal
-## # pdf("bs-threshold-methods.pdf", width = 7, height = 12)
-## par(mfrow = c(1, 2))
-## # cn <- filter(gomp_hat_normal, main_id == 20579)
-## # resids <- get_gomp_res(filter(gpdd, main_id == 20579)$population_untransformed, sigma_proc = cn$sigma_proc_50, lambda = cn$lambda_50, b = cn$b_50)$res
-## #
-## # hist(resids[-1], breaks = 20)
-## # x <- seq(-0.5, 0.5, length.out = 200)
-## # lines(x, dnorm(x, mean = 0, sd = cn$sigma_proc_50)*5.5, col = "red")
-## # bs <- qnorm(0.001, 0, sd = cn$sigma_proc_50)
-## # bs <- cn$sigma_proc_50 * -2
-## # abline(v = bs, col = "blue")
-## # plot(resids, type = "o")
-## # abline(h = bs, col = "blue")
-##
-## # with tails:
-## cn <- filter(gomp_hat_skew, main_id == id)
-## cn <- filter(gomp_hat_skew, main_id == id)
-## resids <- get_gomp_res(filter(gpdd, main_id == id)$population_untransformed, sigma_proc = cn$sigma_proc_50, lambda = cn$lambda_50, b = cn$b_50)$res
-## bs1 <- qnorm(0.0001, 0, sd = cn$sigma_proc_50)
-## bs2 <- cn$sigma_proc_50 * -5
-## bs2 <- c(bs2, -bs2)
-## bs1 <- c(bs1, -bs1)
-## # par(mfrow = c(1, 2))
-## hist(resids[-1], breaks = 20, xlim = range(c(bs1, bs2, resids[-1])))
-## # x <- seq(-0.5, 0.5, length.out = 200)
-## # lines(x, dnorm(x, mean = 0, sd = cn$sigma_proc_50)*3.5, col = "red")
-## abline(v = bs1, col = "blue")
-## abline(v = bs2, col = "purple")
-## plot(resids, type = "o", ylim = range(c(bs1, bs2, resids[-1])))
-## abline(h = bs1, col = "blue")
-## abline(h = bs2, col = "purple")
-##
-##
-## # with tails, but re-fit normal to residuals:
-## cn <- filter(gomp_hat_base, main_id == 20579)
-## resids <- get_gomp_res(filter(gpdd, main_id == 20579)$population_untransformed, sigma_proc = cn$sigma_proc_50, lambda = cn$lambda_50, b = cn$b_50)$res
-## # par(mfrow = c(1, 2))
-## hist(resids[-1], breaks = 20)
-## x <- seq(-0.5, 0.5, length.out = 200)
-## norm_sd <- sd(resids[-1])
-## lines(x, dnorm(x, mean = 0, sd = norm_sd)*5.5, col = "red")
-## bs <- qnorm(0.001, 0, sd = norm_sd)
-## abline(v = bs, col = "blue")
-## plot(resids, type = "o")
-## abline(h = bs, col = "blue")
-##
-## # or by taking a value that's at the 1% of the t distribution:
-## cn <- filter(gomp_hat_base, main_id == 20579)
-## resids <- get_gomp_res(filter(gpdd, main_id == 20579)$population_untransformed, sigma_proc = cn$sigma_proc_50, lambda = cn$lambda_50, b = cn$b_50)$res
-## # par(mfrow = c(1, 2))
-## hist(resids[-1], breaks = 20)
-## bs <- qt(0.01, df = cn$nu_50) * cn$sigma_proc_50
-## abline(v = bs, col = "blue")
-## plot(resids, type = "o")
-## abline(h = bs, col = "blue")
