@@ -125,7 +125,7 @@ conservation strategies that are robust to ecological surprises.
 \ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
 
 % If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
-\dropcap{M}ajor surprises happen more often than expected in
+\dropcap{M}ajor surprises (black-swan events) happen more often than expected in
 financial, social, and natural systems
 \cite{sornette2002, albeverio2006, taleb2007, may2008, sornette2009}.
 Massive unpredictable market swings are responsible for the majority of
@@ -146,7 +146,7 @@ affecting population persistence \cite{mangel1994} and their importance is
 likely to increase given projected increases in the frequency and magnitude of
 climate-related extremes \cite{ipcc2012}.
 % Despite this anecdotal evidence for
-% ecological black swans, systematic searches of large numbers of timeseries have
+% ecological black swans, systematic searches of large numbers of time series have
 % yet to reveal black-swan events \cite{keitt1998, allen2001, halley2002}.
 However, the overwhelming majority of population model fitting and risk forecasting
 assumes that deviations from model predictions can be represented by a normal
@@ -196,7 +196,7 @@ illustrates the approximate region of heavy tails.}
 \end{figure*}
 
 Here, we develop a new approach to estimate the frequency and magnitude of
-black-swan dynamics across time series of 609 populations from a wide array of
+black-swan dynamics across time series of \NPops\ populations from a wide array of
 taxonomic groups---including many  birds, mammals, insects, and fishes
 (Table~S1). We identify characteristics of time series or
 life-history traits associated with the detection of black-swan events and
@@ -223,13 +223,13 @@ distribution approaches the normal distribution (Fig.~1).
 
 We found that black-swan dynamics are infrequent but highly
 influential: in our dataset they were detected most
-frequently for birds (7\%), mammals (5\%), and
-insects (3\%) but almost never in fishes (Fig.~2). Black-swan
-events were taxonomically widespread, occurring in 38\% of taxonomic orders.
+frequently for birds (\birdPH\%), mammals (\mammalsPH\%), and
+insects (\insectsPH\%) but almost never in fishes (Fig.~2). Black-swan
+events were taxonomically widespread, occurring in \POrdersHeavy\% of taxonomic orders.
 Accounting for time series length and partially pooling inference across
 taxonomic class and order with a hierarchical model, we found stronger evidence
-for black swans in insect populations than these statistics suggest---four of
-eight orders with the highest median probability of heavy tails were insect
+for black swans in insect populations than these statistics suggest---two of
+five orders with the highest median probability of heavy tails were insect
 orders (Fig.~3A).
 
 \begin{figure}[htb]
@@ -249,8 +249,8 @@ with a high to moderately high probability of heavy-tailed dynamics.
 \end{figure}
 
 The majority of our heavy-tailed estimates were robust to alternative
-population models, observation error, and choice of Bayesian priors. Our
-conclusions were not systematically altered when we included autocorrelation
+population models, observation error, and choice of Bayesian priors (Supporting Information). 
+Our conclusions were not systematically altered when we included autocorrelation
 in the residuals, modelled population growth rates with or without
 density dependence, or modelled the population dynamics as Ricker-logistic
 instead of Gompertz (Fig.~S\figalt). Similarly, introducing moderate
@@ -279,7 +279,7 @@ dynamics was positively related to time-series length and negatively related to
 magnitude of process noise but not clearly related to population growth rate,
 density dependence, or maximum lifespan (Fig.~3B, Fig.~S\figcorrelates).
 Longer time-series length was the strongest covariate of observing black-swan
-dynamics: there is a 1.6 times greater probability of detecting a black-swan
+dynamics: there is a \pIncHeavyNThirtyNSixty\ times greater probability of detecting a black-swan
 event in populations with 60 time steps than in one with 30 time steps
 (Fig.~S\figcorrelates).
 
@@ -345,11 +345,12 @@ Given the prevalence of downwards events, we refit our heavy-tailed models to
 measure the degree of skewness \(\gamma\) of the process noise using a skew-$t$
 distribution (Fig.~4a), and used these models to make near-term risk forecasts.
 Aggregated across populations with strong evidence of heavy tails (median \(\nu
-< 10\)), 85\% of the \(\gamma\) probability density was below 1, indicating
+< 10\)), \probDensSkewedForHeavyPops\% of the \(\gamma\)
+probability density was below 1, indicating
 strong evidence of downwardly skewed process noise (Fig.~4B,
 Fig.~S\figskewnu). In contrast, populations that did not have heavy
 tails (median \(\nu \geq 70\)) had little evidence of skewed process noise
-(Fig.~4B; 90\% of 95\% credible intervals overlapped~1). Projecting these
+(Fig.~4B; \percNormPopsNotSkewed\% of 95\% credible intervals overlapped~1). Projecting these
 heavy-tailed populations forward five years revealed that assuming standard
 normal process noise underestimated risk (99\% lower credible interval of
 abundance) by \crashUnderRange-fold (interquartile range; Fig.~4C,
@@ -376,7 +377,7 @@ Next we consider
 
 There are many possible causes of black-swan events, including
 unmodelled intrinsic properties of populations or extrinsic forces acting on
-populations. For example, we could observe black-swan dynamics if we miss an
+populations. For example, we could have observed black-swan dynamics if we missed an
 underlying mixture of processes, since a mixture of normal distributions with
 different variances can generate a $t$ distribution with heavy
 tails \cite{gelman2014}. In ecology, these processes could arise through an
@@ -466,7 +467,7 @@ it requires estimating no more parameters
 than the normal distribution.
 Barring a better estimate,
 we suggest using $\nu = 5$; and
-a skewness parameter ($\gamma$) of $\sim 0.7$ (Fig.~4A)
+a skewness parameter ($\gamma$) of $0.7$ (Fig.~4A)
 if a modeler wishes to allow for downward heavy-tailed events.
 These are midrange values from the populations identified as heavy tailed here.
 Above $\nu  =  10$ the $t$ distribution closely resembles
@@ -487,7 +488,7 @@ forecast probabilities to focus early detection efforts and develop disaster
 response plans \cite{nrc2007}. The presence of ecological black swans also suggests that we
 develop management policy that is robust to heavy tails and encourages
 general resilience \cite{carpenter2012}. For instance, setting target
-population abundances far back from critical limits will buffer against black-swan
+population abundances far back from critical limits may buffer against black-swan
 events \cite{caddy1996}, and maintaining genetic, phenotypic, and behavioural
 diversity may allow some components of populations to persist when others are
 affected by disease or extreme environmental forces \cite{schindler2010}.
@@ -605,10 +606,10 @@ probability of heavy-tailed (black-swan) dynamics. When categorizing a populatio
 tailed, we applied a 0.5 probability threshold.
 The data must therefore alter the posterior so that
 more than 50\% of the posterior probability has $\nu < 10$ for a
-population to be declared heavy tailed. 
+population to be declared heavy tailed.
 If the data
-are uninformative about heavy tails (e.g.~Fig.~1E, H), 
-and the population model is otherwise a reasonable representation of the dynamics, 
+are uninformative about heavy tails (e.g.~Fig.~1E, H),
+and the population model is otherwise a reasonable representation of the dynamics,
 the posterior for
 \(\nu\) will approximately match the prior (prior median \(= 71\), mean \(=
 102\)) and a metric of Pr\((\nu < 10) > 0.5\) will not flag any
@@ -623,11 +624,12 @@ than \(1.05\) for any parameter, or if the minimum effective sample size,
 for any parameter was less than \(200\), we doubled both the total iterations
 and warm up period and sampled from the model again.
 In the majority of cases our minimum thresholds were
-greatly exceeded. We continued this procedure up to 8,000 iterations 
-by which all chains had sufficiently converged.
+greatly exceeded. We continued this procedure up to 8,000 iterations
+by which point all chains had sufficiently converged.
 % The No-U-Turn Hamiltonian Markov chain Monte Carlo sampler in Stan generally
 % requires fewer iterations to obtain equivalent effective sample sizes than the
 % Gibbs or Metropolis--Hastings algorithms \cite{stan-manual2015}.
+% \cite{monnahan2016}
 
 \subsection{Alternative models and simulation testing}
 We fit alternative population models to test if four key phenomena
@@ -724,11 +726,12 @@ gelman2008d}.
 % higher probability density far into the tails, thereby allowing the data to
 % dominate the posterior more strongly if it disagrees with the prior.
 We fit our
-models with 5,000 total iterations per chain, 2500 warm-up iterations, four
-chains, and discarding every second sample. We checked for chain convergence
+model with 2,000 total iterations per chain, 1,000 warm-up iterations,
+and four chains. We checked for chain convergence
 visually and with the same criteria as before (\(\widehat{R} < 1.05\) and
 \(n_\mathrm{eff} >200\) for all parameters). Furthermore, we checked our model
-against a similar model with the glmmADMB \textsf{R} package \cite{glmmadmb}
+against a similar maximum likelihood model fit with
+the glmmADMB \textsf{R} package \cite{glmmadmb}
 without uncertainty around the predictors.
 
 To derive taxonomic-order-level estimates of the probability of heavy tails
@@ -763,15 +766,16 @@ between the two model projections for all populations in which Pr(\(\nu < 10\))
 \(> 0.5\). To ensure the results had stabilized in the tails of the forecast
 posterior, we increased the number of posterior samples in Stan. We ran four
 chains of 20,000 iterations and discarded the first 10,000 as warmup for a
-total of 40,000 samples.
-
-
+total of 40,000 samples. We then generated five sets of future stochastic
+process deviations for each for each sample
+for a total of 200,000 forecast samples per population.
 
 }
 
 \showmatmethods % Display the Materials and Methods section
 
-\acknow{We thank J.W. Moore, A.O. Mooers, L.R. Gerber, J.D. Yeakel, C. Minto and
+\acknow{We thank J.W. Moore, A.O. Mooers, L.R. Gerber, J.D. Yeakel, C. Minto,
+  two anonymous reviewers and
 members of the Earth to Ocean Group for helpful discussions and comments. We
 are grateful to the contributors and maintainers of the Global Population
 Dynamics Database and to Compute Canada's WestGrid high-performance computing
