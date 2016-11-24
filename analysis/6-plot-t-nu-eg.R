@@ -28,7 +28,7 @@ plot(x, dt(x, 2), type = "l", xlab = "",
   ylab = "", yaxs = "i", lty = 1, , lwd = lwd,
   xlim = c(-8, 8), ylim = c(0, 0.42), col = cols[1], xaxt = "n", yaxt = "n")
 text(-7.5, 0.393, "A", font = 2, cex = 1.4)
-mtext("Student-t distribution", side = 3, line = 0, cex = 0.9)
+mtext("Student-t distribution", side = 3, line = 0.1, cex = 0.9)
 axis(2, at = c(0, 0.2, 0.4), col = box.col)
 lines(x, dt(x, 3), lty = 1, col = cols[2], lwd = lwd)
 lines(x, dt(x, 5), lty = 1, col = cols[3], lwd = lwd)
@@ -86,7 +86,7 @@ seed <- nu_5_seeds_N50$seeds[15] # good seed for illustration
 y1 <- make_ts(seed = seed, nu = 3, bs_col = bs_cols[2])
 text(1, 7.1, "C", pos = 4, font = 2, cex = 1.4)
 text(6, 7.1, quote(nu==3), pos = 4)
-mtext("Simulated population dynamics", side = 3, line = 0, cex = 0.9)
+mtext("Simulated population dynamics", side = 3, line = 0.1, cex = 0.9)
 text(13, -3.9, "Black swans", pos = 4)
 seed <- nu_5_seeds_N50$seeds[15]
 y2 <- make_ts(seed = seed, nu = 5, bs_col = bs_cols[3])
@@ -106,19 +106,19 @@ if(!file.exists("illustrate-nu-sampling.rda")) {
     data = list(N = 50, y = y1$y, nu_rate = 0.01,
       b_lower = -1, b_upper = 2),
     pars = c("lambda", "sigma_proc", "nu", "b"), iter = 2000,
-    chains = 4, warmup = 1000)
+    chains = 4, warmup = 1000, control = list(adapt_delta = 0.95))
 
   sm2 <- sampling(stan_gomp,
     data = list(N = 50, y = y2$y, nu_rate = 0.01,
       b_lower = -1, b_upper = 2),
     pars = c("lambda", "sigma_proc", "nu", "b"), iter = 2000,
-    chains = 4, warmup = 1000)
+    chains = 4, warmup = 1000, control = list(adapt_delta = 0.95))
 
   sm3 <- sampling(stan_gomp,
     data = list(N = 50, y = y3$y, nu_rate = 0.01,
       b_lower = -1, b_upper = 2),
     pars = c("lambda", "sigma_proc", "nu", "b"), iter = 2000,
-    chains = 4, warmup = 1000)
+    chains = 4, warmup = 1000, control = list(adapt_delta = 0.95))
   save(sm1, sm2, sm3, file = "illustrate-nu-sampling.rda")
 } else {
   load("illustrate-nu-sampling.rda")
@@ -183,7 +183,7 @@ text(2.5, 0.022, "F", pos = 4, font = 2, cex = 1.4)
 text(8.5, 0.022, quote(Heavy~tails), pos = 4)
 text(30, 0.009, "Prior", pos = 4)
 text(8.5, 0.0015, "Posterior samples", pos = 4)
-mtext("Model fits", side = 3, line = 0, cex = 0.9)
+mtext("Model fits", side = 3, line = 0.1, cex = 0.9)
 make_hist2(e2)
 text(1, 0.022, "G", pos = 4, font = 2, cex = 1.4)
 text(8.5, 0.022, quote(Slightly~heavy~tails), pos = 4)

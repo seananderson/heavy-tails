@@ -177,7 +177,7 @@ can differ dramatically across taxa.
 
 \begin{figure*}[htb]
 \centering
-\includegraphics[width=0.65\textwidth]{../analysis/t-nu-eg2.pdf}
+\includegraphics[width=0.63\textwidth]{../analysis/t-nu-eg2.pdf}
 \caption{Illustration of population dynamic models that allow for heavy
 tails. (A, B) Probability density for the Student-$t$
 distribution with scale parameter of $1$ and different values of \(\nu\). Small
@@ -234,7 +234,7 @@ orders (Fig.~3A).
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.3\textwidth]{../analysis/nu-coefs-2.pdf}
+\includegraphics[width=0.28\textwidth]{../analysis/nu-coefs-2.pdf}
 \caption{Estimates of population dynamic heavy-tailedness for
 populations of birds, mammals, insects, and fishes. (A to D)
 Small values of \(\nu\) suggest heavy-tailed black-swan dynamics. Vertical
@@ -249,7 +249,7 @@ with a high to moderately high probability of heavy-tailed dynamics.
 \end{figure}
 
 The majority of our heavy-tailed estimates were robust to alternative
-population models, observation error, and choice of Bayesian priors (Supporting Information). 
+population models, observation error, and choice of Bayesian priors (Supporting Information).
 Our conclusions were not systematically altered when we included autocorrelation
 in the residuals, modelled population growth rates with or without
 density dependence, or modelled the population dynamics as Ricker-logistic
@@ -580,12 +580,13 @@ of black-swan events.
 One alternative approach would involve fitting
 the generalized extreme value (GEV) distribution,
 which represents the limit distribution of a series of maxima or minima.
-Although the GEV is well-suited for physical ecological variables
+Although the GEV is well-suited for environmental variables
 (e.g.\ sedimentation rates or wind speeds \cite{gaines1993, denny2009}),
 the GEV requires maxima per time block.
 Therefore, the GEV requires longer or higher frequency time series than typically available
 for wild animal population abundance.
-Furthermore, the GEV approach cannot be easily integrated into population dynamics models.
+Furthermore, to our knowledge, the GEV cannot
+be easily integrated into population dynamics models.
 
 For the Gompertz model,
 we chose weakly informative priors for
@@ -765,8 +766,8 @@ data. We calculated the ratio of the lower 99\% quantile credible interval
 between the two model projections for all populations in which Pr(\(\nu < 10\))
 \(> 0.5\). To ensure the results had stabilized in the tails of the forecast
 posterior, we increased the number of posterior samples in Stan. We ran four
-chains of 20,000 iterations and discarded the first 10,000 as warmup for a
-total of 40,000 samples. We then generated five sets of future stochastic
+chains of 20,000 iterations and discarded the first 10,000 as warmup.
+We then generated five sets of future stochastic
 process deviations for each for each sample
 for a total of 200,000 forecast samples per population.
 
@@ -775,7 +776,7 @@ for a total of 200,000 forecast samples per population.
 \showmatmethods % Display the Materials and Methods section
 
 \acknow{We thank J.W. Moore, A.O. Mooers, L.R. Gerber, J.D. Yeakel, C. Minto,
-  two anonymous reviewers and
+  two anonymous reviewers, and
 members of the Earth to Ocean Group for helpful discussions and comments. We
 are grateful to the contributors and maintainers of the Global Population
 Dynamics Database and to Compute Canada's WestGrid high-performance computing
