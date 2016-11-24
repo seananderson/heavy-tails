@@ -11,34 +11,33 @@
 \usepackage{booktabs}
 \usepackage{ragged2e}
 \usepackage{verbatim}
-\usepackage[sectionbib]{chapterbib}
-\usepackage{amsmath}
+% \usepackage[sectionbib]{chapterbib}
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{array}
-\usepackage{tabu} % for spacing between rows in longtable
-\usepackage{titlesec}
+% \usepackage{tabu} % for spacing between rows in longtable
+% \usepackage{titlesec}
 \usepackage{url}
 \usepackage{mathtools}
 %\usepackage{cite}
 % \usepackage{citesupernumber}
 % \usepackage{scicite}
 
-\usepackage{lineno}
-\usepackage{xcolor}
-\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
-\modulolinenumbers[2]
+% \usepackage{lineno}
+% \usepackage{xcolor}
+% \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+% \modulolinenumbers[2]
 
 % Linux Libertine:
-\usepackage{textcomp}
-\usepackage[sb]{libertine}
-\usepackage[varqu,varl]{inconsolata}% sans serif typewriter
-\usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
-\usepackage[cal=boondoxo]{mathalfa} % mathcal
-%\useosf % osf for text, not math
-\usepackage[supstfm=libertinesups,%
-  supscaled=1.2,%
-  raised=-.13em]{superiors}
+% \usepackage{textcomp}
+% \usepackage[sb]{libertine}
+% \usepackage[varqu,varl]{inconsolata}% sans serif typewriter
+% \usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
+% \usepackage[cal=boondoxo]{mathalfa} % mathcal
+% %\useosf % osf for text, not math
+% \usepackage[supstfm=libertinesups,%
+%   supscaled=1.2,%
+%   raised=-.13em]{superiors}
 
 \mathchardef\mhyphen="2D % math hyphen
 
@@ -50,25 +49,25 @@
 \setlength\parskip{0.10in}
 \setlength\parindent{0in}
 
-% Fix line numbering and align environment
-% http://phaseportrait.blogspot.ca/2007/08/lineno-and-amsmath-compatibility.html
-\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
-  \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
-  \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
-  \renewenvironment{#1}%
-     {\linenomath\csname old#1\endcsname}%
-     {\csname oldend#1\endcsname\endlinenomath}}%
-\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
-  \patchAmsMathEnvironmentForLineno{#1}%
-  \patchAmsMathEnvironmentForLineno{#1*}}%
-\AtBeginDocument{%
-\patchBothAmsMathEnvironmentsForLineno{equation}%
-\patchBothAmsMathEnvironmentsForLineno{align}%
-\patchBothAmsMathEnvironmentsForLineno{flalign}%
-\patchBothAmsMathEnvironmentsForLineno{alignat}%
-\patchBothAmsMathEnvironmentsForLineno{gather}%
-\patchBothAmsMathEnvironmentsForLineno{multline}%
-}
+% % Fix line numbering and align environment
+% % http://phaseportrait.blogspot.ca/2007/08/lineno-and-amsmath-compatibility.html
+% \newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+%   \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+%   \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+%   \renewenvironment{#1}%
+%      {\linenomath\csname old#1\endcsname}%
+%      {\csname oldend#1\endcsname\endlinenomath}}%
+% \newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+%   \patchAmsMathEnvironmentForLineno{#1}%
+%   \patchAmsMathEnvironmentForLineno{#1*}}%
+% \AtBeginDocument{%
+% \patchBothAmsMathEnvironmentsForLineno{equation}%
+% \patchBothAmsMathEnvironmentsForLineno{align}%
+% \patchBothAmsMathEnvironmentsForLineno{flalign}%
+% \patchBothAmsMathEnvironmentsForLineno{alignat}%
+% \patchBothAmsMathEnvironmentsForLineno{gather}%
+% \patchBothAmsMathEnvironmentsForLineno{multline}%
+% }
 
 % remove numbers in front of sections:
 \makeatletter
@@ -80,7 +79,7 @@
   populations}
 
 \author{
-Sean C. Anderson$^{1*}$ \and
+Sean C. Anderson$^{1,2*}$ \and
 Trevor A. Branch$^2$ \and
 Andrew B. Cooper$^3$ \and
 Nicholas K. Dulvy$^1$
@@ -133,9 +132,9 @@ Washington, Box 355020, Seattle, WA 98195, USA
 \textsuperscript{3}School of Resource and Environmental Management, Simon
 Fraser University, Burnaby, BC, V5A 1S6, Canada
 
-\textsuperscript{*}Corresponding author: Sean C. Anderson; E-mail: sandrsn@uw.edu; Present address: School of Aquatic and Fishery Sciences, Box 355020, University of Washington, Seattle, WA 98195, USA
+\textsuperscript{*}Corresponding author: Sean C. Anderson; E-mail: sandrsn@uw.edu
 
-\linenumbers
+% \linenumbers
 \onehalfspacing
 
 
@@ -324,7 +323,7 @@ x_t &= x_{t-1} + \epsilon_t\\
 \epsilon &\sim \mathrm{Student}\mhyphen t(\nu, 0, \sigma).
 \end{align}
 However, the estimates of $\nu$ were qualitatively similar to those from
-Equation \ref{eq:rw-drift} (Fig.~\ref{fig:alt}C) and are therefore not shown. 
+Equation \ref{eq:rw-drift} (Fig.~\ref{fig:alt}C) and are therefore not shown.
 
 \subsection{Observation error} Observation error can bias parameter
 estimates \citep{knape2012} and is known to affect the ability to detect extreme
@@ -570,12 +569,11 @@ obtained with the help of the rphylopic R package,
 \onehalfspacing
 
 \section{Code availability.} Data and code to reproduce our analysis are
-available at \url{https://github.com/seananderson/heavy-tails} (currently
-private).
+available at \url{https://github.com/seananderson/heavy-tails}.
 
 %\bibliography{/Users/seananderson/Dropbox/tex/jshort,supp}
 
-\bibliographystyle{ecologyletters}\bibliography{jshort,newbib}
+\bibliographystyle{apalike}\bibliography{jshort,newbib}
 
 \clearpage
 
@@ -621,7 +619,7 @@ substituted zeros, and total number of time steps.
 %\begin{helvetica}
 \singlespacing
 \begin{scriptsize}
-\begin{longtable}{>{\RaggedRight}m{1.4cm}>{\RaggedRight}p{6.0cm}>{\RaggedRight}p{0.7cm}>{\RaggedRight}p{1.2cm}>{\RaggedRight}p{4.4cm}>{\RaggedRight}p{1.4cm}}
+\begin{longtable}{>{\RaggedRight}m{1.4cm}>{\RaggedRight}p{5.0cm}>{\RaggedRight}p{0.65cm}>{\RaggedRight}p{2.1cm}>{\RaggedRight}p{4.2cm}>{\RaggedRight}p{1.6cm}}
 \caption{Populations with a high probability of heavy-tailed dynamics in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black-swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events that have a $10^{-4}$ probability or less of occurring if the population dynamics were explained by a Gompertz model with normally distributed process noise with a standard deviation equal to the scale parameter in the fitted $t$ distribution.}\\
 
 \toprule
@@ -632,7 +630,7 @@ substituted zeros, and total number of time steps.
 \onehalfspacing
 %\end{helvetica}
 
-\clearpage
+% \clearpage
 
 
 \renewcommand{\figurename}{Figure}
@@ -806,7 +804,7 @@ low abundance if the process error is in fact heavy-tailed.}
 \noindent
 Example Stan code for a heavy-tailed Gompertz model. The specific code for
 the various models in our analysis is available at
-\url{https://github.com/seananderson/heavy-tails} (currently private).
+\url{https://github.com/seananderson/heavy-tails}.
 
 %\begin{spacing}{1.15}
 %% \begin{footnotesize}
