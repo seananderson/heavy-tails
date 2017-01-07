@@ -70,7 +70,7 @@ functions {
     reject("Skew has to be positive. Found skew=", skew);
   if (sigma <= 0)
     reject("Scale has to be positive.  Found sigma=", sigma);
-  lp <- log(skew) - log1p(square(skew));
+  lp = log(skew) - log1p(square(skew));
   if (y < mu)
     return lp + student_t_log(y * skew, nu, mu * skew, sigma);
   else
@@ -114,8 +114,8 @@ functions {
    real z; real zc;
    if (sigma <= 0)
      reject("Scale has to be positive. Found sigma=", sigma);
-   z <- (y - mu) / sigma;
-   zc <- skew * z * sqrt((nu+1) / (nu + square(z)));
+   z = (y - mu) / sigma;
+   zc = skew * z * sqrt((nu+1) / (nu + square(z)));
    return -log(sigma) + student_t_log(z, nu, 0, 1) + student_t_cdf_log(zc, nu + 1, 0, 1);
   }
 }
