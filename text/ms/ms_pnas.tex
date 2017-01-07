@@ -186,13 +186,13 @@ financial gains and losses \cite{taleb2007}, fatalities from the largest wars
 dwarf those from all others \cite{newman2005}, and the frequency of the most
 damaging earthquakes has exceeded past expectations \cite{sornette2009}. In
 ecological systems,
-billions of animals can die at once in mass mortality
-events \cite{fey2015},
 background rates of global extinction are punctuated by
 mass extinction \cite{harnik2012},
-and evolution is characterized by
-long periods of stasis punctuated by
-bursts of speciation \cite{gould1977}.
+evolution is characterized by
+long periods of stasis interrupted by
+bursts of speciation \cite{gould1977},
+and billions of animals can die at once in mass mortality
+events \cite{fey2015}.
 
 Indeed, such die-offs may be the most important element
 affecting population persistence \cite{mangel1994} and their importance is
@@ -274,8 +274,7 @@ distribution approaches the normal distribution (Fig.~1).
 
 \section*{Results}
 
-We found that black-swan dynamics are infrequent but highly
-influential: in our dataset they were detected most
+We detected black-swan dynamics most
 frequently for birds (\birdPH\%), mammals (\mammalsPH\%), and
 insects (\insectsPH\%) but almost never in fishes (Fig.~2). Black-swan
 events were taxonomically widespread, occurring in \POrdersHeavy\% of taxonomic orders.
@@ -302,39 +301,39 @@ with a high to moderately high probability of heavy-tailed dynamics.
 \end{figure}
 
 The majority of our heavy-tailed estimates were robust to alternative
-population models, observation error, and choice of Bayesian priors (Supporting Information).
+population models, observation error, and choice of Bayesian priors (SI Appendix).
 Our conclusions were not systematically altered when we included autocorrelation
 in the residuals, modelled population growth rates with or without
 density dependence, or modelled the population dynamics as Ricker-logistic
-instead of Gompertz (Fig.~S\figalt). Similarly, introducing moderate
+instead of Gompertz (SI Appendix, Fig.~S\figalt). Similarly, introducing moderate
 observation error (CV = 0.2) only slightly decreased the estimated prevalence
-of black-swan events (Fig.~S\figalt), and the strength of the prior on
+of black-swan events (SI Appendix, Fig.~S\figalt), and the strength of the prior on
 \(\nu\) had little influence on estimates of black-swan dynamics
-(Fig.~S\figaltpriors). Finally, our simulation testing shows that, if
+(SI Appendix, Fig.~S\figaltpriors). Finally, our simulation testing shows that, if
 anything, our models underpredict the true magnitude and probability of
 heavy-tailed events---especially given that the time series are relatively short,
 with a median of only 26
-years in our analysis (Figs~S\figsimnu,~S\figsimprob).
+years in our analysis (SI Appendix, Figs~S\figsimnu,~S\figsimprob).
 
 % Our results show that weaker and stronger priors have little influence on our
-% conclusions about heavy-tailed dynamics (Fig.~\figaltpriors). When the
+% conclusions about heavy-tailed dynamics (SI Appendix, Fig.~\figaltpriors). When the
 % data are informative about tail behaviour (i.e. when there is strong evidence
-% of low \(\nu\) values, upper-right of Fig.~\figaltpriors), the prior has
+% of low \(\nu\) values, upper-right of SI Appendix, Fig.~\figaltpriors), the prior has
 % little impact on the estimate of \(\nu\). When the data are less informative
 % about \(\nu\) (i.e.\ when there are no or few tail events and time series are
 % short or noisy), the prior can pull the estimate of \(\nu\) towards larger or
-% smaller values (Fig.~\figaltpriors). The vast majority of the
+% smaller values (SI Appendix, Fig.~\figaltpriors). The vast majority of the
 % populations with Pr\((\nu < 10)\) in the base prior were not altered
 % qualitatively by this range of prior strength.
 
 For model fits to the population data, the probability of detecting black-swan
 dynamics was positively related to time-series length and negatively related to
 magnitude of process noise but not clearly related to population growth rate,
-density dependence, or maximum lifespan (Fig.~3B, Fig.~S\figcorrelates).
+density dependence, or maximum lifespan (Fig.~3B, SI Appendix, Fig.~S\figcorrelates).
 Longer time-series length was the strongest covariate of observing black-swan
 dynamics: there is a \pIncHeavyNThirtyNSixty\ times greater probability of detecting a black-swan
 event in populations with 60 time steps than in one with 30 time steps
-(Fig.~S\figcorrelates).
+(SI Appendix, Fig.~S\figcorrelates).
 
 \begin{figure}[htb]
 \centering
@@ -357,7 +356,7 @@ medians.
 The majority of black-swan events (\percBSDown \%) were downward (die-offs)
 rather than upward (unexpectedly rapid abundance increases). Of the black-swan
 events with published explanations (Table~S2), the majority involved
-a combination of multiple factors. For example, a synchronization of
+a combination of factors. For example, a synchronization of
 environmental- and predation-mediated population cycles is thought to have
 caused a downward black-swan event for a water vole (\emph{Arvicola
 terrestris}) population \cite{saucy1994}. Other black swans were the result of
@@ -401,13 +400,13 @@ Aggregated across populations with strong evidence of heavy tails (median \(\nu
 < 10\)), \probDensSkewedForHeavyPops\% of the \(\gamma\)
 probability density was below 1, indicating
 strong evidence of downwardly skewed process noise (Fig.~4B,
-Fig.~S\figskewnu). In contrast, populations that did not have heavy
+SI Appendix, Fig.~S\figskewnu). In contrast, populations that did not have heavy
 tails (median \(\nu \geq 70\)) had little evidence of skewed process noise
 (Fig.~4B; \percNormPopsNotSkewed\% of 95\% credible intervals overlapped~1). Projecting these
 heavy-tailed populations forward five years revealed that assuming standard
 normal process noise underestimated risk (99\% lower credible interval of
 abundance) by \crashUnderRange-fold (interquartile range; Fig.~4C,
-Fig.~S\figskewprojections).
+SI Appendix, Fig.~S\figskewprojections).
 
 \section*{Discussion}
 
@@ -466,7 +465,7 @@ recording mistakes, although conversely, some extreme observations may have been
 discarded or altered if they were erroneously suspected of being recording
 mistakes. Indeed, we discarded three of the populations that our method
 initially identified as heavy tailed because they turned out to be data-entry
-errors (Supporting Information).
+errors (SI Appendix).
 Third, the temporal scales of observation and population dynamics
 vary considerably across populations in the GPDD and these likely influence the
 detection of heavy tails. For example, if we make frequent observations
@@ -568,7 +567,7 @@ these may increase true extinction risk.
 We selected abundance time series from the Global Population Dynamics
 Database \cite[GPDD,][]{gpdd2010}, which contains nearly 5,000 time series of
 abundance from \(\sim\) 1,000 species and \(\sim\) 100 taxonomic orders. We
-filtered the data (Supporting Information) to remove populations from less
+filtered the data (SI Appendix) to remove populations from less
 reliable data sources, and those without sufficient data for our models, and
 then interpolated remaining missing values (sensu \cite{brook2006a}).
 Our interpolation affected only \(\sim\)
@@ -639,7 +638,7 @@ be easily integrated into population dynamics models.
 
 For the Gompertz model,
 we chose weakly informative priors for
-all parameters (Fig.~S\figpriors, Supporting Information).
+all parameters (SI Appendix, Fig.~S\figpriors).
 For the degrees of freedom parameter $\nu$,
 we chose an exponential prior
 with a rate parameter
@@ -699,17 +698,17 @@ where we allowed for a fixed quantity of observation error ($0.2$ standard
 deviations on a log scale). Fourth, the Gompertz model assumes that
 population growth rate declines linearly with log abundance. Therefore, we
 also fit an alternative model, the Ricker-logistic model, which assumes that
-population growth rate declines linearly with abundance (Supporting Information).
+population growth rate declines linearly with abundance (SI Appendix).
 % Our models also assume that their parameters
 % (e.g. parameters representing productivity and density dependence)
 
 We investigated the sensitivity
 of our results to weaker and stronger priors (exponential rate parameter $=
-0.005, 0.02$) and alternative priors (Fig.~S\figpriors, Supporting Information).
+0.005, 0.02$) and alternative priors (SI Appendix, Fig.~S\figpriors).
 Furthermore, we used
 simulated data to test how easily we could detect $\nu$ given different sample
 sizes and to ensure we could recover unbiased parameter estimates from the
-Gompertz model (Supporting Information).
+Gompertz model (SI Appendix).
 
 \subsection{Covariates of heavy-tailed dynamics} We fit a hierarchical beta
 regression model to the predicted probability of heavy tails, Pr(\(\nu < 10\)),
@@ -754,10 +753,10 @@ the standard deviation of the posterior samples for the Gompertz parameters
 distributions (not shown in the above equation).
 
 We log transformed \(\sigma\), time-series length, and lifespan to
-to make the
+make the
 relationship approximately linear on the logit-transformed response scale;
 this matches the way the predictors are visually presented in
-Fig.~S\figcorrelates.
+SI Appendix, Fig.~S\figcorrelates.
 All input variables were standardized by subtracting their mean and dividing by two
 standard deviations to make their coefficients comparable in
 magnitude \cite{gelman2008c}. We excluded body length as a covariate because it
@@ -830,7 +829,7 @@ members of the Earth to Ocean Group for helpful discussions and comments. We
 are grateful to the contributors and maintainers of the Global Population
 Dynamics Database and to Compute Canada's WestGrid high-performance computing
 resources. Silhouette images were obtained from \url{phylopic.org} under Creative
-Commons licenses; sources are listed in the Supporting Information. Funding was
+Commons licenses; sources are listed in the SI Appendix. Funding was
 provided by a Simon Fraser University Graduate Fellowship and David H. Smith
 Conservation Research Fellowship (S.C.A.), the Natural Sciences and Engineering
 Research Council of Canada (N.K.D., A.B.C.), the Canada Research Chairs Program
@@ -845,264 +844,6 @@ Research Council of Canada (N.K.D., A.B.C.), the Canada Research Chairs Program
 \pnasbreak
 
 % Bibliography
-% \bibliography{jshort,ms}
-\begin{thebibliography}{10}
-
-\bibitem{sornette2002}
-Sornette D (2002) Predictability of catastrophic events: Material rupture,
-  earthquakes, turbulence, financial crashes, and human birth.
-\newblock {\em Proc. Natl. Acad. Sci. U.S.A.} 99(suppl 1):2522--2529.
-
-\bibitem{albeverio2006}
-Albeverio S, Jentsch V, Kantz H, eds. (2006) {\em Extreme Events in Nature and
-  Society}, Frontiers collection.
-\newblock (Springer, Berlin).
-
-\bibitem{taleb2007}
-Taleb NN (2007) {\em The Black Swan: The Impact of the Highly Improbable}.
-\newblock (Random House).
-
-\bibitem{may2008}
-May RM, Levin SA, Sugihara G (2008) Complex systems: ecology for bankers.
-\newblock {\em Nature} 451(7181):893--895.
-
-\bibitem{sornette2009}
-Sornette D (2009) Dragon-kings, black swans and the prediction of crises.
-\newblock {\em International Journal of Terraspace Science and Engineering}
-  2(1):1--18.
-
-\bibitem{newman2005}
-Newman MEJ (2005) Power laws, {Pareto} distributions and {Zipf}'s law.
-\newblock {\em Contemporary Physics} 46(5):323--351.
-
-\bibitem{fey2015}
-Fey SB et~al. (2015) Recent shifts in the occurrence, cause, and magnitude of
-  animal mass mortality events.
-\newblock {\em Proc. Natl. Acad. Sci. U.S.A.} 112(4):1083--1088.
-
-\bibitem{harnik2012}
-Harnik PG et~al. (2012) Extinctions in ancient and modern seas.
-\newblock {\em Trends Ecol. Evolut.} 27(11):608--617.
-
-\bibitem{gould1977}
-Gould SJ, Eldredge N (1977) Punctuated equilibria: The tempo and mode of
-  evolution reconsidered.
-\newblock {\em Paleobiology} 3(02):115--151.
-
-\bibitem{mangel1994}
-Mangel M, Tier C (1994) Four facts every conservation biologists should know
-  about persistence.
-\newblock {\em Ecology} 75(3):607--614.
-
-\bibitem{ipcc2012}
-{IPCC} (2012) Managing the risks of extreme events and disasters to advance
-  climate change adaptation in {\em A Special Report of Working Groups I and II
-  of the Intergovernmental Panel on Climate Change}, eds.{} Field CB et~al.
-\newblock (Cambridge University Press, Cambridge, UK, and New York, NY, USA).
-
-\bibitem{brook2006a}
-Brook BW, Traill LW, Bradshaw CJA (2006) Minimum viable population sizes and
-  global extinction risk are unrelated.
-\newblock {\em Ecol. Lett.} 9(4):375--382.
-
-\bibitem{knape2012}
-Knape J, de~Valpine P (2012) Are patterns of density dependence in the {Global
-  Population Dynamics Database} driven by uncertainty about population
-  abundance?
-\newblock {\em Ecol. Lett.} 15(1):17--23.
-
-\bibitem{keitt1998}
-Keitt TH, Stanley HE (1998) Dynamics of {North American} breeding bird
-  populations.
-\newblock {\em Nature} 393(6682):257--260.
-
-\bibitem{allen2001}
-Allen A, Li BL, Charnov E (2001) Population fluctuations, power laws and
-  mixtures of lognormal distributions.
-\newblock {\em Ecol. Lett.} 4(1):1--3.
-
-\bibitem{halley2002}
-Halley J, Inchausti P (2002) Lognormality in ecological time series.
-\newblock {\em Oikos} 99(3):518--530.
-
-\bibitem{segura2013}
-Segura AM, Calliari D, Fort H, Lan BL (2013) Fat tails in marine microbial
-  population fluctuations.
-\newblock {\em Oikos} 122(12):1739--1745.
-
-\bibitem{young1994}
-Young TP (1994) Natural die-offs of large mammals: implications for
-  conservation.
-\newblock {\em Conserv. Biol.} 8(2):410--418.
-
-\bibitem{gerber2001}
-Gerber LR, Hilborn R (2001) Catastrophic events and recovery from low densities
-  in populations of otariids: implications for risk of extinction.
-\newblock {\em Mammal. Rev.} 31(2):131--150.
-
-\bibitem{reed2003}
-Reed DH, O'Grady JJ, Ballou JD, Frankham R (2003) The frequency and severity of
-  catastrophic die-offs in vertebrates.
-\newblock {\em Anim. Conserv.} 6(2):109--114.
-
-\bibitem{saucy1994}
-Saucy F (1994) Density dependence in time series of the fossorial form of the
-  water vole, \textit{Arvicola terrestris}.
-\newblock {\em Oikos} 71(3):381--392.
-
-\bibitem{stafford1971}
-Stafford J (1971) The heron population of {England} and {Wales}.
-\newblock {\em Bird Study} 18(4):218--221.
-
-\bibitem{potts1980}
-Potts GR, Coulson JC, Deans IR (1980) Population dynamics and breeding success
-  of the shag, \textit{Phalacrocorax aristotelis}, on the {Farne Islands},
-  {Northumberland}.
-\newblock {\em J. Anim. Ecol.} 49(2):465--484.
-
-\bibitem{gelman2014}
-Gelman A et~al. (2014) {\em Bayesian Data Analysis} ed.{} edition T.
-\newblock (Chapman {\&} Hall, Boca Raton, FL).
-
-\bibitem{schindler2010}
-Schindler DE et~al. (2010) Population diversity and the portfolio effect in an
-  exploited species.
-\newblock {\em Nature} 465(7298):609--612.
-
-\bibitem{carpenter2006}
-Carpenter SR, Brock WA (2006) Rising variance: a leading indicator of
-  ecological transition.
-\newblock {\em Ecol. Lett.} 9(3):311--318.
-
-\bibitem{nunez2012}
-Nu{\~n}ez MA, Logares R (2012) {Black Swans} in ecology and evolution: the
-  importance of improbable but highly influential events.
-\newblock {\em Ideas in Ecology and Evolution} 5:16--21.
-
-\bibitem{meehl2004}
-Meehl GA, Tebaldi C (2004) More intense, more frequent, and longer lasting heat
-  waves in the 21st century.
-\newblock {\em Science} 305(5686):994--997.
-
-\bibitem{katz2005}
-Katz RW, Brush GS, Parlange MB (2005) Statistics of extremes: modelling
-  ecological disturbances.
-\newblock {\em Ecology} 86(5):1124--1134.
-
-\bibitem{kirby2009}
-Kirby RR, Beaugrand G, Lindley JA (2009) Synergistic effects of climate and
-  fishing in a marine ecosystem.
-\newblock {\em Ecosystems} 12(4):548--561.
-
-\bibitem{denny2009}
-Denny MW, Hunt LJH, Miller LP, Harley CDG (2009) On the prediction of extreme
-  ecological events.
-\newblock {\em Ecol. Monograph.} 79(3):397--421.
-
-\bibitem{gpdd2010}
-{NERC Centre for Population Biology, Imperial College} (2010) {\em {The Global
-  Population Dynamics Database Version 2}}.
-
-\bibitem{kot1996}
-Kot M, Lewis MA, {van den Driessche} P (1996) Dispersal data and the spread of
-  invading organisms.
-\newblock {\em Ecology} 77(7):2027--2042.
-
-\bibitem{clark1999}
-Clark JS, Silman M, Kern R, Macklin E, HilleRisLambers J (1999) Seed dispersal
-  near and far: patterns across temperate and tropical forests.
-\newblock {\em Ecology} 80(5):1475--1494.
-
-\bibitem{ward2007}
-Ward EJ, Hilborn R, Towell RG, Gerber L (2007) A state--space mixture approach
-  for estimating catastrophic events in time series data.
-\newblock {\em Can. J. Fish. Aquat. Sci.} 64(6):899--910.
-
-\bibitem{nrc2007}
-{NRC} (2007) {\em Successful Response Starts with a Map: Improving Geospatial
-  Support for Disaster Management}.
-\newblock (The National Academies Press, Washington, {DC}).
-
-\bibitem{carpenter2012}
-{Carpenter} SR et~al. (2012) General resilience to cope with extreme events.
-\newblock {\em Sustainability} 4(12):3248--3259.
-
-\bibitem{caddy1996}
-Caddy JF, McGarvey R (1996) Targets or limits for management of fisheries?
-\newblock {\em N. Am. J. Fish. Manage.} 16(3):479--487.
-
-\bibitem{doak2008}
-Doak DF et~al. (2008) Understanding and predicting ecological dynamics: are
-  major surprises inevitable?
-\newblock {\em Ecology} 89(4):952--961.
-
-\bibitem{lindenmayer2010}
-Lindenmayer DB, Likens GE, Krebs CJ, Hobbs RJ (2010) Improved probability of
-  detection of ecological ``surprises''.
-\newblock {\em Proc. Natl. Acad. Sci. U.S.A.} 107(51):21957--21962.
-
-\bibitem{thompson2013}
-Thompson RM, Beardall J, Beringer J, Grace M, Sardina P (2013) Means and
-  extremes: building variability into community-level climate change
-  experiments.
-\newblock {\em Ecol. Lett.} 16(6):799--806.
-
-\bibitem{gaines1993}
-Gaines SD, Denny MW (1993) The largest, smallest, highest, lowest, longest, and
-  shortest: Extremes in ecology.
-\newblock {\em Ecology} 74(6):1677--1692.
-
-\bibitem{fernandez1998}
-Fernandez C, Steel MFJ (1998) On {Bayesian} modeling of fat tails and skewness.
-\newblock {\em J. Am. Stat. Assoc.} 93(441):359--371.
-
-\bibitem{hoffman2014}
-Hoffman MD, Gelman A (2014) The {No-U-Turn Sampler}: adaptively setting path
-  lengths in {Hamiltonian Monte Carlo}.
-\newblock {\em J. Mach. Learn. Res.} 15:1593--1623.
-
-\bibitem{stan-manual2015}
-{Stan Development Team} (2015) {\em Stan Modeling Language User's Guide and
-  Reference Manual, Version 2.12.0}.
-
-\bibitem{carpenter2016}
-Carpenter B et~al. (2016) Stan: A probabilistic programming language.
-\newblock {\em J. Stat. Soft.} In press.
-
-\bibitem{r2015}
-{R Core Team} (2016) {\em R: A Language and Environment for Statistical
-  Computing} (R Foundation for Statistical Computing, Vienna, Austria).
-
-\bibitem{inchausti2002}
-Inchausti P, Halley J (2002) The long-term temporal variability and spectral
-  colour of animal populations.
-\newblock {\em Evol. Ecol. Res.} 4:1033--1048.
-
-\bibitem{ferrari2004}
-Ferrari S, Cribari-Neto F (2004) Beta regression for modelling rates and
-  proportions.
-\newblock {\em J. Appl. Stat.} 31(7):799--815.
-
-\bibitem{gelman2008c}
-Gelman A (2008) Scaling regression inputs by dividing by two standard
-  deviations.
-\newblock {\em Statist. Med.} 27:2865--2873.
-
-\bibitem{gelman2006c}
-Gelman A (2006) Prior distributions on variance parameters in hierarchical
-  models.
-\newblock {\em Bayesian Analysis} 1(3):515--533.
-
-\bibitem{gelman2008d}
-Gelman A, Jakulin A, Pittau MG, Su YS (2008) A weakly informative default prior
-  distribution for logistic and other regression models.
-\newblock {\em Ann. Appl. Stat.} 2(4):1360--1383.
-
-\bibitem{glmmadmb}
-Skaug H, Fournier D, Bolker B, Magnusson A, Nielsen A (2015) {\em {Generalized
-  Linear Mixed Models using AD Model Builder}}.
-\newblock R package version 0.8.1.
-
-\end{thebibliography}
+\bibliography{jshort,ms}
 
 \end{document}
