@@ -2,16 +2,16 @@
 # start by running 5.8...
 
 library("rstan")
-options(mc.cores = 2L)
+options(mc.cores = 4L)
 library("ggplot2")
 library("dplyr")
 
-if(!file.exists("betareg5.rds")) {
+# if(!file.exists("betareg5.rds")) {
   stan_beta5 <- stan_model("betareg5.stan")
   saveRDS(stan_beta5, "betareg5.rds")
-} else {
-  stan_beta5 <- readRDS("betareg5.rds")
-}
+# } else {
+#  stan_beta5 <- readRDS("betareg5.rds")
+# }
 d <- readRDS("beta-modelling-dat.rds")
 
 # Test with glmmADMB:
@@ -26,7 +26,7 @@ d <- readRDS("beta-modelling-dat.rds")
 # glmmADMB::ranef(m)
 # plogis(coef(m))
 
-if(!file.exists("beta-stan-samples-n-only.rds")) {
+# if(!file.exists("beta-stan-samples-n-only.rds")) {
   m.stan.beta5 <- sampling(stan_beta5,
     data = list(
       N = nrow(d),
@@ -46,7 +46,7 @@ if(!file.exists("beta-stan-samples-n-only.rds")) {
   sink("beta-stan-stamples-n-only.txt")
   print(m.stan.beta5)
   sink()
-}
+# }
 m <- readRDS("beta-stan-samples-n-only.rds")
 
 lu <- d[,c("order_id", "class_id", "taxonomic_class", "taxonomic_order")]
