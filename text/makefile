@@ -26,7 +26,10 @@ text:
 	latexmk $(SOM)
 
 supp:
-	latexmk -pdf $(SOM)
+	pdflatex $(SOM)
+	bibtex $(SOM)
+	pdflatex $(SOM)
+	pdflatex $(SOM)
 
 quick:
 	pdflatex $(TEXT)

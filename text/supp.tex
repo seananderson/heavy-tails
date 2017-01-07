@@ -28,23 +28,26 @@
 % \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 % \modulolinenumbers[2]
 
+\widowpenalty10000
+\clubpenalty10000
+
 % Linux Libertine:
-% \usepackage{textcomp}
-% \usepackage[sb]{libertine}
-% \usepackage[varqu,varl]{inconsolata}% sans serif typewriter
-% \usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
-% \usepackage[cal=boondoxo]{mathalfa} % mathcal
-% %\useosf % osf for text, not math
-% \usepackage[supstfm=libertinesups,%
-%   supscaled=1.2,%
-%   raised=-.13em]{superiors}
+\usepackage{textcomp}
+\usepackage[sb]{libertine}
+\usepackage[varqu,varl]{inconsolata}% sans serif typewriter
+\usepackage[libertine,bigdelims,vvarbb]{newtxmath} % bb from STIX
+\usepackage[cal=boondoxo]{mathalfa} % mathcal
+%\useosf % osf for text, not math
+\usepackage[supstfm=libertinesups,%
+  supscaled=1.2,%
+  raised=-.13em]{superiors}
 
 \mathchardef\mhyphen="2D % math hyphen
 
 \textheight 22.0cm
 
-\usepackage[round,sectionbib]{natbib}
-\bibpunct{(}{)}{;}{a}{}{;}
+% \usepackage[round,sectionbib]{natbib}
+% \bibpunct{(}{)}{;}{a}{}{;}
 
 \setlength\parskip{0.10in}
 \setlength\parindent{0in}
@@ -75,8 +78,8 @@
 \makeatother
 
 
-\title{Supporting Information:\\Black-swan events in animal
-  populations}
+\title{Supporting Information Appendix:\\
+  Black-swan events in animal populations}
 
 \author{
 Sean C. Anderson$^{1,2*}$ \and
@@ -163,15 +166,15 @@ Global Population Dynamics Database (GPDD):
 
 \item We removed all populations rated as $< 2$ in the GPDD quality assessment
   (on a scale of $1$ to $5$, with $1$ being the lowest quality data)
-  \citep{sibly2005, ziebarth2010}.
+  \cite{sibly2005, ziebarth2010}.
 
 \item Populations with negative abundance values were removed. Of the
   populations that remained at the end of our other filtering rules, the
   remaining populations with negative abundances listed were all from time
   series that had been standardized by subtracting the mean and dividing by the
   standard deviation. We verified this by locating the original papers the
-  datasets were extracted from: \citet{colebrook1978} for zooplankton and
-  \citet{lindstrom1995} for grouse. Since the papers did not include the
+  datasets were extracted from: Ref.~\cite{colebrook1978} for zooplankton and
+  Ref.~\cite{lindstrom1995} for grouse. Since the papers did not include the
   original mean time-series values we could not back transform these data
   points.
 
@@ -181,7 +184,7 @@ Global Population Dynamics Database (GPDD):
   Gompertz and Ricker-logistic models were fit on.
 
 \item We filled in single recorded values of zero with the lowest non-zero
-  value in the time series \citep{brook2006a}. This assumes that
+  value in the time series \cite{brook2006a}. This assumes that
   single values of zero result from abundance being low enough that censusing
   overlooked individuals that were actually present. We turned multiple zero
   values in a row into \texttt{NA} values. This implies that multiple zero
@@ -191,7 +194,7 @@ Global Population Dynamics Database (GPDD):
   strongly, we removed populations in which we filled in more than four zeros.
 
 \item We removed all populations without at least four unique values
-  \citep{brook2006a}.
+  \cite{brook2006a}.
 
 \item We removed all populations with four or more identical values in a row
   since these suggest either recording error or extrapolation between two
@@ -201,7 +204,7 @@ Global Population Dynamics Database (GPDD):
   abundance (no \texttt{NA}s) with at least $20$ time steps in each population
   time series. If there were any populations with multiple windows of identical
   length, we took the most recent window. This is a longer window than used in
-  some previous analyses \citep{brook2006a}, but since our model
+  some previous analyses \cite{brook2006a}, but since our model
   attempts to capture the shape of the distribution tails, our model requires
   more data.
 
@@ -216,10 +219,10 @@ Global Population Dynamics Database (GPDD):
 \item Finally, we removed populations with the following GPDD Main IDs, which
   we discovered were data entry errors when verifying the populations with
   suspected black swans: \texttt{1207} because the 1957 data point was entered
-  as 2 but should have been 27 \citep{kendeigh1982}, \texttt{6531} because the
-  1978 data point was entered as 7 but should have been 47 \citep{minot1986},
+  as 2 but should have been 27 \cite{kendeigh1982}, \texttt{6531} because the
+  1978 data point was entered as 7 but should have been 47 \cite{minot1986},
   and \texttt{6566} because some of the data did not match the graph
-  \citep{heessen1996}.
+  \cite{heessen1996}.
 
 \end{enumerate}
 
@@ -248,11 +251,11 @@ values above \(1\). We allowed values of \(b\) above \(1\) to allow for
 non-stationary time series of growth rates. The estimates of \(b\) were well
 within these bounds. Our prior on \(\lambda\) was weakly informative within the
 range of expected values for population growth and is similar to the default
-priors suggested by \citet{gelman2008d} for intercepts of
+priors suggested by Ref.~\cite{gelman2008d} for intercepts of
 regression models. Our half-Cauchy prior on \(\sigma\) follows
-\citet{gelman2006c} and \citet{gelman2008d} and the specific scale parameter of
+Ref.~\cite{gelman2006c} and Ref.~\cite{gelman2008d} and the specific scale parameter of
 \(2.5\) is based on our expected range of the value in nature from previous
-studies \citep{connors2014}. In our testing of a subsample of populations, our
+studies \cite{connors2014}. In our testing of a subsample of populations, our
 parameter estimates were not qualitatively changed by switching to a uniform
 prior on \(\sigma\), but the weakly informative half-Cauchy prior sped up chain
 convergence.
@@ -265,11 +268,11 @@ used Truncated-Exponential(0.02, min.\ = 2) (Fig.~\ref{fig:priors}C). Note that
 the base and weaker priors are relatively flat within the region of \(\nu <
 20\), which is the region we are concerned about when categorizing
 populations as heavy tailed. We considered using a Uniform(\(0, 1\))
-prior on \(1/\nu\) as used in \citet{gelman2014}, but this
+prior on \(1/\nu\) as used in Ref.~\cite{gelman2014}, but this
 prior puts considerably more weight on lower (heavy-tailed) values of \(\nu\)
 than the truncated exponential priors considered here,
 and the results are therefore not shown.
-Furthermore, we considered the prior suggested in \citet{juarez2010} of
+Furthermore, we considered the prior suggested in Ref.~\cite{juarez2010} of
 $\nu \sim \mathrm{Gamma}(2, 0.1)$, again limited to $\nu > 2$.
 Compared to our main truncated exponential prior,
 this prior places a higher probability density at $\nu < 10$ ($0.25$ vs.\ $0.08$)
@@ -293,8 +296,8 @@ x_t &= \lambda + b x_{t-1} + \epsilon_t\\
 In addition to the parameters in the original Gompertz model, this model
 estimates an additional parameter \(\phi\), which represents the correlation of
 subsequent residuals. Based on the results of previous analyses with the
-GPDD \citep{connors2014} and the chosen prior in previous
-analyses \citep{thorson2014a}, we placed a moderately informative prior on
+GPDD \cite{connors2014} and the chosen prior in previous
+analyses \cite{thorson2014a}, we placed a moderately informative prior on
 \(\phi\) that assumed the greatest probability density near zero with the
 reduced possibility of \(\phi\) being near \(-1\) or \(1\). Specifically, we
 chose \(\phi \sim \mathrm{truncated\mhyphen Normal}(0, 0.5, \mathrm{min.} = -1,
@@ -315,7 +318,7 @@ provides a check that our more complicated full Gompertz model was obtaining
 reasonable estimates of \(\nu\), (2) it provides a test of whether density
 dependence was affecting our perception of heavy tails, (3) it
 matches how some previous authors have modelled heavy tails without accounting
-for density dependence \citep{segura2013}.
+for density dependence \cite{segura2013}.
 
 We also considered a simpler model: a random walk on log abundance without drift,
 \begin{align}
@@ -326,15 +329,15 @@ However, the estimates of $\nu$ were qualitatively similar to those from
 Equation \ref{eq:rw-drift} (Fig.~\ref{fig:alt}C) and are therefore not shown.
 
 \subsection{Observation error} Observation error can bias parameter
-estimates \citep{knape2012} and is known to affect the ability to detect extreme
-events \citep{ward2007}. In our main analysis, we fit a model that ignored
+estimates \cite{knape2012} and is known to affect the ability to detect extreme
+events \cite{ward2007}. In our main analysis, we fit a model that ignored
 observation error. One way to account for observation error would be to fit a
 full state-space model that simultaneously estimates the magnitude of process
 noise and observation error. However, simultaneously estimating observation and
 process noise is a challenging problem (e.g.\ because the observation and
 process noise parameters tend to negatively covary in model fitting) and is
 known to sometimes result in identifiability issues with the Gompertz
-population model \citep{knape2008}. Furthermore, our model was applied to
+population model \cite{knape2008}. Furthermore, our model was applied to
 hundreds of time series, often of short length (as few as \minTimeSteps\ time
 steps) and our model estimates an additional parameter---the shape of the
 process deviation tails---potentially making identifiability and computational
@@ -349,7 +352,7 @@ where \(U\) represents the served state vector, \(\sigma_\mathrm{obs}\)
 represents the standard deviation of observation error (on a log scale), and
 \(\sigma_\mathrm{proc}\) represent the process noise scale parameter. We set
 \(\sigma_\mathrm{obs}\) to \(0.2\), which represents a typical value used in
-simulation analyses \citep{valpine2002, thorson2014b}.
+simulation analyses \cite{valpine2002, thorson2014b}.
 
 \subsection{Ricker-logistic} We also fit a Ricker-logistic model:
 \begin{align}
@@ -366,8 +369,8 @@ model assumes a linear decrease in population growth rate with increases in
 
 To fit the Ricker-logistic models, we chose a prior on \(K\) uniform between
 zero and twice the maximum observed abundance (similar and less informative
-than in \citet{delean2013}). We set the prior on
-\(r_\mathrm{max}\) as uniform between 0 and 20 as in \citet{delean2013}.
+than in Ref.~\cite{delean2013}). We set the prior on
+\(r_\mathrm{max}\) as uniform between 0 and 20 as in Ref.~\cite{delean2013}.
 We used the same priors on \(\nu\) and \(\sigma\) as in
 the Gompertz model.
 
@@ -495,8 +498,8 @@ magnitude of observation error was unknown in the empirical data.
 \section{Implementation of the skewed Student-$t$ distribution in Stan}
 
 The probability density for the skewed Student-$t$ distribution
-\citep{fernandez1998} equates to the following probability density as
-implemented in \citet{king2012}:
+\cite{fernandez1998} equates to the following probability density as
+implemented in Ref.~\cite{king2012}:
 
 \begin{equation}
   \mathrm{Skewed\,Student}\mhyphen t(x) =
@@ -525,10 +528,10 @@ density:
 \end{equation}
 
 Since Stan only needs the probability density up to an additive
-constant \citep{stan-manual2014}, we
+constant \cite{stan-manual2014}, we
 can replace $\log(2 \gamma)$ in the above for $\log(\gamma)$. The final log
 probability density for the skewed Student-$t$ distribution implemented in
-Stan\footnote{Credit to Stan developer Bob Carpenter:
+Stan\footnote{Credit to Stan developer Bob Carpenter:\\
 \url{https://groups.google.com/d/msg/stan-users/jeZQnQRUsDs/BeqhicWm1GEJ}}
 looks like the following:
 
@@ -568,12 +571,12 @@ obtained with the help of the rphylopic R package,
 \end{footnotesize}
 \onehalfspacing
 
-\section{Code availability.} Data and code to reproduce our analysis are
-available at \url{https://github.com/seananderson/heavy-tails}.
+\section{Code availability} Data and code to reproduce our analysis are
+available at\\ \url{https://github.com/seananderson/heavy-tails}
 
 %\bibliography{/Users/seananderson/Dropbox/tex/jshort,supp}
 
-\bibliographystyle{apalike}\bibliography{jshort,newbib}
+\bibliographystyle{pnas2011}\bibliography{jshort,newbib}
 
 \clearpage
 
@@ -619,7 +622,7 @@ substituted zeros, and total number of time steps.
 %\begin{helvetica}
 \singlespacing
 \begin{scriptsize}
-\begin{longtable}{>{\RaggedRight}m{1.4cm}>{\RaggedRight}p{5.0cm}>{\RaggedRight}p{0.65cm}>{\RaggedRight}p{2.1cm}>{\RaggedRight}p{4.2cm}>{\RaggedRight}p{1.6cm}}
+\begin{longtable}{>{\RaggedRight}m{1.4cm}>{\RaggedRight}p{5.3cm}>{\RaggedRight}p{0.65cm}>{\RaggedRight}p{1.5cm}>{\RaggedRight}p{4.2cm}>{\RaggedRight}p{1.6cm}}
 \caption{Populations with a high probability of heavy-tailed dynamics in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black-swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events that have a $10^{-4}$ probability or less of occurring if the population dynamics were explained by a Gompertz model with normally distributed process noise with a standard deviation equal to the scale parameter in the fitted $t$ distribution.}\\
 
 \toprule
@@ -801,10 +804,10 @@ low abundance if the process error is in fact heavy-tailed.}
 
 \clearpage
 
-\noindent
-Example Stan code for a heavy-tailed Gompertz model. The specific code for
-the various models in our analysis is available at
-\url{https://github.com/seananderson/heavy-tails}.
+% \noindent
+% Example Stan code for a heavy-tailed Gompertz model. The specific code for
+% the various models in our analysis is available at
+% \url{https://github.com/seananderson/heavy-tails}.
 
 %\begin{spacing}{1.15}
 %% \begin{footnotesize}
@@ -849,38 +852,38 @@ the various models in our analysis is available at
 %% \end{verbatim}
 %% \end{footnotesize}
 %%
-
-\begin{footnotesize}
-\begin{verbatim}
-data {
-  int<lower=1> N;              // number of observations
-  vector[N] y;                 // vector to hold log abundance observations
-  real<lower=0> nu_rate;       // rate parameter for nu exponential prior
-}
-parameters {
-  real lambda;                 // Gompertz growth rate parameter
-  real<lower=-1, upper=2> b;   // Gompertz density dependence parameter
-  real<lower=0> sigma_proc;    // process noise scale parameter
-  real<lower=2> nu;            // t-distribution degrees of freedom
-}
-model {
-  nu ~ exponential(nu_rate);
-  lambda ~ normal(0, 10);
-  sigma_proc ~ cauchy(0, 2.5);
-  for (i in 2:N) {
-    y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
-  }
-}
-\end{verbatim}
-\end{footnotesize}
-
+%%
+%% \begin{footnotesize}
+%% \begin{verbatim}
+%% data {
+%%   int<lower=1> N;              // number of observations
+%%   vector[N] y;                 // vector to hold log abundance observations
+%%   real<lower=0> nu_rate;       // rate parameter for nu exponential prior
+%% }
+%% parameters {
+%%   real lambda;                 // Gompertz growth rate parameter
+%%   real<lower=-1, upper=2> b;   // Gompertz density dependence parameter
+%%   real<lower=0> sigma_proc;    // process noise scale parameter
+%%   real<lower=2> nu;            // t-distribution degrees of freedom
+%% }
+%% model {
+%%   nu ~ exponential(nu_rate);
+%%   lambda ~ normal(0, 10);
+%%   sigma_proc ~ cauchy(0, 2.5);
+%%   for (i in 2:N) {
+%%     y[i] ~ student_t(nu, lambda + b * y[i-1], sigma_proc);
+%%   }
+%% }
+%% \end{verbatim}
+%% \end{footnotesize}
+%%
 
 \clearpage
 \noindent
 Stan code for the multilevel beta regression:
-\begin{footnotesize}
+\begin{scriptsize}
 \verbatiminput{../analysis/betareg4.stan}
-\end{footnotesize}
+\end{scriptsize}
 
 \clearpage
 
