@@ -46,14 +46,14 @@ dat$class_id <- as.numeric(dat$taxonomic_class)
 d <- dat
 saveRDS(d, file = "beta-modelling-dat.rds")
 
-# if(!file.exists("betareg4.rds")) {
+if(!file.exists("betareg4.rds")) {
   stan_beta4 <- stan_model("betareg4.stan")
   saveRDS(stan_beta4, file = "betareg4.rds")
-#} else {
-#  stan_beta4 <- readRDS("betareg4.rds")
-#}
+} else {
+ stan_beta4 <- readRDS("betareg4.rds")
+}
 
-# if(!file.exists("beta-stan-samples.rds")) {
+if(!file.exists("beta-stan-samples.rds")) {
   m.stan.beta4 <- sampling(stan_beta4,
     data = list(
       N = nrow(d),
@@ -83,7 +83,7 @@ saveRDS(d, file = "beta-modelling-dat.rds")
     inc_warmup = FALSE)
   dev.off()
   saveRDS(m.stan.beta4, file = "beta-stan-samples.rds")
-# }
+}
 
 m <- readRDS("beta-stan-samples.rds") # or reload this
 sink("beta-stan-samples-2.txt")

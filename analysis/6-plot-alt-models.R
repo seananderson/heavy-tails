@@ -1,4 +1,5 @@
 source("5-shape-data.R")
+library(ggplot2)
 
 gomp_hat_base <- arrange(gomp_hat_base, main_id)
 gomp_hat_obs_0.2 <- arrange(gomp_hat_obs_0.2, main_id)
