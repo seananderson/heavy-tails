@@ -2,6 +2,7 @@
 # populations for a table
 
 source("5-shape-data.R")
+dir.create("sparks")
 
 heavy <- filter(gomp_hat_base, nu_50 < 20) %>%
   select(main_id, common_name, p10)
