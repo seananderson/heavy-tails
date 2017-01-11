@@ -3,6 +3,8 @@
 source("1.5-compile-fit-function.R")
 source("1.6-extract-function.R")
 
+options(mc.cores = min(c(4L, parallel::detectCores())))
+
 model <- readRDS("stan-gomp2-ar1.rds")
 gpdd <- readRDS("gpdd-clean.rds")
 id <- "gomp-ar1"
