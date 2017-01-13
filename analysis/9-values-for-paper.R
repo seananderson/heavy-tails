@@ -226,46 +226,46 @@ write_tex(NPops, "NPops")
 write_tex(NOrders, "NOrders")
 write_tex(NClasses, "NClasses")
 
-### stat_table <- read.csv("stat_table.csv", stringsAsFactors = FALSE)
-### 
-### interpPointsPerc <- round((sum(stat_table$n_zero_sub) + sum(stat_table$n_interpolated)) / sum(stat_table$n### _points) * 100, 0)
-### 
-### write_tex(interpPointsPerc, "interpPointsPerc")
-### 
-### # count ups and downs:
-### heavy_res <- readRDS("heavy_residuals.rds")
-### heavy_res <- heavy_res %>% mutate(bs_l = res < l, bs_u = res > u)
-### n_bs_up <- sum(heavy_res$bs_u, na.rm = TRUE)
-### n_bs_down <- sum(heavy_res$bs_l, na.rm = TRUE)
-### write_tex(n_bs_up, "nBSUp")
-### write_tex(n_bs_down, "nBSDown")
-### write_tex(sprintf("%.1f", round(n_bs_down/n_bs_up, 1)), "ratioBSDownToUp")
-### write_tex(round(n_bs_down / (sum(n_bs_down, n_bs_up))*100), "percBSDown")
-### 
-### qq <- readRDS("skew-understimates.rds")
-### q <- quantile(1/qq$r, probs = c(0.25, 0.5, 0.75)) %>% round(1)
-### write_tex(paste0(q[[1]], "--", q[[3]]), "crashUnderRange")
-### write_tex(q[[2]], "crashUnderMedian")
-### 
-### sk <- readRDS("skew_samples.rds")
-### sk <- sk %>% group_by(main_id) %>%
-###   mutate(
-###     median_nu = median(nu),
-###     h1 = ifelse(median_nu <= 10, "1 heavy",
-###       ifelse(median_nu <= 70, "2 moderate", "3 normal"))) %>%
-###   ungroup()
-### 
-### normal <- filter(sk, h1 == "3 normal")$log_skew %>% sort
-### moderate <- filter(sk, h1 == "2 moderate")$log_skew %>% sort
-### heavy <- filter(sk, h1 == "1 heavy")$log_skew %>% sort
-### write_tex(round(mean(heavy < 0), 2) * 100, "probDensSkewedForHeavyPops")
-### 
-### overlap <- sk %>% filter(h1 == "3 normal") %>%
-###   group_by(main_id) %>%
-###     summarise(
-###       l = exp(quantile(log_skew, prob = 0.025)),
-###       u = exp(quantile(log_skew, prob = 0.975))) %>%
-###   mutate(overlap1 = l <= 1 & u >= 1)
-### write_tex(round(mean(overlap$overlap1), 2) * 100, "percNormPopsNotSkewed")
+stat_table <- read.csv("stat_table.csv", stringsAsFactors = FALSE)
+
+interpPointsPerc <- round((sum(stat_table$n_zero_sub) + sum(stat_table$n_interpolated)) / sum(stat_table$n_points) * 100, 0)
+
+write_tex(interpPointsPerc, "interpPointsPerc")
+
+# count ups and downs:
+heavy_res <- readRDS("heavy_residuals.rds")
+heavy_res <- heavy_res %>% mutate(bs_l = res < l, bs_u = res > u)
+n_bs_up <- sum(heavy_res$bs_u, na.rm = TRUE)
+n_bs_down <- sum(heavy_res$bs_l, na.rm = TRUE)
+write_tex(n_bs_up, "nBSUp")
+write_tex(n_bs_down, "nBSDown")
+write_tex(sprintf("%.1f", round(n_bs_down/n_bs_up, 1)), "ratioBSDownToUp")
+write_tex(round(n_bs_down / (sum(n_bs_down, n_bs_up))*100), "percBSDown")
+
+qq <- readRDS("skew-understimates.rds")
+q <- quantile(1/qq$r, probs = c(0.25, 0.5, 0.75)) %>% round(1)
+write_tex(paste0(q[[1]], "--", q[[3]]), "crashUnderRange")
+write_tex(q[[2]], "crashUnderMedian")
+
+sk <- readRDS("skew_samples.rds")
+sk <- sk %>% group_by(main_id) %>%
+  mutate(
+    median_nu = median(nu),
+    h1 = ifelse(median_nu <= 10, "1 heavy",
+      ifelse(median_nu <= 70, "2 moderate", "3 normal"))) %>%
+  ungroup()
+
+normal <- filter(sk, h1 == "3 normal")$log_skew %>% sort
+moderate <- filter(sk, h1 == "2 moderate")$log_skew %>% sort
+heavy <- filter(sk, h1 == "1 heavy")$log_skew %>% sort
+write_tex(round(mean(heavy < 0), 2) * 100, "probDensSkewedForHeavyPops")
+
+overlap <- sk %>% filter(h1 == "3 normal") %>%
+  group_by(main_id) %>%
+    summarise(
+      l = exp(quantile(log_skew, prob = 0.025)),
+      u = exp(quantile(log_skew, prob = 0.975))) %>%
+  mutate(overlap1 = l <= 1 & u >= 1)
+write_tex(round(mean(overlap$overlap1), 2) * 100, "percNormPopsNotSkewed")
 
 close(zz)
