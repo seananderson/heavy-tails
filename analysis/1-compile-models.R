@@ -72,9 +72,9 @@ functions {
     reject("Scale has to be positive.  Found sigma=", sigma);
   lp = log(skew) - log1p(square(skew));
   if (y < mu)
-    return lp + student_t_log(y * skew, nu, mu * skew, sigma);
+    return lp + student_t_lpdf(y * skew, nu, mu * skew, sigma);
   else
-    return lp + student_t_log(y / skew, nu, mu / skew, sigma);
+    return lp + student_t_lpdf(y / skew, nu, mu / skew, sigma);
   }
 }
 data {
