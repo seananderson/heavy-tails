@@ -42,8 +42,12 @@
 \newcommand{\insectsPH}{3}
 \newcommand{\mammalsPH}{5}
 \newcommand{\fishPH}{0}
-\newcommand{\NOrdersHeavy}{16}
-\newcommand{\POrdersHeavy}{41}
+\newcommand{\propSkewedAves}{0.21}
+\newcommand{\propSkewedInsecta}{0.18}
+\newcommand{\propSkewedMammalia}{0.31}
+\newcommand{\propSkewedOsteichthyes}{0.21}
+\newcommand{\NOrdersHeavy}{15}
+\newcommand{\POrdersHeavy}{38}
 \newcommand{\baseFiftyObsFiftySwitch}{8}
 \newcommand{\baseSeventyFiveObsFiftySwitch}{2}
 \newcommand{\totalHeavyFifty}{26}
@@ -55,7 +59,7 @@
 \newcommand{\baseNuFiveObsTenSwitch}{2}
 \newcommand{\pHeavyNThirty}{0.13}
 \newcommand{\pHeavyNSixty}{0.20}
-\newcommand{\pIncHeavyNThirtyNSixty}{1.6}
+\newcommand{\pIncHeavyNThirtyNSixty}{1.5}
 \newcommand{\obsErrorNuFivePerc}{75}
 \newcommand{\modelsNoConvergeAROne}{1}
 \newcommand{\modelsNoConvergeAROneHeavyBase}{0}
@@ -74,13 +78,14 @@
 \newcommand{\NClasses}{7}
 \newcommand{\interpPointsPerc}{1}
 \newcommand{\nBSUp}{8}
-\newcommand{\nBSDown}{51}
-\newcommand{\ratioBSDownToUp}{6.4}
+\newcommand{\nBSDown}{49}
+\newcommand{\ratioBSDownToUp}{6.1}
 \newcommand{\percBSDown}{86}
-\newcommand{\crashUnderRange}{1.1--2}
-\newcommand{\crashUnderMedian}{1.3}
+\newcommand{\crashUnderRange}{1.2--1.9}
+\newcommand{\crashUnderMedian}{1.4}
 \newcommand{\probDensSkewedForHeavyPops}{86}
-\newcommand{\percNormPopsNotSkewed}{88}
+\newcommand{\percNormPopsNotSkewed}{89}
+
 
 \title{Black-swan events in animal populations}
 
@@ -599,8 +604,9 @@ dependent if \(b = 0\), and inversely density dependent if \(b < 0\). Usually,
 the process noise \(\epsilon_{t}\) is modelled as normally distributed, but we
 allow it to be drawn from a Student-$t$ distribution with scale parameter
 \(\sigma\) and degrees of freedom \(\nu\). We can then estimate the degree to
-which the process deviations have heavy tails and are therefore evidence of
-black-swan events (Fig.~1A, B).
+which the process deviations have heavy tails (i.e., heavier tails than the
+lognormal distribution) and are therefore evidence of black-swan events
+(Fig.~1A, B).
 
 We chose the $t$ distribution for a number of reasons.
 Pragmatically, the $t$ distribution requires the estimation of only one additional
@@ -664,7 +670,7 @@ the posterior for
 102\)) and a metric of Pr\((\nu < 10) > 0.5\) will not flag any
 populations as heavy tailed.
 
-We fit our models with Stan 2.12.1 \cite{hoffman2014, stan-manual2015, carpenter2016}, and R
+We fit our models with Stan 2.14.1 \cite{hoffman2014, stan-manual2015, carpenter2016}, and R
 3.3.1 \cite{r2015}. We began with four chains and 2,000 iterations, discarding
 the first 1,000 as warm up. If \(\hat{R}\) (the
 potential scale reduction factor---a measure of chain convergence) was greater
