@@ -567,6 +567,8 @@ Fig.~3 were obtained from the following sources (metadata
 obtained with the help of the rphylopic R package,
 \url{https://github.com/sckott/rphylopic}):
 
+\clearpage
+
 \LTcapwidth=\textwidth
 \singlespacing
 \begin{footnotesize}
@@ -604,13 +606,13 @@ substituted zeros, and total number of time steps.
 
 %\begin{helvetica}
 \smallskip
-\begin{scriptsize}
+\begin{footnotesize}
 \begin{tabular}{lrrrrrrrr}
 \toprule
 \input{../analysis/stat-table.tex}
 \label{tab:stats}
 \end{tabular}
-\end{scriptsize}
+\end{footnotesize}
 %\end{helvetica}
 
 \clearpage
@@ -631,7 +633,7 @@ substituted zeros, and total number of time steps.
 \singlespacing
 \begin{scriptsize}
 \begin{longtable}{>{\RaggedRight}m{1.4cm}>{\RaggedRight}p{5.3cm}>{\RaggedRight}p{0.65cm}>{\RaggedRight}p{1.5cm}>{\RaggedRight}p{4.2cm}>{\RaggedRight}p{1.6cm}}
-\caption{Populations with a high probability of heavy-tailed dynamics in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black-swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events that have a $10^{-4}$ probability or less of occurring if the population dynamics were explained by a Gompertz model with normally distributed process noise with a standard deviation equal to the scale parameter in the fitted $t$ distribution.}\\
+\caption{Populations with a high ($> 0.6$) probability of heavy-tailed dynamics in the base heavy-tailed Gompertz population dynamics model. Shown are the log abundance time series, population descriptions, Global Population Dynamics Database Main IDs, citation for the data source or separate verification literature, a description of the cause of the black-swan events (if known), the probability of heavy tails as calculated by our model, and median estimate of $\nu$ from our model with 90\% quantile credible intervals indicated in parentheses. Red dots on the time series indicate downward black-swan events and blue values indicate upward black-swan events that have a $10^{-4}$ probability or less of occurring if the population dynamics were explained by a Gompertz model with normally distributed process noise with a standard deviation equal to the scale parameter in the fitted $t$ distribution.}\\
 
 \toprule
 \input{../analysis/cause-table.tex}
