@@ -30,6 +30,9 @@ heavy <- mutate(heavy,
     "Ref" = citation,
     "Description" = reasons, "Pr($\\nu < 10$)" = p10)#, "$\\widehat{\\nu}$" = nu_hat)
 
+heavy$Ref <- sub("citep", "cite", heavy$Ref)
+heavy$Ref <- sub("citet", "cite", heavy$Ref)
+
 print.xtable(xtable(heavy,
     caption = ""),
   include.rownames = FALSE, file = "cause-table.tex",
