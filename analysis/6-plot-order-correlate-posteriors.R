@@ -20,9 +20,12 @@ or <- mutate(or,
     hash, ".256.png"),
   scaling_factor = rep(1, nrow(or)))
 or[or$taxonomic_order == "Gadiformes", "scaling_factor"] <- 0.6
-or[or$taxonomic_order == "Salmoniformes", "scaling_factor"] <- 0.6
+or[or$taxonomic_order == "Salmoniformes", "scaling_factor"] <- 0.9
 or[or$taxonomic_order == "Perciformes", "scaling_factor"] <- 0.6
 or[or$taxonomic_order == "Pleuronectiformes", "scaling_factor"] <- 0.8
+or[or$taxonomic_order == "Falconiformes", "scaling_factor"] <- 0.8
+or[or$taxonomic_order == "Charadriiformes", "scaling_factor"] <- 0.8
+
 # to get ordering right:
 or <- plyr::join(a_df[,c("taxonomic_order", "sorted_order")], or)
 
@@ -48,16 +51,16 @@ or_table$credit <- gsub("&", "and", or_table$credit)
 names(or_table) <- c("Taxonomic order", "Credit", "License URL", "URL")
 or_table$URL <- NULL # don't use after all
 
-print.xtable(xtable(or_table, caption = ""),
-  include.rownames = FALSE, file = "phylopic.tex", booktabs = TRUE,
-  sanitize.text.function = identity, only.contents = TRUE, timestamp = NULL)
-
-if(any(!file.exists(paste0("silhouettes/", or$taxonomic_order, ".png")))) {
-  for(i in 1:nrow(or)) {
-    download.file(or$png_url[i],
-      destfile = paste0("silhouettes/", or$taxonomic_order[i], ".png"))
-  }
-}
+# print.xtable(xtable(or_table, caption = ""),
+#   include.rownames = FALSE, file = "phylopic.tex", booktabs = TRUE,
+#   sanitize.text.function = identity, only.contents = TRUE, timestamp = NULL)
+#
+# if(any(!file.exists(paste0("silhouettes/", or$taxonomic_order, ".png")))) {
+#   for(i in 1:nrow(or)) {
+#     download.file(or$png_url[i],
+#       destfile = paste0("silhouettes/", or$taxonomic_order[i], ".png"))
+#   }
+# }
 
 op <- vector(mode = "list", length = nrow(a_df))
 for(i in seq_along(op)) {
