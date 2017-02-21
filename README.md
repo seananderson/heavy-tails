@@ -4,7 +4,8 @@ This repository contains code for an analysis of heavy-tailed
 population dynamics for animal populations. It accompanies the paper:
 
 Anderson, S.C., T.B. Branch, A.B. Cooper, N.K. Dulvy. Black-swan
-events in animal populations. In review.
+events in animal populations. In press at Proceedings of the 
+National Academy of Sciences.
 
 To recreate the analysis, first you will need the following R
 packages installed:
