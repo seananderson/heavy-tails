@@ -23,7 +23,7 @@ Theoretically, you should be able to run the entire analysis by sourcing the fol
 source("analysis/make.R")
 ```
 
-However, many of the analyses will take a very long time to run (multiple days), and you might run into minor issues with changes to R packages overtime. Therefore, it is probably more useful to open the file `analysis/make.R` and work through the analysis files as they are called. Alternatively, the `.R` files are named in the order they should be run. Files starting with the same number can be run in any order. Output from a number of the models is cached in `.rds` files that will be available with a freshly cloned repository.
+However, many of the analyses will take a very long time to run (multiple days), and you might run into minor issues with changes to R packages over time. Therefore, it is probably more useful to open the file `analysis/make.R` and work through the analysis files as they are called. Alternatively, the `.R` files are named in the order they should be run. Files starting with the same number can be run in any order. Output from a number of the Stan models is cached in `.rds` files that will be available with a freshly cloned repository. Delete these files to force the models to be fit again.
 
 ## Data
 
