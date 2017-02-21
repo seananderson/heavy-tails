@@ -540,9 +540,9 @@ real skew_student_t_log(real y, real nu, real mu, real sigma, real skew) {
   real lp;
   lp <- log(skew) - log1p(square(skew));
   if (y < mu)
-    return lp + student_t_log(y * skew, nu, mu * skew, sigma);
+    return lp + student_t_lpdf(y * skew | nu, mu * skew, sigma);
   else
-    return lp + student_t_log(y / skew, nu, mu / skew, sigma);
+    return lp + student_t_lpdf(y / skew | nu, mu / skew, sigma);
 }
 \end{verbatim}
 
