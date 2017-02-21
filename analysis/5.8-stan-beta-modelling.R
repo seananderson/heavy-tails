@@ -12,8 +12,21 @@ gelm_scale <- function(x) {
 }
 
 ghb <- dplyr::select(gomp_hat_base, Lifesp, sigma_proc_50, b_50, lambda_50,
-  dataset_length, p10, main_id)
+  dataset_length, p10, main_id, taxonomic_order, taxonomic_class, taxon_name)
+length(unique(ghb$main_id))
+length(unique(ghb$taxonomic_order))
+length(unique(ghb$taxonomic_class))
+length(unique(ghb$taxon_name))
+
 ghb <- na.omit(ghb)
+
+length(unique(ghb$main_id))
+length(unique(ghb$taxonomic_order))
+length(unique(ghb$taxonomic_class))
+length(unique(ghb$taxon_name))
+
+ghb <- dplyr::select(ghb, -taxonomic_order, -taxonomic_class, -taxon_name)
+
 ghb$log_Lifesp_scaled <- gelm_scale(log(ghb$Lifesp))
 ghb$log_sigma_proc_50_scaled <- gelm_scale(log(ghb$sigma_proc_50))
 ghb$b_50_scaled <- gelm_scale(ghb$b_50)
