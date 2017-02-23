@@ -58,3 +58,5 @@ text/response.md
 analysis/beta-stan-stamples-n-only.txt
 
 media/questions.md
+analysis/heavy_ids.csv
+*.xls
