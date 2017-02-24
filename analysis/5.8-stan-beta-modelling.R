@@ -1,6 +1,5 @@
-# cut from 5.5-modelling.R
-# this version is a streamlined version with the final analysis
-# see 5.6-... for the intermediate work
+# Hierarchical beta regression model of possible predictors of black swan
+# probability 
 
 library("rstan")
 options(mc.cores = 4L)

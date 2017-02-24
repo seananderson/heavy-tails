@@ -1,4 +1,4 @@
-# this file reads in the posterior data, filter it a bit, and joins it with
+# This file reads in the posterior data, filters it a bit, and joins it with
 # the original gpdd and mammal life history databases
 # it then does some reshaping for plotting purposes
 

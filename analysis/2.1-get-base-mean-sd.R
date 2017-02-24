@@ -1,5 +1,5 @@
-# get the means and sds of predictors:
-# for modelling later
+# Get the means and sds of predictors for modelling later
+
 gpdd <- readRDS("gpdd-clean.rds")
 out <- plyr::ldply(unique(gpdd$main_id), function(x) {
   folder <- paste0("gomp-base/sm-", x, ".rds")

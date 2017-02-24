@@ -1,4 +1,4 @@
-## plot various skewness figures
+# Plot various skewness figures
 
 # look at the skew-t distribution:
 library(skewt)
@@ -33,8 +33,6 @@ gomp_hat_skew <- gomp_hat_skew %>% group_by(taxonomic_class) %>%
 p <- ggplot(gomp_hat_skew, aes(1/nu_50, log_skew_50)) +
   geom_segment(aes(y = log_skew_25, yend = log_skew_75, x = 1/nu_50, xend = 1/nu_50),
     alpha = 0.08, lwd = 0.3) +
-  #geom_segment(aes(y = log_skew_5, yend = log_skew_95, x = nu_50, xend = nu_50),
-    #alpha = 0.06, lwd = 0.2) +
   geom_segment(aes(y = log_skew_50, yend = log_skew_50, x = 1/nu_25, xend = 1/nu_75),
     alpha = 0.09, lwd = 0.3) +
   geom_point(alpha = 0.3, pch = 21) +
@@ -42,18 +40,9 @@ p <- ggplot(gomp_hat_skew, aes(1/nu_50, log_skew_50)) +
   scale_x_continuous(breaks = 1/c(100, 10, 5, 3, 2), labels = c(100, 10, 5, 3, 2)) +
   geom_hline(yintercept = median(gomp_hat_skew$log_skew_50), col = "red") +
   xlab(expression(nu)) + ylab("log(Skewness parameter)")
-#print(p)
 ggsave("skewness-vs-nu.pdf", width = 6, height = 5)
 
 ## extract samples from all posteriors of skewness parameter:
-
-# par(mfrow = c(3, 1))
-# xx <- filter(gomp_hat_skew, nu_50 < 10)
-# hist(xx$log_skew_50, xlim = c(-2, 2))
-# xx <- filter(gomp_hat_skew, nu_50 < 50, nu_50 >= 10)
-# hist(xx$log_skew_50, xlim = c(-2, 2))
-# xx <- filter(gomp_hat_skew, nu_50 >= 50)
-# hist(xx$log_skew_50, xlim = c(-2, 2))
 
 sk <- readRDS("skew_samples.rds")
 sk <- sk %>% group_by(main_id) %>%
@@ -72,7 +61,6 @@ sk <- sk %>% group_by(main_id) %>%
       ifelse(median_nu <= 70, "2 moderate", "3 normal"))) %>%
   as.data.frame()
 
-#pal <- c("#000000", RColorBrewer::brewer.pal(3, "YlOrRd")[c(2, 3)]) %>% rev()
 pal <- c(RColorBrewer::brewer.pal(5, "YlOrRd")[c(4,2)], "#000000")
 library(ggplot2)
 gg_skew <- function(heavy_type) {
@@ -96,12 +84,9 @@ pdf("skewness-densities1.pdf", width = 5, height = 4)
 p4 %>% print()
 dev.off()
 
-
 normal <- filter(sk, h1 == "3 normal")$log_skew %>% sort
 moderate <- filter(sk, h1 == "2 moderate")$log_skew %>% sort
 heavy <- filter(sk, h1 == "1 heavy")$log_skew %>% sort
-
-plot(density())
 
 ticks <- c(0.2, 0.5, 1, 2, 5)
 par(yaxs = "i")
@@ -119,9 +104,6 @@ pfunc(dn$x, dn$y, col = pal[3], alpha = "15")
 pfunc(dm$x, dm$y, col = pal[2], alpha = "15")
 pfunc(dh$x, dh$y, col = pal[1], alpha = "15")
 axis(1, at = log(ticks), ticks)
-abline(v = 0, lty = 2)
-
-
 
 group_by(sk, heavy) %>%
   summarise(p_lt0 = sum((log_skew < 0))/n(),

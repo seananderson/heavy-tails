@@ -1,6 +1,6 @@
 # Need to run 5.9-order-level-posteriors.R first
-
-# a_df_select <- filter(a_df, n_pops > 3)
+# Plot the posteriors from the taxonomic order-only
+# hierarchical beta regression 
 
 source("add_phylopic.R") # modifed from Scott's rphylopic package
 subtext_col <- "grey50"
@@ -28,7 +28,6 @@ or[or$taxonomic_order == "Charadriiformes", "scaling_factor"] <- 0.8
 
 # to get ordering right:
 or <- plyr::join(a_df[,c("taxonomic_order", "sorted_order")], or)
-
 
 # get citation details:
 if(!file.exists("phylopic-metadata.rds")) {
@@ -90,7 +89,6 @@ x <- x[x > 2]
 prior_p10 <- length(x[x < 10])/length(x)
 
 pdf("order-posteriors-covariates.pdf", width = 3.1, height = 5.65)
-#layout(mat =c(rep(1, 4), rep(2, 9)))
 layout(mat =c(rep(1, 9), rep(2, 4)))
 par(mar = c(4.1,2,1.4,0), oma = c(0.2, 5.9, 0, 0.8),
   tck = -0.04, mgp = c(2, 0.5, 0), col.axis = "grey25", col = "grey25")
@@ -106,8 +104,6 @@ plot(1, 1, xlim = xlim, ylim = c(1, length(op)), type = "n",
 abline(v = prior_p10, lty = 2, col = "grey40", lwd = 0.6)
 scaling_factor <- 63
 for(i in seq_along(op)) {
-  #segments(xlim[1]+0.05, i, min(op[[i]]$dens$x), i, col = "grey90")
-  #segments(max(op[[i]]$dens$x), i, xlim[2], i, col = "grey90")
   polygon(c(op[[i]]$dens$x, rev(op[[i]]$dens$x)),
     i + c(op[[i]]$dens$y/scaling_factor, -rev(op[[i]]$dens$y/scaling_factor)),
     border = "grey50", lwd = 0.5, col = "white")
@@ -174,11 +170,6 @@ for(i in ord) {
 axis(1, mgp = c(2, 0.3, 0), tck = -0.045)
 axis(2, at = 1:5, labels = coefs[ord], las = 1, lwd = 0, line = -0.6)
 
-# axis(2, at = seq_along(op),
-#   labels = as.character(unlist(lapply(op, function(x) x$taxonomic_order))),
-#   las = 1, lwd = 0, line = -0.6)
-# text(as.numeric(lapply(extract(m), median)[ord]),
-#   1:5-0.4, coefs[ord])
 mtext("Coefficient value", side = 1, line = 1.55,
   cex = 0.8, outer = FALSE)
 mtext("(per 2 SDs of predictor)", side = 1, line = 2.6,

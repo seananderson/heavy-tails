@@ -1,7 +1,6 @@
 # All steps to run the analysis
 # =============================
 #
-# - Alternatively, run `make` from the Terminal
 # - Run `make clean` in the Terminal to remove all cached `.rds` files
 # - Note that re-running all the model fitting will take a long time (days)
 # - If you have cloned the repository from GitHub, then most of the cached
@@ -68,7 +67,7 @@ source("6-plot-prior.R")
 source("6-plot-sparks.R")
 source("6-plot-t-nu-eg.R")
 source("6-causes-table.R")
-#source("6-plot-skewness.R")
+source("6-plot-skewness.R")
 source("8-sim-extinction-risk.R")
 source("8.1-plot-skewness.R")
 source("9-values-for-paper.R")

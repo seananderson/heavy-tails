@@ -1,3 +1,6 @@
+# This helper function extracts posterior samples from 
+# the Stan population models 
+
 extract_model <- function(id, get_phi = TRUE,
   root_folder = getwd(), sub_folder = "base",
   file_prefix = "sm",

@@ -1,10 +1,8 @@
-# this file runs some simulation tests of the Stan model
+# This file runs some simulation tests of the Stan model
 # I have set the parameter values to ballpark median values from the GPDD
 # this file tests the ability for the Gompertz to perform well
 # when we feed it process deviations that have been selected to have the true
 # population value of nu (within a certain CV)
-#
-# Note that phi is being ignored now
 
 library("rstan")
 stan_gomp_obs <- readRDS("stan-gomp-obs.rds")

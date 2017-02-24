@@ -1,17 +1,6 @@
 # This file looks at quasi-extinction probability with heavy vs. normal tails.
 #
-# **I'm currently adapting this script to bring in the parameter values from the
-# model fitting.**
-#
 # Do downwards heavy tails really matter for extinction risk?
-#
-# Two ways to go about this: repeatedly bootstrap from the observed process
-# deviations or draw the deviations from a t distribution with given sigma and
-# nu. The problem with the later is that the deviations won't be appropriately
-# downwardly skewed. But the problem with the former is that I'm not sure this
-# gets what we want out of the exercise. The assumed normal distributions might
-# not in fact be normal. The model might just have fit poorly. Therefore, I'm
-# going to start with the first option.
 #
 # We'll write a little C++ function to simulate from a Gompertz model. We'll do
 # this in C++ just to make everything fast:
@@ -159,12 +148,9 @@ p <- ggplot(before_and_projections, aes(year, med, colour = model, fill = model)
   scale_y_log10() + plain_theme + ylab("Abundance")
 ggsave("heavy-skew-projections-ggplot.pdf", width = 16, height = 10)
 
-# heavy_skewed_pops <- dplyr::filter(gomp_hat_skew, log_skew_50 < 0.7, nu_50 < 30)
-
 qq <- before_and_projections %>% group_by(main_id, year) %>%
   summarise(r = q_low3[model == "heavy-skew"]/q_low3[model == "normal"]) %>%
   filter(year == 6)
-  # filter(main_id %in% heavy_skewed_pops$main_id)
 plot(qq$r, log = "y", ylim = c(0.2, 5))
 abline(h = 1)
 median(1/qq$r)
@@ -172,3 +158,4 @@ plot(density(1/qq$r), xlim = c(-1, 4.5));abline(v = 1)
 quantile(1/qq$r, probs = c(0, 0.25, 0.5, 0.75, 1)) %>%
   round(1)
 saveRDS(qq, file = "skew-understimates.rds")
+

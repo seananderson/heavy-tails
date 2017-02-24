@@ -8,8 +8,6 @@ model <- readRDS("stan-gomp.rds")
 gpdd <- readRDS("gpdd-clean.rds")
 id <- "gomp-base-stronger"
 
-# gpdd <- subset(gpdd, main_id %in% c(1))
-
 stan_pars <- c("lambda", "sigma_proc", "nu", "b")
 
 fit_gpdd_model(gpdd_dat = gpdd, model = model, sub_folder = id,

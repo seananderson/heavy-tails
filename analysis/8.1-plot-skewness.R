@@ -1,4 +1,4 @@
-## plot various skewness figures
+# Plot various skewness figures
 
 # look at the skew-t distribution:
 library(skewt)
@@ -21,7 +21,6 @@ plain_theme <- theme_bw() + theme(
 p <- ggplot(o, aes(x, V1, colour = nu_label)) + geom_line() +
   facet_wrap(~skew_label, nrow = 1) + ylab("Probability density") +
   xlab("x") + plain_theme + labs(colour=expression(nu))
-  # print(p)
 ggsave("skew-t-illustration.pdf", width = 9, height = 2)
 
 source("5-shape-data.R")
@@ -33,8 +32,6 @@ gomp_hat_skew <- gomp_hat_skew %>% group_by(taxonomic_class) %>%
 p <- ggplot(gomp_hat_skew, aes(1/nu_50, log_skew_50)) +
   geom_segment(aes(y = log_skew_25, yend = log_skew_75, x = 1/nu_50, xend = 1/nu_50),
     alpha = 0.08, lwd = 0.3) +
-  #geom_segment(aes(y = log_skew_5, yend = log_skew_95, x = nu_50, xend = nu_50),
-    #alpha = 0.06, lwd = 0.2) +
   geom_segment(aes(y = log_skew_50, yend = log_skew_50, x = 1/nu_25, xend = 1/nu_75),
     alpha = 0.09, lwd = 0.3) +
   geom_point(alpha = 0.3, pch = 21) +
@@ -42,7 +39,6 @@ p <- ggplot(gomp_hat_skew, aes(1/nu_50, log_skew_50)) +
   scale_x_continuous(breaks = 1/c(100, 10, 5, 3, 2), labels = c(100, 10, 5, 3, 2)) +
   geom_hline(yintercept = median(gomp_hat_skew$log_skew_50), col = "red") +
   xlab(expression(nu)) + ylab("log(Skewness parameter)")
-#print(p)
 ggsave("skewness-vs-nu.pdf", width = 6, height = 5)
 
 ## extract samples from all posteriors of skewness parameter:
@@ -59,13 +55,10 @@ moderate <- filter(sk, h1 == "2 moderate")$log_skew %>% sort
 heavy <- filter(sk, h1 == "1 heavy")$log_skew %>% sort
 
 ticks <- c(0.1, 0.2, 0.5, 1, 2, 5)
-# pdf("skewness-densities-base.pdf", width = 5, height = 4)
-# par(yaxs = "i")
 pal <- c(RColorBrewer::brewer.pal(6, "YlOrRd")[c(5,4)], "#4D4D4D")
 dn <- density(normal, from = min(sk$log_skew), to = max(sk$log_skew))
 dm <- density(moderate, from = min(sk$log_skew), to = max(sk$log_skew))
 dh <- density(heavy, from = min(sk$log_skew), to = max(sk$log_skew))
-# plot(1, 1, xlim = c(-2, 2), ylim = c(0, 1.0), type = "n", axes = FALSE, ylab = "", xlab = "")
 pfunc <- function(x, y, col, alpha = 50, fill = TRUE) {
   if (fill) {
     polygon(c(x, rev(x)), c(y, rep(0, length(y))), border = NA,
@@ -73,12 +66,6 @@ pfunc <- function(x, y, col, alpha = 50, fill = TRUE) {
   }
   lines(x, y, col = col, lwd = 1.8)
 }
-# pfunc(dn$x, dn$y, col = pal[3], alpha = "15")
-# pfunc(dm$x, dm$y, col = pal[2], alpha = "15")
-# pfunc(dh$x, dh$y, col = pal[1], alpha = "15")
-# axis(1, at = log(ticks), ticks)
-# abline(v = 0, lty = 2)
-# dev.off()
 
 group_by(sk, h1) %>%
   summarise(p_lt0 = sum((log_skew < 0))/n(),
@@ -254,8 +241,6 @@ for (i in ids) {
   meta <- filter(gomp_hat_skew, main_id == unique(this_dat$main_id))
   sk_param <- sprintf("%.1f", round(exp(meta$log_skew_50), 1))
   nu_param <- sprintf("%.0f", round(meta$nu_50, 0))
-  #add_label(label = paste0(meta$common_name, ", sk ", sk_param, ", nu ", nu_param),
-    #cex = 1.1, col = "grey20")
   add_label(label = bquote(.(meta$common_name)~gamma == .(sk_param)~nu == .(nu_param)),
     cex = 1.1, col = "grey20")
 }

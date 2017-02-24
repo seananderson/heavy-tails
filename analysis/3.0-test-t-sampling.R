@@ -1,4 +1,4 @@
-# this file tests the combination of N samples and degree of heavy tailedness
+# This file tests the combination of N samples and degree of heavy tailedness
 # in terms of the frequency that nu is estimated correctly
 # this is part 1 of 2 simulation testing checks
 
@@ -7,7 +7,6 @@ stan_t <- readRDS("stan-t.rds")
 
 # take a basic t- dist
 # and try and re-capture it with our prior at different nu values
-# use a ton of data (2000 points, 500 points, 100 points, 50 points)
 # show how probability of noticing goes down
 set.seed(123)
 
@@ -16,11 +15,6 @@ sigma_proc <- 1
 nu_vec <- c(1, 3, 5, 10, 1e6)
 reps <- 1:20
 show_plot <- FALSE
-
-# test:
-#N_vec <- 50
-#nu_vec <- 100
-#reps <- 1:2
 
 out <- plyr::ldply(reps, function(k) {
   out_N <- plyr::ldply(seq_along(nu_vec), function(i) {
@@ -32,8 +26,6 @@ out <- plyr::ldply(reps, function(k) {
       abline(v = N_vec, col = "red", lwd = 2)
       rect(1, -100, max(N_vec) + 10, qnorm(0.001), col = "#00000030", border = NA)
       rect(1, 100, max(N_vec) + 10, qnorm(0.999), col = "#00000030", border = NA)
-      #rect(1, -100, max(N_vec) + 10, qnorm(0.01), col = "#00000030", border = NA)
-      #rect(1, 100, max(N_vec) + 10, qnorm(0.99), col = "#00000030", border = NA)
     }
 
     out_nu <-  plyr::ldply(seq_along(N_vec), function(j) {

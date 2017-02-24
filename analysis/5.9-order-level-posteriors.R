@@ -1,4 +1,4 @@
-# plot order-level posterior predictions
+# Plot order-level posterior predictions
 # start by running 5.8...
 
 library("rstan")

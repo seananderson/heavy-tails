@@ -1,3 +1,6 @@
+# This file extracts the posteriors for the skew
+# models and samples an arbitrary number of them 
+
 sample_posterior <- function(path = ".", N = 5000L, files = NULL) {
   if (is.null(files)) {
     f <- list.files(path, pattern = "*.rds")

@@ -1,4 +1,4 @@
-# this file produces some values for inclusion of the text of the associated paper
+# This file produces some values for inclusion in the text in the associated paper
 
 library("dplyr")
 source("5-shape-data.R")

@@ -1,3 +1,7 @@
+# Get some seed values where the effective value of 
+# nu matches the true value of nu for a very simple case 
+# where we are just fitting a simple t distribution 
+
 library("rstan")
 stan_t <- readRDS("stan-t.rds")
 

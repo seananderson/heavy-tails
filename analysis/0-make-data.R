@@ -340,21 +340,3 @@ make_big_ts_plot(gpdd[gpdd$taxonomic_class %in%
   c("Gastropoda", "Crustacea", "Chondrichtyhes", "Osteichthyes"), ],
   id = "fishes-others", width = 24, height = 20)
 
-# y <- subset(gpdd, ref == "Lindstrom, J., Ranta, E. Kaitala, V. & Linden, H. 1995 The clockwork of Finnish tetraonid population dynamics. Oikos, 74:185-194")
-# ggplot(y, aes(decimal_year_begin, log10(population_untransformed))) + geom_line() + facet_wrap(~main_id)
-
-# p <- ggplot(subset(gpdd, assumed_log10 == TRUE & !main_id %in% unique(y$main_id)),
-#   aes(series_step, population)) +
-#   geom_point() + geom_line() +
-#   facet_wrap(~label, scales = "free")
-
-# p <- ggplot(subset(gpdd, assumed_log10 == TRUE & !main_id %in% unique(y$main_id)),
-#   aes(series_step, population_untransformed_original)) +
-#   geom_point() + geom_line() +
-#   facet_wrap(~label, scales = "free")
-
-# p <- ggplot(subset(gpdd, assumed_log10 == TRUE & !main_id %in% unique(y$main_id)),
-#   aes(series_step, population_untransformed)) +
-#   geom_point() + geom_line() +
-#   facet_wrap(~label, scales = "free")
-# ggsave("log10-assumed.pdf", width = 20, height = 20)

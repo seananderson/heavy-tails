@@ -1,4 +1,4 @@
-# this file compiles the Stan models, nothing more
+# This file compiles the Stan models, nothing more
 
 library(rstan)
 

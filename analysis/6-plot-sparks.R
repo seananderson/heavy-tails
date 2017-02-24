@@ -1,4 +1,4 @@
-# make little time series sparklines (copyright Tufte) of the heavy-tailed
+# Make little time series sparklines (copyright Tufte) of the heavy-tailed
 # populations for a table
 
 source("5-shape-data.R")
@@ -18,7 +18,6 @@ get_gomp_res <- function(id_show) {
   res <- rep(NA, length(pop))
   for(i in 2:length(pop)) {
     res[i] <- log(pop)[i] - (p$lambda_50 + p$b_50 * log(pop[i-1]))
-      #p$phi_50 * (p$lambda_50 + p$b_50 * log(pop[i-2]))
   }
   l <- qnorm(0.0001, 0, sd = p$sigma_proc_50)
   u <- qnorm(0.9999, 0, sd = p$sigma_proc_50)
@@ -42,8 +41,6 @@ make_spark <- function(x) {
       xlab = "", ylab = "", yaxs = "i", xaxs = "i", log = "y"))
 
 # check for interpolation and blacks swan association:
-# with(x, points(seq_along(population_untransformed), population_untransformed,
-# cex = ifelse(interpolated | zero_sub, 5, 1)))
   if(length(bsw_l) > 0)
     points(bsw_l, x$population_untransformed[bsw_l], col = "red", pch = 20, cex = 3)
   if(length(bsw_u) > 0)
@@ -58,7 +55,6 @@ plyr::d_ply(heavy, "main_id", function(y) {
 # output .csv to get started
 h <- heavy %>% plyr::ddply("main_id", function(x) x[1,]) %>% arrange(desc(p10))
 h <- h[,c("main_id", "p10", "common_name", "taxon_name", "exact_name", "ref", "notes", "data_notes")]
-
 
 write.csv(h, file = "heavy.csv")
 

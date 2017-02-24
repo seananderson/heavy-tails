@@ -1,6 +1,5 @@
 # Check how student-t changes with nu
 # to justify tailing off prior around 100 or 200
-#pdf("t-nu.pdf", width = 5, height = 4.5)
 
 library("rstan")
 
@@ -158,14 +157,8 @@ for(j in 1:(nrow(bs_bg) - 1)) {
     col = paste0(bs_bg$col[j], "80"))
 }
 
-#   cols_df <- data.frame(nu = c(1.9, 2.9, 4.9, 15.9, 25),
-#     col = c(bs_cols[-length(bs_cols)], "grey30"),
-#     stringsAsFactors = FALSE)
-#   h_cols <- cols_df$col[findInterval(h$breaks, cols_df$nu)]
-
   for(j in seq_along(h$breaks)) {
     rect(h$breaks[j], 0, h$breaks[j+1], h$counts[j], border = "grey10",
-#       col = h_cols[j], lwd = 1)
        col = "white", lwd = 1)
   }
   segments(quantile(x, probs = 0.25), ylim[2] / 2,

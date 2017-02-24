@@ -21,15 +21,6 @@ out <- plyr::ldply(unique(gpdd$main_id), extract_model,
 library(dplyr)
 ids_non_converged <- filter(out,  max_rhat > 1.05 | min_neff < 200)$main_id
 ids_non_converged
-# gpdd_non_converged <- filter(gpdd, main_id %in% ids_non_converged)
-# gpdd_non_converged <- filter(gpdd, main_id %in% 10144) # example problem population
 
 saveRDS(out, file = paste0(id, "-hat.rds"))
 
-# out <- readRDS("gomp-ar1-hat.rds")
-# out2 <- readRDS("gomp-ar12-hat.rds")
-# ids_non_converged <- filter(out2,  max_rhat > 1.05 | min_neff < 200)$main_id
-# out <- out[!out$main_id %in% out2$main_id, ]
-# out <- bind_rows(out, out2) %>% as.data.frame()
-
-# saveRDS(out, file = "gomp-ar1-extra-iterations-hat.rds")

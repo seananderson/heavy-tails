@@ -1,4 +1,4 @@
-# a pretty version of nu coeffs and p(nu < 10) for a main paper figure
+# A pretty version of nu coefs and p(nu < 10) for a main paper figure
 
 library("grImport")
 
@@ -31,7 +31,6 @@ for(i in 1:length(classes)) {
   ticks <- c(2, 3, 5, 10, Inf)
 
   plot(1, 1, type = "n", xlim = c(-0.2, 100.2), ylim = c(0, 0.5), xlab = "", ylab = "", yaxt = "n", xaxs = "i", yaxs = "i", xaxt = xaxt, las = 1)
-  #axis(2, at = seq(0, 100, 50), las = 1)
   par(xpd = NA)
   add_label(label = LETTERS[i], font = 2, cex = 1.2)
   add_label(label = classes[i], xfrac = 0.03)

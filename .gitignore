@@ -60,3 +60,8 @@ analysis/beta-stan-stamples-n-only.txt
 media/questions.md
 analysis/heavy_ids.csv
 *.xls
+analysis/check-skewness.R
+analysis/6-plot-t-risk.R
+analysis/6-plot-t-nu-eg-present.R
+analysis/6-bswans-time.R
+

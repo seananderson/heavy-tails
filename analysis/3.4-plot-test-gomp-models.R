@@ -1,4 +1,4 @@
-# plot the simulation output from 3.3-test-gomp-models.R
+# Plot the simulation output from 3.3-test-gomp-models.R
 
 library("dplyr")
 
@@ -140,7 +140,5 @@ p <- filter(check_nu_long, variable == "inverse_nu") %>%
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     panel.background = element_blank())
-  #scale_x_continuous(breaks = c(0, 0.1, 0.2, 0.333, 0.5),
-    #labels = c("Infinity", "10", "5", "3", "2"))
 
 ggsave("sim-gompertz-p10.pdf", width = 9, height = 3)

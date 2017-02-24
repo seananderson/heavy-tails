@@ -1,4 +1,4 @@
-# a pretty version of the correlates of nu plot for the main paper
+# A pretty version of the correlates of nu plot for the main paper
 # need to run 5.8... first
 
 # randomly sort the rows:
@@ -136,8 +136,6 @@ with(gomp_hat_base_corr, make_panel(x = Len, log = "x",
 with(gomp_hat_base_corr, make_panel(x = Lifesp/12, log = "x",
   label = "Lifespan (years)", xaxis_ticks = c(0.2, 1, 5, 20)))
 
-# mtext("Possible covariate value", side = 1, outer = TRUE, line = 0,
-#   cex = 0.9)
 mtext(quote(Pr(nu<10)), side = 2,
   outer = TRUE, line = 2.8, cex = 0.9, adj = 0.6)
 

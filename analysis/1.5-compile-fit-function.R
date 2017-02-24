@@ -1,3 +1,5 @@
+# This function fits Stan models to the GPDD data 
+
 fit_gpdd_model <- function(gpdd_dat, model, sub_folder,
   root_folder = getwd(), file_prefix = "sm",
   stan_dat = paste0("list(N = nrow(x), y = log(x$population_untransformed), ",
