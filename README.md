@@ -2,6 +2,8 @@
 Black-swan events in animal populations
 =======================================
 
+[![DOI](https://zenodo.org/badge/24315125.svg)](https://zenodo.org/badge/latestdoi/24315125)
+
 This repository contains code for an analysis of heavy-tailed population dynamics for animal populations. It accompanies the paper:
 
 Anderson, S.C., T.B. Branch, A.B. Cooper, N.K. Dulvy. Black-swan events in animal populations. In press at Proceedings of the National Academy of Sciences.
