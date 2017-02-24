@@ -1,6 +1,0 @@
-main_id, error_description
-6566, "Data entered into GPDD incorrectly"
-10139, "Same as 20579 but shorter"
-1207, "Data entered into GPDD incorrectly, 1957 entered as 2 should be 27"
-6531, "Data entered into GPDD incorrectly, 1978 entered as 7 should be 47. See Appendix Table 1"
-9801, "Data are centered by subtracating the mean, not logged, and we do not know the mean"
